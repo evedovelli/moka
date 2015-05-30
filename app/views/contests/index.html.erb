@@ -1,0 +1,33 @@
+<div class="span12">
+  <h1><%= t '.title' %></h1>
+
+  <% if can? :create, Contest %>
+    <div id="contest_new">
+      <div class="row">
+        <div class="span12" id="contest_form" style="display:none;"></div>
+      </div>
+
+      <div class="row">
+        <div class="span12">
+          <div class="center">
+            <%= link_to(new_contest_path, :id => "add_contest", :remote => true, :class => "btn btn-inverse center extra-space") do %>
+              <i class="icon-plus icon-inverse"></i><%= " #{t '.add_contest'}" %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+  <div id="contest_index">
+    <%= render @contests %>
+  </div>
+
+  <div class="row">
+    <div class="span12">
+      <%= link_to(t('buttons.back'), :back, :onclick => "goBack()", :class => "btn extra-space") %>
+    </div>
+  </div>
+
+</div>
+

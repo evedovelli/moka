@@ -1,0 +1,14 @@
+pt-BR:
+  buttons:
+    add: 'Adicionar'
+    edit: 'Editar'
+    update: 'Atualizar'
+    cancel: 'Cancelar'
+    submit: 'Enviar'
+    back: 'Voltar'
+    create: 'Criar'
+    sign_in: 'Entrar'
+    sign_up: 'Registrar'
+    vote: 'Envie seu voto agora'
+  links:
+    here: 'aqui'

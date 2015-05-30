@@ -1,0 +1,23 @@
+<div class="span12">
+  <h1><%= t '.title', :id => @contest.id %></h1>
+
+  <div id="contest_total">
+    <%= render 'contests/total' %>
+  </div>
+
+  <div id="contest_total_stuff">
+    <%= render 'contests/total_stuff' %>
+  </div>
+
+  <div id="contest_total_hour">
+    <%= render 'contests/total_hour' %>
+  </div>
+
+  <div class="row">
+    <div class="span12">
+      <%= link_to(t('buttons.back'), :back, :onclick => "goBack()", :class => "btn extra-space") %>
+    </div>
+  </div>
+
+</div>
+

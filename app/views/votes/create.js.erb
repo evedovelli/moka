@@ -1,0 +1,21 @@
+$('#vote_form').html("<%= j (render 'votes/form') %>");
+$('#flash_messages').slideUp(350);
+$('#partial_results').html("<%= j (render "votes/vote")%>")
+$('#partial_results').slideDown(350);
+$(document).ready(selectablePicture);
+$(document).ready(closeOverlayResults);
+
+jQuery(function() {
+  var data, partialChart;
+  data = [
+    <% @results_by_stuff.each do |result| %>
+      {
+        value: <%=result[:percent]%>,
+        color: "<%=result[:color]%>",
+        highlight: "<%=result[:highlight]%>",
+        label: "<%=result[:label]%>"
+      },
+    <% end %>
+  ]
+  return partialChart = new Chart($("#canvas").get(0).getContext("2d")).Doughnut(data, {});
+});

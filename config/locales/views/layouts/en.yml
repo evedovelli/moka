@@ -1,0 +1,12 @@
+en:
+  layouts:
+    _navigation:
+      page_title: 'Contests'
+      home: 'Config'
+      logout: 'Logout'
+      edit_account: 'Edit account'
+      login: 'Login'
+      sign_up: 'Sign up'
+    application:
+      title: 'Contests'
+

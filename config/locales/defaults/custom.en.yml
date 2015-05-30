@@ -1,0 +1,65 @@
+en:
+  time:
+    formats:
+      date: ! '%Y-%m-%d'
+  languages:
+    portuguese: 'Portuguese'
+    english: 'English'
+  devise:
+    registrations:
+      new:
+        title: 'Sign up'
+      edit:
+        title: 'Edit account'
+        password_help: "Leave blank if you don't want to change it"
+        change_password_help: 'We need your current password to confirm your changes'
+        cancel_my_account: 'Cancel my account'
+        unhappy: 'Unhappy?'
+    sessions:
+      new:
+        title: 'Sign in'
+    confirmations:
+      new:
+        title: 'Resend confirmation instructions'
+        resend: 'Resend confirmation instructions'
+    mailer:
+      confirmation_instructions:
+        title: "Welcome %{user}!"
+        confirmation_message: 'You can confirm your account email through the link below:'
+        confirm: 'Confirm my account'
+      reset_password_instructions:
+        title: "Hello %{user}!"
+        reset_message: 'Someone has requested a link to change your password. You can do this through the link below.'
+        reset: 'Change my password'
+        ignore: "If you didn't request this, please ignore this email."
+        explanation: "Your password won't change until you access the link above and create a new one."
+      unlock_instructions:
+        title: "Hello %{user}!"
+        locked_message: 'Your account has been locked due to an excessive number of unsuccessful sign in attempts.'
+        unlock_message: 'Click the link below to unlock your account:'
+        unlock: 'Unlock my account'
+    passwords:
+      edit:
+        title: 'Change your password'
+        new_password: 'New password'
+        confirm_password: 'Confirm new password'
+        change_password: 'Change my password'
+      new:
+        title: 'Forgot your password?'
+        send_reset_instructions: 'Send me reset password instructions'
+    shared:
+      _links:
+        sign_in: 'Sign in'
+        sign_up: 'Sign up'
+        recover: 'Forgot your password?'
+        confirm: "Didn't receive confirmation instructions?"
+        unlock: "Didn't receive unlock instructions?"
+        omniauth: "Sign in with %{provider}"
+    unlocks:
+      new:
+        title: 'Resend unlock instructions'
+        unlock: 'Resend unlock instructions'
+  activerecord:
+    errors:
+      messages:
+        confirmation: "doesn't match confirmation"

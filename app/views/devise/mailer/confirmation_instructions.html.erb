@@ -1,0 +1,5 @@
+<p><%= t('.title', user: @email) %></p>
+
+<p><%= t('.confirmation_message') %></p>
+
+<p><%= link_to t('.confirm'), confirmation_url(@resource, :confirmation_token => @resource.confirmation_token) %></p>

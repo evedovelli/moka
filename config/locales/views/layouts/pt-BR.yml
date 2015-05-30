@@ -1,0 +1,12 @@
+pt-BR:
+  layouts:
+    _navigation:
+      page_title: 'Disputas'
+      home: 'Configurações'
+      logout: 'Sair'
+      edit_account: 'Editar conta'
+      login: 'Entrar'
+      sign_up: 'Criar conta'
+    application:
+      title: 'Disputas'
+

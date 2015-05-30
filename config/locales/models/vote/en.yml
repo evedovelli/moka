@@ -1,0 +1,8 @@
+en:
+  activerecord:
+    models:
+      vote: "vote"
+    attributes:
+      vote:
+        stuff: "Stuff"
+        contest: "Contest"

@@ -1,0 +1,88 @@
+<div id="contest<%= contest[:id] %>" class="contest main-box">
+  <div class="row">
+    <div class="span12">
+
+      <div class="row">
+        <div class="span12">
+          <% if can? :destroy, contest %>
+            <h3 class="remove pull-right">
+              <%= link_to(contest_path(contest),
+                          :confirm => t('contests._contest.destroy'),
+                          :method => :delete,
+                          :remote => true,
+                          :id => "delete_contest#{contest[:id]}") do %>
+                <i class="icon-remove pull-right"></i>
+              <% end %>
+            </h3>
+          <% end %>
+
+          <% if can? :update, contest %>
+            <h3 class="update pull-right">
+              <%= link_to(edit_contest_path(contest),
+                          :remote => true,
+                          :id => "edit_contest#{contest[:id]}") do %>
+                <i class="icon-edit pull-right"></i>
+              <% end %>
+            </h3>
+          <% end %>
+        </div>
+      </div>
+
+      <h2 class="center"><%= t('contests._contest.title', number: contest[:id]) %></h2>
+
+      <div class="row">
+        <div class="span6">
+          <div class="row">
+            <div class="span6">
+              <h5 class="pull-left"><%= t 'activerecord.attributes.contest.starts_at' %></h5>
+            </div>
+          </div>
+          <div class="row">
+            <div class="span6">
+              <h4 class="show-start-date date-left">
+                <%= contest.starts_at.strftime('%d/%m/%y - %H:%M') %>
+              </h4>
+            </div>
+          </div>
+        </div>
+        <div class="span6">
+          <div class="row">
+            <div class="span6">
+              <h5 class="pull-right"><%= t 'activerecord.attributes.contest.finishes_at' %></h5>
+            </div>
+          </div>
+          <div class="row">
+            <div class="span6">
+              <h4 class="show-end-date date-right">
+                <%= contest.finishes_at.strftime('%d/%m/%y - %H:%M') %>
+              </h4>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="contest-box">
+        <div class="row">
+          <% contest.stuffs.each do |stuff| %>
+            <%= render stuff %>
+          <% end %>
+        </div>
+      </div>
+
+      <% if can? :show, contest and not contest.in_future? %>
+        <div class="row">
+          <div class="span12">
+            <%= link_to(contest_path(contest),
+                        :id => "more_contest#{contest[:id]}",
+                        :class => "btn btn-small btn-info pull-right") do %>
+                <i class="icon-eye-open"></i>
+              <%= t 'contests._contest.statistics' %>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+
+    </div>
+  </div>
+</div>
+

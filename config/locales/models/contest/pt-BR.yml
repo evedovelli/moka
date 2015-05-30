@@ -1,0 +1,8 @@
+pt-BR:
+  activerecord:
+    models:
+      contest: "disputa"
+    attributes:
+      contest:
+        starts_at: "Começa em"
+        finishes_at: "Termina em"

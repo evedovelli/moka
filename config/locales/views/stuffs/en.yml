@@ -1,0 +1,10 @@
+en:
+  stuffs:
+    index:
+      title: 'Stuffs'
+      add_stuff: 'Add Stuff'
+    _form:
+      title: 'Pick a picture and a name for the new stuff'
+    _stuff:
+      destroy: 'Are you sure you want to remove this stuff?'
+

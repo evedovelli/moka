@@ -1,0 +1,65 @@
+pt-BR:
+  time:
+    formats:
+      date: ! "%d/%m/%Y"
+  languages:
+    portuguese: 'Português'
+    english: 'Inglês'
+  devise:
+    registrations:
+      new:
+        title: 'Registrar-se'
+      edit:
+        title: 'Editar conta'
+        password_help: 'Deixe em branco caso não queira alterá-la'
+        change_password_help: 'Sua senha atual é necessária para confirmar as mudanças'
+        cancel_my_account: 'Cancelar minha conta'
+        unhappy: 'Infeliz?'
+    sessions:
+      new:
+        title: 'Entrar'
+    confirmations:
+      new:
+        title: 'Reenviar instruções de confirmação'
+        resend: 'Reenviar instruções de confirmação'
+    mailer:
+      confirmation_instructions:
+        title: "Bem-vindo %{user}!"
+        confirmation_message: 'Você pode confirmar seu e-mail associado a sua conta através do link abaixo:'
+        confirm: 'Confirm my account'
+      reset_password_instructions:
+        title: "Olá %{user}!"
+        reset_message: 'Alguém solicitou um link para a troca de sua senha. Você trocar a senha através do link abaixo.'
+        reset: 'Trocar minha senha'
+        ignore: 'Se você não solicitou a troca de sua senha, por favor ignore esse e-mail.'
+        explanation: 'Seu password não será alterado a menos que você acesse o link abaixo e crie um novo passwrd.'
+      unlock_instructions:
+        title: "Olá %{user}!"
+        locked_message: 'Sua conta foi bloqueada devido a um excessivo número de falhas ao tentar conectar-se.'
+        unlock_message: 'Clique no link abaixo para desbloquear sua conta:'
+        unlock: 'Desbloquear minha conta'
+    passwords:
+      edit:
+        title: 'Altere a sua senha'
+        new_password: 'Nova senha'
+        confirm_password: 'Confirme a nova senha'
+        change_password: 'Alterar minha senha'
+      new:
+        title: 'Esqueceu a sua senha?'
+        send_reset_instructions: 'Envie-me instruções para recuperar senha'
+    shared:
+      _links:
+        sign_in: 'Entrar'
+        sign_up: 'Registrar-se'
+        recover: 'Esqueceu a sua senha?'
+        confirm: "Não recebeu as instruções de confirmação?"
+        unlock: "Não recebeu as instruções para desbloqueio?"
+        omniauth: "Entrar com %{provider}"
+    unlocks:
+      new:
+        title: 'Reenviar instruções para desbloqueio'
+        unlock: 'Reenviar instruções para desbloqueio'
+  activerecord:
+    errors:
+      messages:
+        confirmation: "não é igual a confirmação"

@@ -1,0 +1,10 @@
+pt-BR:
+  stuffs:
+    index:
+      title: 'Stuffs'
+      add_stuff: 'Adicionar Stuff'
+    _form:
+      title: 'Escolha a foto e nome para o novo stuff'
+    _stuff:
+      destroy: 'Você tem certeza que quer remover esse stuff?'
+

@@ -1,0 +1,39 @@
+.vote_picture {
+  background-color: #FCFCFC;
+}
+
+.selected_picture {
+  box-shadow: 0px 0px 200px rgba(255, 149, 34, 1) inset;
+}
+
+.outer_selected_picture {
+  box-shadow: 0px 0px 10px rgba(255, 149, 34, 1);
+}
+
+#overlay {
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  width: 100%;
+  height: 100%;
+  padding-top: 140px;
+  padding-bottom: 140px;
+  text-align:center;
+  z-index: 1000;
+  background-image:url(smoke.png);
+  background-repeat: repeat;
+}
+
+.results-box {
+  margin-left: -10px;
+  margin-right: -10px;
+  background-color: #FFFFFF;
+  border: 6px solid #222222;
+  box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.08) inset;
+}
+
+.close-box {
+  margin-top: -12px;
+  margin-right: -24px;
+}
+

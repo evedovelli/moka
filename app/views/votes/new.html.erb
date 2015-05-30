@@ -1,0 +1,20 @@
+<div class="span12">
+  <h1 class="title-poll">
+    <div class="icon-poll pull-left"></div>
+    <%= t '.title_html' %>
+  </h1>
+
+  <% if can? :create, Vote %>
+    <div class="row">
+      <div id="vote_form" class="span12">
+        <%= render "votes/form" %>
+      </div>
+    </div>
+  <% end %>
+
+  <% if can? :show, Vote %>
+    <div id="partial_results" style="display:none;"></div>
+  <% end %>
+
+</div>
+

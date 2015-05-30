@@ -1,0 +1,7 @@
+<p><%= t('.title', user: @email) %></p>
+
+<p><%= t('.locked_message') %></p>
+
+<p><%= t('.unlock_message') %></p>
+
+<p><%= link_to t('.unlock'), unlock_url(@resource, :unlock_token => @resource.unlock_token) %></p>

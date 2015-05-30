@@ -1,0 +1,45 @@
+<%= simple_form_for([@contest, @vote], :html => { :multipart => true, :class => "form-horizontal" }, remote: true) do |f| %>
+  <div class="main-box">
+    <div class="row">
+      <% i = 0 %>
+      <% @contest.stuffs.each do |stuff| %>
+        <% i += 1 %>
+        <div class="<%= get_stuff_span_poll(@contest.stuffs.count, i) %>">
+          <h3 class="center"><%= stuff.name %></h3>
+          <div class="vote_picture_frame">
+            <label class="radio vote_picture">
+              <%= f.radio_button(
+                :stuff,
+                stuff.id,
+                :checked => false,
+                :name => "vote[stuff_id]",
+                :class => "vote_radio"
+              )%>
+              <div id="vote_picture_borther<%=stuff.id%>" class="picture<%=stuff.picture%> picture"></div>
+            </label>
+          </div>
+          <p><%= t('votes._form.help_html',
+                   :name => "#{stuff.name}",
+                   :fone => "0800-123-00#{i}",
+                   :sms => "800#{i}") %>
+          </p>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="span12">
+      <div class="pull-right">
+        <%= recaptcha_tags %>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="span12">
+      <div class="pull-right">
+        <%= f.button(:submit, t('buttons.vote'), :id => "vote_button", :class => "btn btn-primary btn-large") %>
+      </div>
+    </div>
+  </div>
+<% end %>

@@ -1,0 +1,14 @@
+en:
+  buttons:
+    add: 'Add'
+    edit: 'Edit'
+    update: 'Update'
+    cancel: 'Cancel'
+    submit: 'Submit'
+    back: 'Back'
+    create: 'Create'
+    sign_in: 'Sign in'
+    sign_up: 'Sign up'
+    vote: 'Vote now'
+  links:
+    here: 'here'

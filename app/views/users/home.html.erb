@@ -1,0 +1,22 @@
+<div class="span12">
+  <h1><%= t '.title' %></h1>
+  <div class="row">
+    <% if can? :index, Stuff %>
+      <div class="span4 offset1">
+        <h2>
+          <%= link_to(t('.manage_stuffs'), stuffs_path, :id => "manage_stuffs",
+                        :class => "btn btn-large btn-block btn-info text-center") %>
+        </h2>
+      </div>
+    <% end %>
+
+    <% if can? :index, Contest %>
+      <div class="span4 offset2">
+        <h2>
+          <%= link_to(t('.manage_contests'), contests_path, :id => "manage_contests",
+                        :class => "btn btn-large btn-block btn-info text-center") %>
+        </h2>
+      </div>
+    <% end %>
+  </div>
+</div>

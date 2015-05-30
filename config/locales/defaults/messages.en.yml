@@ -1,0 +1,13 @@
+en:
+  messages:
+    creating: 'creating'
+    updating: 'updating'
+    uploading: 'uploading'
+    adding: 'adding'
+    registering: 'registering'
+    error: "Error while %{action} %{name}! Please fix the following errors and try again:"
+    access_denied: 'Access denied.'
+    finishes_after_starts: 'should be later than the start date'
+    stuff_must_belong_to_contest: 'must belong to the Contest'
+    finished_contest: 'Contest is finished'
+    not_started_contest: 'Contest not started'

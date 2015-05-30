@@ -1,0 +1,36 @@
+<div class="span12">
+  <h1><%= t '.title' %></h1>
+
+  <div class="main-box">
+    <div class="row">
+      <div id="stuff_index">
+        <%= render @stuffs %>
+      </div>
+    </div>
+  </div>
+
+  <% if can? :create, Stuff %>
+    <div id="stuff_new">
+      <div class="row">
+        <div class="span12" id="stuff_form" style="display:none;"></div>
+      </div>
+
+      <div class="row">
+        <div class="span12">
+          <div class="center">
+            <%= link_to(new_stuff_path, :id => "add_stuff", :remote => true, :class => "btn btn-inverse center extra-space") do %>
+              <i class="icon-plus icon-inverse"></i><%= " #{t '.add_stuff'}" %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="row">
+    <div class="span12">
+      <%= link_to(t('buttons.back'), :back, :onclick => "goBack()", :class => "btn extra-space") %>
+    </div>
+  </div>
+
+</div>

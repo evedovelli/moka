@@ -1,0 +1,8 @@
+en:
+  activerecord:
+    models:
+      stuff: "stuff"
+    attributes:
+      stuff:
+        name: "Name"
+        picture: "Picture"

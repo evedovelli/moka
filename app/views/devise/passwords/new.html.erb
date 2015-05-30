@@ -1,0 +1,31 @@
+<div class="span12">
+  <div class="main-frame">
+    <h2><%= t('.title') %></h2>
+
+    <%= form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :post, :class => "form-horizontal" }) do |f| %>
+      <%= devise_error_messages! %>
+
+      <div class="control-group">
+        <%= f.label :email, :class => "control-label" %>
+        <div class="controls">
+          <%= f.email_field :email, :autofocus => true, :class => "input-large" %>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <div class="controls">
+          <%= f.submit t('.send_reset_instructions'), :class => "btn btn-primary" %>
+        </div>
+      </div>
+    <% end %>
+
+    <div class="form-horizontal">
+      <div class="control-group">
+        <div class="controls">
+          <%= render "devise/shared/links" %>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,8 @@
+pt-BR:
+  activerecord:
+    models:
+      stuff: "stuff"
+    attributes:
+      stuff:
+        name: "Nome"
+        picture: "Foto"
