@@ -6,6 +6,7 @@ gem 'rails', '3.2.17'
 
 group :development do
   gem 'capistrano', '~> 3.4.0'
+  gem 'capistrano-puma', require: false
   gem 'capistrano-rails', '~> 1.1.1'
   gem 'capistrano-bundler', '~> 1.1.2'
   gem 'capistrano-rbenv', '~> 2.0.2'

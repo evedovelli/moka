@@ -18,13 +18,13 @@ set :rbenv_map_bins, %w{rake gem bundle ruby rails}
 set :rbenv_roles, :all # default value
 
 # Default value for :format is :pretty
-# set :format, :pretty
+set :format, :pretty
 
 # Default value for :log_level is :debug
-# set :log_level, :debug
+set :log_level, :debug
 
 # Default value for :pty is false
-# set :pty, true
+set :pty, true
 
 # Default value for :linked_files is []
 set :linked_files, fetch(:linked_files, []).push('config/database.yml', 'config/secrets.yml')
@@ -37,6 +37,21 @@ set :linked_dirs, fetch(:linked_dirs, []).push('bin', 'log', 'tmp/pids', 'tmp/ca
 
 # Default value for keep_releases is 5
 set :keep_releases, 5
+
+# Puma settings
+set :puma_rackup, -> { File.join(current_path, 'config.ru') }
+set :puma_state, "#{shared_path}/tmp/pids/puma.state"
+set :puma_pid, "#{shared_path}/tmp/pids/puma.pid"
+set :puma_bind, "unix://#{shared_path}/tmp/sockets/puma.sock"
+set :puma_conf, "#{shared_path}/puma.rb"
+set :puma_access_log, "#{shared_path}/log/puma.stdout.log"
+set :puma_error_log, "#{shared_path}/log/puma.stderr.log"
+set :puma_role, :app
+set :puma_env, fetch(:rack_env, fetch(:rails_env, 'production'))
+set :puma_threads, [1, 20]
+set :puma_workers, 1
+set :puma_init_active_record, true
+set :puma_preload_app, true
 
 namespace :deploy do
 

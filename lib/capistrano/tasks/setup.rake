@@ -8,6 +8,14 @@ namespace :setup do
     end
   end
 
+  desc "Upload secrets.yml file."
+  task :upload_secrets do
+    on roles(:app) do
+      execute "mkdir -p #{shared_path}/config"
+      upload! StringIO.new(File.read("config/secrets.yml")), "#{shared_path}/config/secrets.yml"
+    end
+  end
+
   desc "Seed the database."
   task :seed_db do
     on roles(:app) do

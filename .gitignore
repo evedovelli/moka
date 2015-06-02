@@ -30,3 +30,4 @@ tags
 /shared
 
 config/database.yml
+config/secrets.yml
