@@ -273,9 +273,10 @@ PLATFORMS
 DEPENDENCIES
   bootstrap-sass (= 2.3.2.0)
   cancancan (~> 1.10)
-  capistrano (~> 3.1)
+  capistrano (~> 3.4.0)
+  capistrano-bundler (~> 1.1.2)
   capistrano-rails (~> 1.1.1)
-  capistrano-rbenv (~> 2.0)
+  capistrano-rbenv (~> 2.0.2)
   capybara (>= 2.2.1)
   chart-js-rails
   coffee-rails (~> 3.2.1)
