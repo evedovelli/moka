@@ -10,10 +10,10 @@ namespace :deploy do
   end
 
   %w[start stop restart].each do |command|
-    desc "#{command} Puma server."
+    desc "#{command} Unicorn server."
     task command do
       on roles(:app) do
-        execute "sudo #{command} puma-manager"
+        execute "/etc/init.d/unicorn_#{fetch(:application)} #{command}"
       end
     end
   end

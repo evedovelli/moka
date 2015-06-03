@@ -63,10 +63,8 @@
 set :stage, :production
 set :rails_env, :production
 
-server 'ec2-52-24-145-236.us-west-2.compute.amazonaws.com',
-  user: 'ubuntu',
-  roles: %w{web app},
-  ssh_options: {
-    keys: %w(../AWS/bbbapp.pem),
-  }
+server '104.236.197.52',
+  user: 'evedovelli',
+  roles: %w{web app db},
+  primary: true
 
