@@ -2,6 +2,6 @@ pt-BR:
   users:
     home:
       title: 'Configurações'
-      manage_stuffs: 'Stuffs'
-      manage_contests: 'Disputas'
+      manage_options: 'Opções'
+      manage_battles: 'Batalhas'
 

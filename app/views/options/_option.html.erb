@@ -1,0 +1,39 @@
+<div id="option<%= option[:id] %>">
+  <div class="span4">
+
+
+    <div class="row">
+      <div class="span4">
+        <% if can? :destroy, option %>
+          <h3 class="remove pull-right">
+            <%= link_to(option_path(option),
+                        :confirm => t('options._option.destroy'),
+                        :method => :delete,
+                        :remote => true,
+                        :id => "delete_option#{option[:id]}") do %>
+              <div class="icon-close picture"></div>
+            <% end %>
+          </h3>
+        <% else %>
+          <div class="missing-icon-close picture"></div>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="option-box">
+      <div class="row">
+        <div class="span4">
+          <div class="picture-box">
+            <div id="picture_option<%= option.id %>" class="picture<%= option.picture %> picture"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="span4">
+        <h3 class="center"><%= option.name %></h3>
+      </div>
+    </div>
+  </div>
+</div>

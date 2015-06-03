@@ -1,16 +1,16 @@
 class VotesController < ApplicationController
-  load_and_authorize_resource :contest, :except => :new
-  load_and_authorize_resource :vote, :through => :contest, :except => :new
+  load_and_authorize_resource :battle, :except => :new
+  load_and_authorize_resource :vote, :through => :battle, :except => :new
 
   def new
-    @contest = Contest.current.first
-    if not @contest
-      render 'votes/no_contest'
+    @battle = Battle.current.first
+    if not @battle
+      render 'votes/no_battle'
       return
     end
-    authorize! :show, @contest
+    authorize! :show, @battle
     authorize! :create, Vote
-    @vote = @contest.votes.new()
+    @vote = @battle.votes.new()
   end
 
   def create
@@ -18,10 +18,10 @@ class VotesController < ApplicationController
 
     if verify_recaptcha(:model => @vote) && @vote.save
       @registered_vote = @vote
-      @vote = @contest.votes.new()
-      @number_of_stuffs = @contest.stuffs.count
-      @results_by_stuff = @contest.results_by_stuff
-      @remaining_time = @contest.remaining_time
+      @vote = @battle.votes.new()
+      @number_of_options = @battle.options.count
+      @results_by_option = @battle.results_by_option
+      @remaining_time = @battle.remaining_time
       respond_to do |format|
         format.js { render 'votes/create' }
       end

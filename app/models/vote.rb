@@ -1,32 +1,32 @@
 class Vote < ActiveRecord::Base
   resourcify
 
-  belongs_to :stuff
-  belongs_to :contest
+  belongs_to :option
+  belongs_to :battle
 
-  attr_accessible :stuff, :stuff_id, :contest, :contest_id
+  attr_accessible :option, :option_id, :battle, :battle_id
 
-  validate  :created_at, :finished_contest
-  validate  :created_at, :not_started_contest
-  validates :contest,   :presence => true
-  validates :stuff,    :presence => true
-  validate  :stuff,    :belongs_to_contest
+  validate  :created_at, :finished_battle
+  validate  :created_at, :not_started_battle
+  validates :battle,   :presence => true
+  validates :option,    :presence => true
+  validate  :option,    :belongs_to_battle
 
-  def finished_contest
-    if created_at && contest && contest.finishes_at
-      errors.add(:created_at, I18n.t('messages.finished_contest')) unless contest.finishes_at > created_at
+  def finished_battle
+    if created_at && battle && battle.finishes_at
+      errors.add(:created_at, I18n.t('messages.finished_battle')) unless battle.finishes_at > created_at
     end
   end
 
-  def not_started_contest
-    if created_at && contest && contest.starts_at
-      errors.add(:created_at, I18n.t('messages.not_started_contest')) unless contest.starts_at < created_at
+  def not_started_battle
+    if created_at && battle && battle.starts_at
+      errors.add(:created_at, I18n.t('messages.not_started_battle')) unless battle.starts_at < created_at
     end
   end
 
-  def belongs_to_contest
-    if stuff && contest
-      errors.add(:stuff, I18n.t('messages.stuff_must_belong_to_contest')) unless contest.stuffs.include?(stuff)
+  def belongs_to_battle
+    if option && battle
+      errors.add(:option, I18n.t('messages.option_must_belong_to_battle')) unless battle.options.include?(option)
     end
   end
 

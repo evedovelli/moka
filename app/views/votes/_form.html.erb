@@ -1,25 +1,25 @@
-<%= simple_form_for([@contest, @vote], :html => { :multipart => true, :class => "form-horizontal" }, remote: true) do |f| %>
+<%= simple_form_for([@battle, @vote], :html => { :multipart => true, :class => "form-horizontal" }, remote: true) do |f| %>
   <div class="main-box">
     <div class="row">
       <% i = 0 %>
-      <% @contest.stuffs.each do |stuff| %>
+      <% @battle.options.each do |option| %>
         <% i += 1 %>
-        <div class="<%= get_stuff_span_poll(@contest.stuffs.count, i) %>">
-          <h3 class="center"><%= stuff.name %></h3>
+        <div class="<%= get_option_span_poll(@battle.options.count, i) %>">
+          <h3 class="center"><%= option.name %></h3>
           <div class="vote_picture_frame">
             <label class="radio vote_picture">
               <%= f.radio_button(
-                :stuff,
-                stuff.id,
+                :option,
+                option.id,
                 :checked => false,
-                :name => "vote[stuff_id]",
+                :name => "vote[option_id]",
                 :class => "vote_radio"
               )%>
-              <div id="vote_picture_borther<%=stuff.id%>" class="picture<%=stuff.picture%> picture"></div>
+              <div id="vote_picture_borther<%=option.id%>" class="picture<%=option.picture%> picture"></div>
             </label>
           </div>
           <p><%= t('votes._form.help_html',
-                   :name => "#{stuff.name}",
+                   :name => "#{option.name}",
                    :fone => "0800-123-00#{i}",
                    :sms => "800#{i}") %>
           </p>

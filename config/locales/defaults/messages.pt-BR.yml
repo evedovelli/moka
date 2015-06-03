@@ -8,6 +8,6 @@ pt-BR:
     error: "Erro ao %{action} %{name}! Por favor, resolva os seguintes erros e tente novamente:"
     access_denied: 'Acesso negado.'
     finishes_after_starts: 'deve ser após a data de começo'
-    stuff_must_belong_to_contest: 'deve pertencer à disputa'
-    finished_contest: 'A disputa está terminada'
-    not_started_contest: 'DIsputa não inicializada'
+    option_must_belong_to_battle: 'deve pertencer à batalha'
+    finished_battle: 'A batalha está terminada'
+    not_started_battle: 'DIsputa não inicializada'

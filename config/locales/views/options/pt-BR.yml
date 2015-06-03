@@ -1,0 +1,10 @@
+pt-BR:
+  options:
+    index:
+      title: 'Opções'
+      add_option: 'Adicionar Opção'
+    _form:
+      title: 'Escolha a foto e nome para a nova opção'
+    _option:
+      destroy: 'Você tem certeza que quer remover essa opção?'
+

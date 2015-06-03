@@ -6,8 +6,8 @@ en:
       help_html: 'To evict <b>%{name}</b>, call <b>%{fone}</b>, or send a SMS message to <b>%{sms}</b>'
     _vote:
       registered_html: 'Congratulations! Your vote for <b>%{name}</b> was successfully sent.'
-    no_contest:
-      title_html: 'There is no current <b>contest</b> :( Come back later!'
+    no_battle:
+      title_html: 'There is no current <b>battle</b> :( Come back later!'
     _result:
       info: '%{percent}% of votes'
       remaining_time_html: '<b>%{hours}:%{minutes}:%{seconds}</b> remaining for voting'

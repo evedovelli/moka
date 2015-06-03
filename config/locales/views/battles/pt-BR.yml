@@ -1,0 +1,21 @@
+pt-BR:
+  battles:
+    index:
+      title: 'Batalhas'
+      add_battle: 'Adicionar batalha'
+    _battle:
+      destroy: 'Você tem certeza que quer remover essa batalha?'
+      title: 'Batalha número %{number}'
+      statistics: 'Estatísticas'
+    _form:
+      title: 'Escolha as opções e o período da batalha'
+    show:
+      title: 'Estatísticas da batalha %{id}'
+    _total:
+      total: 'Total de votos'
+    _total_option:
+      title: 'Total de votos para cada opção:'
+      info: '%{total} votos'
+    _total_hour:
+      title: 'Total de votos em cada hora:'
+

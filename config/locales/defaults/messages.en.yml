@@ -8,6 +8,6 @@ en:
     error: "Error while %{action} %{name}! Please fix the following errors and try again:"
     access_denied: 'Access denied.'
     finishes_after_starts: 'should be later than the start date'
-    stuff_must_belong_to_contest: 'must belong to the Contest'
-    finished_contest: 'Contest is finished'
-    not_started_contest: 'Contest not started'
+    option_must_belong_to_battle: 'must belong to the Battle'
+    finished_battle: 'Battle is finished'
+    not_started_battle: 'Battle not started'

@@ -4,5 +4,5 @@ pt-BR:
       vote: "Voto"
     attributes:
       vote:
-        stuff: "Stuff"
-        contest: "Disputa"
+        option: "Opção"
+        battle: "Batalha"

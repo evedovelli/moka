@@ -2,29 +2,29 @@ include ActionDispatch::TestProcess
 
 ### GIVEN ###
 
-Given /^"([^"]*)" has (\d+) votes$/ do |stuff, votes|
+Given /^"([^"]*)" has (\d+) votes$/ do |option, votes|
   for vote in 1..votes.to_i do
     FactoryGirl.create(:vote, {
-      :stuff_id => Stuff.find_by_name(stuff).id,
-      :contest_id => Contest.current.first.id
+      :option_id => Option.find_by_name(option).id,
+      :battle_id => Battle.current.first.id
     })
   end
 end
 
-Given /^"([^"]*)" had (\d+) votes (\d+) hours ago$/ do |stuff, votes, hours|
+Given /^"([^"]*)" had (\d+) votes (\d+) hours ago$/ do |option, votes, hours|
   now = Time.current
   Timecop.travel(Time.current - hours.to_i.hours)
   for vote in 1..votes.to_i do
     FactoryGirl.create(:vote, {
-      :stuff_id => Stuff.find_by_name(stuff).id,
-      :contest_id => Contest.current.first.id
+      :option_id => Option.find_by_name(option).id,
+      :battle_id => Battle.current.first.id
     })
   end
   Timecop.travel(now)
 end
 
-Given /^"([^"]*)" had (\d+) votes just now$/ do |stuff, votes|
-  step %Q{"#{stuff}" has #{votes} votes}
+Given /^"([^"]*)" had (\d+) votes just now$/ do |option, votes|
+  step %Q{"#{option}" has #{votes} votes}
 end
 
 Given /^captcha is enabled$/ do
@@ -33,8 +33,8 @@ end
 
 ### WHEN ###
 
-When /^I vote for "([^"]*)"$/ do |stuff|
-  find("#vote_picture_borther#{Stuff.find_by_name(stuff).id}").click
+When /^I vote for "([^"]*)"$/ do |option|
+  find("#vote_picture_borther#{Option.find_by_name(option).id}").click
   find("#vote_button").click
 end
 
@@ -48,8 +48,8 @@ end
 
 ### THEN ###
 
-Then /^I should see "([^"]*)" with (\d+)\.0% of votes$/ do |stuff, percent|
-  expect(page).to have_content("#{stuff} #{percent}.0% of votes")
+Then /^I should see "([^"]*)" with (\d+)\.0% of votes$/ do |option, percent|
+  expect(page).to have_content("#{option} #{percent}.0% of votes")
 end
 
 Then /^captcha should be disabled$/ do

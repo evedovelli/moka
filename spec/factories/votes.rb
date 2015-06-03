@@ -1,11 +1,11 @@
 FactoryGirl.define do
   factory :vote do
-    stuff nil
-    contest nil
+    option nil
+    battle nil
 
     after :build do |vote|
-      vote.contest ||= FactoryGirl.build(:contest)
-      vote.stuff ||= vote.contest.stuffs[0]
+      vote.battle ||= FactoryGirl.build(:battle)
+      vote.option ||= vote.battle.options[0]
     end
   end
 

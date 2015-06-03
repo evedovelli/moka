@@ -8,7 +8,7 @@ $(document).ready(closeOverlayResults);
 jQuery(function() {
   var data, partialChart;
   data = [
-    <% @results_by_stuff.each do |result| %>
+    <% @results_by_option.each do |result| %>
       {
         value: <%=result[:percent]%>,
         color: "<%=result[:color]%>",

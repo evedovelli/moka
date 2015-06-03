@@ -1,0 +1,21 @@
+en:
+  battles:
+    index:
+      title: 'Battles'
+      add_battle: 'Add battle'
+    _battle:
+      destroy: 'Are you sure you want to remove this battle?'
+      title: 'Battle number %{number}'
+      statistics: 'Statistics'
+    _form:
+      title: 'Choose options and schedule battle'
+    show:
+      title: 'Battle %{id} statistics'
+    _total:
+      total: 'Total of votes'
+    _total_option:
+      title: 'Total of votes for each Option:'
+      info: '%{total} votes'
+    _total_hour:
+      title: 'Total of votes in each hour:'
+

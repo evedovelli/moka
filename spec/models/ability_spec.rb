@@ -25,15 +25,15 @@ describe Ability do
         end
       end
 
-      describe "Resource Stuff" do
-        it "should be able to manage stuffs" do
-          expect(@ability).to be_able_to(:manage, Stuff)
+      describe "Resource Option" do
+        it "should be able to manage options" do
+          expect(@ability).to be_able_to(:manage, Option)
         end
       end
 
-      describe "Resource Contest" do
-        it "should be able to manage contests" do
-          expect(@ability).to be_able_to(:manage, Contest)
+      describe "Resource Battle" do
+        it "should be able to manage battles" do
+          expect(@ability).to be_able_to(:manage, Battle)
         end
       end
     end
@@ -55,56 +55,56 @@ describe Ability do
         end
       end
 
-      describe "Resource Stuff" do
+      describe "Resource Option" do
         before :each do
-          @stuff = FactoryGirl.create(:stuff)
+          @option = FactoryGirl.create(:option)
         end
-        it "should be able to read stuffs" do
-          expect(@ability).to be_able_to(:read, Stuff)
+        it "should be able to read options" do
+          expect(@ability).to be_able_to(:read, Option)
         end
-        it "should not be able to create stuffs" do
-          expect(@ability).not_to be_able_to(:create, Stuff)
+        it "should not be able to create options" do
+          expect(@ability).not_to be_able_to(:create, Option)
         end
-        it "should not be able to destroy stuffs" do
-          expect(@ability).not_to be_able_to(:destroy, @stuff)
+        it "should not be able to destroy options" do
+          expect(@ability).not_to be_able_to(:destroy, @option)
         end
-        it "should not be able to update stuffs" do
-          expect(@ability).not_to be_able_to(:update, @stuff)
+        it "should not be able to update options" do
+          expect(@ability).not_to be_able_to(:update, @option)
         end
       end
 
-      describe "Resource Contest" do
+      describe "Resource Battle" do
         before :each do
           t = Time.local(2015, 10, 21, 07, 28, 0)
           Timecop.travel(t)
-          @contest = FactoryGirl.create(:contest,
+          @battle = FactoryGirl.create(:battle,
                                          :starts_at   => DateTime.now - 1.day,
                                          :finishes_at => DateTime.now + 1.day)
         end
-        it "should be able to show current contests" do
-          expect(@ability).to be_able_to(:show, @contest)
+        it "should be able to show current battles" do
+          expect(@ability).to be_able_to(:show, @battle)
         end
-        it "should be able to show past contests" do
+        it "should be able to show past battles" do
           t = Time.local(2015, 10, 26, 07, 28, 0)
           Timecop.travel(t)
-          expect(@ability).to be_able_to(:show, @contest)
+          expect(@ability).to be_able_to(:show, @battle)
         end
-        it "should not be able to show future contests" do
+        it "should not be able to show future battles" do
           t = Time.local(2015, 10, 18, 07, 28, 0)
           Timecop.travel(t)
-          expect(@ability).not_to be_able_to(:show, @contest)
+          expect(@ability).not_to be_able_to(:show, @battle)
         end
-        it "should not be able to index contests" do
-          expect(@ability).not_to be_able_to(:index, Contest)
+        it "should not be able to index battles" do
+          expect(@ability).not_to be_able_to(:index, Battle)
         end
-        it "should not be able to create contests" do
-          expect(@ability).not_to be_able_to(:create, Contest)
+        it "should not be able to create battles" do
+          expect(@ability).not_to be_able_to(:create, Battle)
         end
-        it "should not be able to update contests" do
-          expect(@ability).not_to be_able_to(:update, @contest)
+        it "should not be able to update battles" do
+          expect(@ability).not_to be_able_to(:update, @battle)
         end
-        it "should not be able to destroy contests" do
-          expect(@ability).not_to be_able_to(:destroy, @contest)
+        it "should not be able to destroy battles" do
+          expect(@ability).not_to be_able_to(:destroy, @battle)
         end
       end
     end

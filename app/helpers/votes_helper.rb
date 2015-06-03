@@ -1,8 +1,8 @@
 module VotesHelper
-  def get_stuff_span_poll(number_of_stuffs, stuff)
-    case number_of_stuffs
+  def get_option_span_poll(number_of_options, option)
+    case number_of_options
     when 2
-      if stuff == 1
+      if option == 1
         "span4 offset1"
       else
         "span4 offset2"
@@ -10,7 +10,7 @@ module VotesHelper
     when 3
       "span4"
     when 4
-      if stuff == 1 or stuff == 3
+      if option == 1 or option == 3
         "span4 offset1"
       else
         "span4 offset2"

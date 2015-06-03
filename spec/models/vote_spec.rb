@@ -2,13 +2,13 @@ require 'rails_helper'
 
 describe Vote do
   before(:each) do
-    @contest = FactoryGirl.create(:contest, {
+    @battle = FactoryGirl.create(:battle, {
       :starts_at   => DateTime.now - 1.day,
       :finishes_at => DateTime.now + 1.day
     })
     @attr = {
-      :stuff => @contest.stuffs[0],
-      :contest => @contest,
+      :option => @battle.options[0],
+      :battle => @battle,
     }
   end
 
@@ -18,60 +18,60 @@ describe Vote do
   end
 
   describe 'validates presence of required attributes' do
-    it 'should fails when stuff is empty' do
-      @attr.delete(:stuff)
+    it 'should fails when option is empty' do
+      @attr.delete(:option)
       vote = Vote.new(@attr)
       expect(vote).not_to be_valid
     end
-    it 'should fails when contest is empty' do
-      @attr.delete(:contest)
+    it 'should fails when battle is empty' do
+      @attr.delete(:battle)
       vote = Vote.new(@attr)
       expect(vote).not_to be_valid
     end
   end
 
-  describe 'validates if stuff belongs to contest' do
-    it 'should fails when stuff does not belong to contest' do
-      vote = Vote.new(@attr.merge(:stuff => FactoryGirl.create(:stuff)))
+  describe 'validates if option belongs to battle' do
+    it 'should fails when option does not belong to battle' do
+      vote = Vote.new(@attr.merge(:option => FactoryGirl.create(:option)))
       expect(vote).not_to be_valid
     end
   end
 
   describe 'validates posts created in wrong period' do
-    it 'should fails when post is created to a finished contest' do
-      @contest = FactoryGirl.create(:contest, {
+    it 'should fails when post is created to a finished battle' do
+      @battle = FactoryGirl.create(:battle, {
         :starts_at   => DateTime.now - 2.day,
         :finishes_at => DateTime.now - 1.day
       })
       @attr = {
-        :stuff => @contest.stuffs[0],
-        :contest => @contest,
+        :option => @battle.options[0],
+        :battle => @battle,
       }
       vote = Vote.new(@attr)
       vote.save()
       expect(vote).not_to be_valid
     end
-    it 'should fails when post is created to a not started contest' do
-      @contest = FactoryGirl.create(:contest, {
+    it 'should fails when post is created to a not started battle' do
+      @battle = FactoryGirl.create(:battle, {
         :starts_at   => DateTime.now + 2.day,
         :finishes_at => DateTime.now + 4.day
       })
       @attr = {
-        :stuff => @contest.stuffs[0],
-        :contest => @contest,
+        :option => @battle.options[0],
+        :battle => @battle,
       }
       vote = Vote.new(@attr)
       vote.save()
       expect(vote).not_to be_valid
     end
-    it 'should be ok when post is created during contest' do
-      @contest = FactoryGirl.create(:contest, {
+    it 'should be ok when post is created during battle' do
+      @battle = FactoryGirl.create(:battle, {
         :starts_at   => DateTime.now - 2.day,
         :finishes_at => DateTime.now + 2.day
       })
       @attr = {
-        :stuff => @contest.stuffs[0],
-        :contest => @contest,
+        :option => @battle.options[0],
+        :battle => @battle,
       }
       vote = Vote.new(@attr)
       vote.save()

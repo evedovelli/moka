@@ -1,0 +1,8 @@
+pt-BR:
+  activerecord:
+    models:
+      option: "opção"
+    attributes:
+      option:
+        name: "Nome"
+        picture: "Foto"

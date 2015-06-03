@@ -1,0 +1,8 @@
+en:
+  activerecord:
+    models:
+      battle: "battle"
+    attributes:
+      battle:
+        starts_at: "Starts at"
+        finishes_at: "Finishes at"

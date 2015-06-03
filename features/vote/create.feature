@@ -1,26 +1,26 @@
-Feature: Create stuff
+Feature: Create option
   To incentivate users to watch the show and interact with it
-  Users should be able to vote in contests to eliminate
-  the stuffs they want to get out of the house
+  Users should be able to vote in battles to eliminate
+  the options they want to get out of the house
 
-Background: There is an contest running
-    Given the following stuffs were added:
+Background: There is an battle running
+    Given the following options were added:
     | name     | picture  |
     | Joseane  | 1        |
     | Arthur   | 2        |
     | Andréia  | 3        |
     | Jaime    | 4        |
-    And an contest was created with stuffs "Joseane", "Jaime" and "Andréia"
+    And an battle was created with options "Joseane", "Jaime" and "Andréia"
 
     @javascript
-    Scenario: User votes to a stuff and see its vote was successful
+    Scenario: User votes to a option and see its vote was successful
       Given I am on the home page
       When I vote for "Andréia"
       Then I should be on the home page
       And I should see "Congratulations! Your vote for Andréia was successfully sent."
 
     @javascript
-    Scenario: User votes to a stuff and see its vote was successful
+    Scenario: User votes to a option and see its vote was successful
       Given "Joseane" has 5 votes
       And "Jaime" has 4 votes
       And "Andréia" has 10 votes
@@ -31,7 +31,7 @@ Background: There is an contest running
       And I should see "Andréia" with 50.0% of votes
 
     @javascript
-    Scenario: User votes to a stuff and then votes again
+    Scenario: User votes to a option and then votes again
       Given I am on the home page
       When I vote for "Jaime"
       And I close the results overlay
@@ -50,8 +50,8 @@ Background: There is an contest running
       And captcha should be disabled
 
     @javascript
-    Scenario: User must choose a stuff before voting
+    Scenario: User must choose a option before voting
       Given I am on the home page
       When I press the button to vote
-      Then I should see "Stuff can't be blank"
+      Then I should see "Option can't be blank"
 

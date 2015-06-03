@@ -4,5 +4,5 @@ en:
       vote: "vote"
     attributes:
       vote:
-        stuff: "Stuff"
-        contest: "Contest"
+        option: "Option"
+        battle: "Battle"

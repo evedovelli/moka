@@ -1,0 +1,8 @@
+pt-BR:
+  activerecord:
+    models:
+      battle: "batalha"
+    attributes:
+      battle:
+        starts_at: "Começa em"
+        finishes_at: "Termina em"

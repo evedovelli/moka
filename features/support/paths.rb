@@ -26,11 +26,11 @@ module NavigationHelpers
     when /the edit account page/
       edit_user_registration_path
 
-    when /the stuff index page/
-      stuffs_path
+    when /the option index page/
+      options_path
 
-    when /the contest index page/
-      contests_path
+    when /the battle index page/
+      battles_path
 
     else
       begin

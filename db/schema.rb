@@ -13,16 +13,23 @@
 
 ActiveRecord::Schema.define(:version => 20150520013248) do
 
-  create_table "contests", :force => true do |t|
+  create_table "battles", :force => true do |t|
     t.datetime "starts_at"
     t.datetime "finishes_at"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
   end
 
-  create_table "contests_stuffs", :id => false, :force => true do |t|
-    t.integer "stuff_id"
-    t.integer "contest_id"
+  create_table "battles_options", :id => false, :force => true do |t|
+    t.integer "option_id"
+    t.integer "battle_id"
+  end
+
+  create_table "options", :force => true do |t|
+    t.integer  "picture"
+    t.string   "name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "roles", :force => true do |t|
@@ -35,13 +42,6 @@ ActiveRecord::Schema.define(:version => 20150520013248) do
 
   add_index "roles", ["name", "resource_type", "resource_id"], :name => "index_roles_on_name_and_resource_type_and_resource_id"
   add_index "roles", ["name"], :name => "index_roles_on_name"
-
-  create_table "stuffs", :force => true do |t|
-    t.integer  "picture"
-    t.string   "name"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
 
   create_table "users", :force => true do |t|
     t.string   "email",                  :default => "", :null => false
@@ -71,13 +71,13 @@ ActiveRecord::Schema.define(:version => 20150520013248) do
   add_index "users_roles", ["user_id", "role_id"], :name => "index_users_roles_on_user_id_and_role_id"
 
   create_table "votes", :force => true do |t|
-    t.integer  "stuff_id"
-    t.integer  "contest_id"
+    t.integer  "option_id"
+    t.integer  "battle_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
 
-  add_index "votes", ["contest_id"], :name => "index_votes_on_contest_id"
-  add_index "votes", ["stuff_id"], :name => "index_votes_on_stuff_id"
+  add_index "votes", ["battle_id"], :name => "index_votes_on_battle_id"
+  add_index "votes", ["option_id"], :name => "index_votes_on_option_id"
 
 end

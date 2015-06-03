@@ -6,8 +6,8 @@ pt-BR:
       help_html: 'Para eliminar <b>%{name}</b> pelo telefone, disque <b>%{fone}</b>, ou mande um SMS para <b>%{sms}</b>'
     _vote:
       registered_html: 'Parabéns! Seu voto para <b>%{name}</b> foi enviado com sucesso.'
-    no_contest:
-      title_html: 'Não há <b>disputas</b> no momento :( Volte novamente mais tarde!'
+    no_battle:
+      title_html: 'Não há <b>batalhas</b> no momento :( Volte novamente mais tarde!'
     _result:
       info: '%{percent}% dos votos'
       remaining_time_html: 'Faltam <b>%{hours}:%{minutes}:%{seconds}</b> para encerrar a votação'

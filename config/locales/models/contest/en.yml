@@ -1,8 +1,0 @@
-en:
-  activerecord:
-    models:
-      contest: "contest"
-    attributes:
-      contest:
-        starts_at: "Starts at"
-        finishes_at: "Finishes at"

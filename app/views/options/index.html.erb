@@ -1,0 +1,36 @@
+<div class="span12">
+  <h1><%= t '.title' %></h1>
+
+  <div class="main-box">
+    <div class="row">
+      <div id="option_index">
+        <%= render @options %>
+      </div>
+    </div>
+  </div>
+
+  <% if can? :create, Option %>
+    <div id="option_new">
+      <div class="row">
+        <div class="span12" id="option_form" style="display:none;"></div>
+      </div>
+
+      <div class="row">
+        <div class="span12">
+          <div class="center">
+            <%= link_to(new_option_path, :id => "add_option", :remote => true, :class => "btn btn-inverse center extra-space") do %>
+              <i class="icon-plus icon-inverse"></i><%= " #{t '.add_option'}" %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="row">
+    <div class="span12">
+      <%= link_to(t('buttons.back'), :back, :onclick => "goBack()", :class => "btn extra-space") %>
+    </div>
+  </div>
+
+</div>

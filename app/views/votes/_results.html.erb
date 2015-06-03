@@ -14,9 +14,9 @@
   </div>
 
   <% i = 0 %>
-  <% @results_by_stuff.reverse_each do |result| %>
+  <% @results_by_option.reverse_each do |result| %>
     <% i += 1 %>
-    <div class="<%= get_stuff_span_poll(@number_of_stuffs, i) %>">
+    <div class="<%= get_option_span_poll(@number_of_options, i) %>">
       <div class="partial_info pull-right">
         <h4><%= result[:label] %></h4>
         <h5><%= t('votes._result.info', :percent => result[:percent]) %></h5>

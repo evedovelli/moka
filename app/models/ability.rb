@@ -36,13 +36,13 @@ class Ability
       # users
       can :manage, User
 
-      # Stuffs
-      can :manage, Stuff
+      # Options
+      can :manage, Option
 
-      # Contests
-      can :manage, Contest
+      # Battles
+      can :manage, Battle
 
-      # Contests
+      # Battles
       can :read, Vote
       can :create, Vote
     end
@@ -53,15 +53,15 @@ class Ability
       u == user
     end
 
-    # Stuffs
-    can :read, Stuff
+    # Options
+    can :read, Option
 
-    # Contests
-    can :show, Contest do |e|
+    # Battles
+    can :show, Battle do |e|
       not e.in_future?
     end
 
-    # Contests
+    # Battles
     can :read, Vote
     can :create, Vote
   end

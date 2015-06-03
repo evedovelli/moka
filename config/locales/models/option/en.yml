@@ -1,0 +1,8 @@
+en:
+  activerecord:
+    models:
+      option: "option"
+    attributes:
+      option:
+        name: "Name"
+        picture: "Picture"
