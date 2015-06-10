@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150520013248) do
+ActiveRecord::Schema.define(:version => 20150606022610) do
 
   create_table "battles", :force => true do |t|
     t.datetime "starts_at"
@@ -20,16 +20,12 @@ ActiveRecord::Schema.define(:version => 20150520013248) do
     t.datetime "updated_at",  :null => false
   end
 
-  create_table "battles_options", :id => false, :force => true do |t|
-    t.integer "option_id"
-    t.integer "battle_id"
-  end
-
   create_table "options", :force => true do |t|
     t.integer  "picture"
     t.string   "name"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.integer  "battle_id"
   end
 
   create_table "roles", :force => true do |t|
@@ -72,12 +68,10 @@ ActiveRecord::Schema.define(:version => 20150520013248) do
 
   create_table "votes", :force => true do |t|
     t.integer  "option_id"
-    t.integer  "battle_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
 
-  add_index "votes", ["battle_id"], :name => "index_votes_on_battle_id"
   add_index "votes", ["option_id"], :name => "index_votes_on_option_id"
 
 end

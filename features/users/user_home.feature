@@ -5,11 +5,6 @@ Feature: User's home page
 Background: I am a registered user logged in
     Given I am logged in
 
-    Scenario: User can see link to manage options in config page
-      When I go to the config page
-      Then I should see "Options"
-      And "manage_options" should link to the option index page
-
     Scenario: User can see link to manage battles in config page
       Given I am an admin
       When I go to the config page

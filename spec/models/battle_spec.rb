@@ -133,18 +133,19 @@ describe Battle do
       @battle = FactoryGirl.create(:battle, {
         starts_at:   DateTime.now - 1.day,
         finishes_at: DateTime.now + 1.day,
-        option_ids: [@b1.id, @b2.id]
+        number_of_options: 0,
+        options: [@b1, @b2]
       })
     end
     it 'should return an empty array if there is no votes' do
       expect(@battle.results_by_option).to eq([])
     end
     it 'should returns an array with options and their votes' do
-      FactoryGirl.create(:vote, { option_id: @b1.id, battle_id: @battle.id })
-      FactoryGirl.create(:vote, { option_id: @b1.id, battle_id: @battle.id })
-      FactoryGirl.create(:vote, { option_id: @b1.id, battle_id: @battle.id })
-      FactoryGirl.create(:vote, { option_id: @b2.id, battle_id: @battle.id })
-      FactoryGirl.create(:vote, { option_id: @b2.id, battle_id: @battle.id })
+      FactoryGirl.create(:vote, { option_id: @b1.id })
+      FactoryGirl.create(:vote, { option_id: @b1.id })
+      FactoryGirl.create(:vote, { option_id: @b1.id })
+      FactoryGirl.create(:vote, { option_id: @b2.id })
+      FactoryGirl.create(:vote, { option_id: @b2.id })
 
       results = @battle.results_by_option
       expect(results).to eq([
@@ -176,7 +177,8 @@ describe Battle do
       @battle = FactoryGirl.create(:battle, {
         starts_at:   DateTime.now,
         finishes_at: DateTime.now + 4.hours,
-        option_ids: [@b1.id, @b2.id]
+        number_of_options: 0,
+        options: [@b1, @b2]
       })
     end
     it 'should returns an empty hash if battle is in the future' do
@@ -185,14 +187,14 @@ describe Battle do
     end
     it 'should return votes for each hour since start when battle is current' do
       Timecop.freeze(Time.local(2021) + 1.minute)
-      FactoryGirl.create(:vote, { option_id: @b1.id, battle_id: @battle.id })
-      FactoryGirl.create(:vote, { option_id: @b1.id, battle_id: @battle.id })
+      FactoryGirl.create(:vote, { option_id: @b1.id })
+      FactoryGirl.create(:vote, { option_id: @b1.id })
       Timecop.freeze(Time.local(2021) + 1.hour + 1.minute)
-      FactoryGirl.create(:vote, { option_id: @b1.id, battle_id: @battle.id })
-      FactoryGirl.create(:vote, { option_id: @b2.id, battle_id: @battle.id })
-      FactoryGirl.create(:vote, { option_id: @b2.id, battle_id: @battle.id })
+      FactoryGirl.create(:vote, { option_id: @b1.id })
+      FactoryGirl.create(:vote, { option_id: @b2.id })
+      FactoryGirl.create(:vote, { option_id: @b2.id })
       Timecop.freeze(Time.local(2021) + 2.hour + 1.minute)
-      FactoryGirl.create(:vote, { option_id: @b2.id, battle_id: @battle.id })
+      FactoryGirl.create(:vote, { option_id: @b2.id })
 
       FactoryGirl.create(:vote) # Votes to other battles are not counted
 
@@ -211,17 +213,17 @@ describe Battle do
     end
     it 'should return votes for each hour of battle when it is over' do
       Timecop.freeze(Time.local(2021) + 1.minute)
-      FactoryGirl.create(:vote, { option_id: @b1.id, battle_id: @battle.id })
-      FactoryGirl.create(:vote, { option_id: @b1.id, battle_id: @battle.id })
+      FactoryGirl.create(:vote, { option_id: @b1.id })
+      FactoryGirl.create(:vote, { option_id: @b1.id })
       Timecop.freeze(Time.local(2021) + 1.hour + 1.minute)
-      FactoryGirl.create(:vote, { option_id: @b1.id, battle_id: @battle.id })
-      FactoryGirl.create(:vote, { option_id: @b2.id, battle_id: @battle.id })
-      FactoryGirl.create(:vote, { option_id: @b2.id, battle_id: @battle.id })
+      FactoryGirl.create(:vote, { option_id: @b1.id })
+      FactoryGirl.create(:vote, { option_id: @b2.id })
+      FactoryGirl.create(:vote, { option_id: @b2.id })
       Timecop.freeze(Time.local(2021) + 2.hour + 1.minute)
-      FactoryGirl.create(:vote, { option_id: @b2.id, battle_id: @battle.id })
+      FactoryGirl.create(:vote, { option_id: @b2.id })
       Timecop.freeze(Time.local(2021) + 3.hour + 1.minute)
-      FactoryGirl.create(:vote, { option_id: @b1.id, battle_id: @battle.id })
-      FactoryGirl.create(:vote, { option_id: @b2.id, battle_id: @battle.id })
+      FactoryGirl.create(:vote, { option_id: @b1.id })
+      FactoryGirl.create(:vote, { option_id: @b2.id })
 
       FactoryGirl.create(:vote) # Votes to other battles are not counted
 

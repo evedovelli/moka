@@ -1,10 +1,5 @@
 en:
   options:
-    index:
-      title: 'Options'
-      add_option: 'Add Option'
-    _form:
-      title: 'Pick a picture and a name for the new option'
     _option:
       destroy: 'Are you sure you want to remove this option?'
 

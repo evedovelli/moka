@@ -1,12 +1,32 @@
-<%= simple_form_for(@battle, remote: true, :html => {:class => 'form-horizontal' }) do |f| %>
+<%#<%= simple_nested_form_for(@battle, remote: true, :html => {:class => 'form-horizontal' }) do |f| +|%>
+<%= simple_nested_form_for(@battle, remote: true) do |f| %>
   <div class="main-box">
     <h2 class="center"><%= t 'battles._form.title' %></h3>
 
     <%= f.error_notification %>
 
-    <%= f.association :options, as: :check_boxes %>
-    <%= f.input(:starts_at, :as => :datetime_picker, :class => "datetimepicker") %>
-    <%= f.input(:finishes_at, :as => :datetime_picker, :class => "datetimepicker") %>
+    <%= f.error(:options, :id => 'battle-options-error', :class => "text-error") %>
+    <div class="row">
+      <div class="span12 <%= @battle_options_error %>">
+        <div id="options">
+          <%= f.fields_for(:options) %>
+        </div>
+      </div>
+      <div class="span3">
+        <%= f.link_to_add(:options, :id => "add_new_option", :class => "btn btn-inverse btn-small", :data => {:target => "#options"}) do %>
+          <i class="icon-plus icon-inverse"></i><%= " #{t 'battles._form.add_option'}" %>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="span6">
+        <%= f.input(:starts_at, :as => :datetime_picker, :class => "datetimepicker") %>
+      </div>
+      <div class="span6">
+        <%= f.input(:finishes_at, :as => :datetime_picker, :class => "datetimepicker") %>
+      </div>
+    </div>
 
     <div class="row">
       <div class="span12">

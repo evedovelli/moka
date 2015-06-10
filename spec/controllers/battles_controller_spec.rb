@@ -117,7 +117,8 @@ describe BattlesController do
 
       describe "new" do
         it "should call new with correct art" do
-          expect(Battle).to receive(:new)
+          @fake_battle = FactoryGirl.create(:battle)
+          expect(Battle).to receive(:new).and_return(@fake_battle)
           get :new, :format => 'js'
         end
         it "should respond to js" do
@@ -132,9 +133,13 @@ describe BattlesController do
           get :new, :format => 'js'
           expect(assigns(:battle)).to be_new_record
         end
-        it "should make options available to that template" do
+        it "should build 2 options to the template" do
           get :new, :format => 'js'
-          expect(assigns(:options)).to eq(@fake_options)
+          expect(assigns(:battle).options.length).to be_equal(2)
+        end
+        it "should make empty battle options error available to that template" do
+          get :new, :format => 'js'
+          expect(assigns(:battle_options_error)).to match("")
         end
       end
 
@@ -161,20 +166,43 @@ describe BattlesController do
           it "should make battle available to that template" do
             expect(assigns(:battle)).to eq(@fake_battle)
           end
+          it "should make empty battle options error available to that template" do
+            expect(assigns(:battle_options_error)).to match("")
+          end
         end
         describe "in error" do
           before :each do
             allow(@fake_battle).to receive(:save).and_return(false)
-            post(:create, {battle: {}, :format => 'js'})
           end
           it "should respond to js" do
+            post(:create, {battle: {}, :format => 'js'})
             expect(response.content_type).to eq(Mime::JS)
           end
           it "should render the reload_form for template" do
+            post(:create, {battle: {}, :format => 'js'})
             expect(response).to render_template('reload_form')
           end
           it "should make options available to that template" do
+            post(:create, {battle: {}, :format => 'js'})
             expect(assigns(:options)).to eq(@fake_options)
+          end
+          it "should not have error for options when options are ok" do
+            @errors = double("Errors")
+            @messages = {'error1' => 'error'}
+            allow(@fake_battle).to receive(:errors).and_return(@errors)
+            allow(@errors).to receive(:any?).and_return(true)
+            allow(@errors).to receive(:messages).and_return(@messages)
+            post(:create, {battle: {}, :format => 'js'})
+            expect(assigns(:battle_options_error)).to match("")
+          end
+          it "should have error for options when options are not ok" do
+            @errors = double("Errors")
+            @messages = {name: 'error', options: 'error in options'}
+            allow(@fake_battle).to receive(:errors).and_return(@errors)
+            allow(@errors).to receive(:any?).and_return(true)
+            allow(@errors).to receive(:messages).and_return(@messages)
+            post(:create, {battle: {}, :format => 'js'})
+            expect(assigns(:battle_options_error)).to match("battle-options-error")
           end
         end
       end
@@ -216,7 +244,7 @@ describe BattlesController do
           put(:update, { :id => @fake_battle.id, battle: {"starts_at" => "now"}, :format => 'js' })
         end
         it "should update attributes of the battle" do
-          expect(@fake_battle).to receive(:update_attributes).with({"starts_at" => "now", "option_ids" => []})
+          expect(@fake_battle).to receive(:update_attributes).with({"starts_at" => "now"})
           put(:update, { :id => @fake_battle.id, battle: {"starts_at" => "now"}, :format => 'js' })
         end
         describe "in success" do
@@ -290,7 +318,10 @@ describe BattlesController do
           expect(assigns(:battle)).to eq(@fake_battle)
         end
         it "should make the total of votes available to that template" do
-          allow(Vote).to receive(:where).and_return(Array.new(10, double("Vote")))
+          @fake_votes = double("Votes")
+          allow(@fake_votes).to receive(:count).and_return(10)
+          allow(@fake_votes).to receive(:where).and_return(@fake_votes)
+          allow(@fake_battle).to receive(:votes).and_return(@fake_votes)
           get :show, {id: @fake_battle.id}
           expect(assigns(:total)).to eq(10)
         end

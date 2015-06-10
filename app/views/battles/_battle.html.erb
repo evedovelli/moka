@@ -64,7 +64,9 @@
       <div class="battle-box">
         <div class="row">
           <% battle.options.each do |option| %>
-            <%= render option %>
+            <%= render :partial => "options/option",
+                       :locals => { :battle => battle,
+                                    :option => option} %>
           <% end %>
         </div>
       </div>

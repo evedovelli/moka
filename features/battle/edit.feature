@@ -1,5 +1,5 @@
 Feature: Edit battle
-  If an battle was created with a mistake
+  If a battle was created with a mistake
   An admin should be able to access the edit battle form
 
 Background:
@@ -16,7 +16,7 @@ Background:
       Then I should not see the edit battle form for 1st battle
 
     @javascript
-    Scenario: Admin can edit an battle from battle index page
+    Scenario: Admin can edit a battle from battle index page
       When I go to the battle index page
       And I press the button to edit 1st battle
       Then I should be on the battle index page

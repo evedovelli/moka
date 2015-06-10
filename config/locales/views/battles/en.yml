@@ -9,6 +9,7 @@ en:
       statistics: 'Statistics'
     _form:
       title: 'Choose options and schedule battle'
+      add_option: 'Add Option'
     show:
       title: 'Battle %{id} statistics'
     _total:

@@ -6,7 +6,6 @@ Given /^"([^"]*)" has (\d+) votes$/ do |option, votes|
   for vote in 1..votes.to_i do
     FactoryGirl.create(:vote, {
       :option_id => Option.find_by_name(option).id,
-      :battle_id => Battle.current.first.id
     })
   end
 end
@@ -16,8 +15,7 @@ Given /^"([^"]*)" had (\d+) votes (\d+) hours ago$/ do |option, votes, hours|
   Timecop.travel(Time.current - hours.to_i.hours)
   for vote in 1..votes.to_i do
     FactoryGirl.create(:vote, {
-      :option_id => Option.find_by_name(option).id,
-      :battle_id => Battle.current.first.id
+      :option_id => Option.find_by_name(option).id
     })
   end
   Timecop.travel(now)

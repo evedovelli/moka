@@ -75,6 +75,9 @@ gem 'jquery-rails'
 # application keeps RESTfull.
 gem 'turbolinks'
 
+# To create nested forms on the fly
+gem 'nested_form', '~> 0.3.2'
+
 # Binds Rails Turbolinks events to the document.ready events
 gem 'jquery-turbolinks'
 

@@ -18,6 +18,7 @@
 //= require bootstrap-datetimepicker/pickers
 //= require bootstrap-datetimepicker/locales/bootstrap-datetimepicker.pt-BR
 //= require Chart
+//= require jquery_nested_form
 //= require_tree .
 //= require turbolinks
 

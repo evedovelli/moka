@@ -1,11 +1,9 @@
 en:
   votes:
     new:
-      title_html: 'Who should be <b>evicted</b>?'
-    _form:
-      help_html: 'To evict <b>%{name}</b>, call <b>%{fone}</b>, or send a SMS message to <b>%{sms}</b>'
+      title_html: 'Who should win this battle?'
     _vote:
-      registered_html: 'Congratulations! Your vote for <b>%{name}</b> was successfully sent.'
+      registered_html: 'Your vote for <b>%{name}</b> was successfully sent.'
     no_battle:
       title_html: 'There is no current <b>battle</b> :( Come back later!'
     _result:

@@ -5,11 +5,7 @@ Feature: Show
 Background:
     Given I am logged in
     And I am an admin
-    And the following options were added:
-    | name     | picture  |
-    | Robson   | 2        |
-    | Roberta  | 4        |
-    And an battle was created with options "Robson" and "Roberta" starting 3 hours ago
+    And a battle was created with options "Robson" and "Roberta" starting 3 hours ago
     And I am on the battle index page
 
     Scenario: Admin can consult statistics for battle

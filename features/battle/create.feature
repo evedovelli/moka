@@ -5,18 +5,13 @@ Feature: Create battle
 Background:
     Given I am logged in
     And I am an admin
-    And the following options were added:
-    | name     | picture  |
-    | Joseane  | 1        |
-    | Arthur   | 2        |
-    | Andréia  | 3        |
     And I am on the battle index page
     And I press the button to add new battle
 
     @javascript
     Scenario: Creation of a new battle
-      When I check "Arthur"
-      And I check "Andréia"
+      When I add 1st option with name "Arthur" and picture 2
+      And I add 2nd option with name "Andréia" and picture 3
       And I select datetime "2015 06 28 - 10:11" as the "battle_starts_at"
       And I select datetime "2015 06 30 - 10:11" as the "battle_finishes_at"
       And I press "Create"
@@ -27,7 +22,8 @@ Background:
 
     @javascript
     Scenario: Missing bothers
-      When I check "Arthur"
+      When I add 1st option with name "Arthur" and picture 2
+      And I remove 2nd option
       And I select datetime "2015 06 28 - 10:11" as the "battle_starts_at"
       And I select datetime "2015 06 30 - 10:11" as the "battle_finishes_at"
       And I press "Create"
@@ -36,7 +32,8 @@ Background:
 
     @javascript
     Scenario: Timing errors
-      When I check "Arthur"
+      When I add 1st option with name "Arthur" and picture 2
+      When I add 2nd option with name "Joseane" and picture 1
       And I select datetime "2015 06 28 - 10:11" as the "battle_starts_at"
       And I select datetime "2015 06 26 - 10:11" as the "battle_finishes_at"
       And I press "Create"

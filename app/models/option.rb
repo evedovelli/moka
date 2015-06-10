@@ -1,7 +1,7 @@
 class Option < ActiveRecord::Base
   resourcify
 
-  has_and_belongs_to_many :battles
+  belongs_to :battle
   has_many :votes, dependent: :destroy
 
   attr_accessible :name, :picture
