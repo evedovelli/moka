@@ -1,6 +1,6 @@
 Feature: Update battle
-  If an battle was created with a mistake
-  An admin should be able to fill and update an edit form for an battle
+  If a battle was created with a mistake
+  An admin should be able to fill and update an edit form for a battle
 
 Background:
     Given I am logged in
@@ -12,7 +12,7 @@ Background:
     And I press the button to edit 1st battle
 
     @javascript
-    Scenario: Update an battle
+    Scenario: Update a battle
       When I select datetime "2015 04 28 - 10:11" as the "battle_starts_at"
       And I press "Update"
       Then I should be on the battle index page

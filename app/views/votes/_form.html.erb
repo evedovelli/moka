@@ -1,4 +1,4 @@
-<%= simple_form_for([@battle, @vote], :html => { :multipart => true, :class => "form-horizontal" }, remote: true) do |f| %>
+<%= simple_form_for(@vote, remote: true, :html => { :class => "form-horizontal" }) do |f| %>
   <div class="main-box">
     <div class="row">
       <% i = 0 %>
@@ -18,11 +18,6 @@
               <div id="vote_picture_borther<%=option.id%>" class="picture<%=option.picture%> picture"></div>
             </label>
           </div>
-          <p><%= t('votes._form.help_html',
-                   :name => "#{option.name}",
-                   :fone => "0800-123-00#{i}",
-                   :sms => "800#{i}") %>
-          </p>
         </div>
       <% end %>
     </div>

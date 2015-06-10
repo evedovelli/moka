@@ -2,15 +2,13 @@ class Vote < ActiveRecord::Base
   resourcify
 
   belongs_to :option
-  belongs_to :battle
+  has_one :battle, :through => :option
 
-  attr_accessible :option, :option_id, :battle, :battle_id
+  attr_accessible :option, :option_id
 
   validate  :created_at, :finished_battle
   validate  :created_at, :not_started_battle
-  validates :battle,   :presence => true
-  validates :option,    :presence => true
-  validate  :option,    :belongs_to_battle
+  validates :option,     :presence => true
 
   def finished_battle
     if created_at && battle && battle.finishes_at
@@ -21,12 +19,6 @@ class Vote < ActiveRecord::Base
   def not_started_battle
     if created_at && battle && battle.starts_at
       errors.add(:created_at, I18n.t('messages.not_started_battle')) unless battle.starts_at < created_at
-    end
-  end
-
-  def belongs_to_battle
-    if option && battle
-      errors.add(:option, I18n.t('messages.option_must_belong_to_battle')) unless battle.options.include?(option)
     end
   end
 

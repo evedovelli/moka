@@ -1,6 +1,5 @@
 class VotesController < ApplicationController
-  load_and_authorize_resource :battle, :except => :new
-  load_and_authorize_resource :vote, :through => :battle, :except => :new
+  load_and_authorize_resource :vote
 
   def new
     @battle = Battle.current.first
@@ -10,7 +9,7 @@ class VotesController < ApplicationController
     end
     authorize! :show, @battle
     authorize! :create, Vote
-    @vote = @battle.votes.new()
+    @vote = Vote.new()
   end
 
   def create
@@ -18,14 +17,16 @@ class VotesController < ApplicationController
 
     if verify_recaptcha(:model => @vote) && @vote.save
       @registered_vote = @vote
-      @vote = @battle.votes.new()
+      @battle = @vote.battle
       @number_of_options = @battle.options.count
       @results_by_option = @battle.results_by_option
       @remaining_time = @battle.remaining_time
+      @vote = Vote.new()
       respond_to do |format|
         format.js { render 'votes/create' }
       end
     else
+      @battle = Battle.current.first
       flash[:alert] = @vote.error_message
       respond_to do |format|
         format.js { render 'votes/reload_form' }

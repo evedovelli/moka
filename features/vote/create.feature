@@ -1,23 +1,17 @@
-Feature: Create option
+Feature: Create vote
   To incentivate users to watch the show and interact with it
   Users should be able to vote in battles to eliminate
   the options they want to get out of the house
 
-Background: There is an battle running
-    Given the following options were added:
-    | name     | picture  |
-    | Joseane  | 1        |
-    | Arthur   | 2        |
-    | Andréia  | 3        |
-    | Jaime    | 4        |
-    And an battle was created with options "Joseane", "Jaime" and "Andréia"
+Background: There is a battle running
+    Given a battle was created with options "Joseane", "Jaime" and "Andréia"
 
     @javascript
     Scenario: User votes to a option and see its vote was successful
       Given I am on the home page
       When I vote for "Andréia"
       Then I should be on the home page
-      And I should see "Congratulations! Your vote for Andréia was successfully sent."
+      And I should see "Your vote for Andréia was successfully sent."
 
     @javascript
     Scenario: User votes to a option and see its vote was successful

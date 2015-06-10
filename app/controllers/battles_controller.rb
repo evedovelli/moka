@@ -7,18 +7,27 @@ class BattlesController < ApplicationController
   end
 
   def new
-    @options = Option.all
+    2.times do
+      @battle.options.build
+    end
+    @battle_options_error = ""
     respond_to do |format|
       format.js {}
     end
   end
 
   def create
+    @battle_options_error = ""
     if @battle.save
       respond_to do |format|
         format.js {}
       end
     else
+      if @battle.errors.any?
+        if @battle.errors.messages.has_key?(:options)
+          @battle_options_error = "battle-options-error"
+        end
+      end
       @options = Option.all
       respond_to do |format|
         format.js { render 'reload_form' }
@@ -42,9 +51,6 @@ class BattlesController < ApplicationController
   end
 
   def update
-    # Ensure to empty the options if none is marked
-    params[:battle][:option_ids] ||= []
-
     if @battle.update_attributes(params[:battle])
     respond_to do |format|
         format.js {}
@@ -58,7 +64,7 @@ class BattlesController < ApplicationController
   end
 
   def show
-    @total = Vote.where(:battle_id => @battle.id).count
+    @total = @battle.votes.count
     @results_by_option = @battle.results_by_option
     @results_by_hour = @battle.results_by_hour
   end

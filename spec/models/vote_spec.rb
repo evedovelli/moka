@@ -7,8 +7,7 @@ describe Vote do
       :finishes_at => DateTime.now + 1.day
     })
     @attr = {
-      :option => @battle.options[0],
-      :battle => @battle,
+      :option => @battle.options[0]
     }
   end
 
@@ -23,18 +22,6 @@ describe Vote do
       vote = Vote.new(@attr)
       expect(vote).not_to be_valid
     end
-    it 'should fails when battle is empty' do
-      @attr.delete(:battle)
-      vote = Vote.new(@attr)
-      expect(vote).not_to be_valid
-    end
-  end
-
-  describe 'validates if option belongs to battle' do
-    it 'should fails when option does not belong to battle' do
-      vote = Vote.new(@attr.merge(:option => FactoryGirl.create(:option)))
-      expect(vote).not_to be_valid
-    end
   end
 
   describe 'validates posts created in wrong period' do
@@ -44,8 +31,7 @@ describe Vote do
         :finishes_at => DateTime.now - 1.day
       })
       @attr = {
-        :option => @battle.options[0],
-        :battle => @battle,
+        :option => @battle.options[0]
       }
       vote = Vote.new(@attr)
       vote.save()
@@ -57,8 +43,7 @@ describe Vote do
         :finishes_at => DateTime.now + 4.day
       })
       @attr = {
-        :option => @battle.options[0],
-        :battle => @battle,
+        :option => @battle.options[0]
       }
       vote = Vote.new(@attr)
       vote.save()
@@ -70,8 +55,7 @@ describe Vote do
         :finishes_at => DateTime.now + 2.day
       })
       @attr = {
-        :option => @battle.options[0],
-        :battle => @battle,
+        :option => @battle.options[0]
       }
       vote = Vote.new(@attr)
       vote.save()

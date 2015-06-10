@@ -4,10 +4,8 @@ Moka::Application.routes.draw do
   devise_for :users
   get "config" => "users#home", :as => :user_home
 
-  resources :options, :except => [:show, :update, :edit]
-  resources :battles do
-    resources :votes, :only => [:create]
-  end
+  resources :battles
+  resources :votes, :only => [:create]
 
   root :to => 'votes#new'
 end

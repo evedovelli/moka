@@ -9,6 +9,7 @@ pt-BR:
       statistics: 'Estatísticas'
     _form:
       title: 'Escolha as opções e o período da batalha'
+      add_option: 'Adicionar Opção'
     show:
       title: 'Estatísticas da batalha %{id}'
     _total:

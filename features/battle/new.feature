@@ -11,7 +11,7 @@ Background:
       Then I should not see the new battle form
 
     @javascript
-    Scenario: Admin can create an battle from battle index page
+    Scenario: Admin can create a battle from battle index page
       When I go to the battle index page
       And I press the button to add new battle
       Then I should be on the battle index page

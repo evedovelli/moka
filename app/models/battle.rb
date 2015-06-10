@@ -1,12 +1,14 @@
 class Battle < ActiveRecord::Base
   resourcify
 
-  has_and_belongs_to_many :options
-  has_many :votes, dependent: :destroy
+  has_many :options, dependent: :destroy
+  has_many :votes, :through => :options
 
-  attr_accessible :finishes_at, :starts_at, :options, :option_ids
+  accepts_nested_attributes_for :options, :allow_destroy => true
 
-  validates :options,    :length   => { :minimum => 2 }
+  attr_accessible :finishes_at, :starts_at, :options_attributes, :options
+
+  validates :options,     :length   => { :minimum => 2 }
   validates :starts_at,   :presence => true
   validates :finishes_at, :presence => true
   validate  :timings
@@ -42,12 +44,12 @@ class Battle < ActiveRecord::Base
   end
 
   def results_by_option
-    total = Vote.where(:battle_id => id).count
+    total = votes.count
     return [] unless total != 0
 
     results = []
     options.each do |option|
-      option_total = Vote.where(:battle_id => id, :option_id => option.id).count
+      option_total = Option.find(option.id).votes.count
       results.push({
         value: option_total,
         percent: (option_total*100.0/total).round(1),
@@ -74,7 +76,7 @@ class Battle < ActiveRecord::Base
     while hour < finishes_at and not hour.future?
       next_hour = hour + 1.hour
       labels.push(hour.strftime('%d/%m/%y - %kh'))
-      datas.push(Vote.where(:created_at => hour..next_hour, :battle_id => id).count)
+      datas.push(votes.where(:created_at => hour..next_hour).count)
       hour = next_hour
     end
 

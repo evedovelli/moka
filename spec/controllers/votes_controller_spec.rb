@@ -15,9 +15,9 @@ describe VotesController do
       expect(flash[:alert]).to match("Access denied.")
       expect(response).to redirect_to(root_url)
     end
-    it "should be redirected to root page if creating template" do
+    it "should be redirected to root page if creating vote" do
       allow(Battle).to receive(:find).and_return(@fake_battle)
-      post :create, { :vote => {}, :battle_id => 1 }
+      post :create, { vote: {"option_id" => @fake_battle.options[0].id} }
       expect(flash[:alert]).to match("Access denied.")
       expect(response).to redirect_to(root_url)
     end
@@ -63,33 +63,24 @@ describe VotesController do
     describe "create" do
       before :each do
         @fake_vote = FactoryGirl.create(:vote)
+        allow(@fake_vote).to receive(:battle).and_return(@fake_battle)
         allow(Vote).to receive(:new).and_return(@fake_vote)
       end
-      it "should search battle with correct id" do
-        expect(Battle).to receive(:find).with("#{@fake_battle.id}")
-        post :create, {
-          battle_id: @fake_battle.id,
-          vote: {},
-          format: 'js'
-        }
-      end
       it "should call new with correct vote" do
-        expect(Vote).to receive(:new).with({"teste" => "teste"})
+        expect(Vote).to receive(:new).with({"option_id" => @fake_battle.options[0].id})
         post :create, {
-          battle_id: @fake_battle.id,
-          vote: {"teste" => "teste"},
+          vote: {"option_id" => @fake_battle.options[0].id},
           format: 'js'
         }
       end
       describe "in success" do
         before :each do
-          allow(@fake_vote).to receive(:save).and_return(true)
-          allow(Battle).to receive(:find).and_return(@fake_battle)
           @results = double("results")
           allow(@fake_battle).to receive(:results_by_option).and_return(@results)
+          allow(@fake_vote).to receive(:save).and_return(true)
+          allow(@fake_vote).to receive(:battle).and_return(@fake_battle)
           post :create, {
-            battle_id: @fake_battle.id,
-            vote: {},
+            vote: {"option_id" => @fake_battle.options[0].id},
             format: 'js'
           }
         end
@@ -121,9 +112,10 @@ describe VotesController do
       describe "in error" do
         before :each do
           allow(@fake_vote).to receive(:save).and_return(false)
+          @battle = FactoryGirl.create(:battle)
+          allow(Battle).to receive(:current).and_return([@battle])
           post :create, {
-            battle_id: @fake_battle.id,
-            vote: {},
+            vote: {"option_id" => @fake_battle.options[0].id},
             format: 'js'
           }
         end
@@ -134,7 +126,7 @@ describe VotesController do
           expect(response).to render_template('reload_form')
         end
         it "should make battle available to that template" do
-          expect(assigns(:battle)).to eq(@fake_battle)
+          expect(assigns(:battle)).to eq(@battle)
         end
         it "should make new vote available to that template" do
           expect(assigns(:vote)).to eq(@fake_vote)

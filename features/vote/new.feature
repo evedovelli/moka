@@ -30,17 +30,11 @@ Background: The site is up and running
       | 2015-05-01 10:30:14 -0300 | 2015-05-14 10:30:15 -0300 |
       And current time is 2015-05-01 10:30:15 -0300
       When I go to the home page
-      Then I should see "Who should be evicted?"
+      Then I should see "Who should win this battle?"
 
     Scenario: User can only see options from battle in battle
-      Given the following options were added:
-      | name     | picture  |
-      | Joseane  | 1        |
-      | Arthur   | 2        |
-      | Andréia  | 3        |
-      And an battle was created with options "Joseane" and "Andréia"
+      Given a battle was created with options "Joseane" and "Andréia"
       When I go to the home page
       Then I should see "Joseane"
       And I should see "Andréia"
-      And I should not see "Arthur"
 

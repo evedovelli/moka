@@ -5,7 +5,7 @@ include ActionDispatch::TestProcess
 Given /^the following battles were added:$/ do |table|
   table.hashes.each do |battle|
     FactoryGirl.create(:battle, {:starts_at =>   DateTime.parse(battle[:starts_at]),
-                                   :finishes_at => DateTime.parse(battle[:finishes_at])})
+                                 :finishes_at => DateTime.parse(battle[:finishes_at])})
   end
 end
 
@@ -13,41 +13,44 @@ Given /^(\d+) battles were added$/ do |number|
   date = DateTime.now()
   for i in 1..number.to_i do
     FactoryGirl.create(:battle, { :starts_at   => date,
-                                    :finishes_at => date + 5.days })
+                                  :finishes_at => date + 5.days })
     date + 7.days
   end
 end
 
-Given /^an battle was created with options "([^"]*)" and "([^"]*)"$/ do |option1, option2|
+Given /^a battle was created with options "([^"]*)" and "([^"]*)"$/ do |option1, option2|
   FactoryGirl.create(:battle, {
     :starts_at   => DateTime.now - 1.day,
-    :finishes_at   => DateTime.now + 2.day,
-    :option_ids => [
-      Option.find_by_name(option1).id,
-      Option.find_by_name(option2).id
+    :finishes_at => DateTime.now + 2.day,
+    :number_of_options => 0,
+    :options => [
+      FactoryGirl.create(:option, { name: option1 }),
+      FactoryGirl.create(:option, { name: option2 })
     ]
   })
 end
 
-Given /^an battle was created with options "([^"]*)", "([^"]*)" and "([^"]*)"$/ do |option1, option2, option3|
+Given /^a battle was created with options "([^"]*)", "([^"]*)" and "([^"]*)"$/ do |option1, option2, option3|
   FactoryGirl.create(:battle, {
     :starts_at   => DateTime.now - 1.day,
-    :finishes_at   => DateTime.now + 2.day,
-    :option_ids => [
-      Option.find_by_name(option1).id,
-      Option.find_by_name(option2).id,
-      Option.find_by_name(option3).id
+    :finishes_at => DateTime.now + 2.day,
+    :number_of_options => 0,
+    :options => [
+      FactoryGirl.create(:option, { name: option1 }),
+      FactoryGirl.create(:option, { name: option2 }),
+      FactoryGirl.create(:option, { name: option3 })
     ]
   })
 end
 
-Given /^an battle was created with options "([^"]*)" and "([^"]*)" starting (\d+) hours ago$/ do |option1, option2, hours|
+Given /^a battle was created with options "([^"]*)" and "([^"]*)" starting (\d+) hours ago$/ do |option1, option2, hours|
   FactoryGirl.create(:battle, {
     :starts_at   => DateTime.now - hours.to_i.hours,
-    :finishes_at   => DateTime.now + 2.day,
-    :option_ids => [
-      Option.find_by_name(option1).id,
-      Option.find_by_name(option2).id
+    :finishes_at => DateTime.now + 2.day,
+    :number_of_options => 0,
+    :options => [
+      FactoryGirl.create(:option, { name: option1 }),
+      FactoryGirl.create(:option, { name: option2 })
     ]
   })
 end
@@ -72,6 +75,18 @@ When /^I press the button to edit (\d+)(?:st|nd|rd|th) battle$/ do |id|
   find("#edit_battle#{id}").click
 end
 
+When /^I add (\d+)(?:st|nd|rd|th) option with name "([^"]*)" and picture (\d+)$/ do |option_number, option, picture|
+  within(find('#options')) do
+    within(all('.fields')[option_number.to_i - 1]) do
+      find(".picture#{picture}").click
+      find(".option_name").set(option)
+    end
+  end
+end
+
+When /^I remove (\d+)(?:st|nd|rd|th) option$/ do |option_number|
+  all(".remove_option_form")[option_number.to_i - 1].click
+end
 
 ### THEN ###
 
@@ -84,7 +99,7 @@ Then /^I should see the new battle form$/ do
 end
 
 Then /^I should see an error for the number of options$/ do
-  expect(page).to have_content("not enough (minimum is 2)")
+  expect(page).to have_content("not enough options (minimum are 2 options)")
 end
 
 Then /^I should see an error for finishes_at$/ do
@@ -159,6 +174,4 @@ Then /^I should see (\d+) votes in the (\d+)(?:st|nd|rd|th) hour$/ do |votes, ho
   results_by_hour = JSON.parse(find("#data_hours")["data-hours"])
   expect(results_by_hour["datasets"][0]["data"][hour.to_i - 1]).to eq(votes.to_i)
 end
-
-# %Q{{"labels": ["21/10/15 -  4h","21/10/15 -  5h","21/10/15 -  6h","21/10/15 -  7h"], "datasets":[{"label":"Battle 1","fillColor":"rgba(255,107,10,0.5)","strokeColor":"rgba(255,107,10,0.8)","highlightFill":"rgba(255,107,10,0.75)","highlightStroke":"rgba(255,107,10,1)","data":[0,5,10,2]}]}}
 

@@ -1,11 +1,9 @@
 pt-BR:
   votes:
     new:
-      title_html: 'Quem deve ser <b>eliminado</b>?'
-    _form:
-      help_html: 'Para eliminar <b>%{name}</b> pelo telefone, disque <b>%{fone}</b>, ou mande um SMS para <b>%{sms}</b>'
+      title_html: 'Quem deve ganhar essa batalha?'
     _vote:
-      registered_html: 'Parabéns! Seu voto para <b>%{name}</b> foi enviado com sucesso.'
+      registered_html: 'Seu voto para <b>%{name}</b> foi enviado com sucesso.'
     no_battle:
       title_html: 'Não há <b>batalhas</b> no momento :( Volte novamente mais tarde!'
     _result:
