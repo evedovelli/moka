@@ -1,1 +1,22 @@
-$('#battle<%= @battle[:id] %>').replaceWith("<%= j (render 'form') %>");
+$('#battle<%= @battle[:id] %>').after("<%= j (render 'form') %>");
+$('#battle<%= @battle[:id] %>').hide();
+
+$('.upload_picture').hide();
+$('.delete_picture').hide();
+$('.picture_preview').hide();
+
+jQuery(circleImageClick);
+jQuery(deletePhoto);
+
+jQuery(validateNewBattle);
+
+jQuery(function() {
+  $('.remove_form').click(function() {
+    removeForm($(this).closest('.battle_form'));
+  });
+});
+
+jQuery.extend(jQuery.validator.messages, {
+  required: "<%= t('messages.required') %>"
+});
+

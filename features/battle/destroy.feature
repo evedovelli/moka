@@ -6,10 +6,10 @@ Background:
     Given I am logged in
     And I am an admin
     And the following battles were added:
-    | starts_at                 | finishes_at               |
-    | 2015-05-01 10:30:14 -0300 | 2015-05-14 10:30:15 -0300 |
-    | 2015-05-22 10:30:14 -0300 | 2015-05-25 10:30:15 -0300 |
-    | 2015-05-26 10:30:14 -0300 | 2015-05-29 10:30:15 -0300 |
+    | starts_at                 | duration  |
+    | 2015-05-01 10:30:14 -0300 | 60        |
+    | 2015-05-22 10:30:14 -0300 | 300       |
+    | 2015-05-26 10:30:14 -0300 | 580       |
     And I am on the battle index page
 
     @javascript

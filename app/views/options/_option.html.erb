@@ -5,7 +5,7 @@
       <div class="row">
         <div class="span4">
           <div class="picture-box">
-            <div id="picture_option<%= option.id %>" class="picture<%= option.picture %> picture"></div>
+            <%= image_tag option.picture.url(:medium) %>
           </div>
         </div>
       </div>

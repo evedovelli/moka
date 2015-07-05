@@ -11,3 +11,6 @@ en:
     option_must_belong_to_battle: 'must belong to the Battle'
     finished_battle: 'Battle is finished'
     not_started_battle: 'Battle not started'
+    min_options: 'You must specify at least 2 options'
+    required: 'Required field'
+    greater_than_zero: 'Value must be greater than zero'

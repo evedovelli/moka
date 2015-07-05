@@ -3,8 +3,8 @@ require 'rails_helper'
 describe Vote do
   before(:each) do
     @battle = FactoryGirl.create(:battle, {
-      :starts_at   => DateTime.now - 1.day,
-      :finishes_at => DateTime.now + 1.day
+      :starts_at => DateTime.now - 1.day,
+      :duration => 48*60
     })
     @attr = {
       :option => @battle.options[0]
@@ -28,7 +28,7 @@ describe Vote do
     it 'should fails when post is created to a finished battle' do
       @battle = FactoryGirl.create(:battle, {
         :starts_at   => DateTime.now - 2.day,
-        :finishes_at => DateTime.now - 1.day
+        :duration => 24*60
       })
       @attr = {
         :option => @battle.options[0]
@@ -40,7 +40,7 @@ describe Vote do
     it 'should fails when post is created to a not started battle' do
       @battle = FactoryGirl.create(:battle, {
         :starts_at   => DateTime.now + 2.day,
-        :finishes_at => DateTime.now + 4.day
+        :duration => 48*60
       })
       @attr = {
         :option => @battle.options[0]
@@ -52,7 +52,7 @@ describe Vote do
     it 'should be ok when post is created during battle' do
       @battle = FactoryGirl.create(:battle, {
         :starts_at   => DateTime.now - 2.day,
-        :finishes_at => DateTime.now + 2.day
+        :duration => 96*60
       })
       @attr = {
         :option => @battle.options[0]

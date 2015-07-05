@@ -3,8 +3,8 @@ require 'rails_helper'
 describe Option do
   before(:each) do
     @attr = {
-      :name => "Lymda",
-      :picture => 4
+      :name => "Chips",
+      :picture => File.new(Rails.root + 'spec/fixtures/images/chips.png')
     }
   end
 
@@ -26,31 +26,25 @@ describe Option do
     end
   end
 
-  describe 'validateas numericality of picture' do
-    it 'should fails when not integer' do
-      option = Option.new(@attr.merge(:picture => 2.5))
-      expect(option).not_to be_valid
-    end
-    it 'should fails when greater than 4' do
-      option = Option.new(@attr.merge(:picture => 5))
-      expect(option).not_to be_valid
-    end
-    it 'should fails when less than 1' do
-      option = Option.new(@attr.merge(:picture => 0))
+  describe 'validates attached picture' do
+    it 'should validates attachment content type' do
+      option = Option.new(@attr.merge(:picture => File.new(Rails.root + 'spec/fixtures/images/no_image.txt')))
       expect(option).not_to be_valid
     end
   end
 
   describe 'color' do
-    it 'should return a color code for the option according to his picture' do
-      option = Option.new(@attr.merge(:picture => 2))
+    it 'should return a color code for the option according to his id' do
+      @attr[:id] = 2
+      option = Option.new(@attr)
       expect(option.color).to match("#46BFBD")
     end
   end
 
   describe 'color' do
-    it 'should return a highlight color code for the option according to his picture' do
-      option = Option.new(@attr.merge(:picture => 3))
+    it 'should return a highlight color code for the option according to his id' do
+      @attr[:id] = 3
+      option = Option.new(@attr)
       expect(option.highlight).to match("#FFC870")
     end
   end

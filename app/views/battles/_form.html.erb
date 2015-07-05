@@ -1,5 +1,4 @@
-<%#<%= simple_nested_form_for(@battle, remote: true, :html => {:class => 'form-horizontal' }) do |f| +|%>
-<%= simple_nested_form_for(@battle, remote: true) do |f| %>
+<%= simple_nested_form_for(@battle, :remote => true, :html => { :class => 'battle_form'}) do |f| %>
   <div class="main-box">
     <h2 class="center"><%= t 'battles._form.title' %></h3>
 
@@ -7,32 +6,45 @@
 
     <%= f.error(:options, :id => 'battle-options-error', :class => "text-error") %>
     <div class="row">
-      <div class="span12 <%= @battle_options_error %>">
-        <div id="options">
-          <%= f.fields_for(:options) %>
+
+      <div id="options_container" class="span12 <%= @battle_options_error %>">
+        <div class="row">
+
+          <div id="<%= @options_id %>" class="options">
+            <%= f.simple_fields_for(:options) %>
+          </div>
+
+          <div class="span4">
+            <div class="new-option-box option-box-editable add-option-box">
+              <div class="add_new_option_container">
+                <%= f.link_to_add(:options, {:id => "add_new_option", :class => "btn btn-inverse btn-large", :data => {:target => "##{@options_id}"}}) do %>
+                  <i class="icon-plus icon-inverse"></i><%= " #{t 'battles._form.add_option'}" %>
+                <% end %>
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>
-      <div class="span3">
-        <%= f.link_to_add(:options, :id => "add_new_option", :class => "btn btn-inverse btn-small", :data => {:target => "#options"}) do %>
-          <i class="icon-plus icon-inverse"></i><%= " #{t 'battles._form.add_option'}" %>
-        <% end %>
+      <div id="battle-options-error" class="span12 text-error" style="display:none;">
+        <p class="pull-right"><%= t('messages.min_options') %></p>
       </div>
+
     </div>
 
     <div class="row">
-      <div class="span6">
-        <%= f.input(:starts_at, :as => :datetime_picker, :class => "datetimepicker") %>
-      </div>
-      <div class="span6">
-        <%= f.input(:finishes_at, :as => :datetime_picker, :class => "datetimepicker") %>
+      <div class="span12">
+        <%= f.input :duration, :wrapper => :append do %>
+          <%= f.input_field :duration, :class => "input-mini" %><span class="add-on">min</span>
+        <% end %>
       </div>
     </div>
 
     <div class="row">
       <div class="span12">
         <div class="center">
-          <%= f.button(:submit, @battle.new_record? ? t('buttons.create') : t('buttons.update'), :class => "btn btn-primary") %>
-          <%= link_to(t('buttons.cancel'), :back, :onclick => "$('#battle_form').slideUp(350)", :class => "btn") %>
+          <%= f.button(:submit, @battle.new_record? ? t('buttons.create') : t('buttons.update'), :class => "btn btn-primary submit_form") %>
+          <span class="btn remove_form"><%= t('buttons.cancel') %></span>
         </div>
       </div>
     </div>

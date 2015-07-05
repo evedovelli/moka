@@ -21,7 +21,7 @@ Background:
     Scenario: Cancelling new battle creation
       When I go to the battle index page
       And I press the button to add new battle
-      And I follow "Cancel"
+      And I cancel battle creation
       Then I should be on the battle index page
       And I should not see the new battle form
 

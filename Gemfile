@@ -84,9 +84,6 @@ gem 'jquery-turbolinks'
 # Gemigication of chart.js, used to draw the graphics
 gem 'chart-js-rails'
 
-# For adding timepickers
-gem 'datetimepicker-rails', git: 'git://github.com/zpaulovics/datetimepicker-rails', tag: 'v1.0.0'
-
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 
@@ -97,7 +94,14 @@ gem 'datetimepicker-rails', git: 'git://github.com/zpaulovics/datetimepicker-rai
 # gem 'debugger'
 
 # For attaching images
-gem "paperclip", "~> 3.0"
+gem "paperclip", "~> 3.5.3"
+
+# To use Paperclip with AWS S3
+gem 'aws-sdk', '~> 1.6'
+
+
+# For allowing file uploads using Ajax
+gem 'remotipart', '~> 1.2'
 
 # For user authentication
 gem "devise", ">= 3.2.4"
@@ -114,6 +118,12 @@ gem 'routing-filter'
 # Simplify writing forms and handling their errors
 gem 'simple_form'
 
+# To validate forms in client side
+gem "jquery-validation-rails"
+
 # To set up Google's recaptcha to block non-humans
 gem "recaptcha", :require => "recaptcha/rails"
+
+# To show progress while charging pages
+gem 'nprogress-rails'
 

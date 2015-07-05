@@ -32,7 +32,7 @@ end
 ### WHEN ###
 
 When /^I vote for "([^"]*)"$/ do |option|
-  find("#vote_picture_borther#{Option.find_by_name(option).id}").click
+  find("#vote_option#{Option.find_by_name(option).id}").click
   find("#vote_button").click
 end
 

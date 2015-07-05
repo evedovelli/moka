@@ -6,10 +6,10 @@ Background:
     Given I am logged in
     And I am an admin
     And the following battles were added:
-    | starts_at                 | finishes_at               |
-    | 2015-05-01 10:30:14 -0300 | 2015-05-14 10:30:15 -0300 |
-    | 2015-05-22 10:30:14 -0300 | 2015-05-25 10:30:15 -0300 |
-    | 2015-05-26 10:30:14 -0300 | 2015-05-29 10:30:15 -0300 |
+    | starts_at                 | duration  |
+    | 2015-05-01 10:30:14 -0300 | 5000      |
+    | 2015-05-22 10:30:14 -0300 | 3000      |
+    | 2015-05-26 10:30:14 -0300 | 3000      |
 
     Scenario: Admin cannot see battle form unless he press the button to edit battle
       When I go to the battle index page
@@ -27,7 +27,7 @@ Background:
     Scenario: Cancelling new battle creation
       When I go to the battle index page
       And I press the button to edit 1st battle
-      And I follow "Cancel"
+      And I cancel battle edition
       Then I should be on the battle index page
       And I should not see the edit battle form for 1st battle
       And I should see 3 battles

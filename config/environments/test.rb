@@ -45,4 +45,5 @@ Moka::Application.configure do
     t = Time.local(2015, 10, 21, 07, 28, 0)
     Timecop.travel(t)
   end
+
 end

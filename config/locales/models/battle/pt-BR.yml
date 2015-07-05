@@ -5,4 +5,4 @@ pt-BR:
     attributes:
       battle:
         starts_at: "Começa em"
-        finishes_at: "Termina em"
+        duration: "Duração"

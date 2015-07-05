@@ -5,4 +5,4 @@ en:
     attributes:
       battle:
         starts_at: "Starts at"
-        finishes_at: "Finishes at"
+        duration: "Duration"

@@ -78,8 +78,8 @@ describe Ability do
           t = Time.local(2015, 10, 21, 07, 28, 0)
           Timecop.travel(t)
           @battle = FactoryGirl.create(:battle,
-                                         :starts_at   => DateTime.now - 1.day,
-                                         :finishes_at => DateTime.now + 1.day)
+                                       :starts_at => DateTime.now - 1.day,
+                                       :duration => 48*60)
         end
         it "should be able to show current battles" do
           expect(@ability).to be_able_to(:show, @battle)

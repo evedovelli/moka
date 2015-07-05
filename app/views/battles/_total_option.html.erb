@@ -14,7 +14,9 @@
             <h4><%= result[:label] %></h4>
             <h5><%= t('battles._total_option.info', :total => result[:value]) %></h5>
           </div>
-          <div id="partial_picture<%= i %>" class="picture<%= result[:picture] %> picture"></div>
+          <div id="partial_picture<%= i %>">
+            <%= image_tag result[:picture].url(:medium) %>
+          </div>
         </div>
       </div>
     <% end %>
