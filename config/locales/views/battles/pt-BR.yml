@@ -8,7 +8,7 @@ pt-BR:
       title: 'Batalha número %{number}'
       statistics: 'Estatísticas'
     _form:
-      title: 'Escolha as opções e o período da batalha'
+      title: 'Monte sua batalha'
       add_option: 'Adicionar Opção'
     show:
       title: 'Estatísticas da batalha %{id}'
@@ -19,4 +19,6 @@ pt-BR:
       info: '%{total} votos'
     _total_hour:
       title: 'Total de votos em cada hora:'
+    _option_fields:
+      upload_image: 'Clique aqui para adicionar imagem'
 

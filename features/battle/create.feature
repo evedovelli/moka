@@ -10,33 +10,33 @@ Background:
 
     @javascript
     Scenario: Creation of a new battle
-      When I add 1st option with name "Arthur" and picture 2
-      And I add 2nd option with name "Andréia" and picture 3
-      And I select datetime "2015 06 28 - 10:11" as the "battle_starts_at"
-      And I select datetime "2015 06 30 - 10:11" as the "battle_finishes_at"
+      When I add 1st option "Vader" with picture "vader.jpg"
+      And I add 2nd option "Palpatine" with picture "palpatine.jpg"
       And I press "Create"
+      And I wait 2 seconds for uploading images
       Then I should be on the battle index page
-      And I should see the battle that starts on "28/06/15 - 10:11"
-      And I should see "Arthur"
-      And I should see "Andréia"
+      And I should see "Vader"
+      And I should see the image "vader.jpg"
+      And I should see "Palpatine"
+      And I should see the image "palpatine.jpg"
+      And I should see "1440 minutes"
 
     @javascript
-    Scenario: Missing bothers
-      When I add 1st option with name "Arthur" and picture 2
+    Scenario: Missing botherS
+      When I add 1st option "Vader" with picture "vader.jpg"
       And I remove 2nd option
-      And I select datetime "2015 06 28 - 10:11" as the "battle_starts_at"
-      And I select datetime "2015 06 30 - 10:11" as the "battle_finishes_at"
       And I press "Create"
+      And I wait 2 seconds for uploading images
       Then I should be on the battle index page
       And I should see an error for the number of options
 
     @javascript
     Scenario: Timing errors
-      When I add 1st option with name "Arthur" and picture 2
-      When I add 2nd option with name "Joseane" and picture 1
-      And I select datetime "2015 06 28 - 10:11" as the "battle_starts_at"
-      And I select datetime "2015 06 26 - 10:11" as the "battle_finishes_at"
+      When I add 1st option "Vader" with picture "vader.jpg"
+      And I add 2nd option "Palpatine" with picture "palpatine.jpg"
+      And I fill in "battle_duration" with "-1"
       And I press "Create"
+      And I wait 2 seconds for uploading images
       Then I should be on the battle index page
-      And I should see an error for finishes_at
+      And I should see an error for duration
 

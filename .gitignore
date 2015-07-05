@@ -26,6 +26,9 @@ tags
 # Ignore public assets
 /public/assets
 
+# Ignore images uploaded in local server
+/public/system
+
 # Ignore shared
 /shared
 

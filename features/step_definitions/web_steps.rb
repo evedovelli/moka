@@ -131,6 +131,10 @@ Then /^I should see the image "(.+)"$/ do |image|
   expect(page).to have_xpath("//img[contains(@src, \"#{image}\")]")
 end
 
+Then /^I should not see the image "(.+)"$/ do |image|
+  expect(page).not_to have_xpath("//img[contains(@src, \"#{image}\")]")
+end
+
 Then /^the button "([^"]*)" should be inactive$/ do |button|
   # When a button is inactive, then it becomes "invisible"
   begin

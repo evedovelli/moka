@@ -64,7 +64,7 @@ describe BattlesController do
         expect(response).to redirect_to(root_url)
       end
       it "should be redirected to root page if creating template" do
-        post :create, { :option => {} }
+        post :create, { :battle => {} }
         expect(flash[:alert]).to match("Access denied.")
         expect(response).to redirect_to(root_url)
       end
@@ -141,6 +141,10 @@ describe BattlesController do
           get :new, :format => 'js'
           expect(assigns(:battle_options_error)).to match("")
         end
+        it "should make options_id available to that template" do
+          get :new, :format => 'js'
+          expect(assigns(:options_id)).to match("options_new")
+        end
       end
 
       describe "create" do
@@ -149,8 +153,17 @@ describe BattlesController do
           allow(Battle).to receive(:new).and_return(@fake_battle)
         end
         it "should call new with correct art" do
-          expect(Battle).to receive(:new).with({"starts_at" => "now"})
-          post(:create, {battle: {"starts_at" => "now"}, :format => 'js'})
+          Timecop.freeze(Time.local(1994))
+          expect(Battle).to receive(:new).with({"starts_at" => DateTime.now})
+          post(:create, {battle: {}, :format => 'js'})
+        end
+        it "should call new with correct duration" do
+          expect(Battle).to receive(:new).with({"duration" => "23", "starts_at" => DateTime.now})
+          post(:create, {battle: {duration: "23"}, :format => 'js'})
+        end
+        it "should call new with default duration when not specified" do
+          expect(Battle).to receive(:new).with({"duration" => (24*60).to_s, "starts_at" => DateTime.now})
+          post(:create, {battle: {duration: ""}, :format => 'js'})
         end
         describe "in success" do
           before :each do
@@ -182,10 +195,6 @@ describe BattlesController do
             post(:create, {battle: {}, :format => 'js'})
             expect(response).to render_template('reload_form')
           end
-          it "should make options available to that template" do
-            post(:create, {battle: {}, :format => 'js'})
-            expect(assigns(:options)).to eq(@fake_options)
-          end
           it "should not have error for options when options are ok" do
             @errors = double("Errors")
             @messages = {'error1' => 'error'}
@@ -203,6 +212,10 @@ describe BattlesController do
             allow(@errors).to receive(:messages).and_return(@messages)
             post(:create, {battle: {}, :format => 'js'})
             expect(assigns(:battle_options_error)).to match("battle-options-error")
+          end
+          it "should make options_id available to that template" do
+            post(:create, {battle: {}, :format => 'js'})
+            expect(assigns(:options_id)).to match("options_new")
           end
         end
       end
@@ -228,9 +241,13 @@ describe BattlesController do
           get :edit, {id: @fake_battle.id, :format => 'js'}
           expect(assigns(:battle)).to eq(@fake_battle)
         end
-        it "should make options available to that template" do
+        it "should make empty battle options error available to that template" do
           get :edit, {id: @fake_battle.id, :format => 'js'}
-          expect(assigns(:options)).to eq(@fake_options)
+          expect(assigns(:battle_options_error)).to match("")
+        end
+        it "should make options_id available to that template" do
+          get :edit, {id: @fake_battle.id, :format => 'js'}
+          expect(assigns(:options_id)).to match("options#{@fake_battle.id}")
         end
       end
 
@@ -247,6 +264,14 @@ describe BattlesController do
           expect(@fake_battle).to receive(:update_attributes).with({"starts_at" => "now"})
           put(:update, { :id => @fake_battle.id, battle: {"starts_at" => "now"}, :format => 'js' })
         end
+        it "should update with correct duration" do
+          expect(@fake_battle).to receive(:update_attributes).with({"duration" => "23"})
+          put(:update, { :id => @fake_battle.id, battle: {"duration" => "23"}, :format => 'js' })
+        end
+        it "should update with default duration when not specified" do
+          expect(@fake_battle).to receive(:update_attributes).with({"duration" => (24*60).to_s})
+          put(:update, { :id => @fake_battle.id, battle: {"duration" => ""}, :format => 'js' })
+        end
         describe "in success" do
           before :each do
             allow(@fake_battle).to receive(:update_attributes).and_return(true)
@@ -258,20 +283,43 @@ describe BattlesController do
           it "should render the update template" do
             expect(response).to render_template('update')
           end
+          it "should make empty battle options error available to that template" do
+            expect(assigns(:battle_options_error)).to match("")
+          end
         end
         describe "in error" do
           before :each do
             allow(@fake_battle).to receive(:update_attributes).and_return(false)
-            put(:update, { :id => @fake_battle.id, battle: {"starts_at" => "now"}, :format => 'js' })
           end
           it "should respond to js" do
+            put(:update, { :id => @fake_battle.id, battle: {"starts_at" => "now"}, :format => 'js' })
             expect(response.content_type).to eq(Mime::JS)
           end
           it "should render the reload_update template" do
+            put(:update, { :id => @fake_battle.id, battle: {"starts_at" => "now"}, :format => 'js' })
             expect(response).to render_template('reload_update')
           end
-          it "should make options available to that template" do
-            expect(assigns(:options)).to eq(@fake_options)
+          it "should not have error for options when options are ok" do
+            @errors = double("Errors")
+            @messages = {'error1' => 'error'}
+            allow(@fake_battle).to receive(:errors).and_return(@errors)
+            allow(@errors).to receive(:any?).and_return(true)
+            allow(@errors).to receive(:messages).and_return(@messages)
+            put(:update, { :id => @fake_battle.id, battle: {"starts_at" => "now"}, :format => 'js' })
+            expect(assigns(:battle_options_error)).to match("")
+          end
+          it "should have error for options when options are not ok" do
+            @errors = double("Errors")
+            @messages = {name: 'error', options: 'error in options'}
+            allow(@fake_battle).to receive(:errors).and_return(@errors)
+            allow(@errors).to receive(:any?).and_return(true)
+            allow(@errors).to receive(:messages).and_return(@messages)
+            put(:update, { :id => @fake_battle.id, battle: {"starts_at" => "now"}, :format => 'js' })
+            expect(assigns(:battle_options_error)).to match("battle-options-error")
+          end
+          it "should make options_id available to that template" do
+            put(:update, { :id => @fake_battle.id, battle: {"starts_at" => "now"}, :format => 'js' })
+            expect(assigns(:options_id)).to match("options#{@fake_battle.id}")
           end
         end
       end

@@ -9,7 +9,6 @@
  * compiled file, but it's generally better to create a new file per style scope.
  *
  *= require_self
- *= require bootstrap-datetimepicker
  *= require_tree .
  */
 
@@ -54,11 +53,6 @@ $background-color: #F3F3F3;
   text-align: center;
 }
 
-.picture {
-  display:block;
-  margin:auto;
-}
-
 .main-box {
   padding-left: 10px;
   padding-right: 10px;
@@ -72,11 +66,7 @@ $background-color: #F3F3F3;
   box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.05) inset;
 }
 
-.input-xlarge.h3 {
-  font-size: 24.5px;
-  height: 42px;
-}
-
 a.extra-space {
   margin-bottom: 30px;
 }
+

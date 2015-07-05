@@ -30,11 +30,29 @@ $date-color: #EDEDED;
 }
 
 #battle-options-error {
-    color: #B94A48;
+  color: #B94A48;
 }
 
 .battle-options-error {
-    border: 1px solid #B94A48;
-    border-radius: 6px;
+  border: 1px solid #B94A48;
+  border-radius: 6px;
+}
+
+div.add_new_option_container {
+  padding-bottom: 100%;
+  position: relative;
+}
+
+div.add_new_option_container a {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+}
+
+.add-option-box {
+  margin-top: 22px;
 }
 

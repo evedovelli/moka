@@ -1,38 +1,110 @@
+$grayDark:    #333;
+$grayLighter: #eee;
+$red:         #9d261d;
 
-.picture1 {
-  height: 240px;
-  width: 300px;
-  background: url('sprite.png') 0 -200px;
-}
-
-.picture2 {
-  height: 240px;
-  width: 350px;
-  background: url('sprite.png') -300px -200px;
-}
-
-.picture3 {
-  height: 240px;
-  width: 350px;
-  background: url('sprite.png') -300px -440px;
-}
-
-.picture4 {
-  height: 240px;
-  width: 300px;
-  background: url('sprite.png') 0 -440px;
-}
+$optionBoxBackground: #FFFFFF;
+$optionBoxAddBackground: $grayLighter;
+$boxesBorders: $grayDark;
 
 .option-box {
-  margin-top: -41px;
-  margin-left: -3px;
-  margin-right: 14px;
-  background-color: #FFFFFF;
-  border: 6px solid #D6D6D6;
-  border-radius: 8px;
+  background-color: $optionBoxBackground;
+  border: 6px solid $boxesBorders;
   box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.08) inset;
+  overflow: hidden;
+  img {
+    width: 100%;
+  }
+}
+
+.new-option-box {
+  border: 2px solid $boxesBorders;
+  box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.08) inset;
+  overflow: hidden;
+  img {
+    width: 100%;
+  }
+}
+
+.option-box-editable {
+  border-style: dashed;
 }
 
 .picture-box {
-  padding-right: 22px;
+  position: relative;
 }
+
+.span4.h3 {
+  margin-top: 10px;
+  font-size: 24.5px;
+  height: 42px;
+}
+
+.picture_preview {
+  padding-bottom: 100%;
+  position: relative;
+}
+
+.picture_preview_container {
+  position: absolute;
+  top: 0; bottom: 0; left: 0; right: 0;
+}
+
+.delete_picture {
+  position: absolute;
+  top: 0;
+  z-index: 10;
+  right: 12px;
+  background: white;
+}
+
+div.no_picture_container {
+  padding-bottom: 100%;
+  position: relative;
+}
+
+div.no_picture_container div {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+}
+
+.no_picture_circle {
+  height: 50%;
+  width: 50%;
+  background-color: $optionBoxAddBackground;
+  border: 2px solid $boxesBorders;
+  border-radius: 50%;
+  text-align: center;
+  padding: 10%;
+}
+
+div.no_picture_circle {
+  position: relative;
+}
+
+div.no_picture_container h4 {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+}
+
+.current_picture:hover {
+  background-color: darken($optionBoxBackground, 2%);
+  box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.10) inset;
+  cursor: pointer;
+}
+
+.option-box.option-box-editable:hover {
+  border: 6px dashed lighten($boxesBorders, 15%);
+}
+
+.option-box.option-box-editable.error {
+  border: 6px dashed $red;
+}
+

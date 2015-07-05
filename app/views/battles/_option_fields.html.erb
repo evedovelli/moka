@@ -1,22 +1,48 @@
-<%= f.link_to_remove(:class => "remove_option_form") do %>
-  <i class="icon-remove"></i>
-<% end %>
-
-<div class="row">
-  <% for i in 1..4 %>
-    <div class="span6">
-      <label class="radio">
-        <%= f.radio_button(:picture, i, :checked => (i == 1))%>
-        <div class="picture<%=i%> picture"></div>
-      </label>
-    </div>
-  <% end %>
-</div>
-
-<div class="row">
-  <div class="span12">
-    <div class="center">
-      <%= f.input(:name, label: false, input_html: { :class => "input-xlarge h3 center option_name", :placeholder => t('activerecord.attributes.option.name') }) %>
+<div class="span4">
+  <div class="row">
+    <div class="span4">
+      <%= f.link_to_remove(:class => "remove_option_form") do %>
+        <i class="icon-remove pull-left"></i>
+      <% end %>
     </div>
   </div>
+
+  <div class="option-box option-box-editable">
+    <div class="row">
+      <div class="span4">
+        <div class="picture-box">
+          <div class="current_picture">
+            <div class="picture_preview">
+              <div class="picture_preview_container">
+              </div>
+            </div>
+            <% if f.object.picture.file? %>
+              <%= image_tag f.object.picture.url(:medium), :class => "existing_image" %>
+            <% else %>
+              <div class="no_picture_container existing_image">
+                <div class="no_picture_circle">
+                  <h4 class="no_picture_message">
+                    <i class="icon-upload"></i><br/><%= " #{t 'battles._option_fields.upload_image'}" %>
+                  </h4>
+                </div>
+              </div>
+            <% end %>
+          </div>
+          <%= f.file_field(:picture, accept: 'image/png,image/gif,image/jpeg, image/jpg', :class => 'upload_picture required') %>
+          <div class="delete_picture">
+            <i class="icon-remove pull-right"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="span4">
+      <div class="center">
+        <%= f.input(:name, label: false, input_html: { :class => "span4 h3 center option_name", :placeholder => t('activerecord.attributes.option.name') }) %>
+      </div>
+    </div>
+  </div>
+
 </div>

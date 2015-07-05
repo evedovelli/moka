@@ -1,4 +1,4 @@
-<%= simple_form_for(@vote, remote: true, :html => { :class => "form-horizontal" }) do |f| %>
+<%= simple_form_for(@vote, remote: true) do |f| %>
   <div class="main-box">
     <div class="row">
       <% i = 0 %>
@@ -6,8 +6,10 @@
         <% i += 1 %>
         <div class="<%= get_option_span_poll(@battle.options.count, i) %>">
           <h3 class="center"><%= option.name %></h3>
+
           <div class="vote_picture_frame">
-            <label class="radio vote_picture">
+            <div id="<%="vote_option#{option.id}"%>" class="vote_picture">
+
               <%= f.radio_button(
                 :option,
                 option.id,
@@ -15,9 +17,20 @@
                 :name => "vote[option_id]",
                 :class => "vote_radio"
               )%>
-              <div id="vote_picture_borther<%=option.id%>" class="picture<%=option.picture%> picture"></div>
-            </label>
+
+              <div class="option-box">
+                <div class="row">
+                  <div class="span4">
+                    <div class="picture-box">
+                      <%= image_tag option.picture.url(:medium) %>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
           </div>
+
         </div>
       <% end %>
     </div>

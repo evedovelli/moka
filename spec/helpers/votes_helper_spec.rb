@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe VotesHelper, :type => :helper do
+describe VotesHelper do
   describe "get option span poll" do
     it "should return span4 offset1 for 1st option with 2 options" do
       expect(helper.get_option_span_poll(2, 1)).to eq("span4 offset1")

@@ -11,21 +11,24 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150606022610) do
+ActiveRecord::Schema.define(:version => 20150629212041) do
 
   create_table "battles", :force => true do |t|
+    t.datetime "created_at",                 :null => false
+    t.datetime "updated_at",                 :null => false
     t.datetime "starts_at"
-    t.datetime "finishes_at"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.integer  "duration",   :default => 60
   end
 
   create_table "options", :force => true do |t|
-    t.integer  "picture"
     t.string   "name"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",           :null => false
+    t.datetime "updated_at",           :null => false
     t.integer  "battle_id"
+    t.string   "picture_file_name"
+    t.string   "picture_content_type"
+    t.integer  "picture_file_size"
+    t.datetime "picture_updated_at"
   end
 
   create_table "roles", :force => true do |t|

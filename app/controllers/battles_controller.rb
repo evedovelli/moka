@@ -1,6 +1,6 @@
 class BattlesController < ApplicationController
   before_filter :authenticate_user!, :except => [:show]
-  load_and_authorize_resource :battle
+  load_and_authorize_resource :battle, :except => [:create]
 
   def index
     @battles = Battle.all
@@ -10,13 +10,24 @@ class BattlesController < ApplicationController
     2.times do
       @battle.options.build
     end
+    @battle.duration = 24*60
     @battle_options_error = ""
+    @options_id = "options_new"
     respond_to do |format|
       format.js {}
+      format.html { render 'new' }
     end
   end
 
   def create
+    params[:battle]["starts_at"] = DateTime.now
+    if params[:battle][:duration] == ""
+      params[:battle][:duration] = (24*60).to_s
+    end
+
+    @battle = Battle.new(params[:battle])
+    authorize! :create, @battle
+
     @battle_options_error = ""
     if @battle.save
       respond_to do |format|
@@ -28,9 +39,9 @@ class BattlesController < ApplicationController
           @battle_options_error = "battle-options-error"
         end
       end
-      @options = Option.all
+      @options_id = "options_new"
       respond_to do |format|
-        format.js { render 'reload_form' }
+        format.js { render 'battles/reload_form' }
       end
     end
   end
@@ -44,21 +55,32 @@ class BattlesController < ApplicationController
   end
 
   def edit
-    @options = Option.all
+    @battle_options_error = ""
+    @options_id = "options#{@battle.id}"
     respond_to do |format|
       format.js {}
     end
   end
 
   def update
+    if params[:battle][:duration] == ""
+      params[:battle][:duration] = @battle.duration.to_s
+    end
+
+    @battle_options_error = ""
     if @battle.update_attributes(params[:battle])
-    respond_to do |format|
+      respond_to do |format|
         format.js {}
       end
     else
-      @options = Option.all
+      if @battle.errors.any?
+        if @battle.errors.messages.has_key?(:options)
+          @battle_options_error = "battle-options-error"
+        end
+      end
+      @options_id = "options#{@battle.id}"
       respond_to do |format|
-        format.js { render 'reload_update' }
+        format.js { render 'battles/reload_update' }
       end
     end
   end

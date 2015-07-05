@@ -1,7 +1,12 @@
+include ActionDispatch::TestProcess
+
 FactoryGirl.define do
   factory :option do
-    picture "1"
-    name "Adriana"
+    name "Potato"
+    picture_file_name 'chips.png'
+    picture_content_type 'image/png'
+    picture_file_size 4.kilobytes
+    picture_updated_at DateTime.now
 
     transient do
       number_of_votes 0

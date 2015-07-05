@@ -1,90 +1,94 @@
-<div id="battle<%= battle[:id] %>" class="battle main-box">
-  <div class="row">
-    <div class="span12">
+<div class="battle_container">
 
-      <div class="row">
-        <div class="span12">
-          <% if can? :destroy, battle %>
-            <h3 class="remove pull-right">
-              <%= link_to(battle_path(battle),
-                          :confirm => t('battles._battle.destroy'),
-                          :method => :delete,
-                          :remote => true,
-                          :id => "delete_battle#{battle[:id]}") do %>
-                <i class="icon-remove pull-right"></i>
-              <% end %>
-            </h3>
-          <% end %>
+  <div id="battle<%= battle[:id] %>" class="battle main-box">
+    <div class="row">
+      <div class="span12">
 
-          <% if can? :update, battle %>
-            <h3 class="update pull-right">
-              <%= link_to(edit_battle_path(battle),
-                          :remote => true,
-                          :id => "edit_battle#{battle[:id]}") do %>
-                <i class="icon-edit pull-right"></i>
-              <% end %>
-            </h3>
-          <% end %>
-        </div>
-      </div>
-
-      <h2 class="center"><%= t('battles._battle.title', number: battle[:id]) %></h2>
-
-      <div class="row">
-        <div class="span6">
-          <div class="row">
-            <div class="span6">
-              <h5 class="pull-left"><%= t 'activerecord.attributes.battle.starts_at' %></h5>
-            </div>
-          </div>
-          <div class="row">
-            <div class="span6">
-              <h4 class="show-start-date date-left">
-                <%= battle.starts_at.strftime('%d/%m/%y - %H:%M') %>
-              </h4>
-            </div>
-          </div>
-        </div>
-        <div class="span6">
-          <div class="row">
-            <div class="span6">
-              <h5 class="pull-right"><%= t 'activerecord.attributes.battle.finishes_at' %></h5>
-            </div>
-          </div>
-          <div class="row">
-            <div class="span6">
-              <h4 class="show-end-date date-right">
-                <%= battle.finishes_at.strftime('%d/%m/%y - %H:%M') %>
-              </h4>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="battle-box">
-        <div class="row">
-          <% battle.options.each do |option| %>
-            <%= render :partial => "options/option",
-                       :locals => { :battle => battle,
-                                    :option => option} %>
-          <% end %>
-        </div>
-      </div>
-
-      <% if can? :show, battle and not battle.in_future? %>
         <div class="row">
           <div class="span12">
-            <%= link_to(battle_path(battle),
-                        :id => "more_battle#{battle[:id]}",
-                        :class => "btn btn-small btn-info pull-right") do %>
-                <i class="icon-eye-open"></i>
-              <%= t 'battles._battle.statistics' %>
+            <% if can? :destroy, battle %>
+              <h3 class="remove pull-right">
+                <%= link_to(battle_path(battle),
+                            :confirm => t('battles._battle.destroy'),
+                            :method => :delete,
+                            :remote => true,
+                            :id => "delete_battle#{battle[:id]}") do %>
+                  <i class="icon-remove pull-right"></i>
+                <% end %>
+              </h3>
+            <% end %>
+
+            <% if can? :update, battle %>
+              <h3 class="update pull-right">
+                <%= link_to(edit_battle_path(battle),
+                            :remote => true,
+                            :id => "edit_battle#{battle[:id]}") do %>
+                  <i class="icon-edit pull-right"></i>
+                <% end %>
+              </h3>
             <% end %>
           </div>
         </div>
-      <% end %>
 
+        <h2 class="center"><%= t('battles._battle.title', number: battle[:id]) %></h2>
+
+        <div class="row">
+          <div class="span6">
+            <div class="row">
+              <div class="span6">
+                <h5 class="pull-left"><%= t 'activerecord.attributes.battle.starts_at' %></h5>
+              </div>
+            </div>
+            <div class="row">
+              <div class="span6">
+                <h4 class="show-start-date date-left">
+                  <%= battle.starts_at.strftime('%d/%m/%y - %H:%M') %>
+                </h4>
+              </div>
+            </div>
+          </div>
+          <div class="span6">
+            <div class="row">
+              <div class="span6">
+                <h5 class="pull-right"><%= t 'activerecord.attributes.battle.duration' %></h5>
+              </div>
+            </div>
+            <div class="row">
+              <div class="span6">
+                <h4 class="show-end-date date-right">
+                  <%= t 'datetime.distance_in_words.x_minutes', :count => battle.duration %>
+                </h4>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="battle-box">
+          <div class="row">
+            <% battle.options.each do |option| %>
+              <%= render :partial => "options/option",
+                         :locals => { :battle => battle,
+                                      :option => option} %>
+            <% end %>
+          </div>
+        </div>
+
+        <% if can? :show, battle and not battle.in_future? %>
+          <div class="row">
+            <div class="span12">
+              <%= link_to(battle_path(battle),
+                          :id => "more_battle#{battle[:id]}",
+                          :class => "btn btn-small btn-info pull-right") do %>
+                  <i class="icon-eye-open"></i>
+                <%= t 'battles._battle.statistics' %>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+
+      </div>
     </div>
   </div>
+
 </div>
 

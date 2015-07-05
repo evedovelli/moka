@@ -7,7 +7,7 @@ describe Battle do
     @attr = {
       :options => [@b1, @b2],
       :starts_at => DateTime.now,
-      :finishes_at => DateTime.now + 7.days
+      :duration => '60'
     }
   end
 
@@ -19,11 +19,6 @@ describe Battle do
   describe 'validates presence of required attributes' do
     it 'should fails when starts_at is empty' do
       @attr.delete(:starts_at)
-      battle = Battle.new(@attr)
-      expect(battle).not_to be_valid
-    end
-    it 'should fails when finishes_at is empty' do
-      @attr.delete(:finishes_at)
       battle = Battle.new(@attr)
       expect(battle).not_to be_valid
     end
@@ -45,28 +40,32 @@ describe Battle do
     end
   end
 
-  describe 'validates timings' do
-    it 'should fails when finishes earlier than starts' do
-      battle = Battle.new(@attr.merge(:starts_at => DateTime.now, :finishes_at => DateTime.now - 1.day))
+  describe 'validate duration numericality' do
+    it 'should fails for non integer' do
+      battle = Battle.new(@attr.merge(:duration => '7.34'))
       expect(battle).not_to be_valid
     end
-    it 'should fails when finishes later than starts' do
-      battle = Battle.new(@attr.merge(:starts_at => DateTime.now, :finishes_at => DateTime.now + 1.day))
-      expect(battle).to be_valid
+    it 'should fails for 0' do
+      battle = Battle.new(@attr.merge(:duration => '0'))
+      expect(battle).not_to be_valid
+    end
+    it 'should fails for negative values' do
+      battle = Battle.new(@attr.merge(:duration => '-10'))
+      expect(battle).not_to be_valid
     end
   end
 
   describe 'current' do
-    it 'should return only battles which start_at is smaller and finishes_at is greater than current time' do
+    it 'should return only battles which start_at is smaller and starts_at plus duration is greater than current time' do
       e1 = double()
       e2 = double()
       e3 = double()
       allow(e1).to receive(:starts_at).and_return(DateTime.new(2017,3,1,1,0))
       allow(e2).to receive(:starts_at).and_return(DateTime.new(2017,3,1,2,0))
       allow(e3).to receive(:starts_at).and_return(DateTime.new(2017,3,1,3,0))
-      allow(e1).to receive(:finishes_at).and_return(DateTime.new(2017,3,1,2,15))
-      allow(e2).to receive(:finishes_at).and_return(DateTime.new(2017,3,2,0,0))
-      allow(e3).to receive(:finishes_at).and_return(DateTime.new(2017,3,1,4,0))
+      allow(e1).to receive(:duration).and_return(75)
+      allow(e2).to receive(:duration).and_return(22*60)
+      allow(e3).to receive(:duration).and_return(60)
       allow(DateTime).to receive(:current).and_return(DateTime.new(2017,3,1,2,30))
       allow(Battle).to receive(:all).and_return([e1, e2, e3])
       battles = Battle.current
@@ -96,14 +95,14 @@ describe Battle do
     it 'should return the remaining time for battle split in hours, minutes and seconds' do
       Timecop.freeze(Time.local(1994))
       battle = Battle.new(@attr.merge(
-                                          :starts_at => DateTime.now - 1.hour,
-                                          :finishes_at => DateTime.now + 1.hour + 3.minute + 20.seconds
-                                         ))
+                                      :starts_at => DateTime.now - 1.hour,
+                                      :duration  => 123
+                                     ))
       expect(battle.remaining_time).to eq({
-                                             hours: 1,
-                                             minutes: 3,
-                                             seconds: 20
-                                            })
+                                          hours: 1,
+                                          minutes: 3,
+                                          seconds: 0
+                                         })
     end
   end
 
@@ -111,28 +110,28 @@ describe Battle do
     it 'should return true if battle will happen in future' do
       Timecop.freeze(Time.local(2001))
       battle = Battle.new(@attr.merge(
-                                          :starts_at => DateTime.now + 1.hour,
-                                          :finishes_at => DateTime.now + 3.days + 3.hours
-                                         ))
+                                      :starts_at => DateTime.now + 1.hour,
+                                      :duration => 3*24*60
+                                     ))
       expect(battle.in_future?).to eq(true)
     end
     it 'should return false if battle will happen in future' do
       Timecop.freeze(Time.local(2001))
       battle = Battle.new(@attr.merge(
-                                          :starts_at => DateTime.now - 1.day,
-                                          :finishes_at => DateTime.now - 3.hours
-                                         ))
-        expect(battle.in_future?).to eq(false)
+                                      :starts_at => DateTime.now - 1.day,
+                                      :duration => 20*60
+                                     ))
+      expect(battle.in_future?).to eq(false)
     end
   end
 
   describe 'results by option' do
     before(:each) do
-      @b1 = FactoryGirl.create(:option, { name: "Julia", picture: 1 })
-      @b2 = FactoryGirl.create(:option, { name: "Jacques", picture: 2 })
+      @b1 = FactoryGirl.create(:option, { name: "Potato" })
+      @b2 = FactoryGirl.create(:option, { name: "Tomato" })
       @battle = FactoryGirl.create(:battle, {
-        starts_at:   DateTime.now - 1.day,
-        finishes_at: DateTime.now + 1.day,
+        starts_at: DateTime.now - 1.day,
+        duration: 24*60,
         number_of_options: 0,
         options: [@b1, @b2]
       })
@@ -172,11 +171,11 @@ describe Battle do
   describe 'results by hour' do
     before(:each) do
       Timecop.freeze(Time.local(2021))
-      @b1 = FactoryGirl.create(:option, { name: "Julia", picture: 1 })
-      @b2 = FactoryGirl.create(:option, { name: "Jacques", picture: 2 })
+      @b1 = FactoryGirl.create(:option, { name: "Potato" })
+      @b2 = FactoryGirl.create(:option, { name: "Tomato" })
       @battle = FactoryGirl.create(:battle, {
-        starts_at:   DateTime.now,
-        finishes_at: DateTime.now + 4.hours,
+        starts_at: DateTime.now,
+        duration: 4*60,
         number_of_options: 0,
         options: [@b1, @b2]
       })

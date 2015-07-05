@@ -6,23 +6,23 @@ Background:
     Given I am logged in
     And I am an admin
     And the following battles were added:
-    | starts_at                 | finishes_at               |
-    | 2015-05-18 10:30:14 -0300 | 2015-05-22 10:30:13 -0300 |
+    | starts_at                 | duration  |
+    | 2015-05-18 10:30:14 -0300 | 5760      |
     And I am on the battle index page
     And I press the button to edit 1st battle
 
     @javascript
     Scenario: Update a battle
-      When I select datetime "2015 04 28 - 10:11" as the "battle_starts_at"
+      When I fill in "battle_duration" with "300"
       And I press "Update"
       Then I should be on the battle index page
-      And I should see the battle that starts on "28/04/15 - 10:11"
+      And I should see "300 minutes"
 
     @javascript
-    Scenario: Timing errors
-      When I select datetime "2015 04 28 - 10:11" as the "battle_finishes_at"
+    Scenario: Update a battle
+      When I add 1st option "Vader" with picture "vader.jpg"
       And I press "Update"
+      And I wait 2 seconds for uploading images
       Then I should be on the battle index page
-      And I should see an error for finishes_at
-
+      And I should see the image "vader.jpg"
 

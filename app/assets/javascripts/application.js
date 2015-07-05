@@ -14,11 +14,13 @@
 //= require jquery.turbolinks
 //= require jquery_ujs
 //= require bootstrap
-//= require bootstrap-datetimepicker/core
-//= require bootstrap-datetimepicker/pickers
-//= require bootstrap-datetimepicker/locales/bootstrap-datetimepicker.pt-BR
 //= require Chart
 //= require jquery_nested_form
+//= require jquery.remotipart
+//= require nprogress
+//= require nprogress-turbolinks
+//= require nprogress-ajax
+//= require jquery.validate
 //= require_tree .
 //= require turbolinks
 

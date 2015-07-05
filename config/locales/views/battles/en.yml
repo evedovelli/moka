@@ -8,7 +8,7 @@ en:
       title: 'Battle number %{number}'
       statistics: 'Statistics'
     _form:
-      title: 'Choose options and schedule battle'
+      title: 'Compose your battle'
       add_option: 'Add Option'
     show:
       title: 'Battle %{id} statistics'
@@ -19,4 +19,6 @@ en:
       info: '%{total} votes'
     _total_hour:
       title: 'Total of votes in each hour:'
+    _option_fields:
+      upload_image: 'Click here to add image'
 

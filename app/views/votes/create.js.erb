@@ -2,8 +2,8 @@ $('#vote_form').html("<%= j (render 'votes/form') %>");
 $('#flash_messages').slideUp(350);
 $('#partial_results').html("<%= j (render "votes/vote")%>")
 $('#partial_results').slideDown(350);
-$(document).ready(selectablePicture);
-$(document).ready(closeOverlayResults);
+jQuery(selectablePicture);
+jQuery(closeOverlayResults);
 
 jQuery(function() {
   var data, partialChart;

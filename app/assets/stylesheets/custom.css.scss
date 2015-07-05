@@ -3,29 +3,10 @@
   background-image: url('/assets/glyphicons-halflings-white.png');
 }
 
-.icon-close {
-  height: 40px;
-  width: 40px;
-  background: url('sprite.png') 0 -100px;
-}
-
 .missing-icon-close {
   height: 60px;
   width: 40px;
   background: url('sprite.png') -40px -100px;
-}
-
-.icon-poll {
-  height: 40px;
-  width: 40px;
-  background: url('sprite.png') 0px 0px;
-}
-
-.title-poll {
-  margin-top: 20px;
-  font-size: 3em;
-  margin-left: 5px;
-  padding-bottom: 10px;
 }
 
 h1, h2 {

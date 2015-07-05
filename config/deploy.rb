@@ -52,5 +52,6 @@ namespace :deploy do
   before :deploy, "deploy:check_revision"
   after :deploy, "deploy:restart"
   after :rollback, "deploy:restart"
+  after :update_code, "deploy:build_missing_paperclip_styles"
 
 end
