@@ -96,6 +96,10 @@ gem 'chart-js-rails'
 # For attaching images
 gem "paperclip", "~> 3.5.3"
 
+# To use Paperclip with AWS S3
+gem 'aws-sdk', '~> 1.6'
+
+
 # For allowing file uploads using Ajax
 gem 'remotipart', '~> 1.2'
 
