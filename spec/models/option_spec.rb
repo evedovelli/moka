@@ -33,19 +33,11 @@ describe Option do
     end
   end
 
-  describe 'color' do
-    it 'should return a color code for the option according to his id' do
-      @attr[:id] = 2
+  describe 'number of votes' do
+    it 'should return the number of votes for this option' do
       option = Option.new(@attr)
-      expect(option.color).to match("#46BFBD")
-    end
-  end
-
-  describe 'color' do
-    it 'should return a highlight color code for the option according to his id' do
-      @attr[:id] = 3
-      option = Option.new(@attr)
-      expect(option.highlight).to match("#FFC870")
+      votes = FactoryGirl.create_list(:vote, 20, {option: option})
+      expect(option.number_of_votes).to eq(20)
     end
   end
 

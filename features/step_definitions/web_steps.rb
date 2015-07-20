@@ -3,13 +3,13 @@
 Given /^I am logged on my home page$/ do
   create_user("myself", "myself@email.com", "secretpassword")
   sign_in("myself@email.com", "secretpassword")
-  visit user_home_path
+  visit root_path
 end
 
 Given /^I am signed in on my home page$/ do
   logout(:user)
   sign_in("myself@email.com", "secretpassword")
-  visit user_home_path
+  visit root_path
 end
 
 Given /^current time is (.+)$/ do |time|

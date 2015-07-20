@@ -1,30 +1,9 @@
-<div id="results">
-  <div class="span12">
-    <h5>
-      <%= t('votes._result.remaining_time_html',
-            :hours => @remaining_time[:hours],
-            :minutes => @remaining_time[:minutes],
-            :seconds => @remaining_time[:seconds]
-           ) %>
-    </h5>
-  </div>
-
-  <div class="span12">
-    <canvas height="250" id="canvas" width="250"></canvas>
-  </div>
-
-  <% i = 0 %>
-  <% @results_by_option.reverse_each do |result| %>
-    <% i += 1 %>
-    <div class="<%= get_option_span_poll(@number_of_options, i) %>">
-      <div class="partial_info pull-right">
-        <h4><%= result[:label] %></h4>
-        <h5><%= t('votes._result.info', :percent => result[:percent]) %></h5>
-      </div>
-      <div id="partial_picture<%= i %>">
-        <%= image_tag result[:picture].url(:medium) %>
-      </div>
+<div id="<%="results#{id}"%>" class="results">
+  <div class="row">
+    <div class="span4">
+      <h4 class="center">
+        <%= t('votes._results.votes', count: votes) %>
+      </h4>
     </div>
-  <% end %>
-
+  </div>
 </div>

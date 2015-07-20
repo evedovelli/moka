@@ -48,6 +48,10 @@ Given /^I exist as an user$/ do
   create_user("myself", "myself@email.com", "secretpassword")
 end
 
+Given /^user "([^"]*)" exists$/ do |user|
+  create_user(user, "#{user}@email.com", "#{user}password")
+end
+
 Given /^I do not exist as an user$/ do
   delete_user("myself@email.com")
 end

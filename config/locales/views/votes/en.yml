@@ -1,12 +1,6 @@
 en:
   votes:
-    new:
-      title_html: 'Who should win this battle?'
-    _vote:
-      registered_html: 'Your vote for <b>%{name}</b> was successfully sent.'
-    no_battle:
-      title_html: 'There is no current <b>battle</b> :( Come back later!'
-    _result:
-      info: '%{percent}% of votes'
-      remaining_time_html: '<b>%{hours}:%{minutes}:%{seconds}</b> remaining for voting'
-
+    _results:
+      votes:
+        one: "%{count} vote"
+        other: "%{count} votes"

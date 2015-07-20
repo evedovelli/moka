@@ -14,3 +14,5 @@ pt-BR:
     min_options: 'Você deve especificar pelo menos 2 opções'
     required: 'Campo obrigatório'
     greater_than_zero: 'O valor deve ser maior que zero'
+    invalid_username: 'é inválido'
+    invalid_image: 'Imagem inválida'

@@ -2,7 +2,7 @@ en:
   layouts:
     _navigation:
       page_title: 'Batalharia'
-      home: 'Config'
+      home: 'Home'
       logout: 'Logout'
       edit_account: 'Edit account'
       login: 'Login'

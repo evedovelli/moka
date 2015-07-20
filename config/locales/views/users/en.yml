@@ -1,7 +1,5 @@
 en:
   users:
     home:
-      title: 'Settings'
-      manage_options: 'Options'
-      manage_battles: 'Battles'
+      title: 'Battles'
 

@@ -1,21 +1,3 @@
-$('#vote_form').html("<%= j (render 'votes/form') %>");
-$('#flash_messages').slideUp(350);
-$('#partial_results').html("<%= j (render "votes/vote")%>")
-$('#partial_results').slideDown(350);
-jQuery(selectablePicture);
-jQuery(closeOverlayResults);
-
-jQuery(function() {
-  var data, partialChart;
-  data = [
-    <% @results_by_option.each do |result| %>
-      {
-        value: <%=result[:percent]%>,
-        color: "<%=result[:color]%>",
-        highlight: "<%=result[:highlight]%>",
-        label: "<%=result[:label]%>"
-      },
-    <% end %>
-  ]
-  return partialChart = new Chart($("#canvas").get(0).getContext("2d")).Doughnut(data, {});
-});
+<% @battle.options.each do |option| %>
+  $('<%="#results#{option.id}"%>').replaceWith("<%= j (render :partial => 'votes/results', :locals => { :id => option.id, :votes => option.number_of_votes }) %>");
+<% end %>

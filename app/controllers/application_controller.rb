@@ -20,4 +20,9 @@ class ApplicationController < ActionController::Base
     redirect_to root_url
   end
 
+  rescue_from Paperclip::Errors::NotIdentifiedByImageMagickError do |exception|
+    flash[:alert] = I18n.t('messages.invalid_image')
+    redirect_to request.referer
+  end
+
 end

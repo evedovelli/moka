@@ -18,7 +18,8 @@ Given /^the following battles were added:$/ do |table|
     FactoryGirl.create(:battle, { options: [o1, o2],
                                   number_of_options: 0,
                                   starts_at: battle[:starts_at],
-                                  duration: battle[:duration]
+                                  duration: battle[:duration],
+                                  user: User.find_by_username(battle[:user] || "myself")
                                 })
   end
 end
@@ -27,7 +28,9 @@ Given /^(\d+) battles were added$/ do |number|
   date = DateTime.now()
   for i in 1..number.to_i do
     FactoryGirl.create(:battle, { :starts_at => date,
-                                  :duration => 60*24*5 })
+                                  :duration => 60*24*5,
+                                  :user => User.find_by_username("myself")
+                                })
     date + 7.days
   end
 end
@@ -39,7 +42,7 @@ Given /^a battle was created with options "([^"]*)" and "([^"]*)"$/ do |option1,
     :number_of_options => 0,
     :options => [
       FactoryGirl.create(:option, { name: option1, picture: Rack::Test::UploadedFile.new(create_path('vader.jpg'), 'image/jpeg') }),
-      FactoryGirl.create(:option, { name: option2, picture: Rack::Test::UploadedFile.new(create_path('vader.jpg'), 'image/jpeg') })
+      FactoryGirl.create(:option, { name: option2, picture: Rack::Test::UploadedFile.new(create_path('palpatine.jpg'), 'image/jpeg') })
     ]
   })
 end
@@ -51,8 +54,8 @@ Given /^a battle was created with options "([^"]*)", "([^"]*)" and "([^"]*)"$/ d
     :number_of_options => 0,
     :options => [
       FactoryGirl.create(:option, { name: option1, picture: Rack::Test::UploadedFile.new(create_path('vader.jpg'), 'image/jpeg') }),
-      FactoryGirl.create(:option, { name: option2, picture: Rack::Test::UploadedFile.new(create_path('vader.jpg'), 'image/jpeg') }),
-      FactoryGirl.create(:option, { name: option3, picture: Rack::Test::UploadedFile.new(create_path('vader.jpg'), 'image/jpeg') })
+      FactoryGirl.create(:option, { name: option2, picture: Rack::Test::UploadedFile.new(create_path('palpatine.jpg'), 'image/jpeg') }),
+      FactoryGirl.create(:option, { name: option3, picture: Rack::Test::UploadedFile.new(create_path('dick_dastardly.jpg'), 'image/jpeg') })
     ]
   })
 end
@@ -63,7 +66,7 @@ Given /^a battle was created with options "([^"]*)" and "([^"]*)" starting (\d+)
     :duration => 48*60,
     :number_of_options => 0,
     :options => [
-      FactoryGirl.create(:option, { name: option1, picture: Rack::Test::UploadedFile.new(create_path('vader.jpg'), 'image/jpeg') }),
+      FactoryGirl.create(:option, { name: option1, picture: Rack::Test::UploadedFile.new(create_path('dick_dastardly.jpg'), 'image/jpeg') }),
       FactoryGirl.create(:option, { name: option2, picture: Rack::Test::UploadedFile.new(create_path('vader.jpg'), 'image/jpeg') })
     ]
   })
@@ -80,6 +83,24 @@ Given /^a battle was created with images "([^"]*)" and "([^"]*)"$/ do |image1, i
     ]
   })
 end
+
+Given /^a battle was created by "([^"]*)" with options:$/ do |user, table|
+  options = []
+  table.hashes.each do |option|
+    options.push(FactoryGirl.create(:option, {
+      name: option[:name],
+      picture: Rack::Test::UploadedFile.new(create_path(option[:image]), 'image/jpeg')
+    }))
+  end
+  FactoryGirl.create(:battle, {
+    :starts_at => DateTime.now - 1.day,
+    :duration => 47*60,
+    :user => User.find_by_username(user),
+    :number_of_options => 0,
+    :options => options
+  })
+end
+
 
 ### WHEN ###
 
@@ -147,6 +168,12 @@ end
 
 When /^I remove (\d+)(?:st|nd|rd|th) image$/ do |id|
   all('.delete_picture')[id.to_i - 1].click
+end
+
+When /^I click in "([^"]*)" within (\d+)(?:st|nd|rd|th) battle$/ do |link, battle_id|
+  within(all('.battle')[battle_id.to_i - 1]) do
+    find('.battle_user').click
+  end
 end
 
 ### THEN ###
@@ -253,6 +280,18 @@ Then /^I should see the preview of the image for (\d+)(?:st|nd|rd|th) option$/ d
     expect(page).to have_css(".delete_picture")
     expect(page).not_to have_css(".upload_picture")
     expect(page).not_to have_css(".no_picture_container")
+  end
+end
+
+Then /^I should see votes for (\d+)(?:st|nd|rd|th) battle$/ do |battle|
+  within(all('.battle')[battle.to_i - 1]) do
+    expect(page).to have_css(".results")
+  end
+end
+
+Then /^I should not see votes for (\d+)(?:st|nd|rd|th) battle$/ do |battle|
+  within(all('.battle')[battle.to_i - 1]) do
+    expect(page).not_to have_css(".results")
   end
 end
 

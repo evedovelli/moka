@@ -1,7 +1,5 @@
 pt-BR:
   users:
     home:
-      title: 'Configurações'
-      manage_options: 'Opções'
-      manage_battles: 'Batalhas'
+      title: 'Batalhas'
 

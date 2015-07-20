@@ -11,14 +11,17 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150629212041) do
+ActiveRecord::Schema.define(:version => 20150707002801) do
 
   create_table "battles", :force => true do |t|
     t.datetime "created_at",                 :null => false
     t.datetime "updated_at",                 :null => false
     t.datetime "starts_at"
     t.integer  "duration",   :default => 60
+    t.integer  "user_id"
   end
+
+  add_index "battles", ["user_id"], :name => "index_battles_on_user_id"
 
   create_table "options", :force => true do |t|
     t.string   "name"

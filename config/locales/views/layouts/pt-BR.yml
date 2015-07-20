@@ -2,7 +2,7 @@ pt-BR:
   layouts:
     _navigation:
       page_title: 'Batalharia'
-      home: 'Configurações'
+      home: 'Página Inicial'
       logout: 'Sair'
       edit_account: 'Editar conta'
       login: 'Entrar'

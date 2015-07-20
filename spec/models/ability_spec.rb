@@ -47,11 +47,33 @@ describe Ability do
         before :each do
           @other_user = FactoryGirl.create(:user, email: "another@ex.com", username: "second")
         end
-        it "should be able to manage its User" do
-          expect(@ability).to be_able_to(:manage, @user)
+        it "should be able to to access its home" do
+          expect(@ability).to be_able_to(:home, @user)
         end
-        it "should not be able to manage other User" do
-          expect(@ability).not_to be_able_to(:manage, @other_user)
+        it "should be able to read its User" do
+          expect(@ability).to be_able_to(:read, @user)
+        end
+        it "should be able to create its User" do
+          expect(@ability).to be_able_to(:create, @user)
+        end
+        it "should be able to update its User" do
+          expect(@ability).to be_able_to(:update, @user)
+        end
+        it "should be able to destroy its User" do
+          expect(@ability).to be_able_to(:destroy, @user)
+        end
+
+        it "should be able to read other User" do
+          expect(@ability).to be_able_to(:read, @other_user)
+        end
+        it "should not be able to create other User" do
+          expect(@ability).not_to be_able_to(:create, @other_user)
+        end
+        it "should not be able to update other User" do
+          expect(@ability).not_to be_able_to(:update, @other_user)
+        end
+        it "should not be able to destroy other User" do
+          expect(@ability).not_to be_able_to(:destroy, @other_user)
         end
       end
 
@@ -97,8 +119,8 @@ describe Ability do
         it "should not be able to index battles" do
           expect(@ability).not_to be_able_to(:index, Battle)
         end
-        it "should not be able to create battles" do
-          expect(@ability).not_to be_able_to(:create, Battle)
+        it "should be able to create battles" do
+          expect(@ability).to be_able_to(:create, Battle)
         end
         it "should not be able to update battles" do
           expect(@ability).not_to be_able_to(:update, @battle)

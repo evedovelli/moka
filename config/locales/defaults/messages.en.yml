@@ -14,3 +14,5 @@ en:
     min_options: 'You must specify at least 2 options'
     required: 'Required field'
     greater_than_zero: 'Value must be greater than zero'
+    invalid_username: 'is invalid'
+    invalid_image: 'Invalid image'

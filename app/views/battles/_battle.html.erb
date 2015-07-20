@@ -1,11 +1,17 @@
 <div class="battle_container">
 
-  <div id="battle<%= battle[:id] %>" class="battle main-box">
+  <% if battle.current? %>
+    <div id="battle<%= battle[:id] %>" class="battle main-box battle-current">
+  <% else %>
+    <div id="battle<%= battle[:id] %>" class="battle main-box battle-finished">
+  <% end %>
     <div class="row">
       <div class="span12">
-
         <div class="row">
           <div class="span12">
+            <h4 class="pull-left">
+              <%= link_to(battle.user.username, user_path(battle.user), :class => "battle_user") %>
+            </h4>
             <% if can? :destroy, battle %>
               <h3 class="remove pull-right">
                 <%= link_to(battle_path(battle),
@@ -63,27 +69,19 @@
           </div>
         </div>
 
-        <div class="battle-box">
-          <div class="row">
-            <% battle.options.each do |option| %>
-              <%= render :partial => "options/option",
-                         :locals => { :battle => battle,
-                                      :option => option} %>
-            <% end %>
-          </div>
-        </div>
-
-        <% if can? :show, battle and not battle.in_future? %>
-          <div class="row">
-            <div class="span12">
-              <%= link_to(battle_path(battle),
-                          :id => "more_battle#{battle[:id]}",
-                          :class => "btn btn-small btn-info pull-right") do %>
-                  <i class="icon-eye-open"></i>
-                <%= t 'battles._battle.statistics' %>
+        <%= simple_form_for(@vote, remote: true) do |f| %>
+          <div class="battle-box">
+            <div class="row">
+              <% battle.options.each do |option| %>
+                <%= render :partial => "options/option",
+                           :locals => { :battle => battle,
+                                        :option => option,
+                                        :f => f
+                                      } %>
               <% end %>
             </div>
           </div>
+          <%= f.button(:submit, t('buttons.vote'), :class => "vote_button btn btn-primary btn-large") %>
         <% end %>
 
       </div>

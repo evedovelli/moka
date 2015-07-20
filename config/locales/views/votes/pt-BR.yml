@@ -1,12 +1,6 @@
 pt-BR:
   votes:
-    new:
-      title_html: 'Quem deve ganhar essa batalha?'
-    _vote:
-      registered_html: 'Seu voto para <b>%{name}</b> foi enviado com sucesso.'
-    no_battle:
-      title_html: 'Não há <b>batalhas</b> no momento :( Volte novamente mais tarde!'
-    _result:
-      info: '%{percent}% dos votos'
-      remaining_time_html: 'Faltam <b>%{hours}:%{minutes}:%{seconds}</b> para encerrar a votação'
-
+    _results:
+      votes:
+        one: "%{count} voto"
+        other: "%{count} votos"

@@ -11,14 +11,14 @@ class Vote < ActiveRecord::Base
   validates :option,     :presence => true
 
   def finished_battle
-    if created_at && battle && battle.starts_at && battle.duration
-      errors.add(:created_at, I18n.t('messages.finished_battle')) unless battle.starts_at + battle.duration.minutes > created_at
+    if battle && battle.starts_at && battle.duration
+      errors.add(:created_at, I18n.t('messages.finished_battle')) unless battle.starts_at + battle.duration.minutes > DateTime.now
     end
   end
 
   def not_started_battle
-    if created_at && battle && battle.starts_at
-      errors.add(:created_at, I18n.t('messages.not_started_battle')) unless battle.starts_at < created_at
+    if battle && battle.starts_at
+      errors.add(:created_at, I18n.t('messages.not_started_battle')) unless battle.starts_at < DateTime.now
     end
   end
 

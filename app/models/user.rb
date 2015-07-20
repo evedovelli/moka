@@ -7,14 +7,30 @@ class User < ActiveRecord::Base
 
   attr_accessor :login
 
+  has_many :battles, dependent: :destroy
+
   # Setup accessible (or protected) attributes for your model
   attr_accessible :login, :username, :email, :password, :password_confirmation, :remember_me
 
 
   validates :username, :uniqueness => { :case_sensitive => false },
                        :presence => true
+  validate :username, :reserved_usernames
 
-  # Overriding devise authetication method to allow login using email or username
+  def reserved_usernames
+    case username
+    when 'sign_in'
+      errors.add(:username, I18n.t('messages.invalid_username'))
+    when 'sign_up'
+      errors.add(:username, I18n.t('messages.invalid_username'))
+    when 'sign_out'
+      errors.add(:username, I18n.t('messages.invalid_username'))
+    else
+      return
+    end
+  end
+
+  # Overriding devise authentication method to allow login using email or username
   def self.find_for_database_authentication(warden_conditions)
     conditions = warden_conditions.dup
     if login = conditions.delete(:login)
@@ -24,4 +40,12 @@ class User < ActiveRecord::Base
     end
   end
 
+  # Overrides numeric id by username for referring to user in URLs
+  def to_param
+    username
+  end
+
+  def sorted_battles
+    return battles.sort{|x, y| y.starts_at <=> x.starts_at }
+  end
 end

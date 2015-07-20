@@ -49,7 +49,15 @@ class Ability
 
     # Other users
     # users
-    can :manage, User do |u|
+    can :read, User
+    can :home, User
+    can :create, User do |u|
+      u == user
+    end
+    can :update, User do |u|
+      u == user
+    end
+    can :destroy, User do |u|
       u == user
     end
 
@@ -60,8 +68,9 @@ class Ability
     can :show, Battle do |e|
       not e.in_future?
     end
+    can :create, Battle
 
-    # Battles
+    # Votes
     can :read, Vote
     can :create, Vote
   end

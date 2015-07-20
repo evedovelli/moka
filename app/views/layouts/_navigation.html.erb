@@ -10,15 +10,24 @@
     <% end %>
 
     <div class="menu">
-      <% if user_signed_in? %>
-        <nav class="nav-collapse">
-          <ul class="nav pull-right">
-            <li><%= link_to t('layouts._navigation.home'), user_home_path %></li>
+      <nav class="nav-collapse">
+        <ul class="nav pull-right">
+          <% if user_signed_in? %>
+            <li>
+              <%= link_to(user_path(current_user)) do %>
+                <i class="icon-user icon-white"></i>
+                <%= current_user.username %>
+              <% end %>
+            </li>
+            <li><%= link_to t('layouts._navigation.home'), root_path %></li>
             <li><%= link_to t('layouts._navigation.logout'), destroy_user_session_path, :method=>'delete' %></li>
             <li><%= link_to t('layouts._navigation.edit_account'), edit_user_registration_path %></li>
-          </ul>
-        </nav>
-      <% end %>
+          <% else %>
+            <li><%= link_to t('layouts._navigation.login'), new_user_session_path %></li>
+            <li><%= link_to t('layouts._navigation.sign_up'), new_user_registration_path %></li>
+          <% end %>
+        </ul>
+      </nav>
     </div>
   </div>
 </div>

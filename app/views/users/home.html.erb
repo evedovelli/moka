@@ -1,13 +1,7 @@
 <div class="span12">
   <h1><%= t '.title' %></h1>
-  <div class="row">
-    <% if can? :index, Battle %>
-      <div class="span4">
-        <h2>
-          <%= link_to(t('.manage_battles'), battles_path, :id => "manage_battles",
-                        :class => "btn btn-large btn-block btn-info text-center") %>
-        </h2>
-      </div>
-    <% end %>
-  </div>
+
+  <%= render 'battles/new' %>
+  <%= render 'battles/index' %>
+
 </div>

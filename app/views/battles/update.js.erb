@@ -1,1 +1,2 @@
-$('#edit_battle_<%= @battle[:id] %>').parent().replaceWith("<%= j (render @battle) %>");
+$('#edit_battle_<%= @battle.id %>').parent().replaceWith("<%= j (render @battle) %>");
+jQuery(selectablePictureBattle("#battle<%= @battle.id %>"));

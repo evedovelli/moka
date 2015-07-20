@@ -2,10 +2,6 @@ class BattlesController < ApplicationController
   before_filter :authenticate_user!, :except => [:show]
   load_and_authorize_resource :battle, :except => [:create]
 
-  def index
-    @battles = Battle.all
-  end
-
   def new
     2.times do
       @battle.options.build
@@ -15,7 +11,6 @@ class BattlesController < ApplicationController
     @options_id = "options_new"
     respond_to do |format|
       format.js {}
-      format.html { render 'new' }
     end
   end
 
@@ -24,12 +19,14 @@ class BattlesController < ApplicationController
     if params[:battle][:duration] == ""
       params[:battle][:duration] = (24*60).to_s
     end
+    params[:battle][:user] = current_user;
 
     @battle = Battle.new(params[:battle])
     authorize! :create, @battle
 
     @battle_options_error = ""
     if @battle.save
+      @vote = Vote.new()
       respond_to do |format|
         format.js {}
       end
@@ -69,6 +66,7 @@ class BattlesController < ApplicationController
 
     @battle_options_error = ""
     if @battle.update_attributes(params[:battle])
+      @vote = Vote.new()
       respond_to do |format|
         format.js {}
       end
@@ -83,12 +81,6 @@ class BattlesController < ApplicationController
         format.js { render 'battles/reload_update' }
       end
     end
-  end
-
-  def show
-    @total = @battle.votes.count
-    @results_by_option = @battle.results_by_option
-    @results_by_hour = @battle.results_by_hour
   end
 
 end

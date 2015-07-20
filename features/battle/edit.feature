@@ -12,23 +12,23 @@ Background:
     | 2015-05-26 10:30:14 -0300 | 3000      |
 
     Scenario: Admin cannot see battle form unless he press the button to edit battle
-      When I go to the battle index page
+      When I go to the home page
       Then I should not see the edit battle form for 1st battle
 
     @javascript
-    Scenario: Admin can edit a battle from battle index page
-      When I go to the battle index page
+    Scenario: Admin can edit a battle from home page
+      When I go to the home page
       And I press the button to edit 1st battle
-      Then I should be on the battle index page
+      Then I should be on the home page
       And I should see the edit form for the 1st battle
       And I should see 2 battles
 
     @javascript
     Scenario: Cancelling new battle creation
-      When I go to the battle index page
+      When I go to the home page
       And I press the button to edit 1st battle
       And I cancel battle edition
-      Then I should be on the battle index page
+      Then I should be on the home page
       And I should not see the edit battle form for 1st battle
       And I should see 3 battles
 
