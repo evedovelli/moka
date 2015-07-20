@@ -9,21 +9,21 @@ Background:
 
     @javascript
     Scenario: User may upload picture
-      When I go to the battle index page
+      When I go to the home page
       And I press the button to add new battle
       Then I should see the button to add 1st image
       And I should see the button to add 2nd image
 
     @javascript
     Scenario: User may add options and upload pictures
-      When I go to the battle index page
+      When I go to the home page
       And I press the button to add new battle
       And I press the button to add option
       Then I should see the button to add 3rd image
 
     @javascript
     Scenario: User select image and see preview
-      When I go to the battle index page
+      When I go to the home page
       And I press the button to add new battle
       And I select "dick_dastardly.jpg" image for 2nd option
       Then I should see the preview of the image for 2nd option
@@ -31,7 +31,7 @@ Background:
 
     @javascript
     Scenario: User see upload message after removing image preview
-      When I go to the battle index page
+      When I go to the home page
       And I press the button to add new battle
       And I select "dick_dastardly.jpg" image for 2nd option
       And I select "devil_robot.jpg" image for 1st option
@@ -41,7 +41,7 @@ Background:
 
     @javascript
     Scenario: User upload images successfully
-      When I go to the battle index page
+      When I go to the home page
       And I press the button to add new battle
       And I add 1st option "Dick Dastardly" with picture "dick_dastardly.jpg"
       And I add 2nd option "Devil Robot" with picture "devil_robot.jpg"
@@ -53,7 +53,7 @@ Background:
     @javascript
     Scenario: User see existing images when editing battle
       Given a battle was created with images "palpatine.jpg" and "devil_robot.jpg"
-      When I go to the battle index page
+      When I go to the home page
       And I press the button to edit 1st battle
       Then I should see the image "palpatine.jpg"
       And I should see the image "devil_robot.jpg"
@@ -61,7 +61,7 @@ Background:
     @javascript
     Scenario: User can add image when editing battle
       Given a battle was created with images "palpatine.jpg" and "devil_robot.jpg"
-      When I go to the battle index page
+      When I go to the home page
       And I press the button to edit 1st battle
       And I press the button to add option
       Then I should see the button to add 3rd image
@@ -71,7 +71,7 @@ Background:
     @javascript
     Scenario: User see preview of added images when editing battle
       Given a battle was created with images "palpatine.jpg" and "devil_robot.jpg"
-      When I go to the battle index page
+      When I go to the home page
       And I press the button to edit 1st battle
       And I press the button to add option
       And I select "dick_dastardly.jpg" image for 3rd option
@@ -82,7 +82,7 @@ Background:
     @javascript
     Scenario: User see successfully add and update images
       Given a battle was created with images "palpatine.jpg" and "devil_robot.jpg"
-      When I go to the battle index page
+      When I go to the home page
       And I press the button to edit 1st battle
       And I press the button to add option
       And I add 3rd option "Dick Dastardly" with picture "dick_dastardly.jpg"

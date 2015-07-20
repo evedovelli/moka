@@ -121,9 +121,6 @@ gem 'simple_form'
 # To validate forms in client side
 gem "jquery-validation-rails"
 
-# To set up Google's recaptcha to block non-humans
-gem "recaptcha", :require => "recaptcha/rails"
-
 # To show progress while charging pages
 gem 'nprogress-rails'
 

@@ -6,3 +6,4 @@ en:
       vote:
         option: "Option"
         battle: "Battle"
+        created_at: ""

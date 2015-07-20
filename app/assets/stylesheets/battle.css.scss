@@ -1,4 +1,8 @@
 $date-color: #EDEDED;
+$border-color-current: lighten(#46a546, 30%);
+$border-color-finished: #E5E5E5;
+$background-color-current: lighten(#46a546, 45%);
+$background-color-finished: #f9f9f9;
 
 .show-end-date {
   margin-left: -30px;
@@ -56,3 +60,22 @@ div.add_new_option_container a {
   margin-top: 22px;
 }
 
+.main-box.battle-current {
+//   background-color: $background-color-current;
+  border: 1px solid $border-color-current;
+  box-shadow: 0px 3px 10px rgba(70, 165, 70, 0.2) inset;
+  .show-start-date {
+    background-color: $background-color-current;
+    box-shadow: 10px 3px 10px rgba(70, 165, 70, 0.25) inset;
+  }
+  .show-end-date {
+    background-color: $background-color-current;
+    box-shadow: -10px 3px 10px rgba(0, 0, 0, 0.08) inset;
+  }
+}
+
+.main-box.battle-finished {
+  background-color: $background-color-finished;
+  border: 1px solid $border-color-finished;
+  box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.05) inset;
+}

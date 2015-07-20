@@ -9,6 +9,7 @@ FactoryGirl.define do
 
     after :build do |battle, evaluator|
       battle.options.push FactoryGirl.build_list(:option, evaluator.number_of_options, battle: nil)
+      battle.user ||= FactoryGirl.build(:user)
     end
   end
 end

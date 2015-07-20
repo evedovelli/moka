@@ -1,13 +1,29 @@
-<div id="option<%= option[:id] %>">
+<div id="option<%= option.id %>">
   <div class="span4">
 
-    <div class="option-box">
-      <div class="row">
-        <div class="span4">
-          <div class="picture-box">
-            <%= image_tag option.picture.url(:medium) %>
+    <div class="vote_picture_frame <%= if battle.current?
+                                         "current_battle"
+                                       end %>">
+      <div id="<%="vote_option#{option.id}"%>" class="vote_picture">
+
+        <%= f.radio_button(
+          :option,
+          option.id,
+          :checked => false,
+          :name => "vote[option_id]",
+          :class => "vote_radio"
+        )%>
+
+        <div class="option-box">
+          <div class="row">
+            <div class="span4">
+              <div class="picture-box">
+                <%= image_tag option.picture.url(:medium) %>
+              </div>
+            </div>
           </div>
         </div>
+
       </div>
     </div>
 
@@ -16,6 +32,12 @@
         <h3 class="center"><%= option.name %></h3>
       </div>
     </div>
+
+    <% if battle.current? && battle.user != current_user %>
+      <div id='<%="results#{option.id}"%>' style='display:none;'></div>
+    <% else %>
+      <%= render :partial => 'votes/results', :locals => { :id => option.id, :votes => option.number_of_votes } %>
+    <% end %>
 
   </div>
 </div>

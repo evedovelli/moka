@@ -6,3 +6,4 @@ pt-BR:
       vote:
         option: "Opção"
         battle: "Batalha"
+        created_at: ""

@@ -193,7 +193,6 @@ GEM
     rake (10.4.2)
     rdoc (3.12.2)
       json (~> 1.4)
-    recaptcha (0.4.0)
     remotipart (1.2.1)
     responders (1.1.2)
       railties (>= 3.2, < 4.2)
@@ -306,7 +305,6 @@ DEPENDENCIES
   pg
   rails (= 3.2.17)
   rails_12factor
-  recaptcha
   remotipart (~> 1.2)
   rolify
   routing-filter

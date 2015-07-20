@@ -1,4 +1,2 @@
-$('#vote_form').html("<%= j (render 'form') %>");
-$('#flash_messages').html("<%= j (render 'layouts/messages') %>");
-$('#flash_messages').slideDown(100);
-$(document).ready(selectablePicture);
+$('#flash_messages').html("<%= j (render 'layouts/messages') %>").show().fadeOut(5000);
+jquery.ready(selectablePicture);

@@ -12,10 +12,13 @@ module NavigationHelpers
       root_path
 
     when /my home\s?page/
-      user_home_path
+      root_path
 
-    when /the config(?:|uration) page/
-      user_home_path
+    when /my (?:|user )profile page/
+      user_path("myself")
+
+    when /the "([^"]*)" profile page/
+      user_path($1)
 
     when /the sign up page/
       new_user_registration_path
@@ -28,9 +31,6 @@ module NavigationHelpers
 
     when /the option index page/
       options_path
-
-    when /the battle index page/
-      battles_path
 
     else
       begin

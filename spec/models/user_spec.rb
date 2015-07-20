@@ -163,5 +163,36 @@ describe User do
     end
   end
 
+  describe 'username' do
+    it 'should reject sign_in' do
+      user = User.new(@attr.merge(:username => "sign_in"))
+      expect(user).not_to be_valid
+    end
+    it 'should reject sign_out' do
+      user = User.new(@attr.merge(:username => "sign_out"))
+      expect(user).not_to be_valid
+    end
+    it 'should reject sign_up' do
+      user = User.new(@attr.merge(:username => "sign_up"))
+      expect(user).not_to be_valid
+    end
+  end
+
+  describe 'to_param' do
+    it 'should return the username' do
+      user = User.create!(@attr)
+      expect(user.to_param).to eq("testuser")
+    end
+  end
+
+  describe 'sorted_battles' do
+    it 'should return the battles sorted according to start_at' do
+      user = User.create!(@attr)
+      e1 = FactoryGirl.create(:battle, {:starts_at => DateTime.new(2017,3,1,4,0), :user => user})
+      e2 = FactoryGirl.create(:battle, {:starts_at => DateTime.new(2017,3,1,2,0), :user => user})
+      e3 = FactoryGirl.create(:battle, {:starts_at => DateTime.new(2017,3,1,3,0), :user => user})
+      expect(user.sorted_battles).to eq([e1, e3, e2])
+    end
+  end
 
 end

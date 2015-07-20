@@ -3,11 +3,6 @@ require 'rails_helper'
 describe BattlesController do
 
   describe "When user is not logged in" do
-    it "should be redirected to 'sign in' page if accessing index" do
-      get :index
-      expect(flash[:alert]).to match("You need to sign in or sign up before continuing.")
-      expect(response).to redirect_to("/en/users/sign_in")
-    end
     it "should be redirected to 'sign in' page if accessing new page" do
       get :new
       expect(flash[:alert]).to match("You need to sign in or sign up before continuing.")
@@ -33,12 +28,6 @@ describe BattlesController do
       expect(flash[:alert]).to match("You need to sign in or sign up before continuing.")
       expect(response).to redirect_to("/en/users/sign_in")
     end
-    it "should not be redirected to 'sign in' page if accessing show page" do
-      @fake_battle = FactoryGirl.create(:battle)
-      get :show, {id: @fake_battle.id}
-      expect(flash[:alert]).not_to match("You need to sign in or sign up before continuing.")
-      expect(response).not_to redirect_to("/en/users/sign_in")
-    end
   end
 
   describe "When user is logged in" do
@@ -53,11 +42,6 @@ describe BattlesController do
         allow(controller).to receive(:authorize!).and_raise(CanCan::AccessDenied)
       end
 
-      it "should be redirected to root page if accessing index" do
-        get :index
-        expect(flash[:alert]).to match("Access denied.")
-        expect(response).to redirect_to(root_url)
-      end
       it "should be redirected to root page if accessing new page" do
         get :new
         expect(flash[:alert]).to match("Access denied.")
@@ -84,11 +68,6 @@ describe BattlesController do
         expect(flash[:alert]).to match("Access denied.")
         expect(response).to redirect_to(root_url)
       end
-      it "should be redirected to root page if showing the page" do
-        get :show, {id: @fake_battle.id}
-        expect(flash[:alert]).to match("Access denied.")
-        expect(response).to redirect_to(root_url)
-      end
     end
 
     describe "When user is authorized" do
@@ -98,25 +77,8 @@ describe BattlesController do
         allow(controller).to receive(:authorize!).and_return(true)
       end
 
-      describe "index" do
-        before (:each) do
-          @fake_battles = [double('Battle1'), double('Battle2'), double('Battle3')]
-          allow(Battle).to receive(:all).and_return(@fake_battles)
-          get :index
-        end
-        it "should respond to HTML" do
-          expect(response.content_type).to eq(Mime::HTML)
-        end
-        it "should render the battle index" do
-          expect(response).to render_template('battles')
-        end
-        it "should make the list of battles available to that template" do
-          expect(assigns(:battles)).to eq(@fake_battles)
-        end
-      end
-
       describe "new" do
-        it "should call new with correct art" do
+        it "should call new" do
           @fake_battle = FactoryGirl.create(:battle)
           expect(Battle).to receive(:new).and_return(@fake_battle)
           get :new, :format => 'js'
@@ -149,24 +111,28 @@ describe BattlesController do
 
       describe "create" do
         before :each do
-          @fake_battle = FactoryGirl.create(:battle)
+          @fake_battle = FactoryGirl.create(:battle, {user: @fake_user})
           allow(Battle).to receive(:new).and_return(@fake_battle)
         end
-        it "should call new with correct art" do
+        it "should call new with correct starts_at and user" do
           Timecop.freeze(Time.local(1994))
-          expect(Battle).to receive(:new).with({"starts_at" => DateTime.now})
+          expect(Battle).to receive(:new).with({"starts_at" => DateTime.now, "user" => @fake_user})
           post(:create, {battle: {}, :format => 'js'})
         end
         it "should call new with correct duration" do
-          expect(Battle).to receive(:new).with({"duration" => "23", "starts_at" => DateTime.now})
+          Timecop.freeze(Time.local(1994))
+          expect(Battle).to receive(:new).with({"duration" => "23", "starts_at" => DateTime.now, "user" => @fake_user})
           post(:create, {battle: {duration: "23"}, :format => 'js'})
         end
         it "should call new with default duration when not specified" do
-          expect(Battle).to receive(:new).with({"duration" => (24*60).to_s, "starts_at" => DateTime.now})
+          Timecop.freeze(Time.local(1994))
+          expect(Battle).to receive(:new).with({"duration" => (24*60).to_s, "starts_at" => DateTime.now, "user" => @fake_user})
           post(:create, {battle: {duration: ""}, :format => 'js'})
         end
         describe "in success" do
           before :each do
+            @fake_vote = double("vote")
+            allow(Vote).to receive(:new).and_return(@fake_vote)
             allow(@fake_battle).to receive(:save).and_return(true)
             post(:create, {battle: {}, :format => 'js'})
           end
@@ -178,6 +144,9 @@ describe BattlesController do
           end
           it "should make battle available to that template" do
             expect(assigns(:battle)).to eq(@fake_battle)
+          end
+          it "should make a new vote available to that template" do
+            expect(assigns(:vote)).to eq(@fake_vote)
           end
           it "should make empty battle options error available to that template" do
             expect(assigns(:battle_options_error)).to match("")
@@ -274,6 +243,8 @@ describe BattlesController do
         end
         describe "in success" do
           before :each do
+            allow(Vote).to receive(:new).and_return(@fake_vote)
+            allow(@fake_battle).to receive(:save).and_return(true)
             allow(@fake_battle).to receive(:update_attributes).and_return(true)
             put(:update, { :id => @fake_battle.id, battle: {"starts_at" => "now"}, :format => 'js' })
           end
@@ -285,6 +256,9 @@ describe BattlesController do
           end
           it "should make empty battle options error available to that template" do
             expect(assigns(:battle_options_error)).to match("")
+          end
+          it "should make a new vote available to that template" do
+            expect(assigns(:vote)).to eq(@fake_vote)
           end
         end
         describe "in error" do
@@ -341,49 +315,6 @@ describe BattlesController do
         it "should redirect to the destroy js" do
           delete :destroy, { :id => @fake_battle.id, :format => 'js' }
           expect(response).to render_template('destroy')
-        end
-      end
-
-      describe "show" do
-        before (:each) do
-          @fake_battle = FactoryGirl.create(:battle)
-          allow(Battle).to receive(:find).and_return(@fake_battle)
-        end
-        it "should call show with correct id" do
-          expect(Battle).to receive(:find).with("#{@fake_battle.id}")
-          get :show, {id: @fake_battle.id}
-        end
-        it "should respond to HTML" do
-          get :show, {id: @fake_battle.id}
-          expect(response.content_type).to eq(Mime::HTML)
-        end
-        it "should render the show template" do
-          get :show, {id: @fake_battle.id}
-          expect(response).to render_template('show')
-        end
-        it "should make the battle available to that template" do
-          get :show, {id: @fake_battle.id}
-          expect(assigns(:battle)).to eq(@fake_battle)
-        end
-        it "should make the total of votes available to that template" do
-          @fake_votes = double("Votes")
-          allow(@fake_votes).to receive(:count).and_return(10)
-          allow(@fake_votes).to receive(:where).and_return(@fake_votes)
-          allow(@fake_battle).to receive(:votes).and_return(@fake_votes)
-          get :show, {id: @fake_battle.id}
-          expect(assigns(:total)).to eq(10)
-        end
-        it "should make the results by option available to that template" do
-          results = double("results")
-          allow(@fake_battle).to receive(:results_by_option).and_return(results)
-          get :show, {id: @fake_battle.id}
-          expect(assigns(:results_by_option)).to eq(results)
-        end
-        it "should make the results by hour available to that template" do
-          results = double("results")
-          allow(@fake_battle).to receive(:results_by_hour).and_return(results)
-          get :show, {id: @fake_battle.id}
-          expect(assigns(:results_by_hour)).to eq(results)
         end
       end
 
