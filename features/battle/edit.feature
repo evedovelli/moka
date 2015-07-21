@@ -11,6 +11,7 @@ Background:
     | 2015-05-22 10:30:14 -0300 | 3000      |
     | 2015-05-26 10:30:14 -0300 | 3000      |
 
+    @javascript
     Scenario: Admin cannot see battle form unless he press the button to edit battle
       When I go to the home page
       Then I should not see the edit battle form for 1st battle

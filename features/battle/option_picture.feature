@@ -46,7 +46,7 @@ Background:
       And I add 1st option "Dick Dastardly" with picture "dick_dastardly.jpg"
       And I add 2nd option "Devil Robot" with picture "devil_robot.jpg"
       And I press "Create"
-      And I wait 3 seconds for uploading images
+      And I wait 4 seconds for uploading images
       Then I should see the image "dick_dastardly.jpg"
       And I should see the image "devil_robot.jpg"
 
@@ -88,7 +88,7 @@ Background:
       And I add 3rd option "Dick Dastardly" with picture "dick_dastardly.jpg"
       And I select "vader.jpg" image for 1st option
       And I press "Update"
-      And I wait 3 seconds for uploading images
+      And I wait 4 seconds for uploading images
       Then I should see the image "vader.jpg"
       And I should see the image "devil_robot.jpg"
       And I should see the image "dick_dastardly.jpg"

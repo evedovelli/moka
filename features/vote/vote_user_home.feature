@@ -55,7 +55,7 @@ Background: I exist as an user, and I there are battles
       And I add 1st option "Dastardly" with picture "dick_dastardly.jpg"
       And I add 2nd option "Robot" with picture "devil_robot.jpg"
       And I press "Create"
-      And I wait 3 seconds for uploading images
+      And I wait 4 seconds for uploading images
       And I vote for "Robot" for the 1st battle
       Then I should be on the home page
       And I should see "Robot" option selected for the 1st battle
@@ -69,7 +69,7 @@ Background: I exist as an user, and I there are battles
       And I add 1st option "Dastardly" with picture "dick_dastardly.jpg"
       And I add 2nd option "Robot" with picture "devil_robot.jpg"
       And I press "Create"
-      And I wait 3 seconds for uploading images
+      And I wait 4 seconds for uploading images
       And I vote for "Palpatine" for the 2nd battle
       Then I should be on the home page
       And I should see "Palpatine" option selected for the 2nd battle
