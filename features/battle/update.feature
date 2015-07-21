@@ -22,7 +22,7 @@ Background:
     Scenario: Update a battle
       When I add 1st option "Vader" with picture "vader.jpg"
       And I press "Update"
-      And I wait 2 seconds for uploading images
+      And I wait 4 seconds for uploading images
       Then I should be on the home page
       And I should see the image "vader.jpg"
 

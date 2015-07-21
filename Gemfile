@@ -20,7 +20,7 @@ group :development, :test do
   gem "factory_girl_rails", ">= 4.2.0"
 
   # Used to drive browser in tests
-  gem "selenium-webdriver", "~> 2.38.0"
+  gem "selenium-webdriver", "~> 2.46.0"
 end
 group :test do
   gem "database_cleaner", ">= 0.9.1"
