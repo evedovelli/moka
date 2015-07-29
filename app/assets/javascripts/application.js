@@ -14,7 +14,6 @@
 //= require jquery.turbolinks
 //= require jquery_ujs
 //= require bootstrap
-//= require Chart
 //= require jquery_nested_form
 //= require jquery.remotipart
 //= require nprogress

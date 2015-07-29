@@ -88,6 +88,11 @@ When /^(?:|I )choose "([^"]*)"$/ do |field|
   choose(field)
 end
 
+When /^I scroll to the bottom of the page$/ do
+  page.execute_script("window.scrollBy(0,10000)")
+end
+
+
 ### THEN ###
 
 Then /^(?:|I )should be on (.+)$/ do |page_name|

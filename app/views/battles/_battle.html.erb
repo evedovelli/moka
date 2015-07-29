@@ -18,7 +18,8 @@
                             :confirm => t('battles._battle.destroy'),
                             :method => :delete,
                             :remote => true,
-                            :id => "delete_battle#{battle[:id]}") do %>
+                            :id => "delete_battle#{battle[:id]}",
+                            :class => "delete_battle") do %>
                   <i class="icon-remove pull-right"></i>
                 <% end %>
               </h3>

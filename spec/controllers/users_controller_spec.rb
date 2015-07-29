@@ -49,22 +49,35 @@ describe UsersController do
       describe "home" do
         before (:each) do
           @battles = [double("b1"), double("b2"), double("b3"), double("b4")]
-          allow(Battle).to receive(:all).and_return(@battles)
-          get :home
+          allow(Battle).to receive(:user_home).and_return(@battles)
         end
         it "should respond to html" do
+          get :home
           expect(response.content_type).to eq(Mime::HTML)
         end
+        it "should respond to js" do
+          get :home, :format => 'js'
+          expect(response.content_type).to eq(Mime::JS)
+        end
         it "should render the home template" do
+          get :home
           expect(response).to render_template('home')
         end
-        it "should make all battles available to that template" do
+        it "should make user_home battles available to that template" do
+          get :home
+          expect(assigns(:battles)).to eq(@battles)
+        end
+        it "should receive user_home with user and page" do
+          expect(Battle).to receive(:user_home).with(@fake_user, "2").and_return(@battles)
+          get :home, {page: "2"}
           expect(assigns(:battles)).to eq(@battles)
         end
         it "should make the user available to that template" do
+          get :home
           expect(assigns(:user)).to eq(@fake_user)
         end
         it "should build a vote to the template" do
+          get :home
           expect(assigns(:vote)).to be_new_record
         end
       end
@@ -75,21 +88,33 @@ describe UsersController do
           @battles = [double("b1"), double("b2"), double("b3"), double("b4")]
           allow(@other_user).to receive(:sorted_battles).and_return(@battles)
           expect(User).to receive(:find_by_username!).with(@other_user.username).and_return(@other_user)
-          get :show, {:id => @other_user.username}
         end
         it "should respond to html" do
+          get :show, {:id => @other_user.username}
           expect(response.content_type).to eq(Mime::HTML)
         end
+        it "should respond to js" do
+          get(:show, {:id => @other_user.username, :format => 'js'})
+          expect(response.content_type).to eq(Mime::JS)
+        end
         it "should render the show user template" do
+          get :show, {:id => @other_user.username}
           expect(response).to render_template('show')
         end
         it "should make all battles available to that template" do
+          get :show, {:id => @other_user.username}
           expect(assigns(:battles)).to eq(@battles)
         end
+        it "should call sorted_battles with the correct page" do
+          expect(@other_user).to receive(:sorted_battles).with("3").and_return(@battles)
+          get :show, {:id => @other_user.username, :page => "3"}
+        end
         it "should make the user available to that template" do
+          get :show, {:id => @other_user.username}
           expect(assigns(:user)).to eq(@other_user)
         end
         it "should build a vote to the template" do
+          get :show, {:id => @other_user.username}
           expect(assigns(:vote)).to be_new_record
         end
       end

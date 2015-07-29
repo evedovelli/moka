@@ -191,7 +191,25 @@ describe User do
       e1 = FactoryGirl.create(:battle, {:starts_at => DateTime.new(2017,3,1,4,0), :user => user})
       e2 = FactoryGirl.create(:battle, {:starts_at => DateTime.new(2017,3,1,2,0), :user => user})
       e3 = FactoryGirl.create(:battle, {:starts_at => DateTime.new(2017,3,1,3,0), :user => user})
-      expect(user.sorted_battles).to eq([e1, e3, e2])
+      expect(user.sorted_battles("1")).to eq([e1, e3, e2])
+    end
+    it 'should return the battles according to the page' do
+      user = User.create!(@attr)
+      e1 = FactoryGirl.create(:battle, {:starts_at => DateTime.new(2017,3,1,12,0), :user => user})
+      e2 = FactoryGirl.create(:battle, {:starts_at => DateTime.new(2017,3,1,11,0), :user => user})
+      e3 = FactoryGirl.create(:battle, {:starts_at => DateTime.new(2017,3,1,10,0), :user => user})
+      e4 = FactoryGirl.create(:battle, {:starts_at => DateTime.new(2017,3,1,9,0), :user => user})
+      e5 = FactoryGirl.create(:battle, {:starts_at => DateTime.new(2017,3,1,8,0), :user => user})
+      e6 = FactoryGirl.create(:battle, {:starts_at => DateTime.new(2017,3,1,7,0), :user => user})
+      e7 = FactoryGirl.create(:battle, {:starts_at => DateTime.new(2017,3,1,6,0), :user => user})
+      e8 = FactoryGirl.create(:battle, {:starts_at => DateTime.new(2017,3,1,5,0), :user => user})
+      e9 = FactoryGirl.create(:battle, {:starts_at => DateTime.new(2017,3,1,4,0), :user => user})
+      e10 = FactoryGirl.create(:battle, {:starts_at => DateTime.new(2017,3,1,3,0), :user => user})
+      e11 = FactoryGirl.create(:battle, {:starts_at => DateTime.new(2017,3,1,2,0), :user => user})
+      e12 = FactoryGirl.create(:battle, {:starts_at => DateTime.new(2017,3,1,1,0), :user => user})
+      expect(user.sorted_battles("1")).to eq([e1, e2, e3, e4, e5])
+      expect(user.sorted_battles("2")).to eq([e6, e7, e8, e9, e10])
+      expect(user.sorted_battles("3")).to eq([e11, e12])
     end
   end
 

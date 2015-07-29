@@ -1,5 +1,6 @@
 class Battle < ActiveRecord::Base
   resourcify
+  paginates_per 5
 
   has_many :options, dependent: :destroy
   has_many :votes, :through => :options
@@ -7,21 +8,19 @@ class Battle < ActiveRecord::Base
 
   accepts_nested_attributes_for :options, :allow_destroy => true
 
-  attr_accessible :starts_at, :duration, :options_attributes, :options, :user
+  attr_accessible :starts_at, :duration, :options_attributes, :options, :user, :hidden
 
   validates :options,   :length   => { :minimum => 2 }
   validates :user,      :presence => true
   validates :starts_at, :presence => true
   validates :duration,  :numericality => { :only_integer => true, :greater_than => 0 }
 
-  def self.all
-    return super.sort{|x, y| y.starts_at <=> x.starts_at }
+  def hide
+    self.update_attributes({hidden: true})
   end
 
-  def self.current
-    return Battle.all.delete_if {|e|
-      (e.starts_at > DateTime.current) or (e.starts_at + e.duration.minutes < DateTime.current)
-    }.sort_by{|e| e.starts_at}
+  def self.user_home(user, page)
+    return Battle.order(:starts_at).reverse_order.page(page)
   end
 
   def current?

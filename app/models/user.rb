@@ -45,7 +45,7 @@ class User < ActiveRecord::Base
     username
   end
 
-  def sorted_battles
-    return battles.sort{|x, y| y.starts_at <=> x.starts_at }
+  def sorted_battles(page)
+    return battles.order(:starts_at).reverse_order.page(page)
   end
 end

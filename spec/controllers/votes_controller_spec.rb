@@ -83,7 +83,6 @@ describe VotesController do
           before :each do
             allow(@fake_vote).to receive(:save).and_return(false)
             @battle = FactoryGirl.create(:battle)
-            allow(Battle).to receive(:current).and_return([@battle])
             post :create, {
               vote: { option_id: @fake_battle.options[0].id},
               format: 'js'
