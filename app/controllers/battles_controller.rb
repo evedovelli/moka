@@ -45,7 +45,7 @@ class BattlesController < ApplicationController
 
   def destroy
     @battle_id = @battle.id
-    @battle.destroy
+    @battle.hide
     respond_to do |format|
       format.js {}
     end

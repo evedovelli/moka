@@ -308,7 +308,7 @@ describe BattlesController do
           delete :destroy, { :id => @fake_battle.id, :format => 'js' }
         end
         it "should destroy the battle" do
-          expect(@fake_battle).to receive(:destroy)
+          expect(@fake_battle).to receive(:hide)
           delete :destroy, { :id => @fake_battle.id, :format => 'js' }
           expect(assigns(:battle_id)).to eq(@fake_battle.id)
         end

@@ -62,31 +62,38 @@ describe Battle do
     end
   end
 
-  describe 'all' do
+  describe 'hide' do
+    it 'should make the battle hidden' do
+      battle = Battle.new(@attr)
+      expect(battle.hidden).to equal(false)
+      battle.hide
+      expect(battle.hidden).to equal(true)
+    end
+  end
+
+  describe 'user_home' do
     it 'should return the battles sorted according to start_at' do
       e1 = FactoryGirl.create(:battle, :starts_at => DateTime.new(2017,3,1,4,0))
       e2 = FactoryGirl.create(:battle, :starts_at => DateTime.new(2017,3,1,2,0))
       e3 = FactoryGirl.create(:battle, :starts_at => DateTime.new(2017,3,1,3,0))
-      expect(Battle.all).to eq([e1, e3, e2])
+      expect(Battle.user_home(double("user"), "1")).to eq([e1, e3, e2])
     end
-  end
-
-  describe 'current' do
-    it 'should return only battles which start_at is smaller and starts_at plus duration is greater than current time' do
-      e1 = double()
-      e2 = double()
-      e3 = double()
-      allow(e1).to receive(:starts_at).and_return(DateTime.new(2017,3,1,1,0))
-      allow(e2).to receive(:starts_at).and_return(DateTime.new(2017,3,1,2,0))
-      allow(e3).to receive(:starts_at).and_return(DateTime.new(2017,3,1,3,0))
-      allow(e1).to receive(:duration).and_return(75)
-      allow(e2).to receive(:duration).and_return(22*60)
-      allow(e3).to receive(:duration).and_return(60)
-      allow(DateTime).to receive(:current).and_return(DateTime.new(2017,3,1,2,30))
-      allow(Battle).to receive(:all).and_return([e1, e2, e3])
-      battles = Battle.current
-      expect(battles).to include(e2)
-      expect(battles).not_to include(e1, e3)
+    it 'should return the battles according to the page' do
+      e1 = FactoryGirl.create(:battle, :starts_at => DateTime.new(2017,3,1,12,0))
+      e2 = FactoryGirl.create(:battle, :starts_at => DateTime.new(2017,3,1,11,0))
+      e3 = FactoryGirl.create(:battle, :starts_at => DateTime.new(2017,3,1,10,0))
+      e4 = FactoryGirl.create(:battle, :starts_at => DateTime.new(2017,3,1,9,0))
+      e5 = FactoryGirl.create(:battle, :starts_at => DateTime.new(2017,3,1,8,0))
+      e6 = FactoryGirl.create(:battle, :starts_at => DateTime.new(2017,3,1,7,0))
+      e7 = FactoryGirl.create(:battle, :starts_at => DateTime.new(2017,3,1,6,0))
+      e8 = FactoryGirl.create(:battle, :starts_at => DateTime.new(2017,3,1,5,0))
+      e9 = FactoryGirl.create(:battle, :starts_at => DateTime.new(2017,3,1,4,0))
+      e10 = FactoryGirl.create(:battle, :starts_at => DateTime.new(2017,3,1,3,0))
+      e11 = FactoryGirl.create(:battle, :starts_at => DateTime.new(2017,3,1,2,0))
+      e12 = FactoryGirl.create(:battle, :starts_at => DateTime.new(2017,3,1,1,0))
+      expect(Battle.user_home(double("user"), "1")).to eq([e1, e2, e3, e4, e5])
+      expect(Battle.user_home(double("user"), "2")).to eq([e6, e7, e8, e9, e10])
+      expect(Battle.user_home(double("user"), "3")).to eq([e11, e12])
     end
   end
 

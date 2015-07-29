@@ -1,0 +1,11 @@
+$("<%= escape_javascript(render visible_battles(@battles)) %>").appendTo("#battle_index");
+<% visible_battles(@battles).each do |battle| %>
+  jQuery(selectablePictureBattle("#battle<%= battle.id %>"));
+<% end %>
+
+// Update pagination link
+<% if @battles.last_page? %>
+  $('.pagination').html("<p class='center last_page'><i class='icon-star'></i></p>");
+<% else %>
+  $('.pagination').html("<%=j link_to_next_page(@battles, 'Next Page', :remote => true, :class => "next_page") %>");
+<% end %>

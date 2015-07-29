@@ -27,4 +27,11 @@ Background:
       Then I should be on the home page
       And I should see 3 battles
 
+    @javascript
+    Scenario: User destroy battle and reload page
+      When I follow the link to remove 1st battle
+      And I confirm popup
+      And I go to my home page
+      Then I should see 2 battles
+      And I should not see the battle that starts on "18/05/15 - 10:30"
 

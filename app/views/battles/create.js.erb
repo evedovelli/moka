@@ -1,3 +1,4 @@
 $("<%= escape_javascript(render @battle) %>").prependTo("#battle_index");
+jQuery(avoidDuplicateBattle());
 $('#battle_form').slideUp(350);
 jQuery(selectablePictureBattle("#battle<%= @battle.id %>"));

@@ -81,9 +81,6 @@ gem 'nested_form', '~> 0.3.2'
 # Binds Rails Turbolinks events to the document.ready events
 gem 'jquery-turbolinks'
 
-# Gemigication of chart.js, used to draw the graphics
-gem 'chart-js-rails'
-
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 
@@ -123,4 +120,7 @@ gem "jquery-validation-rails"
 
 # To show progress while charging pages
 gem 'nprogress-rails'
+
+# To paginate index pages
+gem 'kaminari', '~> 0.16.3'
 

@@ -24,17 +24,6 @@ Given /^the following battles were added:$/ do |table|
   end
 end
 
-Given /^(\d+) battles were added$/ do |number|
-  date = DateTime.now()
-  for i in 1..number.to_i do
-    FactoryGirl.create(:battle, { :starts_at => date,
-                                  :duration => 60*24*5,
-                                  :user => User.find_by_username("myself")
-                                })
-    date + 7.days
-  end
-end
-
 Given /^a battle was created with options "([^"]*)" and "([^"]*)"$/ do |option1, option2|
   FactoryGirl.create(:battle, {
     :starts_at => DateTime.now - 1.day,
@@ -116,6 +105,10 @@ end
 
 When /^I follow the link to remove (\d+)(?:st|nd|rd|th) battle$/ do |id|
   find("#delete_battle#{id}").click
+end
+
+When /^I remove the (\d+)(?:st|nd|rd|th) battle$/ do |id|
+  all(".delete_battle")[id.to_i - 1].click
 end
 
 When /^I press the button to edit (\d+)(?:st|nd|rd|th) battle$/ do |id|

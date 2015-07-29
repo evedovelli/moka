@@ -1,3 +1,11 @@
 <div id="battle_index">
-  <%= render @battles %>
+  <%= render visible_battles(@battles) %>
 </div>
+
+<p class="pagination">
+  <% if @battles.last_page? %>
+    <p class='center last_page'><i class='icon-star'></i></p>
+  <% else %>
+    <%= link_to_next_page(@battles, 'Next Page', :remote => true, :class => "next_page") %>
+  <% end %>
+</p>
