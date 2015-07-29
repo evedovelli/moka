@@ -137,13 +137,13 @@ Background: I am a registered user logged in and battles exist
     @javascript
     Scenario: Delete battle and scroll page
       When I go to my home page
-      And I remove the 4th battle
+      And I remove the 2nd battle
       And I confirm popup
       And I scroll to the bottom of the page
       Then I should see the battle that starts on "11/10/15 - 10:30"
-      And I should see the battle that starts on "10/10/15 - 10:30"
+      And I should not see the battle that starts on "10/10/15 - 10:30"
       And I should see the battle that starts on "09/10/15 - 10:30"
-      And I should not see the battle that starts on "08/10/15 - 10:30"
+      And I should see the battle that starts on "08/10/15 - 10:30"
       And I should see the battle that starts on "07/10/15 - 10:30"
       And I should see the battle that starts on "06/10/15 - 10:30"
       And I should see the battle that starts on "05/10/15 - 10:30"
