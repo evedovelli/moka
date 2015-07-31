@@ -8,7 +8,7 @@ class Battle < ActiveRecord::Base
 
   accepts_nested_attributes_for :options, :allow_destroy => true
 
-  attr_accessible :starts_at, :duration, :options_attributes, :options, :user, :hidden
+  attr_accessible :starts_at, :duration, :options_attributes, :options, :user, :hidden, :title
 
   validates :options,   :length   => { :minimum => 2 }
   validates :user,      :presence => true

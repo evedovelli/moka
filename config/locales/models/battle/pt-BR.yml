@@ -6,3 +6,4 @@ pt-BR:
       battle:
         starts_at: "Começa em"
         duration: "Duração"
+        title: "Título"

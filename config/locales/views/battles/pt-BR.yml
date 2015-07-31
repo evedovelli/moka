@@ -2,8 +2,6 @@ pt-BR:
   battles:
     _battle:
       destroy: 'Você tem certeza que quer remover essa batalha?'
-      title: 'Batalha número %{number}'
-      statistics: 'Estatísticas'
     _form:
       title: 'Monte sua batalha'
       add_option: 'Adicionar Opção'

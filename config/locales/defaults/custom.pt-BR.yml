@@ -63,3 +63,5 @@ pt-BR:
     errors:
       messages:
         confirmation: "não é igual a confirmação"
+  battles:
+    default_title: "Quem deve ganhar essa batalha?"

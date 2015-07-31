@@ -2,6 +2,7 @@ FactoryGirl.define do
   factory :battle do
     starts_at DateTime.now - 1.day
     duration 1440
+    title "Choose your player"
 
     transient do
       number_of_options 2

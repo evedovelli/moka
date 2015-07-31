@@ -116,18 +116,40 @@ describe BattlesController do
         end
         it "should call new with correct starts_at and user" do
           Timecop.freeze(Time.local(1994))
-          expect(Battle).to receive(:new).with({"starts_at" => DateTime.now, "user" => @fake_user})
+          expect(Battle).to receive(:new).with({"duration" => (24*60).to_s,
+                                                "starts_at" => DateTime.now,
+                                                "user" => @fake_user,
+                                                "title" => "Who should win this battle?"})
           post(:create, {battle: {}, :format => 'js'})
         end
         it "should call new with correct duration" do
           Timecop.freeze(Time.local(1994))
-          expect(Battle).to receive(:new).with({"duration" => "23", "starts_at" => DateTime.now, "user" => @fake_user})
+          expect(Battle).to receive(:new).with({"duration" => "23",
+                                                "starts_at" => DateTime.now,
+                                                "user" => @fake_user,
+                                                "title" => "Who should win this battle?"})
           post(:create, {battle: {duration: "23"}, :format => 'js'})
         end
-        it "should call new with default duration when not specified" do
+        it "should call new with correct title" do
           Timecop.freeze(Time.local(1994))
-          expect(Battle).to receive(:new).with({"duration" => (24*60).to_s, "starts_at" => DateTime.now, "user" => @fake_user})
-          post(:create, {battle: {duration: ""}, :format => 'js'})
+          expect(Battle).to receive(:new).with({"title" => "What?", "duration" => (24*60).to_s, "starts_at" => DateTime.now, "user" => @fake_user})
+          post(:create, {battle: {title: "What?"}, :format => 'js'})
+        end
+        it "should call new with default duration and title when they are empty" do
+          Timecop.freeze(Time.local(1994))
+          expect(Battle).to receive(:new).with({"duration" => (24*60).to_s,
+                                                "starts_at" => DateTime.now,
+                                                "user" => @fake_user,
+                                                "title" => "Who should win this battle?"})
+          post(:create, {battle: {duration: "", title: ""}, :format => 'js'})
+        end
+        it "should call new with default duration and title when not specified" do
+          Timecop.freeze(Time.local(1994))
+          expect(Battle).to receive(:new).with({"duration" => (24*60).to_s,
+                                                "starts_at" => DateTime.now,
+                                                "user" => @fake_user,
+                                                "title" => "Who should win this battle?"})
+          post(:create, {battle: {}, :format => 'js'})
         end
         describe "in success" do
           before :each do
@@ -237,9 +259,13 @@ describe BattlesController do
           expect(@fake_battle).to receive(:update_attributes).with({"duration" => "23"})
           put(:update, { :id => @fake_battle.id, battle: {"duration" => "23"}, :format => 'js' })
         end
-        it "should update with default duration when not specified" do
-          expect(@fake_battle).to receive(:update_attributes).with({"duration" => (24*60).to_s})
-          put(:update, { :id => @fake_battle.id, battle: {"duration" => ""}, :format => 'js' })
+        it "should update with correct title" do
+          expect(@fake_battle).to receive(:update_attributes).with({"title" => "Ask?"})
+          put(:update, { :id => @fake_battle.id, battle: {"title" => "Ask?"}, :format => 'js' })
+        end
+        it "should update with default duration and title when they are empty" do
+          expect(@fake_battle).to receive(:update_attributes).with({"duration" => (24*60).to_s, "title" => @fake_battle.title})
+          put(:update, { :id => @fake_battle.id, battle: {"duration" => "", "title" => ""}, :format => 'js' })
         end
         describe "in success" do
           before :each do

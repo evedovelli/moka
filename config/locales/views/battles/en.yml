@@ -2,8 +2,6 @@ en:
   battles:
     _battle:
       destroy: 'Are you sure you want to remove this battle?'
-      title: 'Battle number %{number}'
-      statistics: 'Statistics'
     _form:
       title: 'Compose your battle'
       add_option: 'Add Option'
