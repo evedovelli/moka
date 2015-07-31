@@ -19,7 +19,8 @@ Given /^the following battles were added:$/ do |table|
                                   number_of_options: 0,
                                   starts_at: battle[:starts_at],
                                   duration: battle[:duration],
-                                  user: User.find_by_username(battle[:user] || "myself")
+                                  user: User.find_by_username(battle[:user] || "myself"),
+                                  title: battle[:title] || "Choose your vegetable"
                                 })
   end
 end
@@ -118,7 +119,7 @@ When /^I press the button to edit (\d+)(?:st|nd|rd|th) battle$/ do |id|
   # problems for tests with selenium and my version of Firefox, so I will let this sleep
   # and remove it when I move to a unix environment.
   sleep 0.5
-  expect(page).to have_content("Compose your battle")
+  expect(page).to have_css(".battle_form")
 end
 
 When /^I add (\d+)(?:st|nd|rd|th) option "([^"]*)" with picture "([^"]*)"$/ do |option_number, option, picture|
@@ -151,7 +152,7 @@ When /^I press the button to add option$/ do
 end
 
 When /^I select "([^"]*)" image for (\d+)(?:st|nd|rd|th) option$/ do |image, option_number|
-  expect(page).to have_content("Compose your battle")
+  expect(page).to have_css(".battle_form")
   within(all('.options')[0]) do
     within(all('.fields')[option_number.to_i - 1]) do
       attach_option_picture(image)
@@ -168,6 +169,11 @@ When /^I click in "([^"]*)" within (\d+)(?:st|nd|rd|th) battle$/ do |link, battl
     find('.battle_user').click
   end
 end
+
+Then /^I fill battle title with "([^"]*)"$/ do |title|
+  fill_in("battle_title", :with => title)
+end
+
 
 ### THEN ###
 
@@ -286,5 +292,9 @@ Then /^I should not see votes for (\d+)(?:st|nd|rd|th) battle$/ do |battle|
   within(all('.battle')[battle.to_i - 1]) do
     expect(page).not_to have_css(".results")
   end
+end
+
+Then /^I should see the battle title "([^"]*)"$/ do |title|
+  expect(page).to have_text(title)
 end
 

@@ -16,8 +16,11 @@ class BattlesController < ApplicationController
 
   def create
     params[:battle]["starts_at"] = DateTime.now
-    if params[:battle][:duration] == ""
+    if (not params[:battle][:duration]) || (params[:battle][:duration] == "")
       params[:battle][:duration] = (24*60).to_s
+    end
+    if (not params[:battle][:title]) || (params[:battle][:title] == "")
+      params[:battle][:title] = I18n.t('battles.default_title')
     end
     params[:battle][:user] = current_user;
 
@@ -62,6 +65,9 @@ class BattlesController < ApplicationController
   def update
     if params[:battle][:duration] == ""
       params[:battle][:duration] = @battle.duration.to_s
+    end
+    if params[:battle][:title] == ""
+      params[:battle][:title] = @battle.title
     end
 
     @battle_options_error = ""

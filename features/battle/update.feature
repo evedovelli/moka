@@ -6,8 +6,8 @@ Background:
     Given I am logged in
     And I am an admin
     And the following battles were added:
-    | starts_at                 | duration  |
-    | 2015-05-18 10:30:14 -0300 | 5760      |
+    | starts_at                 | duration  | title            |
+    | 2015-05-18 10:30:14 -0300 | 5760      | Choose anything  |
     And I am on the home page
     And I press the button to edit 1st battle
 
@@ -25,4 +25,20 @@ Background:
       And I wait 4 seconds for uploading images
       Then I should be on the home page
       And I should see the image "vader.jpg"
+
+    @javascript
+    Scenario: Specify new battle title
+      When I fill battle title with "Something something something Darkside?"
+      And I press "Update"
+      And I wait 4 seconds for uploading images
+      Then I should be on the home page
+      And I should see the battle title "Something something something Darkside?"
+
+    @javascript
+    Scenario: Specify new battle title
+      When I fill battle title with ""
+      And I press "Update"
+      And I wait 4 seconds for uploading images
+      Then I should be on the home page
+      And I should see the battle title "Choose anything"
 

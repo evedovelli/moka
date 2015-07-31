@@ -6,3 +6,4 @@ en:
       battle:
         starts_at: "Starts at"
         duration: "Duration"
+        title: "Title"

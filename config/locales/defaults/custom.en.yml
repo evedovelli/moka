@@ -63,3 +63,5 @@ en:
     errors:
       messages:
         confirmation: "doesn't match confirmation"
+  battles:
+    default_title: "Who should win this battle?"

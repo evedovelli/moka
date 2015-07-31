@@ -1,6 +1,10 @@
 <%= simple_nested_form_for(@battle, :remote => true, :html => { :class => 'battle_form'}) do |f| %>
   <div class="main-box">
-    <h2 class="center"><%= t 'battles._form.title' %></h3>
+    <div class="row">
+      <div class="span8 offset2">
+        <%= f.input(:title, label: false, input_html: { :class => "span8 h2 center battle_title", :placeholder => t('battles.default_title') }) %>
+      </div>
+    </div>
 
     <%= f.error_notification %>
 

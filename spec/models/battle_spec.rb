@@ -9,6 +9,7 @@ describe Battle do
       :options => [@b1, @b2],
       :starts_at => DateTime.now,
       :duration => '60',
+      :title => 'Why?',
       :user => @user
     }
   end
