@@ -36,6 +36,30 @@ describe Ability do
           expect(@ability).to be_able_to(:manage, Battle)
         end
       end
+
+      describe "Resource Vote" do
+        before :each do
+          @vote = FactoryGirl.create(:vote)
+        end
+        it "should be able to read Votes" do
+          expect(@ability).to be_able_to(:read, @vote)
+        end
+        it "should be able to create Votes" do
+          expect(@ability).to be_able_to(:create, Vote)
+        end
+        it "should not be able to update Votes" do
+          expect(@ability).not_to be_able_to(:update, @vote)
+        end
+        it "should not be able to destroy Votes" do
+          expect(@ability).not_to be_able_to(:destroy, @vote)
+        end
+      end
+
+      describe "Resource Friendship" do
+        it "should be able to manage friendships" do
+          expect(@ability).to be_able_to(:manage, Friendship)
+        end
+      end
     end
 
     describe "other user" do
@@ -129,6 +153,52 @@ describe Ability do
           expect(@ability).not_to be_able_to(:destroy, @battle)
         end
       end
+
+      describe "Resource Vote" do
+        before :each do
+          @vote = FactoryGirl.create(:vote)
+        end
+        it "should be able to read Votes" do
+          expect(@ability).to be_able_to(:read, @vote)
+        end
+        it "should be able to create Votes" do
+          expect(@ability).to be_able_to(:create, Vote)
+        end
+        it "should not be able to update Votes" do
+          expect(@ability).not_to be_able_to(:update, @vote)
+        end
+        it "should not be able to destroy Votes" do
+          expect(@ability).not_to be_able_to(:destroy, @vote)
+        end
+      end
+
+      describe "Resource Friendship" do
+        before :each do
+          @u1 = FactoryGirl.create(:user, email: "u1@u1.com", username: "u1")
+          @u2 = FactoryGirl.create(:user, email: "u2@u2.com", username: "u2")
+          @f1 = FactoryGirl.create(:friendship, user: @user, friend: @u1)
+          @f2 = FactoryGirl.create(:friendship, user: @u2, friend: @user)
+        end
+        it "should not be able to show Friendships" do
+          expect(@ability).not_to be_able_to(:show, @f1)
+        end
+        it "should be able to index Friendships" do
+          expect(@ability).to be_able_to(:index, Friendship)
+        end
+        it "should be able to create Friendships" do
+          expect(@ability).to be_able_to(:create, Friendship)
+        end
+        it "should not be able to update Friendships" do
+          expect(@ability).not_to be_able_to(:update, @f1)
+        end
+        it "should be able to destroy his Friendships" do
+          expect(@ability).to be_able_to(:destroy, @f1)
+        end
+        it "should not be able to destroy others' Friendships" do
+          expect(@ability).not_to be_able_to(:destroy, @f2)
+        end
+      end
+
     end
 
   end

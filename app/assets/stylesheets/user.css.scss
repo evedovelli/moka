@@ -1,0 +1,19 @@
+p.username {
+  margin-bottom: 25px;
+  margin-top: 5px;
+  font-size: 31.5px;
+  height: 50px;
+}
+
+p.user-button {
+  margin-left: 20px;
+}
+
+a.btn-unfollow .unfollow { display: none; }
+a.btn-unfollow:hover .following {
+  display: none;
+}
+a.btn-unfollow:hover .unfollow {
+  display: inline;
+}
+

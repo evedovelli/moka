@@ -52,6 +52,14 @@ Given /^user "([^"]*)" exists$/ do |user|
   create_user(user, "#{user}@email.com", "#{user}password")
 end
 
+Given /^the following users exist:$/ do |table|
+  table.hashes.each do |user|
+    create_user(user[:username],
+                user[:email] || "#{user[:username]}@email.com",
+                user[:password] || "#{user[:username]}password")
+  end
+end
+
 Given /^I do not exist as an user$/ do
   delete_user("myself@email.com")
 end
@@ -123,27 +131,27 @@ When /^I sign in with a wrong password$/ do
 end
 
 When /^I edit my account details$/ do
-  click_link "Edit account"
+  click_link "Edit profile"
   fill_in "user_current_password", :with => "secretpassword"
   click_button "Update"
 end
 
 When /^I edit my username with "([^"]+)"$/ do |username|
-  click_link "Edit account"
+  click_link "Edit profile"
   fill_in "user_username", :with => username
   fill_in "user_current_password", :with => "secretpassword"
   click_button "Update"
 end
 
 When /^I edit my email with "([^"]+)"$/ do |email|
-  click_link "Edit account"
+  click_link "Edit profile"
   fill_in "user_email", :with => email
   fill_in "user_current_password", :with => "secretpassword"
   click_button "Update"
 end
 
 When /^I edit my password with "([^"]+)"$/ do |password|
-  click_link "Edit account"
+  click_link "Edit profile"
   fill_in "user_password", :with => password
   fill_in "user_password_confirmation", :with => password
   fill_in "user_current_password", :with => "secretpassword"

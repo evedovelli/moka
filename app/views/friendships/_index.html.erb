@@ -1,0 +1,20 @@
+<% for i in 0..1 %>
+  <div class="span6">
+
+    <table class="table">
+      <% friends.in_groups(2, false)[i].each do |user| %>
+        <tr id="friend<%= user.id %>">
+          <td><h5><%= link_to(user.username, user_path(user)) %></h5></td>
+          <td>
+            <div class="span3 pull-right">
+              <div id="user-button<%= user.id %>" class="user-button">
+                <%= user_button_for(user) %>
+              </div>
+            </div>
+          </td>
+        </tr>
+      <% end %>
+    </table>
+
+  </div>
+<% end %>

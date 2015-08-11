@@ -42,14 +42,19 @@ class Ability
       # Battles
       can :manage, Battle
 
-      # Battles
+      # Votes
       can :read, Vote
       can :create, Vote
+
+      # Friendships
+      can :manage, Friendship
     end
 
     # Other users
     # users
     can :read, User
+    can :following, User
+    can :followers, User
     can :home, User
     can :create, User do |u|
       u == user
@@ -73,5 +78,13 @@ class Ability
     # Votes
     can :read, Vote
     can :create, Vote
+
+    # Friendships
+    can :create, Friendship
+    can :destroy, Friendship do |friendship|
+      friendship.try(:user) == user
+    end
+    can :index, Friendship
+
   end
 end

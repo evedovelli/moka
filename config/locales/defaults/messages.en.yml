@@ -16,3 +16,4 @@ en:
     greater_than_zero: 'Value must be greater than zero'
     invalid_username: 'is invalid'
     invalid_image: 'Invalid image'
+    uniqueness_friend: 'Already following this user'

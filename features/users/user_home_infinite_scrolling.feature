@@ -6,16 +6,20 @@ Background: I am a registered user logged in and battles exist
     Given I am logged in
     And I am an admin
     And user "willywallace" exists
+    And user "macewindu" exists
+    And I am following "willywallace"
     And the following battles were added:
     | starts_at                 | duration  | user         |
     | 2015-10-01 10:30:00 -0300 | 6000      | myself       |
     | 2015-10-02 10:30:00 -0300 | 30000     | willywallace |
     | 2015-10-03 10:30:00 -0300 | 58000     | myself       |
     | 2015-10-04 10:30:00 -0300 | 3000      | willywallace |
+    | 2015-10-04 11:30:00 -0300 | 3000      | macewindu    |
     | 2015-10-05 10:30:00 -0300 | 6000      | myself       |
     | 2015-10-06 10:30:00 -0300 | 30000     | willywallace |
     | 2015-10-07 10:30:00 -0300 | 58000     | myself       |
     | 2015-10-08 10:30:00 -0300 | 3000      | willywallace |
+    | 2015-10-08 11:30:00 -0300 | 3000      | macewindu    |
     | 2015-10-09 10:30:00 -0300 | 58000     | myself       |
     | 2015-10-10 10:30:00 -0300 | 58000     | myself       |
     | 2015-10-11 10:30:00 -0300 | 3000      | willywallace |
@@ -31,6 +35,7 @@ Background: I am a registered user logged in and battles exist
       And I should see the battle that starts on "07/10/15 - 10:30"
       And I should not see the battle that starts on "06/10/15 - 10:30"
       And I should not see the battle that starts on "05/10/15 - 10:30"
+      And I should not see the battle that starts on "08/10/15 - 11:30"
       And I should see 5 battles
 
     @javascript
@@ -48,6 +53,7 @@ Background: I am a registered user logged in and battles exist
       And I should see the battle that starts on "03/10/15 - 10:30"
       And I should see the battle that starts on "02/10/15 - 10:30"
       And I should not see the battle that starts on "01/10/15 - 10:30"
+      And I should not see the battle that starts on "04/10/15 - 11:30"
       And I should see 10 battles
 
     @javascript
@@ -67,6 +73,8 @@ Background: I am a registered user logged in and battles exist
       And I should see the battle that starts on "03/10/15 - 10:30"
       And I should see the battle that starts on "02/10/15 - 10:30"
       And I should see the battle that starts on "01/10/15 - 10:30"
+      And I should not see the battle that starts on "08/10/15 - 11:30"
+      And I should not see the battle that starts on "04/10/15 - 11:30"
       And I should see 11 battles
 
     @javascript

@@ -16,3 +16,4 @@ pt-BR:
     greater_than_zero: 'O valor deve ser maior que zero'
     invalid_username: 'é inválido'
     invalid_image: 'Imagem inválida'
+    uniqueness_friend: 'Você já está seguindo este usuário'

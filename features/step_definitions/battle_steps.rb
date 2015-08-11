@@ -33,7 +33,8 @@ Given /^a battle was created with options "([^"]*)" and "([^"]*)"$/ do |option1,
     :options => [
       FactoryGirl.create(:option, { name: option1, picture: Rack::Test::UploadedFile.new(create_path('vader.jpg'), 'image/jpeg') }),
       FactoryGirl.create(:option, { name: option2, picture: Rack::Test::UploadedFile.new(create_path('palpatine.jpg'), 'image/jpeg') })
-    ]
+    ],
+    :user => User.find_by_username("myself")
   })
 end
 
@@ -46,7 +47,8 @@ Given /^a battle was created with options "([^"]*)", "([^"]*)" and "([^"]*)"$/ d
       FactoryGirl.create(:option, { name: option1, picture: Rack::Test::UploadedFile.new(create_path('vader.jpg'), 'image/jpeg') }),
       FactoryGirl.create(:option, { name: option2, picture: Rack::Test::UploadedFile.new(create_path('palpatine.jpg'), 'image/jpeg') }),
       FactoryGirl.create(:option, { name: option3, picture: Rack::Test::UploadedFile.new(create_path('dick_dastardly.jpg'), 'image/jpeg') })
-    ]
+    ],
+    :user => User.find_by_username("myself")
   })
 end
 
@@ -58,7 +60,8 @@ Given /^a battle was created with options "([^"]*)" and "([^"]*)" starting (\d+)
     :options => [
       FactoryGirl.create(:option, { name: option1, picture: Rack::Test::UploadedFile.new(create_path('dick_dastardly.jpg'), 'image/jpeg') }),
       FactoryGirl.create(:option, { name: option2, picture: Rack::Test::UploadedFile.new(create_path('vader.jpg'), 'image/jpeg') })
-    ]
+    ],
+    :user => User.find_by_username("myself")
   })
 end
 
@@ -70,7 +73,8 @@ Given /^a battle was created with images "([^"]*)" and "([^"]*)"$/ do |image1, i
     :options => [
       FactoryGirl.create(:option, { picture: Rack::Test::UploadedFile.new(create_path(image1), 'image/jpeg') }),
       FactoryGirl.create(:option, { picture: Rack::Test::UploadedFile.new(create_path(image2), 'image/jpeg') })
-    ]
+    ],
+    :user => User.find_by_username("myself")
   })
 end
 

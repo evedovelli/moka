@@ -5,12 +5,16 @@ Feature: User's home page
 Background: I am a registered user logged in and battles exist
     Given I am logged in
     And user "willywallace" exists
+    And user "macewindu" exists
+    And I am following "willywallace"
     And the following battles were added:
     | starts_at                 | duration  | user         |
     | 2015-10-01 10:30:00 -0300 | 6000      | myself       |
     | 2015-10-12 10:30:00 -0300 | 30000     | willywallace |
+    | 2015-10-13 10:30:00 -0300 | 3000      | macewindu    |
     | 2015-10-16 10:30:00 -0300 | 58000     | myself       |
     | 2015-10-20 10:30:00 -0300 | 3000      | willywallace |
+    | 2015-10-22 10:30:00 -0300 | 4000      | macewindu    |
     And current time is 2015-10-21 07:28:00 -0300
 
 
@@ -19,10 +23,15 @@ Background: I am a registered user logged in and battles exist
       Then I should see the battle that starts on "01/10/15 - 10:30"
       And I should see the battle that starts on "16/10/15 - 10:30"
 
-    Scenario: I can see battles other submits
+    Scenario: I can see battles from my following list
       When I go to my home page
       Then I should see the battle that starts on "12/10/15 - 10:30"
       And I should see the battle that starts on "20/10/15 - 11:30"
+
+    Scenario: I should not see battles if user is not in my following list
+      When I go to my home page
+      Then I should not see the battle that starts on "13/10/15 - 10:30"
+      And I should not see the battle that starts on "22/10/15 - 10:30"
 
     Scenario: I can see mine and others battles ordered by starting time
       When I go to my home page

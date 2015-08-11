@@ -8,6 +8,10 @@ class User < ActiveRecord::Base
   attr_accessor :login
 
   has_many :battles, dependent: :destroy
+  has_many :friendships, dependent: :destroy
+  has_many :friends, :through => :friendships
+  has_many :inverse_friendships, :class_name => "Friendship", :foreign_key => "friend_id"
+  has_many :inverse_friends, :through => :inverse_friendships, :source => :user
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :login, :username, :email, :password, :password_confirmation, :remember_me
@@ -47,5 +51,16 @@ class User < ActiveRecord::Base
 
   def sorted_battles(page)
     return battles.order(:starts_at).reverse_order.page(page)
+  end
+
+  def is_friends_with?(friend)
+    if friendships && friendships.exists?(:friend_id => friend.id)
+      return true
+    end
+    return false
+  end
+
+  def get_friendship_with(friend)
+    return friendships.where(:friend_id => friend.id).first
   end
 end

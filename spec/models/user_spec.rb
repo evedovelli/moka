@@ -213,4 +213,34 @@ describe User do
     end
   end
 
+  describe 'is_friends_with?' do
+    before(:each) do
+      @friend = FactoryGirl.create(:user)
+    end
+    it 'should return false if friendship is nil' do
+      user = User.create!(@attr)
+      expect(user.is_friends_with?(@friend)).to eq(false)
+    end
+    it 'should return false if user is not following the friend' do
+      user = User.create!(@attr)
+      not_friend = FactoryGirl.create(:user, email: "not_friend@not_friend.com", username: "not_friend")
+      FactoryGirl.create(:friendship, user: user, friend: @friend)
+      expect(user.is_friends_with?(not_friend)).to eq(false)
+    end
+    it 'should return true if user is following the friend' do
+      user = User.create!(@attr)
+      FactoryGirl.create(:friendship, user: user, friend: @friend)
+      expect(user.is_friends_with?(@friend)).to eq(true)
+    end
+  end
+
+  describe 'get_friendship_with' do
+    it 'should return the friendship' do
+      user = User.create!(@attr)
+      friend = FactoryGirl.create(:user)
+      friendship = FactoryGirl.create(:friendship, user: user, friend: friend)
+      expect(user.get_friendship_with(friend)).to eq(friendship)
+    end
+  end
+
 end

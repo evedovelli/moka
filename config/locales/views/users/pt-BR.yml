@@ -2,4 +2,15 @@ pt-BR:
   users:
     home:
       title: 'Batalhas'
+    show:
+      edit_account: 'Editar perfil'
+      follow: 'Seguir'
+      following: 'Seguindo'
+      unfollow: 'Deixar de seguir'
+      following_list: 'Seguindo (%{count})'
+      followers_list: 'Seguidores (%{count})'
+    followers:
+      title: 'Seguidores'
+    following:
+      title: 'Seguindo'
 

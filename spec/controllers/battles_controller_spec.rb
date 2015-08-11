@@ -3,27 +3,27 @@ require 'rails_helper'
 describe BattlesController do
 
   describe "When user is not logged in" do
-    it "should be redirected to 'sign in' page if accessing new page" do
+    it "should be redirected to 'sign in' page if accessing new battle page" do
       get :new
       expect(flash[:alert]).to match("You need to sign in or sign up before continuing.")
       expect(response).to redirect_to("/en/users/sign_in")
     end
-    it "should be redirected to 'sign in' page if creating template" do
+    it "should be redirected to 'sign in' page if creating battle" do
       post :create, { :battle => {} }
       expect(flash[:alert]).to match("You need to sign in or sign up before continuing.")
       expect(response).to redirect_to("/en/users/sign_in")
     end
-    it "should be redirected to 'sign in' page if editing the page" do
+    it "should be redirected to 'sign in' page if editing the battle" do
       get :edit, {id: "0"}
       expect(flash[:alert]).to match("You need to sign in or sign up before continuing.")
       expect(response).to redirect_to("/en/users/sign_in")
     end
-    it "should be redirected to 'sign in' page if updating the page" do
+    it "should be redirected to 'sign in' page if updating the battle" do
       put :update, { :id => "0", :battle => {} }
       expect(flash[:alert]).to match("You need to sign in or sign up before continuing.")
       expect(response).to redirect_to("/en/users/sign_in")
     end
-    it "should be redirected to 'sign in' page if destroying template" do
+    it "should be redirected to 'sign in' page if destroying battle" do
       delete :destroy, { :id => "0" }
       expect(flash[:alert]).to match("You need to sign in or sign up before continuing.")
       expect(response).to redirect_to("/en/users/sign_in")
@@ -42,27 +42,27 @@ describe BattlesController do
         allow(controller).to receive(:authorize!).and_raise(CanCan::AccessDenied)
       end
 
-      it "should be redirected to root page if accessing new page" do
+      it "should be redirected to root page if accessing new battle page" do
         get :new
         expect(flash[:alert]).to match("Access denied.")
         expect(response).to redirect_to(root_url)
       end
-      it "should be redirected to root page if creating template" do
+      it "should be redirected to root page if creating battle" do
         post :create, { :battle => {} }
         expect(flash[:alert]).to match("Access denied.")
         expect(response).to redirect_to(root_url)
       end
-      it "should be redirected to root page if editing the page" do
+      it "should be redirected to root page if editing the battle" do
         get :edit, {id: @fake_battle.id}
         expect(flash[:alert]).to match("Access denied.")
         expect(response).to redirect_to(root_url)
       end
-      it "should be redirected to root page if updating the page" do
+      it "should be redirected to root page if updating the battle" do
         put :update, { :id => @fake_battle.id, :battle => {} }
         expect(flash[:alert]).to match("Access denied.")
         expect(response).to redirect_to(root_url)
       end
-      it "should be redirected to root page if creating template" do
+      it "should be redirected to root page if destroying the battle" do
         allow(Battle).to receive(:find).and_return(@fake_battle)
         delete :destroy, { :id => 1 }
         expect(flash[:alert]).to match("Access denied.")
@@ -182,7 +182,7 @@ describe BattlesController do
             post(:create, {battle: {}, :format => 'js'})
             expect(response.content_type).to eq(Mime::JS)
           end
-          it "should render the reload_form for template" do
+          it "should render the reload_form for battle" do
             post(:create, {battle: {}, :format => 'js'})
             expect(response).to render_template('reload_form')
           end

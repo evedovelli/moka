@@ -2,4 +2,15 @@ en:
   users:
     home:
       title: 'Battles'
+    show:
+      edit_account: 'Edit profile'
+      follow: 'Follow'
+      following: 'Following'
+      unfollow: 'Unfollow'
+      following_list: 'Following (%{count})'
+      followers_list: 'Followers (%{count})'
+    followers:
+      title: 'Followers'
+    following:
+      title: 'Following'
 

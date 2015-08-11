@@ -1,0 +1,25 @@
+<div class="span12">
+  <div class="row">
+    <div class="span3">
+      <p class="username">
+        <%= link_to(@user.username, user_path(@user)) %>
+      </p>
+    </div>
+
+    <div class="span3">
+      <div id="user-button<%= @user.id %>" class="user-button">
+        <%= user_button_for(@user) %>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="span3">
+      <h2><%= I18n.t('users.followers.title') %></h2>
+    </div>
+  </div>
+
+  <div class="row">
+    <%= render :partial => "friendships/index", :locals => { :friends => @followers }  %>
+  </div>
+</div>

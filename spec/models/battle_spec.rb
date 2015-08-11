@@ -73,28 +73,56 @@ describe Battle do
   end
 
   describe 'user_home' do
+    before(:each) do
+      @u1 = FactoryGirl.create(:user, email: "u1@u1.com", username: "u1")
+      @u2 = FactoryGirl.create(:user, email: "u2@u2.com", username: "u2")
+      @u3 = FactoryGirl.create(:user, email: "u3@u3.com", username: "u3")
+      @user = FactoryGirl.create(:user, email: "user@user.com", username: "user")
+      FactoryGirl.create(:friendship, user: @user, friend: @u1)
+      FactoryGirl.create(:friendship, user: @user, friend: @u2)
+    end
     it 'should return the battles sorted according to start_at' do
-      e1 = FactoryGirl.create(:battle, :starts_at => DateTime.new(2017,3,1,4,0))
-      e2 = FactoryGirl.create(:battle, :starts_at => DateTime.new(2017,3,1,2,0))
-      e3 = FactoryGirl.create(:battle, :starts_at => DateTime.new(2017,3,1,3,0))
-      expect(Battle.user_home(double("user"), "1")).to eq([e1, e3, e2])
+      e1 = FactoryGirl.create(:battle, :user => @u1, :starts_at => DateTime.new(2017,3,1,4,0))
+      e2 = FactoryGirl.create(:battle, :user => @u2, :starts_at => DateTime.new(2017,3,1,2,0))
+      e3 = FactoryGirl.create(:battle, :user => @u1, :starts_at => DateTime.new(2017,3,1,3,0))
+      expect(Battle.user_home(@user, "1")).to eq([e1, e3, e2])
     end
     it 'should return the battles according to the page' do
-      e1 = FactoryGirl.create(:battle, :starts_at => DateTime.new(2017,3,1,12,0))
-      e2 = FactoryGirl.create(:battle, :starts_at => DateTime.new(2017,3,1,11,0))
-      e3 = FactoryGirl.create(:battle, :starts_at => DateTime.new(2017,3,1,10,0))
-      e4 = FactoryGirl.create(:battle, :starts_at => DateTime.new(2017,3,1,9,0))
-      e5 = FactoryGirl.create(:battle, :starts_at => DateTime.new(2017,3,1,8,0))
-      e6 = FactoryGirl.create(:battle, :starts_at => DateTime.new(2017,3,1,7,0))
-      e7 = FactoryGirl.create(:battle, :starts_at => DateTime.new(2017,3,1,6,0))
-      e8 = FactoryGirl.create(:battle, :starts_at => DateTime.new(2017,3,1,5,0))
-      e9 = FactoryGirl.create(:battle, :starts_at => DateTime.new(2017,3,1,4,0))
-      e10 = FactoryGirl.create(:battle, :starts_at => DateTime.new(2017,3,1,3,0))
-      e11 = FactoryGirl.create(:battle, :starts_at => DateTime.new(2017,3,1,2,0))
-      e12 = FactoryGirl.create(:battle, :starts_at => DateTime.new(2017,3,1,1,0))
-      expect(Battle.user_home(double("user"), "1")).to eq([e1, e2, e3, e4, e5])
-      expect(Battle.user_home(double("user"), "2")).to eq([e6, e7, e8, e9, e10])
-      expect(Battle.user_home(double("user"), "3")).to eq([e11, e12])
+      e1  = FactoryGirl.create(:battle, :user => @u1, :starts_at => DateTime.new(2017,3,1,12,0))
+      e2  = FactoryGirl.create(:battle, :user => @u2, :starts_at => DateTime.new(2017,3,1,11,0))
+      e3  = FactoryGirl.create(:battle, :user => @u1, :starts_at => DateTime.new(2017,3,1,10,0))
+      e4  = FactoryGirl.create(:battle, :user => @u2, :starts_at => DateTime.new(2017,3,1,9,0))
+      e5  = FactoryGirl.create(:battle, :user => @u1, :starts_at => DateTime.new(2017,3,1,8,0))
+      e6  = FactoryGirl.create(:battle, :user => @user, :starts_at => DateTime.new(2017,3,1,7,0))
+      e7  = FactoryGirl.create(:battle, :user => @u1, :starts_at => DateTime.new(2017,3,1,6,0))
+      e8  = FactoryGirl.create(:battle, :user => @u2, :starts_at => DateTime.new(2017,3,1,5,0))
+      e9  = FactoryGirl.create(:battle, :user => @u1, :starts_at => DateTime.new(2017,3,1,4,0))
+      e10 = FactoryGirl.create(:battle, :user => @user, :starts_at => DateTime.new(2017,3,1,3,0))
+      e11 = FactoryGirl.create(:battle, :user => @u2, :starts_at => DateTime.new(2017,3,1,2,0))
+      e12 = FactoryGirl.create(:battle, :user => @u1, :starts_at => DateTime.new(2017,3,1,1,0))
+      expect(Battle.user_home(@user, "1")).to eq([e1, e2, e3, e4, e5])
+      expect(Battle.user_home(@user, "2")).to eq([e6, e7, e8, e9, e10])
+      expect(Battle.user_home(@user, "3")).to eq([e11, e12])
+    end
+    it 'should return the battles only from following' do
+      e1  = FactoryGirl.create(:battle, :user => @u1, :starts_at => DateTime.new(2017,3,1,12,0))
+      e2  = FactoryGirl.create(:battle, :user => @u3, :starts_at => DateTime.new(2017,3,1,11,0))
+      e3  = FactoryGirl.create(:battle, :user => @u2, :starts_at => DateTime.new(2017,3,1,10,0))
+      e4  = FactoryGirl.create(:battle, :user => @u3, :starts_at => DateTime.new(2017,3,1,9,0))
+      e5  = FactoryGirl.create(:battle, :user => @u1, :starts_at => DateTime.new(2017,3,1,8,0))
+      e6  = FactoryGirl.create(:battle, :user => @user, :starts_at => DateTime.new(2017,3,1,7,0))
+      e7  = FactoryGirl.create(:battle, :user => @u3, :starts_at => DateTime.new(2017,3,1,6,0))
+      expect(Battle.user_home(@user, "1")).to eq([e1, e3, e5, e6])
+    end
+    it 'should return no battles if not following anyone' do
+      e1  = FactoryGirl.create(:battle, :user => @u1, :starts_at => DateTime.new(2017,3,1,12,0))
+      e2  = FactoryGirl.create(:battle, :user => @u3, :starts_at => DateTime.new(2017,3,1,11,0))
+      e3  = FactoryGirl.create(:battle, :user => @user, :starts_at => DateTime.new(2017,3,1,10,0))
+      e4  = FactoryGirl.create(:battle, :user => @u3, :starts_at => DateTime.new(2017,3,1,9,0))
+      e5  = FactoryGirl.create(:battle, :user => @u1, :starts_at => DateTime.new(2017,3,1,8,0))
+      e6  = FactoryGirl.create(:battle, :user => @user, :starts_at => DateTime.new(2017,3,1,7,0))
+      e7  = FactoryGirl.create(:battle, :user => @u3, :starts_at => DateTime.new(2017,3,1,6,0))
+      expect(Battle.user_home(@u2, "1")).to eq([])
     end
   end
 

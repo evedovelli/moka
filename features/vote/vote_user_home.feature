@@ -5,6 +5,7 @@ Feature: Voting in home page
 Background: I exist as an user, and I there are battles
     Given I am logged in
     And user "willywonka" exists
+    And I am following "willywonka"
     And current time is 1985-10-21 07:28:00 -0300
     And a battle was created by "myself" with options:
     | name            | image              |
