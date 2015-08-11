@@ -32,6 +32,18 @@ module NavigationHelpers
     when /the option index page/
       options_path
 
+    when /my following page/
+      user_following_path("myself")
+
+    when /my followers page/
+      user_followers_path("myself")
+
+    when /the "([^"]*)" following page/
+      user_following_path($1)
+
+    when /the "([^"]*)" followers page/
+      user_followers_path($1)
+
     else
       begin
         page_name =~ /the (.*) page/

@@ -20,7 +20,8 @@ class Battle < ActiveRecord::Base
   end
 
   def self.user_home(user, page)
-    return Battle.order(:starts_at).reverse_order.page(page)
+    ids = user.friends.pluck(:id) << user.id
+    return Battle.order(:starts_at).where(:user_id => ids).reverse_order.page(page)
   end
 
   def current?
