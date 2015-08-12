@@ -1,10 +1,9 @@
 Feature: Edit battle
   If a battle was created with a mistake
-  An admin should be able to access the edit battle form
+  An user should be able to access the edit battle form
 
 Background:
     Given I am logged in
-    And I am an admin
     And the following battles were added:
     | starts_at                 | duration  |
     | 2015-05-01 10:30:14 -0300 | 5000      |

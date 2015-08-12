@@ -1,9 +1,11 @@
 $('#battle_form').html("<%= j (render 'form') %>");
-$('#battle_form').slideDown(350);
+$('#battle_form').slideDown(200);
 
 $('.upload_picture').hide();
 $('.delete_picture').hide();
 $('.picture_preview').hide();
+
+$('#add_battle').slideUp(200);
 
 jQuery(circleImageClick);
 jQuery(deletePhoto);
@@ -13,6 +15,7 @@ jQuery(validateNewBattle);
 jQuery(function() {
   $('.remove_form').click(function() {
     removeForm($(this).closest('.battle_form'));
+    $('#add_battle').show();
   });
 });
 

@@ -1,10 +1,9 @@
 Feature: Create battle
   To allow users to vote between options to get out of the house
-  An admin should be able to fill and submit the new battle form
+  An user should be able to fill and submit the new battle form
 
 Background:
     Given I am logged in
-    And I am an admin
     And I am on the home page
     And I press the button to add new battle
 
@@ -19,6 +18,7 @@ Background:
       And I should see "Palpatine"
       And I should see the image "palpatine.jpg"
       And I should see "1440 minutes"
+      And I should see the button to add new battle
 
     @javascript
     Scenario: Missing options

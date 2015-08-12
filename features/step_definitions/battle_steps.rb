@@ -197,7 +197,7 @@ Then /^I should see an error for duration$/ do
   expect(page).to have_content("Value must be greater than zero")
 end
 
-Then /^I should see (\d+) battles$/ do |number|
+Then /^I should see (\d+) battle(?:s|)$/ do |number|
   within(find("#battle_index")) do
     expect(all('.battle').count).to eq(number.to_i)
   end
@@ -302,3 +302,10 @@ Then /^I should see the battle title "([^"]*)"$/ do |title|
   expect(page).to have_text(title)
 end
 
+Then /^I should see the button to add new battle$/ do
+  expect(page).to have_css("#add_battle")
+end
+
+Then /^I should not see the button to add new battle$/ do
+  expect(page).not_to have_css("#add_battle")
+end

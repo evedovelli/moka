@@ -5,7 +5,6 @@ Feature: Option picture
 
 Background:
     Given I am logged in
-    And I am an admin
 
     @javascript
     Scenario: User may upload picture

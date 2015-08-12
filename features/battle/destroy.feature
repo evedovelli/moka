@@ -4,7 +4,6 @@ Feature: Destroy
 
 Background:
     Given I am logged in
-    And I am an admin
     And the following battles were added:
     | starts_at                 | duration  |
     | 2015-05-01 10:30:14 -0300 | 60        |
