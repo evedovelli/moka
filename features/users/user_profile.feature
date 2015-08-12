@@ -32,8 +32,8 @@ Background: I am a registered user logged in and battles exist
     @javascript
     Scenario: I can create battles in my profile page
       When I go to my profile page
-      And I press the button to add new battle
       Then I should see "#add_battle" css element
+      And I press the button to add new battle
       And I should be on my profile page
       And I should see the new battle form
 
