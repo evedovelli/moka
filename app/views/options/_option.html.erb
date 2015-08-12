@@ -33,10 +33,10 @@
       </div>
     </div>
 
-    <% if battle.current? && battle.user != current_user %>
-      <div id='<%="results#{option.id}"%>' style='display:none;'></div>
-    <% else %>
+    <% if can? :show_results, battle %>
       <%= render :partial => 'votes/results', :locals => { :id => option.id, :votes => option.number_of_votes } %>
+    <% else %>
+      <div id='<%="results#{option.id}"%>' style='display:none;'></div>
     <% end %>
 
   </div>

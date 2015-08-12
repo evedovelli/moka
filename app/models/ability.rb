@@ -36,29 +36,34 @@ class Ability
       # users
       can :manage, User
 
+
       # Options
       can :manage, Option
+
 
       # Battles
       can :manage, Battle
 
+
       # Votes
       can :read, Vote
       can :create, Vote
+
 
       # Friendships
       can :manage, Friendship
     end
 
     # Other users
+
     # users
     can :read, User
     can :following, User
     can :followers, User
-    can :home, User
-    can :create, User do |u|
+    can :home, User do |u|
       u == user
     end
+    can :create, User
     can :update, User do |u|
       u == user
     end
@@ -66,25 +71,36 @@ class Ability
       u == user
     end
 
+
     # Options
     can :read, Option
 
+
     # Battles
-    can :show, Battle do |e|
-      not e.in_future?
-    end
     can :create, Battle
+    can :update, Battle do |battle|
+      battle.try(:user) == user
+    end
+    can :destroy, Battle do |battle|
+      battle.try(:user) == user
+    end
+    can :show, Battle do |battle|
+      not battle.in_future?
+    end
+    can :show_results, Battle do |battle|
+      (not battle.current?) || (battle.try(:user) == user)
+    end
+
 
     # Votes
-    can :read, Vote
     can :create, Vote
+
 
     # Friendships
     can :create, Friendship
     can :destroy, Friendship do |friendship|
       friendship.try(:user) == user
     end
-    can :index, Friendship
 
   end
 end

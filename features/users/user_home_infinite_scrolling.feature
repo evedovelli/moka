@@ -4,7 +4,6 @@ Feature: User's home page infinite scrolling
 
 Background: I am a registered user logged in and battles exist
     Given I am logged in
-    And I am an admin
     And user "willywallace" exists
     And user "macewindu" exists
     And I am following "willywallace"
@@ -145,7 +144,7 @@ Background: I am a registered user logged in and battles exist
     @javascript
     Scenario: Delete battle and scroll page
       When I go to my home page
-      And I remove the 2nd battle
+      And I remove the 1st battle
       And I confirm popup
       And I scroll to the bottom of the page
       Then I should see the battle that starts on "11/10/15 - 10:30"

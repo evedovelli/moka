@@ -4,7 +4,6 @@ Feature: User's profile page infinite scrolling
 
 Background: I am a registered user logged in and battles exist
     Given I am logged in
-    And I am an admin
     And user "willywallace" exists
     And the following battles were added:
     | starts_at                 | duration  | user         |
