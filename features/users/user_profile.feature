@@ -8,26 +8,26 @@ Background: I am a registered user logged in and battles exist
     Given I am logged in
     And user "willywallace" exists
     And the following battles were added:
-    | starts_at                 | duration  | user         |
-    | 2015-10-01 10:30:00 -0300 | 6000      | myself       |
-    | 2015-10-12 10:30:00 -0300 | 30000     | willywallace |
-    | 2015-10-16 10:30:00 -0300 | 58000     | myself       |
-    | 2015-10-20 10:30:00 -0300 | 3000      | willywallace |
+    | starts_at                 | duration  | user         | title    |
+    | 2015-10-01 10:30:00 -0300 | 6000      | myself       | battle 1 |
+    | 2015-10-12 10:30:00 -0300 | 30000     | willywallace | battle 2 |
+    | 2015-10-16 10:30:00 -0300 | 58000     | myself       | battle 3 |
+    | 2015-10-20 10:30:00 -0300 | 3000      | willywallace | battle 4 |
     And current time is 2015-10-21 07:28:00 -0300
 
     Scenario: I can see only battles from the user in his profile page
       When I go to the "willywallace" profile page
-      Then I should see the battle that starts on "12/10/15 - 10:30"
-      And I should see the battle that starts on "20/10/15 - 11:30"
-      And I should not see the battle that starts on "01/10/15 - 10:30"
-      And I should not see the battle that starts on "16/10/15 - 10:30"
+      Then I should see the battle title "battle 2"
+      And I should see the battle title "battle 4"
+      And I should not see the battle title "battle 1"
+      And I should not see the battle title "battle 3"
 
     Scenario: I can see my battles in my profile page
       When I go to my profile page
-      Then I should not see the battle that starts on "12/10/15 - 10:30"
-      And I should not see the battle that starts on "20/10/15 - 11:30"
-      And I should see the battle that starts on "01/10/15 - 10:30"
-      And I should see the battle that starts on "16/10/15 - 10:30"
+      Then I should not see the battle title "battle 2"
+      And I should not see the battle title "battle 4"
+      And I should see the battle title "battle 1"
+      And I should see the battle title "battle 3"
 
     @javascript
     Scenario: I can create battles in my profile page

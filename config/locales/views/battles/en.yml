@@ -2,6 +2,13 @@ en:
   battles:
     _battle:
       destroy: 'Are you sure you want to remove this battle?'
+      remaining_time: 'Remaining time'
+      day: 'day'
+      hour: 'hour'
+      min: 'min'
+      sec: 'sec'
+      finished: 'Finished battle!'
+      finished_ago: '%{distance} ago'
     _form:
       title: 'Compose your battle'
       add_option: 'Add Option'

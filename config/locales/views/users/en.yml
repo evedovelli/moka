@@ -1,7 +1,5 @@
 en:
   users:
-    home:
-      title: 'Battles'
     show:
       edit_account: 'Edit profile'
       follow: 'Follow'

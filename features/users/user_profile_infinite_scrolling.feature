@@ -6,47 +6,47 @@ Background: I am a registered user logged in and battles exist
     Given I am logged in
     And user "willywallace" exists
     And the following battles were added:
-    | starts_at                 | duration  | user         |
-    | 2015-09-29 10:30:00 -0300 | 58000     | myself       |
-    | 2015-09-30 10:30:00 -0300 | 58000     | myself       |
-    | 2015-10-01 10:30:00 -0300 | 6000      | willywallace |
-    | 2015-10-02 10:30:00 -0300 | 30000     | willywallace |
-    | 2015-10-03 10:30:00 -0300 | 58000     | myself       |
-    | 2015-10-04 10:30:00 -0300 | 3000      | willywallace |
-    | 2015-10-05 10:30:00 -0300 | 6000      | myself       |
-    | 2015-10-06 10:30:00 -0300 | 30000     | willywallace |
-    | 2015-10-07 10:30:00 -0300 | 58000     | willywallace |
-    | 2015-10-08 10:30:00 -0300 | 3000      | willywallace |
-    | 2015-10-09 10:30:00 -0300 | 58000     | myself       |
-    | 2015-10-10 10:30:00 -0300 | 58000     | myself       |
-    | 2015-10-11 10:30:00 -0300 | 3000      | willywallace |
+    | starts_at                 | duration  | user         | title        |
+    | 2015-09-29 10:30:00 -0300 | 58000     | myself       | first battle |
+    | 2015-09-30 10:30:00 -0300 | 58000     | myself       | battle 2     |
+    | 2015-10-01 10:30:00 -0300 | 6000      | willywallace | battle 3     |
+    | 2015-10-02 10:30:00 -0300 | 30000     | willywallace | battle 4     |
+    | 2015-10-03 10:30:00 -0300 | 58000     | myself       | battle 5     |
+    | 2015-10-04 10:30:00 -0300 | 3000      | willywallace | battle 6     |
+    | 2015-10-05 10:30:00 -0300 | 6000      | myself       | battle 7     |
+    | 2015-10-06 10:30:00 -0300 | 30000     | willywallace | battle 8     |
+    | 2015-10-07 10:30:00 -0300 | 58000     | willywallace | battle 9     |
+    | 2015-10-08 10:30:00 -0300 | 3000      | willywallace | battle 10    |
+    | 2015-10-09 10:30:00 -0300 | 58000     | myself       | battle 11    |
+    | 2015-10-10 10:30:00 -0300 | 58000     | myself       | battle 12    |
+    | 2015-10-11 10:30:00 -0300 | 3000      | willywallace | battle 13    |
     And current time is 2015-10-21 07:28:00 -0300
 
     @javascript
     Scenario: I can only see first page profile battles before scrolling
       When I go to the "willywallace" profile page
-      Then I should see the battle that starts on "11/10/15 - 10:30"
-      And I should see the battle that starts on "08/10/15 - 10:30"
-      And I should see the battle that starts on "07/10/15 - 10:30"
-      And I should see the battle that starts on "06/10/15 - 10:30"
-      And I should see the battle that starts on "04/10/15 - 10:30"
-      And I should not see the battle that starts on "10/10/15 - 10:30"
-      And I should not see the battle that starts on "02/10/15 - 10:30"
-      And I should not see the battle that starts on "01/10/15 - 10:30"
+      Then I should see the battle title "battle 13"
+      And I should see the battle title "battle 10"
+      And I should see the battle title "battle 9"
+      And I should see the battle title "battle 8"
+      And I should see the battle title "battle 6"
+      And I should not see the battle title "battle 12"
+      And I should not see the battle title "battle 4"
+      And I should not see the battle title "battle 3"
       And I should see 5 battles
 
     @javascript
     Scenario: I can see next page profile battles when scrolling
       When I go to the "willywallace" profile page
       And I scroll to the bottom of the page
-      Then I should see the battle that starts on "11/10/15 - 10:30"
-      And I should see the battle that starts on "08/10/15 - 10:30"
-      And I should see the battle that starts on "07/10/15 - 10:30"
-      And I should see the battle that starts on "06/10/15 - 10:30"
-      And I should see the battle that starts on "04/10/15 - 10:30"
-      And I should see the battle that starts on "02/10/15 - 10:30"
-      And I should see the battle that starts on "01/10/15 - 10:30"
-      And I should not see the battle that starts on "10/10/15 - 10:30"
+      Then I should see the battle title "battle 13"
+      And I should see the battle title "battle 10"
+      And I should see the battle title "battle 9"
+      And I should see the battle title "battle 8"
+      And I should see the battle title "battle 6"
+      And I should see the battle title "battle 4"
+      And I should see the battle title "battle 3"
+      And I should not see the battle title "battle 12"
       And I should see 7 battles
 
     @javascript
@@ -58,11 +58,11 @@ Background: I am a registered user logged in and battles exist
       And I press "Create"
       And I wait 4 seconds for uploading images
       Then I should see "Vader"
-      And I should see the battle that starts on "10/10/15 - 10:30"
-      And I should see the battle that starts on "09/10/15 - 10:30"
-      And I should see the battle that starts on "05/10/15 - 10:30"
-      And I should see the battle that starts on "03/10/15 - 10:30"
-      And I should not see the battle that starts on "30/09/15 - 10:30"
+      And I should see the battle title "battle 12"
+      And I should see the battle title "battle 11"
+      And I should see the battle title "battle 7"
+      And I should see the battle title "battle 5"
+      And I should not see the battle title "battle 2"
       And I should see 5 battles
 
     @javascript
@@ -75,12 +75,12 @@ Background: I am a registered user logged in and battles exist
       And I wait 4 seconds for uploading images
       And I scroll to the bottom of the page
       Then I should see "Vader"
-      And I should see the battle that starts on "10/10/15 - 10:30"
-      And I should see the battle that starts on "09/10/15 - 10:30"
-      And I should see the battle that starts on "05/10/15 - 10:30"
-      And I should see the battle that starts on "03/10/15 - 10:30"
-      And I should see the battle that starts on "30/09/15 - 10:30"
-      And I should see the battle that starts on "29/09/15 - 10:30"
+      And I should see the battle title "battle 12"
+      And I should see the battle title "battle 11"
+      And I should see the battle title "battle 7"
+      And I should see the battle title "battle 5"
+      And I should see the battle title "battle 2"
+      And I should see the battle title "first battle"
       And I should see 7 battles
 
     @javascript
@@ -93,12 +93,12 @@ Background: I am a registered user logged in and battles exist
       And I press "Create"
       And I wait 4 seconds for uploading images
       Then I should see "Vader"
-      And I should see the battle that starts on "10/10/15 - 10:30"
-      And I should see the battle that starts on "09/10/15 - 10:30"
-      And I should see the battle that starts on "05/10/15 - 10:30"
-      And I should see the battle that starts on "03/10/15 - 10:30"
-      And I should see the battle that starts on "30/09/15 - 10:30"
-      And I should see the battle that starts on "29/09/15 - 10:30"
+      And I should see the battle title "battle 12"
+      And I should see the battle title "battle 11"
+      And I should see the battle title "battle 7"
+      And I should see the battle title "battle 5"
+      And I should see the battle title "battle 2"
+      And I should see the battle title "first battle"
       And I should see 7 battles
 
     @javascript
@@ -107,12 +107,11 @@ Background: I am a registered user logged in and battles exist
       And I remove the 4th battle
       And I confirm popup
       And I scroll to the bottom of the page
-      Then I should see the battle that starts on "10/10/15 - 10:30"
-      And I should see the battle that starts on "09/10/15 - 10:30"
-      And I should see the battle that starts on "05/10/15 - 10:30"
-      And I should not see the battle that starts on "03/10/15 - 10:30"
-      And I should see the battle that starts on "30/09/15 - 10:30"
-      And I should see the battle that starts on "29/09/15 - 10:30"
+      Then I should see the battle title "battle 12"
+      And I should see the battle title "battle 11"
+      And I should see the battle title "battle 7"
+      And I should not see the battle title "battle 5"
+      And I should see the battle title "battle 2"
+      And I should see the battle title "first battle"
       And I should see 5 battles
-
 

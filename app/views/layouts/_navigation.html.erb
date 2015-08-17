@@ -1,13 +1,11 @@
 <div class="navbar-inner">
   <div class="container">
-    <%= link_to t('layouts._navigation.page_title'), root_path, :id => "logo" %>
-    <% if user_signed_in? %>
-      <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </a>
-    <% end %>
+    <%= link_to image_tag("logo_small.png", alt: t('layouts._navigation.page_title')), root_path, :id => "logo" %>
+    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </a>
 
     <div class="menu">
       <nav class="nav-collapse">
@@ -15,8 +13,7 @@
           <% if user_signed_in? %>
             <li>
               <%= link_to(user_path(current_user)) do %>
-                <i class="icon-user icon-white"></i>
-                <%= current_user.username %>
+                <i class="icon-user icon-white icon-user-nav"></i> <%= current_user.username %>
               <% end %>
             </li>
             <li><%= link_to t('layouts._navigation.home'), root_path %></li>

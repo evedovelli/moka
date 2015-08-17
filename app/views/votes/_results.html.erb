@@ -1,7 +1,7 @@
 <div id="<%="results#{id}"%>" class="results">
   <div class="row">
-    <div class="span4">
-      <h4 class="center">
+    <div class="span<%= size %>">
+      <h4 class="center vote-count">
         <%= t('votes._results.votes', count: votes) %>
       </h4>
     </div>

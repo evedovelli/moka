@@ -1,6 +1,6 @@
-<div class="span4">
+<div class="option-form-sizeable option-form-offsetable span4 offset0">
   <div class="row">
-    <div class="span4">
+    <div class="span4 option-form-sizeable">
       <%= f.link_to_remove(:class => "remove_option_form") do %>
         <i class="icon-remove pull-left"></i>
       <% end %>
@@ -9,7 +9,7 @@
 
   <div class="option-box option-box-editable">
     <div class="row">
-      <div class="span4">
+      <div class="span4 option-form-sizeable">
         <div class="picture-box">
           <div class="current_picture">
             <div class="picture_preview">
@@ -38,10 +38,8 @@
   </div>
 
   <div class="row">
-    <div class="span4">
-      <div class="center">
-        <%= f.input(:name, label: false, input_html: { :class => "span4 h3 center option_name", :placeholder => t('activerecord.attributes.option.name') }) %>
-      </div>
+    <div class="span4 option-form-sizeable">
+      <%= f.input(:name, label: false, input_html: { :class => "h3 input-block-level center option-name option-name-form", :placeholder => t('activerecord.attributes.option.name') }) %>
     </div>
   </div>
 

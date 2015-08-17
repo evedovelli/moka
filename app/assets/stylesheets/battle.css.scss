@@ -1,37 +1,13 @@
-$date-color: #EDEDED;
-$border-color-current: lighten(#46a546, 30%);
+$border-color-current: #afe9c6;
 $border-color-finished: #E5E5E5;
-$background-color-current: lighten(#46a546, 45%);
 $background-color-finished: #f9f9f9;
-
-.show-end-date {
-  margin-left: -30px;
-  border-right: 1px solid $date-color;
-  box-shadow: -10px 3px 10px rgba(0, 0, 0, 0.08) inset;
-}
-
-.show-start-date {
-  border-left: 1px solid $date-color;
-  box-shadow: 10px 3px 10px rgba(0, 0, 0, 0.08) inset;
-}
-
-.show-end-date, .show-start-date {
-  font-size: 1.5em;
-  border-top: 1px solid $date-color;
-  border-bottom: 1px solid $date-color;
-  color: #777;
-  margin-bottom: 20px;
-  padding: 2px;
-  background-color: $date-color;
-}
-
-.date-right {
-  text-align: right;
-}
-
-.date-left {
-  text-align: left;
-}
+$battle-title-backcolor-current: #afe9c6;
+$battle-title-backcolor-finished: darken(#eee, 5%);
+$remaining-time-color: darken(#999, 20%);
+$finished-ago-color: darken(#999, 20%);
+$countdown-color: #eee;
+$finished-color: #ff5555;
+$remaining-time-backcolor: #222;
 
 #battle-options-error {
   color: #B94A48;
@@ -61,16 +37,10 @@ div.add_new_option_container a {
 }
 
 .main-box.battle-current {
-//   background-color: $background-color-current;
   border: 1px solid $border-color-current;
   box-shadow: 0px 3px 10px rgba(70, 165, 70, 0.2) inset;
-  .show-start-date {
-    background-color: $background-color-current;
-    box-shadow: 10px 3px 10px rgba(70, 165, 70, 0.25) inset;
-  }
-  .show-end-date {
-    background-color: $background-color-current;
-    box-shadow: -10px 3px 10px rgba(0, 0, 0, 0.08) inset;
+  .battle-title-row-container {
+    background-color: $battle-title-backcolor-current;
   }
 }
 
@@ -79,3 +49,109 @@ div.add_new_option_container a {
   border: 1px solid $border-color-finished;
   box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.05) inset;
 }
+
+#battle_new {
+  margin-top: 16px;
+}
+
+.last_page {
+  padding-top: 20px;
+  padding-bottom: 50px;
+}
+
+.battle-title-row-container {
+  background-color: $battle-title-backcolor-finished;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.15) inset;
+  margin-left: -30px;
+  padding-left: 30px;
+  margin-right: -10px;
+}
+
+.battle-title {
+  margin-top: 15px;
+  padding-left: 5px;
+  margin-bottom: 15px;
+  font-size: 20px;
+}
+
+.h2.battle-title-form {
+  margin-top: 20px;
+  font-size: 18px;
+  height: 23px;
+}
+
+.h3.option-name-form {
+  margin-top: 10px;
+  font-size: 16px;
+  height: 20px;
+}
+
+.time-container {
+  margin-left: -10px;
+  background-color: $remaining-time-backcolor;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1) inset;
+}
+
+.remaining-time {
+  color: $remaining-time-color;
+  font-size: 12px;
+  margin-top: 7px;
+  margin-bottom: 7px;
+}
+
+.time-finished {
+  color: $finished-color;
+  font-size: 20px;
+  letter-spacing: 1px;
+  margin-top: 15px;
+  margin-bottom: 5px;
+}
+
+.battle-countdown {
+  line-height: 8px;
+  margin-bottom: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  text-align: center;
+  .battle-countdown-running {
+    color: $countdown-color;
+    font-size: 16px;
+    letter-spacing: 1px;
+    .digit {
+      font-size: 20px;
+      border-radius: 4px;
+      background-color: darken(#222, 10%);
+      padding-left: 5px;
+      padding-right: 5px;
+      margin-bottom: 0px;
+    }
+    .timer-range {
+      letter-spacing: 0.5px;
+      font-size: 10px;
+      padding-left: 5px;
+      display: inline-block;
+      width: 29px;
+      padding-right: 5px;
+      color: $remaining-time-color;
+    }
+  }
+  .battle-countdown-finished {
+    color: $finished-ago-color;
+    font-size: 12px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+  }
+}
+
+.battle-countdown-new {
+  line-height: 1.2;
+  margin-bottom: 10px;
+  padding-left: 10px;
+  margin-bottom: -5px;
+  text-align: center;
+}
+
+.battle-user {
+  font-size: 15px;
+}
+

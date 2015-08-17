@@ -48,8 +48,8 @@
 
       <div class="control-group">
         <div class="controls">
-          <%= f.submit("Update", :class => "btn btn-primary") %>
-          <%= link_to("Cancel", :back, :onclick => "goBack()", :class => "btn") %>
+          <%= f.submit(t('buttons.update'), :class => "btn btn-primary") %>
+          <%= link_to(t('buttons.cancel'), :back, :onclick => "goBack()", :class => "btn") %>
         </div>
       </div>
     <% end %>
@@ -60,7 +60,7 @@
       <div class="control-group">
         <label class="control-label"><%= t('.unhappy') %></label>
         <div class="controls">
-          <%= button_to("Cancel my account", registration_path(resource_name), :data => { :confirm => "Are you sure?" }, :method => :delete, :class => "btn") %>
+          <%= button_to(t('buttons.cancel_my_account'), registration_path(resource_name), :data => { :confirm => "Are you sure?" }, :method => :delete, :class => "btn") %>
         </div>
       </div>
     </div>

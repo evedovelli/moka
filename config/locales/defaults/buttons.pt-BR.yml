@@ -10,5 +10,6 @@ pt-BR:
     sign_in: 'Entrar'
     sign_up: 'Registrar'
     vote: 'Envie seu voto agora'
+    cancel_my_account: 'Cancelar minha conta'
   links:
     here: 'aqui'
