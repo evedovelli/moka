@@ -306,10 +306,6 @@ Then /^I should not see the button to add new battle$/ do
   expect(page).not_to have_css("#add_battle")
 end
 
-Then /^I should see the default ending time$/ do
-  expect(find(".battle-countdown-running")["data-countdown"]).to match('2015/10/22 07:')
-end
-
 Then /^I should see the battle ends in "([^"]*)"$/ do |endtime|
   expect(find(".battle-countdown-running")["data-countdown"]).to match(endtime)
 end

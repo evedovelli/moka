@@ -168,21 +168,6 @@ describe Battle do
     end
   end
 
-  describe 'remaining_time' do
-    it 'should return the remaining time for battle split in hours, minutes and seconds' do
-      Timecop.freeze(Time.local(1994))
-      battle = Battle.new(@attr.merge(
-                                      :starts_at => DateTime.now - 1.hour,
-                                      :duration  => 123
-                                     ))
-      expect(battle.remaining_time).to eq({
-                                          hours: 1,
-                                          minutes: 3,
-                                          seconds: 0
-                                         })
-    end
-  end
-
   describe 'in_future?' do
     it 'should return true if battle will happen in future' do
       Timecop.freeze(Time.local(2001))

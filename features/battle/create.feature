@@ -6,6 +6,7 @@ Background:
     Given I am logged in
     And I am on the home page
     And I press the button to add new battle
+    And current time is 2015-06-21 07:28:00 -0300
 
     @javascript
     Scenario: Creation of a new battle
@@ -17,7 +18,7 @@ Background:
       And I should see the image "vader.jpg"
       And I should see "Palpatine"
       And I should see the image "palpatine.jpg"
-      And I should see the default ending time
+      And I should see the battle ends in "2015/06/22 07:"
       And I should see the button to add new battle
 
     @javascript

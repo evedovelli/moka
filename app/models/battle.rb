@@ -28,16 +28,6 @@ class Battle < ActiveRecord::Base
     (starts_at < DateTime.current) and (starts_at + duration.minutes > DateTime.current)
   end
 
-  def remaining_time
-    seconds = starts_at + duration.minutes - DateTime.current
-    hours = (seconds / 1.hour).floor
-    seconds -= hours.hours
-    minutes = (seconds / 1.minute).floor
-    seconds -= minutes.minutes
-    seconds = seconds.floor
-    return { hours: hours, minutes: minutes, seconds: seconds }
-  end
-
   def in_future?
     starts_at > DateTime.current
   end
