@@ -1,5 +1,5 @@
 <div id="option<%= option.id %>">
-  <div class="span4">
+  <div class="option-sizeable option-offsetable span<%= size %> offset<%= offset %>">
 
     <div class="vote_picture_frame <%= if battle.current?
                                          "current_battle"
@@ -12,11 +12,11 @@
           :checked => false,
           :name => "vote[option_id]",
           :class => "vote_radio"
-        )%>
+        ) %>
 
         <div class="option-box">
           <div class="row">
-            <div class="span4">
+            <div class="option-sizeable span<%= size %>">
               <div class="picture-box">
                 <%= image_tag option.picture.url(:medium) %>
               </div>
@@ -28,13 +28,13 @@
     </div>
 
     <div class="row">
-      <div class="span4">
-        <h3 class="center"><%= option.name %></h3>
+      <div class="option-sizeable span<%= size %>">
+        <h3 class="center option-name"><%= option.name %></h3>
       </div>
     </div>
 
     <% if can? :show_results, battle %>
-      <%= render :partial => 'votes/results', :locals => { :id => option.id, :votes => option.number_of_votes } %>
+      <%= render :partial => 'votes/results', :locals => { :id => option.id, :votes => option.number_of_votes, :size => size } %>
     <% else %>
       <div id='<%="results#{option.id}"%>' style='display:none;'></div>
     <% end %>

@@ -1,8 +1,41 @@
 <%= simple_nested_form_for(@battle, :remote => true, :html => { :class => 'battle_form'}) do |f| %>
-  <div class="main-box">
+  <div class="main-box battle-current">
+
     <div class="row">
-      <div class="span8 offset2">
-        <%= f.input(:title, label: false, input_html: { :class => "span8 h2 center battle_title", :placeholder => t('battles.default_title') }) %>
+      <div class="span12">
+        <h4 class="pull-left battle-user">
+          <%= link_to(current_user.username, user_path(current_user), :class => "battle_user") %>
+        </h4>
+      </div>
+    </div>
+
+    <div class="battle-title-row-container">
+      <div class="row">
+
+        <div class="span4 pull-right">
+          <div class="time-container">
+            <div class="row">
+              <div class="span4">
+                <h5 class="center remaining-time"><%= t 'battles._battle.remaining_time' %></h5>
+              </div>
+            </div>
+            <div class="row">
+              <div class="span4">
+                <div class="battle-countdown-new center">
+                  <%= f.input :duration, :label => false, :wrapper => :append do %>
+                    <%= f.input_field :duration, :class => "input-mini center" %>
+                      <span class="add-on">min</span>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="span8">
+          <%= f.input(:title, label: false, input_html: { :class => "h2 input-block-level battle-title battle-title-form", :placeholder => t('battles.default_title') }) %>
+        </div>
+
       </div>
     </div>
 
@@ -18,10 +51,13 @@
             <%= f.simple_fields_for(:options) %>
           </div>
 
-          <div class="span4">
+          <div class="span4 option-form-sizeable new-option-outer">
             <div class="new-option-box option-box-editable add-option-box">
               <div class="add_new_option_container">
-                <%= f.link_to_add(:options, {:id => "add_new_option", :class => "btn btn-inverse btn-large", :data => {:target => "##{@options_id}"}}) do %>
+                <%= f.link_to_add(:options, {:id => "add_new_option",
+                                             :class => "btn btn-inverse btn-large",
+                                             :data => {:target => "##{@options_id}", :limit => 6}
+                                            }) do %>
                   <i class="icon-plus icon-inverse"></i><%= " #{t 'battles._form.add_option'}" %>
                 <% end %>
               </div>
@@ -37,19 +73,11 @@
     </div>
 
     <div class="row">
-      <div class="span12">
-        <%= f.input :duration, :wrapper => :append do %>
-          <%= f.input_field :duration, :class => "input-mini" %><span class="add-on">min</span>
-        <% end %>
+      <div class="span2 offset4">
+        <%= f.button(:submit, @battle.new_record? ? t('buttons.create') : t('buttons.update'), :class => "btn btn-primary btn-block submit_form") %>
       </div>
-    </div>
-
-    <div class="row">
-      <div class="span12">
-        <div class="center">
-          <%= f.button(:submit, @battle.new_record? ? t('buttons.create') : t('buttons.update'), :class => "btn btn-primary submit_form") %>
-          <span class="btn remove_form"><%= t('buttons.cancel') %></span>
-        </div>
+      <div class="span2">
+        <span class="btn btn-block remove_form"><%= t('buttons.cancel') %></span>
       </div>
     </div>
   </div>

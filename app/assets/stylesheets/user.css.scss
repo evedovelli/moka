@@ -1,6 +1,6 @@
 p.username {
-  margin-bottom: 25px;
   margin-top: 5px;
+  padding-top: 12px;
   font-size: 31.5px;
   height: 50px;
 }
@@ -17,3 +17,7 @@ a.btn-unfollow:hover .unfollow {
   display: inline;
 }
 
+.logo-sign-in {
+  padding-top: 80px;
+  padding-bottom: 80px;
+}

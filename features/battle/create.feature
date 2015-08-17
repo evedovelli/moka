@@ -6,6 +6,7 @@ Background:
     Given I am logged in
     And I am on the home page
     And I press the button to add new battle
+    And current time is 2015-06-21 07:28:00 -0300
 
     @javascript
     Scenario: Creation of a new battle
@@ -17,7 +18,7 @@ Background:
       And I should see the image "vader.jpg"
       And I should see "Palpatine"
       And I should see the image "palpatine.jpg"
-      And I should see "1440 minutes"
+      And I should see the battle ends in "2015/06/22 07:"
       And I should see the button to add new battle
 
     @javascript
@@ -45,7 +46,7 @@ Background:
       And I add 1st option "Vader" with picture "vader.jpg"
       And I add 2nd option "Palpatine" with picture "palpatine.jpg"
       And I press "Create"
-      And I wait 2 seconds for uploading images
+      And I wait 4 seconds for uploading images
       Then I should be on the home page
       And I should see the battle title "Who is the most devil?"
       And I should see "Vader"
@@ -56,7 +57,7 @@ Background:
       When I add 1st option "Vader" with picture "vader.jpg"
       And I add 2nd option "Palpatine" with picture "palpatine.jpg"
       And I press "Create"
-      And I wait 2 seconds for uploading images
+      And I wait 4 seconds for uploading images
       Then I should be on the home page
       And I should see the battle title "Who should win this battle?"
       And I should see "Vader"

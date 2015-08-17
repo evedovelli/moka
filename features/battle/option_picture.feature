@@ -21,7 +21,7 @@ Background:
       Then I should see the button to add 3rd image
 
     @javascript
-    Scenario: User select image and see preview
+    Scenario: User selects image and see preview
       When I go to the home page
       And I press the button to add new battle
       And I select "dick_dastardly.jpg" image for 2nd option
@@ -29,7 +29,7 @@ Background:
       And I should see the button to add 1st image
 
     @javascript
-    Scenario: User see upload message after removing image preview
+    Scenario: User sees upload message after removing image preview
       When I go to the home page
       And I press the button to add new battle
       And I select "dick_dastardly.jpg" image for 2nd option
@@ -39,7 +39,7 @@ Background:
       And I should see the button to add 2nd image
 
     @javascript
-    Scenario: User upload images successfully
+    Scenario: User uploads images successfully
       When I go to the home page
       And I press the button to add new battle
       And I add 1st option "Dick Dastardly" with picture "dick_dastardly.jpg"
@@ -50,7 +50,7 @@ Background:
       And I should see the image "devil_robot.jpg"
 
     @javascript
-    Scenario: User see existing images when editing battle
+    Scenario: User sees existing images when editing battle
       Given a battle was created with images "palpatine.jpg" and "devil_robot.jpg"
       When I go to the home page
       And I press the button to edit 1st battle
@@ -68,7 +68,7 @@ Background:
       And I should see the image "devil_robot.jpg"
 
     @javascript
-    Scenario: User see preview of added images when editing battle
+    Scenario: User sees preview of added images when editing battle
       Given a battle was created with images "palpatine.jpg" and "devil_robot.jpg"
       When I go to the home page
       And I press the button to edit 1st battle
@@ -79,7 +79,7 @@ Background:
       And I should see the image "devil_robot.jpg"
 
     @javascript
-    Scenario: User see successfully add and update images
+    Scenario: User sees successfully updates images
       Given a battle was created with images "palpatine.jpg" and "devil_robot.jpg"
       When I go to the home page
       And I press the button to edit 1st battle

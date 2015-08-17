@@ -112,7 +112,7 @@ When /^I follow the link to remove (\d+)(?:st|nd|rd|th) battle$/ do |id|
   find("#delete_battle#{id}").click
 end
 
-When /^I remove the (\d+)(?:st|nd|rd|th) battle$/ do |id|
+When /^I remove (?:the|my) (\d+)(?:st|nd|rd|th) battle$/ do |id|
   all(".delete_battle")[id.to_i - 1].click
 end
 
@@ -130,7 +130,7 @@ When /^I add (\d+)(?:st|nd|rd|th) option "([^"]*)" with picture "([^"]*)"$/ do |
   within(all('.options')[0]) do
     within(all('.fields')[option_number.to_i - 1]) do
       attach_option_picture(picture)
-      find(".option_name").set(option)
+      find(".option-name").set(option)
     end
   end
 end
@@ -190,7 +190,7 @@ Then /^I should see the new battle form$/ do
 end
 
 Then /^I should see an error for the number of options$/ do
-  expect(page).to have_content("You must specify at least 2 options")
+  expect(page).to have_content("You must specify at least 2 and at most 6 options")
 end
 
 Then /^I should see an error for duration$/ do
@@ -201,14 +201,6 @@ Then /^I should see (\d+) battle(?:s|)$/ do |number|
   within(find("#battle_index")) do
     expect(all('.battle').count).to eq(number.to_i)
   end
-end
-
-Then /^I should not see the battle that starts on "([^"]*)"$/ do |starts_at|
-  expect(page).not_to have_content(starts_at)
-end
-
-Then /^I should see the battle that starts on "([^"]*)"$/ do |starts_at|
-  expect(page).to have_content(starts_at)
 end
 
 Then /^I should not see the edit battle form for (\d+)(?:st|nd|rd|th) battle$/ do |id|
@@ -302,6 +294,10 @@ Then /^I should see the battle title "([^"]*)"$/ do |title|
   expect(page).to have_text(title)
 end
 
+Then /^I should not see the battle title "([^"]*)"$/ do |title|
+  expect(page).not_to have_text(title)
+end
+
 Then /^I should see the button to add new battle$/ do
   expect(page).to have_css("#add_battle")
 end
@@ -309,3 +305,16 @@ end
 Then /^I should not see the button to add new battle$/ do
   expect(page).not_to have_css("#add_battle")
 end
+
+Then /^I should see the battle ends in "([^"]*)"$/ do |endtime|
+  expect(find(".battle-countdown-running")["data-countdown"]).to match(endtime)
+end
+
+Then /^I should not see the button to add option$/ do
+  expect(page).not_to have_css("#add_new_option")
+end
+
+Then /^I should see the button to add option$/ do
+  expect(page).to have_css("#add_new_option")
+end
+

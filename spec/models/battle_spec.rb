@@ -41,10 +41,28 @@ describe Battle do
       battle = Battle.new(@attr.merge(:options => [@b1, @b2]))
       expect(battle).to be_valid
     end
-    it 'should be ok when number of options is greater than 2' do
+    it 'should be ok when number of options is greater than 2 and smaller than 6' do
       @b3 = FactoryGirl.create(:option, :name => "Bruni")
-      battle = Battle.new(@attr.merge(:options => [@b1, @b2, @b3]))
+      @b4 = FactoryGirl.create(:option, :name => "Bruni")
+      battle = Battle.new(@attr.merge(:options => [@b1, @b2, @b3, @b4]))
       expect(battle).to be_valid
+    end
+    it 'should be ok when number of options is equal to 6' do
+      @b3 = FactoryGirl.create(:option, :name => "Bruni")
+      @b4 = FactoryGirl.create(:option, :name => "Bruni")
+      @b5 = FactoryGirl.create(:option, :name => "Bruni")
+      @b6 = FactoryGirl.create(:option, :name => "Bruni")
+      battle = Battle.new(@attr.merge(:options => [@b1, @b2, @b3, @b4, @b5, @b6]))
+      expect(battle).to be_valid
+    end
+    it 'should fails when number of options is greater than 6' do
+      @b3 = FactoryGirl.create(:option, :name => "Bruni")
+      @b4 = FactoryGirl.create(:option, :name => "Bruni")
+      @b5 = FactoryGirl.create(:option, :name => "Bruni")
+      @b6 = FactoryGirl.create(:option, :name => "Bruni")
+      @b7 = FactoryGirl.create(:option, :name => "Bruni")
+      battle = Battle.new(@attr.merge(:options => [@b1, @b2, @b3, @b4, @b5, @b6, @b7]))
+      expect(battle).not_to be_valid
     end
   end
 
@@ -150,21 +168,6 @@ describe Battle do
     end
   end
 
-  describe 'remaining_time' do
-    it 'should return the remaining time for battle split in hours, minutes and seconds' do
-      Timecop.freeze(Time.local(1994))
-      battle = Battle.new(@attr.merge(
-                                      :starts_at => DateTime.now - 1.hour,
-                                      :duration  => 123
-                                     ))
-      expect(battle.remaining_time).to eq({
-                                          hours: 1,
-                                          minutes: 3,
-                                          seconds: 0
-                                         })
-    end
-  end
-
   describe 'in_future?' do
     it 'should return true if battle will happen in future' do
       Timecop.freeze(Time.local(2001))
@@ -181,6 +184,17 @@ describe Battle do
                                       :duration => 20*60
                                      ))
       expect(battle.in_future?).to eq(false)
+    end
+  end
+
+  describe 'finishes_at' do
+    it 'should return the date due to finish the battle' do
+      Timecop.freeze(Time.local(2001))
+      battle = Battle.new(@attr.merge(
+                                      :starts_at => DateTime.now + 1.hour,
+                                      :duration => 60
+                                     ))
+      expect(battle.finishes_at).to eq(DateTime.now + 2.hours)
     end
   end
 

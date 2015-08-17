@@ -1,7 +1,5 @@
 pt-BR:
   users:
-    home:
-      title: 'Batalhas'
     show:
       edit_account: 'Editar perfil'
       follow: 'Seguir'

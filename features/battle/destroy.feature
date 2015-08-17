@@ -5,10 +5,11 @@ Feature: Destroy
 Background:
     Given I am logged in
     And the following battles were added:
-    | starts_at                 | duration  |
-    | 2015-05-01 10:30:14 -0300 | 60        |
-    | 2015-05-22 10:30:14 -0300 | 300       |
-    | 2015-05-26 10:30:14 -0300 | 580       |
+    | starts_at                 | duration  | title    |
+    | 2015-05-01 10:30:14 -0300 | 60        | battle 1 |
+    | 2015-05-22 10:30:14 -0300 | 300       | battle 2 |
+    | 2015-05-26 10:30:14 -0300 | 580       | battle 3 |
+    And current time is 2015-05-28 10:31:14 -0300
     And I am on the home page
 
     @javascript
@@ -17,7 +18,7 @@ Background:
       And I confirm popup
       Then I should be on the home page
       And I should see 2 battles
-      And I should not see the battle that starts on "18/05/15 - 10:30"
+      And I should not see the battle title "battle 1"
 
     @javascript
     Scenario: User can cancel destruction of battle
@@ -32,5 +33,5 @@ Background:
       And I confirm popup
       And I go to my home page
       Then I should see 2 battles
-      And I should not see the battle that starts on "18/05/15 - 10:30"
+      And I should not see the battle title "battle 1"
 

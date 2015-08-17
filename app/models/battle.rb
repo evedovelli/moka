@@ -10,7 +10,7 @@ class Battle < ActiveRecord::Base
 
   attr_accessible :starts_at, :duration, :options_attributes, :options, :user, :hidden, :title
 
-  validates :options,   :length   => { :minimum => 2 }
+  validates :options,   :length   => { :minimum => 2, :maximum => 6 }
   validates :user,      :presence => true
   validates :starts_at, :presence => true
   validates :duration,  :numericality => { :only_integer => true, :greater_than => 0 }
@@ -28,18 +28,12 @@ class Battle < ActiveRecord::Base
     (starts_at < DateTime.current) and (starts_at + duration.minutes > DateTime.current)
   end
 
-  def remaining_time
-    seconds = starts_at + duration.minutes - DateTime.current
-    hours = (seconds / 1.hour).floor
-    seconds -= hours.hours
-    minutes = (seconds / 1.minute).floor
-    seconds -= minutes.minutes
-    seconds = seconds.floor
-    return { hours: hours, minutes: minutes, seconds: seconds }
-  end
-
   def in_future?
     starts_at > DateTime.current
+  end
+
+  def finishes_at
+    return self.starts_at + self.duration.minutes
   end
 
 end

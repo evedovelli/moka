@@ -10,5 +10,6 @@ en:
     sign_in: 'Sign in'
     sign_up: 'Sign up'
     vote: 'Vote now'
+    cancel_my_account: 'Cancel my account'
   links:
     here: 'here'

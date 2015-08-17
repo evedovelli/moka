@@ -2,6 +2,13 @@ pt-BR:
   battles:
     _battle:
       destroy: 'Você tem certeza que quer remover essa batalha?'
+      remaining_time: 'Tempo restante'
+      day: 'dia'
+      hour: 'hora'
+      min: 'min'
+      sec: 'seg'
+      finished: 'Batalha encerrada!'
+      finished_ago: '%{distance} atrás'
     _form:
       title: 'Monte sua batalha'
       add_option: 'Adicionar Opção'

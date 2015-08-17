@@ -4,7 +4,7 @@
 
 <p class="pagination">
   <% if @battles.last_page? %>
-    <p class='center last_page'><i class='icon-star'></i></p>
+    <p class='center last_page'><%= image_tag("watermark_small.png") %></p>
   <% else %>
     <%= link_to_next_page(@battles, 'Next Page', :remote => true, :class => "next_page") %>
   <% end %>

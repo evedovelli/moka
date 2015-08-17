@@ -11,7 +11,7 @@ pt-BR:
     option_must_belong_to_battle: 'deve pertencer à batalha'
     finished_battle: 'A batalha está terminada'
     not_started_battle: 'DIsputa não inicializada'
-    min_options: 'Você deve especificar pelo menos 2 opções'
+    min_options: 'Você deve especificar pelo menos 2 e no máximo 6 opções'
     required: 'Campo obrigatório'
     greater_than_zero: 'O valor deve ser maior que zero'
     invalid_username: 'é inválido'

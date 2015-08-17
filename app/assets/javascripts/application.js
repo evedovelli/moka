@@ -20,6 +20,7 @@
 //= require nprogress-turbolinks
 //= require nprogress-ajax
 //= require jquery.validate
+//= require jquery.countdown
 //= require_tree .
 //= require turbolinks
 

@@ -4,10 +4,10 @@ Feature: Update battle
 
 Background:
     Given I am logged in
-    And I am an admin
     And the following battles were added:
     | starts_at                 | duration  | title            |
     | 2015-05-18 10:30:14 -0300 | 5760      | Choose anything  |
+    And current time is 2015-05-18 10:31:14 -0300
     And I am on the home page
     And I press the button to edit 1st battle
 
@@ -16,7 +16,7 @@ Background:
       When I fill in "battle_duration" with "300"
       And I press "Update"
       Then I should be on the home page
-      And I should see "300 minutes"
+      And I should see the battle ends in "2015/05/18 15:30:14"
 
     @javascript
     Scenario: Update a battle

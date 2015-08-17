@@ -85,7 +85,11 @@ $.validator.setDefaults({
 });
 
 function validateNumberOfOptions (battle_form) {
-  if(battle_form.find(".options > div:visible").length < 2) {
+  if (battle_form.find(".options > div:visible").length < 2) {
+    battle_form.find('#options_container').addClass('battle-options-error');
+    battle_form.find('#battle-options-error').show();
+    return false;
+  } else if (battle_form.find(".options > div:visible").length > 6) {
     battle_form.find('#options_container').addClass('battle-options-error');
     battle_form.find('#battle-options-error').show();
     return false;
@@ -174,4 +178,115 @@ function avoidDuplicateBattle () {
   }
   return;
 }
+
+
+/**********************************************************/
+/* Battle countdown                                       */
+/**********************************************************/
+
+startBattleCounters = function(element) {
+  $('[data-countdown]').each(function() {
+    var $this = $(this);
+    var finalDate = $(this).data('countdown');
+    var day = $(this).data('day');
+    var hour = $(this).data('hour');
+    var min = $(this).data('min');
+    var sec = $(this).data('sec');
+    var finished = $(this).data('finished');
+
+    $this.countdown(finalDate, function(event) {
+      var format = '<span class="digit">%H</span>:<span class="digit">%M</span>:<span class="digit">%S</span>';
+      var caption = '<span class="timer-range">' + hour + '%!H' + '</span>';
+      caption = caption + '<span class="timer-range">' + min + '%!M' + '</span>';
+      caption = caption + '<span class="timer-range">' + sec + '%!S' + '</span>';
+      if (event.offset.days > 0) {
+        format = '<span class="digit">%D</span>:' + format;
+        caption = '<span class="timer-range">' + day + '%!D' + '</span>' + caption;
+      }
+      $(this).html(event.strftime(format + '<br></br>' + caption));
+
+    })
+    .on('finish.countdown', function(event) {
+      $(this).html(finished);
+      $(this).closest('.battle_container').find('.vote_picture_frame').removeClass('current_battle');
+    });
+  });
+}
+
+jQuery(startBattleCounters);
+
+
+/**********************************************************/
+/* Resize elements when inserting/removing nested element */
+/**********************************************************/
+
+function setOptionSizes (battle_form) {
+  if (battle_form.find(".options > div:visible").length <= 1) {
+    battle_form.find('.option-form-sizeable').addClass('span4');
+    battle_form.find('.option-form-sizeable').removeClass('span3');
+    battle_form.find('.option-form-sizeable').removeClass('span2');
+    battle_form.find('.option-form-offsetable:first').addClass('offset2');
+    battle_form.find('.option-form-offsetable:first').removeClass('offset1');
+    battle_form.find('.option-form-offsetable:first').removeClass('offset0');
+    return;
+  } else if (battle_form.find(".options > div:visible").length == 2) {
+    battle_form.find('.option-form-sizeable').addClass('span4');
+    battle_form.find('.option-form-sizeable').removeClass('span3');
+    battle_form.find('.option-form-sizeable').removeClass('span2');
+    battle_form.find('.option-form-offsetable:first').addClass('offset0');
+    battle_form.find('.option-form-offsetable:first').removeClass('offset1');
+    battle_form.find('.option-form-offsetable:first').removeClass('offset2');
+    return;
+  } else if (battle_form.find(".options > div:visible").length == 3) {
+    battle_form.find('.option-form-sizeable').addClass('span3');
+    battle_form.find('.option-form-sizeable').removeClass('span4');
+    battle_form.find('.option-form-sizeable').removeClass('span2');
+    battle_form.find('.option-form-offsetable:first').addClass('offset0');
+    battle_form.find('.option-form-offsetable:first').removeClass('offset1');
+    battle_form.find('.option-form-offsetable:first').removeClass('offset2');
+    battle_form.find('#add_new_option').addClass('btn-large');
+    return;
+  } else if (battle_form.find(".options > div:visible").length == 4) {
+    battle_form.find('.option-form-sizeable').addClass('span2');
+    battle_form.find('.option-form-sizeable').removeClass('span4');
+    battle_form.find('.option-form-sizeable').removeClass('span3');
+    battle_form.find('.option-form-offsetable:first').addClass('offset1');
+    battle_form.find('.option-form-offsetable:first').removeClass('offset0');
+    battle_form.find('.option-form-offsetable:first').removeClass('offset2');
+    battle_form.find('#add_new_option').removeClass('btn-large');
+    return;
+  } else if (battle_form.find(".options > div:visible").length == 5) {
+    battle_form.find(".new-option-outer").show();
+    battle_form.find('.option-form-sizeable').addClass('span2');
+    battle_form.find('.option-form-sizeable').removeClass('span4');
+    battle_form.find('.option-form-sizeable').removeClass('span3');
+    battle_form.find('.option-form-offsetable:first').addClass('offset0');
+    battle_form.find('.option-form-offsetable:first').removeClass('offset1');
+    battle_form.find('.option-form-offsetable:first').removeClass('offset2');
+    battle_form.find('#add_new_option').removeClass('btn-large');
+    return;
+  } else {
+    battle_form.find(".new-option-outer").hide();
+    battle_form.find('.option-form-sizeable').addClass('span2');
+    battle_form.find('.option-form-sizeable').removeClass('span4');
+    battle_form.find('.option-form-sizeable').removeClass('span3');
+    battle_form.find('.option-form-offsetable:first').addClass('offset0');
+    battle_form.find('.option-form-offsetable:first').removeClass('offset1');
+    battle_form.find('.option-form-offsetable:first').removeClass('offset2');
+    battle_form.find('#add_new_option').removeClass('btn-large');
+    return;
+  }
+}
+
+$(document).on('nested:fieldAdded', function(event){
+  // this field was just inserted into the form
+  var field = event.field;
+  setOptionSizes(field.closest('.battle_form'));
+})
+
+$(document).on('nested:fieldRemoved', function(event){
+  // this field was just removed the form
+  var field = event.field;
+  setOptionSizes(field.closest('.battle_form'));
+})
 
