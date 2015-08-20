@@ -3,7 +3,8 @@
 
     <table class="table">
       <% friends.in_groups(2, false)[i].each do |user| %>
-        <tr id="friend<%= user.id %>">
+        <tr id="friend<%= user.id %>" class="friend-index">
+          <td><%= link_to(image_tag(user.avatar.url(:small), :class => "img-polaroid"), user_path(user)) %></td>
           <td><h5><%= link_to(user.username, user_path(user)) %></h5></td>
           <td>
             <div class="span3 pull-right">

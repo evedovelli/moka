@@ -11,6 +11,7 @@
         <div class="row">
           <div class="span12">
             <h4 class="pull-left battle-user">
+              <%= link_to(image_tag(battle.user.avatar.url(:icon), :class => "img-polaroid"), user_path(battle.user)) %>
               <%= link_to(battle.user.username, user_path(battle.user), :class => "battle_user") %>
             </h4>
 

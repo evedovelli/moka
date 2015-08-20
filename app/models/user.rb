@@ -14,9 +14,11 @@ class User < ActiveRecord::Base
   has_many :inverse_friends, :through => :inverse_friendships, :source => :user
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :login, :username, :email, :password, :password_confirmation, :remember_me
+  attr_accessible :login, :username, :email, :password, :password_confirmation, :remember_me, :avatar, :name
+  has_attached_file :avatar, :styles => { :medium => "300x300#", :small => "100x100#" , :icon => "44x44#" }, :default_url => "avatar/:style/missing.png"
 
-
+  validates_attachment :avatar, :content_type => { :content_type => /\Aimage\/.*\Z/ },
+                                :size         => { :in => 0..20.megabytes }
   validates :username, :uniqueness => { :case_sensitive => false },
                        :presence => true
   validate :username, :reserved_usernames
@@ -63,4 +65,5 @@ class User < ActiveRecord::Base
   def get_friendship_with(friend)
     return friendships.where(:friend_id => friend.id).first
   end
+
 end

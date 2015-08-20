@@ -1,0 +1,21 @@
+
+<div class="avatar-box">
+  <div class="row">
+    <div class="span2 avatar-form-sizeable">
+      <div class="picture-box">
+        <% if can? :update, user %>
+          <%= link_to(edit_user_path(user), :remote => true, :class => "btn-edit-user-avatar") do %>
+            <span class="current-avatar"><%= image_tag(user.avatar.url(:medium)) %></span>
+            <span class="icon-edit-avatar edit_picture"><i class="icon-edit pull-left"></i></span>
+          <% end %>
+        <% else %>
+          <%= image_tag(user.avatar.url(:medium)) %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<% if can? :update, user %>
+  <div id="user_form" style="display:none;"></div>
+<% end %>

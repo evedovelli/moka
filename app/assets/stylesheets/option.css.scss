@@ -43,14 +43,6 @@ $boxesBorders: $grayDark;
   top: 0; bottom: 0; left: 0; right: 0;
 }
 
-.delete_picture {
-  position: absolute;
-  top: 0;
-  z-index: 10;
-  right: 12px;
-  background: white;
-}
-
 div.no_picture_container {
   padding-bottom: 100%;
   position: relative;
@@ -88,7 +80,11 @@ div.no_picture_container h4 {
   transform: translate(-50%, -50%);
 }
 
-.current_picture:hover {
+.delete_picture.delete-picture-option {
+  right: 12px;
+}
+
+.option-box:hover {
   background-color: darken($optionBoxBackground, 2%);
   box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.10) inset;
   cursor: pointer;

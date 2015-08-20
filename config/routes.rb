@@ -3,7 +3,7 @@ Moka::Application.routes.draw do
 
   devise_for :users
 
-  resources :users, :only => [:show] do
+  resources :users, :only => [:show, :edit, :update] do
     resources :friendships, :only => [:create, :destroy, :index]
   end
   get "users/:id/following" => "users#following", :as => :user_following

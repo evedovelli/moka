@@ -4,6 +4,8 @@ en:
       user: "user"
     attributes:
       user:
+        avatar: "Profile picture"
+        name: "Name"
         email: "Email"
         username: "Username"
         login: "Username or email"

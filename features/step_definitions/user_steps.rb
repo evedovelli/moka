@@ -73,7 +73,14 @@ Given /^I am logged in as an administrator$/ do
   step %Q{I am an administrator}
 end
 
+Given /^I have uploaded the "([^"]*)" image as my profile picture$/ do |image|
+  user = User.find_by_username("myself")
+  user.update_attributes({:avatar => Rack::Test::UploadedFile.new(create_path(image), 'image/png')})
+end
+
+
 ### WHEN ###
+
 When /^I sign in(?:| with valid credentials)$/ do
   sign_in("myself@email.com", "secretpassword")
 end
@@ -162,7 +169,20 @@ When /^I look at the list of users$/ do
   visit '/users/'
 end
 
+When /^I click to edit my profile picture$/ do
+  find('.btn-edit-user-avatar').click
+end
+
+When /^I select "([^"]*)" image for my profile picture$/ do |picture|
+  attach_option_picture(picture)
+end
+
+When /^I remove the profile picture uploaded image$/ do
+  find('.delete-picture-user').click
+end
+
 ### THEN ###
+
 Then /^I should be signed in$/ do
   expect(page).to have_content "Logout"
   expect(page).not_to have_content "Sign up"
@@ -229,3 +249,57 @@ Then /^I should see my username$/ do
   expect(page).to have_content "myself"
 end
 
+Then /^I should see "([^"]*)" as my name$/ do |name|
+  within(".name") do
+    expect(page).to have_content name
+  end
+end
+
+Then /^I should see the default profile picture for profile$/ do
+  within(all(".avatar-box")[0]) do
+    expect(page).to have_xpath("//img[contains(@src, \"missing.png\")]")
+  end
+end
+
+Then /^I should see the "([^"]*)" profile picture for profile$/ do |image|
+  within(all(".avatar-box")[0]) do
+    expect(page).to have_xpath("//img[contains(@src, \"#{image}\")]")
+  end
+end
+
+Then /^I should see the default profile picture for (\d+)(?:st|nd|rd|th) battle$/ do |num|
+  within(all(".battle-user")[num.to_i - 1]) do
+    expect(page).to have_xpath("//img[contains(@src, \"missing.png\")]")
+  end
+end
+
+Then /^I should see the "([^"]*)" profile picture for (\d+)(?:st|nd|rd|th) battle$/ do |image, num|
+  within(all(".battle-user")[num.to_i - 1]) do
+    expect(page).to have_xpath("//img[contains(@src, \"#{image}\")]")
+  end
+end
+
+Then /^I should see the default profile picture for "([^"]*)"$/ do |user|
+  within("#friend#{User.find_by_username(user).id}") do
+    expect(page).to have_xpath("//img[contains(@src, \"missing.png\")]")
+  end
+end
+
+Then /^I should see the "([^"]*)" profile picture for "([^"]*)"$/ do |image, user|
+  within("#friend#{User.find_by_username(user).id}") do
+    expect(page).to have_xpath("//img[contains(@src, \"#{image}\")]")
+  end
+end
+
+Then /^I should see the preview of the image for my profile picture$/ do
+  expect(page).to have_css(".picture_preview")
+  expect(page).to have_css(".delete_picture")
+  expect(page).not_to have_css(".upload_picture")
+  expect(page).not_to have_css(".no_picture_container")
+end
+
+Then /^I should see the preview with the current "([^"]*)" image$/ do |image|
+  within(".current_picture") do
+    expect(page).to have_xpath("//img[contains(@src, \"#{image}\")]")
+  end
+end

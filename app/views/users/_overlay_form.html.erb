@@ -1,0 +1,23 @@
+<div class="overlay">
+  <div id="container" class="container">
+    <div class="row">
+      <div class="span6 offset3 user-black-box-container">
+
+        <div class="row">
+          <div class="span6">
+            <div class="close-box">
+              <div class="pull-right">
+                <i id="close-user-form" class="icon-remove"></i>
+              </h3>
+            </div>
+          </div>
+        </div>
+
+        <div id="user-black-box">
+          <%= render :partial => "users/form", :locals => { :user => user } %>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
