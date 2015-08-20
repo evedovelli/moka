@@ -12,7 +12,23 @@ describe User do
   end
 
   it "should create a new instance given a valid attribute" do
-    User.create!(@attr)
+    user = User.new(@attr)
+    expect(user).to be_valid
+  end
+
+  it "should create a new instance with optional attributes included" do
+    user = User.new(@attr.merge({
+      :name => "Fred Flintstone",
+      :avatar => File.new(Rails.root + 'spec/fixtures/images/tomato.png')
+    }))
+    expect(user).to be_valid
+  end
+
+  describe 'validates attached avatar' do
+    it 'should validates attachment content type' do
+      user = User.new(@attr.merge(:avatar => File.new(Rails.root + 'spec/fixtures/images/no_image.txt')))
+      expect(user).not_to be_valid
+    end
   end
 
   it "should require an email address" do

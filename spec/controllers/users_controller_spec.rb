@@ -17,6 +17,26 @@ describe UsersController do
       get :show, {:id => @fake_user.username}
       expect(response).to have_http_status(:success)
     end
+    it "should have success when accessing following page" do
+      allow(controller).to receive(:authorize!).and_return(true)
+      get :following, {:id => @fake_user.username}
+      expect(response).to have_http_status(:success)
+    end
+    it "should have success when accessing followers page" do
+      allow(controller).to receive(:authorize!).and_return(true)
+      get :followers, {:id => @fake_user.username}
+      expect(response).to have_http_status(:success)
+    end
+    it "should be redirected to 'sign in' page if editing user" do
+      get :edit, {:id => @fake_user.username}
+      expect(flash[:alert]).to match("You need to sign in or sign up before continuing.")
+      expect(response).to redirect_to("/en/users/sign_in")
+    end
+    it "should be redirected to 'sign in' page if updating user" do
+      put :update, { :id => @fake_user.username, :user => {} }
+      expect(flash[:alert]).to match("You need to sign in or sign up before continuing.")
+      expect(response).to redirect_to("/en/users/sign_in")
+    end
   end
 
   describe "When user is logged in" do
@@ -29,13 +49,33 @@ describe UsersController do
         allow(controller).to receive(:authorize!).and_raise(CanCan::AccessDenied)
       end
 
+      it "should be redirected to root page if accessing home page" do
+        get :home
+        expect(flash[:alert]).to match("Access denied.")
+        expect(response).to redirect_to(root_url)
+      end
       it "should be redirected to root page if accessing show page" do
         get :show, {:id => @fake_user.username}
         expect(flash[:alert]).to match("Access denied.")
         expect(response).to redirect_to(root_url)
       end
-      it "should be redirected to root page if accessing home page" do
-        get :home
+      it "should be redirected to root page if accessing following page" do
+        get :following, {:id => @fake_user.username}
+        expect(flash[:alert]).to match("Access denied.")
+        expect(response).to redirect_to(root_url)
+      end
+      it "should be redirected to root page if accessing followers page" do
+        get :followers, {:id => @fake_user.username}
+        expect(flash[:alert]).to match("Access denied.")
+        expect(response).to redirect_to(root_url)
+      end
+      it "should be redirected to root page if editing user" do
+        get :edit, {:id => @fake_user.username}
+        expect(flash[:alert]).to match("Access denied.")
+        expect(response).to redirect_to(root_url)
+      end
+      it "should be redirected to root page if updating user" do
+        put :update, { :id => @fake_user.username, :user => {} }
         expect(flash[:alert]).to match("Access denied.")
         expect(response).to redirect_to(root_url)
       end
@@ -188,6 +228,87 @@ describe UsersController do
         it "should make the user available to that template" do
           get :followers, {:id => @other_user.username}
           expect(assigns(:user)).to eq(@other_user)
+        end
+      end
+
+      describe "edit" do
+        before (:each) do
+          allow(User).to receive(:find_by_username!).with(@fake_user.username).and_return(@fake_user)
+        end
+        it "should search user with correct user id" do
+          expect(User).to receive(:find_by_username!).with("#{@fake_user.username}")
+          get :edit, {:id => @fake_user.username, :format => 'js'}
+        end
+        it "should respond to html" do
+          get :edit, {:id => @fake_user.username, :format => 'js'}
+          expect(response.content_type).to eq(Mime::JS)
+        end
+        it "should render the following template" do
+          get :edit, {:id => @fake_user.username, :format => 'js'}
+          expect(response).to render_template('edit')
+        end
+        it "should make the user available to that template" do
+          get :edit, {:id => @fake_user.username, :format => 'js'}
+          expect(assigns(:user)).to eq(@fake_user)
+        end
+      end
+
+      describe "update" do
+        before :each do
+          allow(User).to receive(:find_by_username!).and_return(@fake_user)
+          @fake_avatar = "avatar"
+        end
+        it "should call update with correct id" do
+          expect(User).to receive(:find_by_username!).with("#{@fake_user.username}")
+          put(:update, { :id => @fake_user.username, user: {} })
+        end
+        it "should update attributes of the user" do
+          expect(@fake_user).to receive(:update_attributes).with({:avatar => @fake_avatar})
+          put(:update, { :id => @fake_user.username, user: {"avatar" => @fake_avatar} })
+        end
+        it "should fill flash alert if user is empty" do
+          put(:update, { :id => @fake_user.username })
+          expect(flash[:alert]).to match("Invalid image")
+        end
+        it "should fill flash alert if avatar is empty" do
+          put(:update, { :id => @fake_user.username, user: {} })
+          expect(flash[:alert]).to match("Invalid image")
+        end
+        describe "in success" do
+          before :each do
+            allow(@fake_user).to receive(:update_attributes).and_return(true)
+            put(:update, { :id => @fake_user.username, user: {"avatar" => @fake_avatar} })
+          end
+          it "should respond to HTML" do
+            expect(response.content_type).to eq(Mime::HTML)
+          end
+          it "should not fill flash alert" do
+            expect(flash[:alert]).to be_nil
+          end
+          it "should redirect to the user profile page" do
+            expect(response).to redirect_to(user_path(@fake_user))
+          end
+          it "should make the user available to that template" do
+            expect(assigns(:user)).to eq(@fake_user)
+          end
+        end
+        describe "in error" do
+          before :each do
+            allow(@fake_user).to receive(:update_attributes).and_return(false)
+            put(:update, { :id => @fake_user.username, user: {"avatar" => @fake_avatar} })
+          end
+          it "should respond to HTML" do
+            expect(response.content_type).to eq(Mime::HTML)
+          end
+          it "should fill flash alert with error message" do
+            expect(flash[:alert]).to match("Invalid image")
+          end
+          it "should redirect to the user profile page" do
+            expect(response).to redirect_to(user_path(@fake_user))
+          end
+          it "should make the user available to that template" do
+            expect(assigns(:user)).to eq(@fake_user)
+          end
         end
       end
 

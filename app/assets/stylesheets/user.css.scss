@@ -1,8 +1,17 @@
+$boxesBorders: #333;
+$boxesBordersHover: #555;
+
 p.username {
-  margin-top: 5px;
+  margin-top: 15px;
   padding-top: 12px;
   font-size: 31.5px;
+  letter-spacing: 1px;
   height: 50px;
+}
+
+p.name {
+  letter-spacing: 0.5px;
+  font-size: 15px;
 }
 
 p.user-button {
@@ -20,4 +29,66 @@ a.btn-unfollow:hover .unfollow {
 .logo-sign-in {
   padding-top: 80px;
   padding-bottom: 80px;
+}
+
+.avatar-box {
+  border: 1px solid $boxesBorders;
+  box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.08) inset;
+  overflow: hidden;
+  img {
+    width: 100%;
+  }
+}
+
+.avatar-box.editable:hover {
+  border: 4px solid $boxesBordersHover;
+  cursor: pointer;
+}
+.avatar-box.editable {
+  border: 4px solid $boxesBorders;
+}
+
+.picture-box {
+  position: relative;
+}
+
+.avatar_form {
+  margin: 0px 0px 0px;
+}
+
+#user-black-box {
+  background-color: #000;
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+
+#close-user-form {
+  padding-right: 4px;
+}
+
+.profile-picture-title {
+  color: #555;
+}
+
+.delete_picture.delete-picture-user {
+  right: 8px;
+}
+
+.edit_picture {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  padding-bottom: 2px;
+  padding-left: 2px;
+  z-index: 10;
+  background: white;
+}
+
+a.btn-edit-user-avatar .icon-edit-avatar { display: none; }
+a.btn-edit-user-avatar:hover .icon-edit-avatar {
+  display: inline;
+}
+
+.user-button {
+  margin-bottom: 20px;
 }

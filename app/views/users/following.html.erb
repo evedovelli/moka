@@ -1,21 +1,49 @@
 <div class="span12">
   <div class="row">
-    <div class="span3">
-      <p class="username">
-        <%= link_to(@user.username, user_path(@user)) %>
-      </p>
+
+    <div class="span2">
+
+      <div class="row">
+        <div class="span2">
+          <%= render :partial => "users/avatar", :locals => { :user => @user } %>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="span2">
+          <div id="user-button<%= @user.id %>" class="user-button profile-user-button">
+            <%= user_button_for(@user, "") %>
+          </div>
+        </div>
+      </div>
+
     </div>
 
-    <div class="span3">
-      <div id="user-button<%= @user.id %>" class="user-button">
-        <%= user_button_for(@user) %>
+    <div class="span10">
+      <div class="row">
+        <div class="span4">
+          <div class="row">
+            <div class="span4">
+              <p class="username">
+                <%= link_to(@user.username, user_path(@user)) %>
+              </p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="span4">
+              <p class="name"><%= @user.name %></p>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
+
   </div>
 
   <div class="row">
-    <div class="span3">
-      <h2><%= I18n.t('users.following.title') %></h2>
+    <div class="span4 offset4">
+      <h2 class="center"><%= I18n.t('users.following.title') %></h2>
     </div>
   </div>
 

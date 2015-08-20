@@ -10,7 +10,7 @@ pt-BR:
       new:
         title: 'Registrar-se'
       edit:
-        title: 'Editar conta'
+        title: 'Editar perfil'
         password_help: 'Deixe em branco caso não queira alterá-la'
         change_password_help: 'Sua senha atual é necessária para confirmar as mudanças'
         cancel_my_account: 'Cancelar minha conta'

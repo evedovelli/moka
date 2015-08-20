@@ -1,3 +1,6 @@
+/**********************************************************/
+/* Show unfollow button when mouse over follow button     */
+/**********************************************************/
 
 showsUnfollowButton = function() {
   $("a.btn-unfollow").hover(
@@ -13,4 +16,25 @@ showsUnfollowButton = function() {
 }
 
 jQuery(showsUnfollowButton);
+
+
+/**********************************************************/
+/* Image upload preview                                   */
+/**********************************************************/
+
+configurePictureForm = function() {
+  $('.upload_picture').hide();
+  $('.delete_picture').hide();
+  $('.picture_preview').hide();
+}
+
+closeOverlayUserForm = function() {
+  $('#close-user-form').click(function() {
+    $('#user_form').css("display","none");
+  });
+}
+
+jQuery(previewImageClick);
+jQuery(deletePhoto);
+jQuery(configurePictureForm);
 

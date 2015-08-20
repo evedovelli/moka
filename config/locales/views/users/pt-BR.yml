@@ -11,4 +11,6 @@ pt-BR:
       title: 'Seguidores'
     following:
       title: 'Seguindo'
+    _form:
+      title: 'Atualizar foto de perfil'
 

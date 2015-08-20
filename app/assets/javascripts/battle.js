@@ -2,7 +2,7 @@
 /* Image upload preview                                   */
 /**********************************************************/
 
-function circleImageClick () {
+function previewImageClick () {
   $('.current_picture').click(function() {
     $(this).attr('disabled', 'true');
     $(this).parent().find('.upload_picture').trigger('click');
@@ -53,7 +53,7 @@ function deletePhoto () {
 $(document).on('nested:fieldAdded', function(event){
   var field = event.field;
 
-  circleImageClick();
+  previewImageClick();
   deletePhoto();
   field.find('.upload_picture').hide();
   field.find('.delete_picture').hide();

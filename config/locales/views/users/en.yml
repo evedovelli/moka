@@ -11,4 +11,6 @@ en:
       title: 'Followers'
     following:
       title: 'Following'
+    _form:
+      title: 'Update profile picture'
 

@@ -1,0 +1,18 @@
+$('#user_form').html("<%= j (render :partial => "users/overlay_form", :locals => { :user => @user })%>")
+
+jQuery(previewImageClick);
+jQuery(deletePhoto);
+jQuery(configurePictureForm);
+
+$('#user_form').show();
+
+jQuery(closeOverlayUserForm);
+
+$(document).click(function(event) {
+  if (!$(event.target).closest('.user-black-box-container').length) {
+    if ($('#user_form').is(":visible")) {
+      $('#user_form').hide()
+    }
+  }
+})
+

@@ -4,6 +4,8 @@ pt-BR:
       user: "usuário"
     attributes:
       user:
+        avatar: "Foto de perfil"
+        name: "Nome"
         email: "E-mail"
         username: "Nome de usuário"
         login: "Usuário ou e-mail"

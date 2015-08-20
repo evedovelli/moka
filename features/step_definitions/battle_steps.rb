@@ -1,14 +1,5 @@
 include ActionDispatch::TestProcess
 
-def create_path(image_name)
-  filepath = Rails.root.join('spec', 'fixtures', 'images', image_name).to_path
-  if filepath.match(/^[A-Z]:\//)
-    filepath.gsub!(/\//, "\\")
-  end
-  return filepath
-end
-
-
 ### GIVEN ###
 
 Given /^the following battles were added:$/ do |table|

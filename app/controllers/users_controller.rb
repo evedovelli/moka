@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
-  load_and_authorize_resource :user, :find_by => :username
   before_filter :authenticate_user!, :except => [:show, :following, :followers]
+  load_and_authorize_resource :user, :find_by => :username
 
   def home
     @user = current_user
@@ -29,6 +29,19 @@ class UsersController < ApplicationController
 
   def followers
     @followers = @user.inverse_friends
+  end
+
+  def edit
+    respond_to do |format|
+      format.js {}
+    end
+  end
+
+  def update
+    if (not params[:user]) || (not params[:user][:avatar]) || (not @user.update_attributes(:avatar => params[:user][:avatar]))
+      flash[:alert] = I18n.t('messages.invalid_image')
+    end
+    redirect_to user_path(@user)
   end
 
 end
