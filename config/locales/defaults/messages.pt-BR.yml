@@ -17,3 +17,4 @@ pt-BR:
     invalid_username: 'é inválido'
     invalid_image: 'Imagem inválida'
     uniqueness_friend: 'Você já está seguindo este usuário'
+    single_vote_per_battle: 'pode ter apenas um voto por batalha'

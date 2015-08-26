@@ -1,9 +1,24 @@
-<div id="<%="results#{id}"%>" class="results">
+<div id="<%="results#{option.id}"%>" class="results">
   <div class="row">
     <div class="span<%= size %>">
-      <h4 class="center vote-count">
-        <%= t('votes._results.votes', count: votes) %>
-      </h4>
+      <% if can? :votes, option %>
+        <h4 class="center vote-count">
+          <%= link_to(t('votes._results.votes', count: votes), option_votes_path(option.id), :remote => true, :id => "votes#{option.id}") %>
+        </h4>
+      <% else %>
+        <h4 class="center vote-count">
+          <%= t('votes._results.votes', count: votes) %>
+        </h4>
+      <% end %>
     </div>
   </div>
+
+  <div class="row">
+    <div class="span<%= size %>">
+      <% if can? :votes, option %>
+        <div id="vote_index<%= option.id %>" style="display:none;"></div>
+      <% end %>
+    </div>
+  </div>
+
 </div>

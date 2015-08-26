@@ -3,6 +3,7 @@ class Option < ActiveRecord::Base
 
   belongs_to :battle
   has_many :votes, dependent: :destroy
+  has_many :users, through: :votes
 
   attr_accessible :name, :picture, :id
   has_attached_file :picture, :styles => { :medium => "370x370#", :thumb => "120x120#" }

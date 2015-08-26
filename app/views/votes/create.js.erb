@@ -1,7 +1,7 @@
 <% @battle.options.each do |option| %>
   $('<%="#results#{option.id}"%>').replaceWith("<%= j (render :partial => 'votes/results',
                                                               :locals => {
-                                                                :id => option.id,
+                                                                :option => option,
                                                                 :votes => option.number_of_votes,
                                                                 :size => option_size(@battle.options.count)
                                                               }) %>");

@@ -36,8 +36,18 @@ describe Option do
   describe 'number of votes' do
     it 'should return the number of votes for this option' do
       option = Option.new(@attr)
-      votes = FactoryGirl.create_list(:vote, 20, {option: option})
-      expect(option.number_of_votes).to eq(20)
+      votes = FactoryGirl.create(:vote, {option: option, user: FactoryGirl.create(:user, {username: "u1", email: "u1@email.com"})})
+      votes = FactoryGirl.create(:vote, {option: option, user: FactoryGirl.create(:user, {username: "u2", email: "u2@email.com"})})
+      votes = FactoryGirl.create(:vote, {option: option, user: FactoryGirl.create(:user, {username: "u3", email: "u3@email.com"})})
+      votes = FactoryGirl.create(:vote, {option: option, user: FactoryGirl.create(:user, {username: "u4", email: "u4@email.com"})})
+      votes = FactoryGirl.create(:vote, {option: option, user: FactoryGirl.create(:user, {username: "u5", email: "u5@email.com"})})
+      votes = FactoryGirl.create(:vote, {option: option, user: FactoryGirl.create(:user, {username: "u6", email: "u6@email.com"})})
+      votes = FactoryGirl.create(:vote, {option: option, user: FactoryGirl.create(:user, {username: "u7", email: "u7@email.com"})})
+      votes = FactoryGirl.create(:vote, {option: option, user: FactoryGirl.create(:user, {username: "u8", email: "u8@email.com"})})
+      votes = FactoryGirl.create(:vote, {option: option, user: FactoryGirl.create(:user, {username: "u9", email: "u9@email.com"})})
+      votes = FactoryGirl.create(:vote, {option: option, user: FactoryGirl.create(:user, {username: "u10", email: "u10@email.com"})})
+      votes = FactoryGirl.create(:vote, {option: option, user: FactoryGirl.create(:user, {username: "u11", email: "u11@email.com"})})
+      expect(option.number_of_votes).to eq(11)
     end
   end
 

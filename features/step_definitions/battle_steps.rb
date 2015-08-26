@@ -188,6 +188,10 @@ Then /^I should see an error for duration$/ do
   expect(page).to have_content("Value must be greater than zero")
 end
 
+Then /^I should see an error for exceeded duration$/ do
+  expect(page).to have_content("Please enter a value less than or equal to 143999")
+end
+
 Then /^I should see (\d+) battle(?:s|)$/ do |number|
   within(find("#battle_index")) do
     expect(all('.battle').count).to eq(number.to_i)

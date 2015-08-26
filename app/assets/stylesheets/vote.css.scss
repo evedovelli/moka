@@ -18,6 +18,15 @@ $selectedColor: #FF9522;
 
 .vote-count {
   margin-top: 0px;
-  margin-bottom: 0px;
+  margin-bottom: 12px;
   font-size: 15px;
+}
+
+.vote-user {
+  font-size: 13px;
+  margin: 0;
+}
+
+.table td.vote-cell {
+  padding: 4px;
 }

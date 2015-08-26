@@ -39,7 +39,7 @@ describe Ability do
 
       describe "Resource Vote" do
         before :each do
-          @vote = FactoryGirl.create(:vote)
+          @vote = FactoryGirl.create(:vote, user: @user)
         end
         it "should be able to read Votes" do
           expect(@ability).to be_able_to(:read, @vote)
@@ -115,7 +115,22 @@ describe Ability do
 
       describe "Resource Option" do
         before :each do
+          t = Time.local(2015, 10, 21, 07, 28, 0)
+          Timecop.travel(t)
           @option = FactoryGirl.create(:option)
+          @battle = FactoryGirl.create(:battle,
+                                       :starts_at => DateTime.now - 1.day,
+                                       :duration => 48*60,
+                                       :user => @user,
+                                       :options => [@option])
+
+          @other_user = FactoryGirl.create(:user, email: "another@ex.com", username: "second")
+          @other_option = FactoryGirl.create(:option)
+          @other_battle = FactoryGirl.create(:battle,
+                                       :starts_at => DateTime.now - 1.day,
+                                       :duration => 48*60,
+                                       :user => @other_user,
+                                       :options => [@other_option])
         end
         it "should be able to read options" do
           expect(@ability).to be_able_to(:read, Option)
@@ -128,6 +143,27 @@ describe Ability do
         end
         it "should not be able to update options" do
           expect(@ability).not_to be_able_to(:update, @option)
+        end
+
+        it "should be able to show votes for past options" do
+          t = Time.local(2015, 10, 26, 07, 28, 0)
+          Timecop.travel(t)
+          expect(@ability).to be_able_to(:votes, @option)
+        end
+        it "should be able to show votes for past options for other users" do
+          t = Time.local(2015, 10, 26, 07, 28, 0)
+          Timecop.travel(t)
+          expect(@ability).to be_able_to(:votes, @other_option)
+        end
+        it "should be able to show votes for its options" do
+          expect(@ability).to be_able_to(:votes, @option)
+        end
+        it "should be able to show votes for options in battles he has voted on" do
+          FactoryGirl.create(:vote, user: @user, option: @other_battle.options[0] )
+          expect(@ability).to be_able_to(:votes, @other_option)
+        end
+        it "should not be able to show votes for unfinished battles from other users" do
+          expect(@ability).not_to be_able_to(:votes, @other_option)
         end
       end
 
@@ -191,7 +227,11 @@ describe Ability do
         it "should be able to show results for its battles" do
           expect(@ability).to be_able_to(:show_results, @battle)
         end
-        it "should not be able to show results unfinished battles from other users" do
+        it "should be able to show results for battles he has voted on" do
+          FactoryGirl.create(:vote, user: @user, option: @other_battle.options[0] )
+          expect(@ability).to be_able_to(:show_results, @other_battle)
+        end
+        it "should not be able to show results for unfinished battles from other users" do
           expect(@ability).not_to be_able_to(:show_results, @other_battle)
         end
 
@@ -202,7 +242,7 @@ describe Ability do
 
       describe "Resource Vote" do
         before :each do
-          @vote = FactoryGirl.create(:vote)
+          @vote = FactoryGirl.create(:vote, user: @user)
         end
         it "should not be able to read Votes" do
           expect(@ability).not_to be_able_to(:read, @vote)

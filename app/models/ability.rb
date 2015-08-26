@@ -74,6 +74,9 @@ class Ability
 
     # Options
     can :read, Option
+    can :votes, Option do |option|
+      (not option.battle.current?) || (option.battle.try(:user) == user) || (user.vote_for(option.battle))
+    end
 
 
     # Battles
@@ -88,7 +91,7 @@ class Ability
       not battle.in_future?
     end
     can :show_results, Battle do |battle|
-      (not battle.current?) || (battle.try(:user) == user)
+      (not battle.current?) || (battle.try(:user) == user) || (user.vote_for(battle))
     end
 
 

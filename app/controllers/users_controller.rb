@@ -5,6 +5,7 @@ class UsersController < ApplicationController
   def home
     @user = current_user
     @battles = Battle.user_home(@user, params[:page])
+    @voted_for = current_user.voted_for_options(@battles)
     @vote = Vote.new()
     respond_to do |format|
       format.js { render "users/load_more_battles" }
@@ -14,6 +15,12 @@ class UsersController < ApplicationController
 
   def show
     @battles = @user.sorted_battles(params[:page])
+
+    @voted_for = {}
+    if current_user
+      @voted_for = current_user.voted_for_options(@battles)
+    end
+
     @vote = Vote.new()
     @number_of_following = @user.friends.count
     @number_of_followers = @user.inverse_friends.count

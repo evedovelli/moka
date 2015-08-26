@@ -2,6 +2,10 @@ require "spec_helper"
 
 describe UsersHelper, :type => :helper do
   describe "user button for" do
+    it "should return nothing if user not logged in" do
+      allow(helper).to receive(:current_user).and_return(nil)
+      expect(helper.user_button_for(@current_user)).to eq("")
+    end
     it "should return link to edit for current user" do
       @current_user = FactoryGirl.create(:user)
       allow(helper).to receive(:current_user).and_return(@current_user)

@@ -1,5 +1,9 @@
 module UsersHelper
   def user_button_for(user, btn_classes = "btn-large")
+    if !current_user
+      return ""
+    end
+
     if current_user == user
       return link_to(t('users.show.edit_account'), edit_user_registration_path, :class => "btn btn-info btn-block #{btn_classes} btn-edit-profile")
     else

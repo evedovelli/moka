@@ -12,5 +12,7 @@ Moka::Application.routes.draw do
   resources :battles, :except => [:index, :show]
   resources :votes, :only => [:create]
 
+  get "options/:id/votes" => "options#votes", :as => :option_votes
+
   root :to => "users#home"
 end

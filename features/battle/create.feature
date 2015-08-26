@@ -26,19 +26,26 @@ Background:
       When I add 1st option "Vader" with picture "vader.jpg"
       And I remove 2nd option
       And I press "Create"
-      And I wait 4 seconds for uploading images
       Then I should be on the home page
       And I should see an error for the number of options
 
     @javascript
-    Scenario: Timing errors
+    Scenario: Invalid duration
       When I add 1st option "Vader" with picture "vader.jpg"
       And I add 2nd option "Palpatine" with picture "palpatine.jpg"
       And I fill in "battle_duration" with "-1"
       And I press "Create"
-      And I wait 4 seconds for uploading images
       Then I should be on the home page
       And I should see an error for duration
+
+    @javascript
+    Scenario: Duration too long
+      When I add 1st option "Vader" with picture "vader.jpg"
+      And I add 2nd option "Palpatine" with picture "palpatine.jpg"
+      And I fill in "battle_duration" with "144000"
+      And I press "Create"
+      Then I should be on the home page
+      And I should see an error for exceeded duration
 
     @javascript
     Scenario: Specify new battle title

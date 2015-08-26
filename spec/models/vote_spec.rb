@@ -6,8 +6,10 @@ describe Vote do
       :starts_at => DateTime.now - 1.day,
       :duration => 48*60
     })
+    @user = FactoryGirl.create(:user, {username: "user", email: "user@user.com"})
     @attr = {
-      :option => @battle.options[0]
+      :option => @battle.options[0],
+      :user => @user
     }
   end
 
@@ -22,44 +24,63 @@ describe Vote do
       vote = Vote.new(@attr)
       expect(vote).not_to be_valid
     end
+    it 'should fails when user is empty' do
+      @attr.delete(:user)
+      vote = Vote.new(@attr)
+      expect(vote).not_to be_valid
+    end
   end
 
-  describe 'validates posts created in wrong period' do
-    it 'should fails when post is created to a finished battle' do
+  describe 'validates vote created in wrong period' do
+    it 'should fails when vote is created to a finished battle' do
       @battle = FactoryGirl.create(:battle, {
         :starts_at   => DateTime.now - 2.day,
         :duration => 24*60
       })
       @attr = {
-        :option => @battle.options[0]
+        :option => @battle.options[0],
+        :user => @user
       }
       vote = Vote.new(@attr)
-      vote.save()
       expect(vote).not_to be_valid
     end
-    it 'should fails when post is created to a not started battle' do
+    it 'should fails when vote is created to a not started battle' do
       @battle = FactoryGirl.create(:battle, {
         :starts_at   => DateTime.now + 2.day,
         :duration => 48*60
       })
       @attr = {
-        :option => @battle.options[0]
+        :option => @battle.options[0],
+        :user => @user
       }
       vote = Vote.new(@attr)
-      vote.save()
       expect(vote).not_to be_valid
     end
-    it 'should be ok when post is created during battle' do
+    it 'should be ok when vote is created during battle' do
       @battle = FactoryGirl.create(:battle, {
         :starts_at   => DateTime.now - 2.day,
         :duration => 96*60
       })
       @attr = {
-        :option => @battle.options[0]
+        :option => @battle.options[0],
+        :user => @user
       }
       vote = Vote.new(@attr)
-      vote.save()
       expect(vote).to be_valid
+    end
+  end
+
+  describe 'validates single vote per battle' do
+    it 'should fails when user creates more than one vote for a battle' do
+      vote = Vote.new(@attr)
+      expect(vote).to be_valid
+      expect(vote.save).to eq(true)
+
+      @attr = {
+        :option => @battle.options[1],
+      }
+      vote = Vote.new(@attr)
+      expect(vote).not_to be_valid
     end
   end
 
