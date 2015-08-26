@@ -13,7 +13,7 @@ class Battle < ActiveRecord::Base
   validates :options,   :length   => { :minimum => 2, :maximum => 6 }
   validates :user,      :presence => true
   validates :starts_at, :presence => true
-  validates :duration,  :numericality => { :only_integer => true, :greater_than => 0 }
+  validates :duration,  :numericality => { :only_integer => true, :greater_than => 0, :less_than => 144000 }
 
   def hide
     self.update_attributes({hidden: true})

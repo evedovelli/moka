@@ -10,8 +10,10 @@ class User < ActiveRecord::Base
   has_many :battles, dependent: :destroy
   has_many :friendships, dependent: :destroy
   has_many :friends, :through => :friendships
-  has_many :inverse_friendships, :class_name => "Friendship", :foreign_key => "friend_id"
+  has_many :inverse_friendships, :class_name => "Friendship", :foreign_key => "friend_id", dependent: :destroy
   has_many :inverse_friends, :through => :inverse_friendships, :source => :user
+  has_many :votes, dependent: :destroy
+  has_many :options, :through => :votes
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :login, :username, :email, :password, :password_confirmation, :remember_me, :avatar, :name
@@ -64,6 +66,20 @@ class User < ActiveRecord::Base
 
   def get_friendship_with(friend)
     return friendships.where(:friend_id => friend.id).first
+  end
+
+  def vote_for(battle)
+    return votes.joins(:option).where('options.battle_id' => battle.id).first
+  end
+
+  def voted_for_options(battles)
+    voted_for = {}
+    battles.each do |battle|
+      battle.options.each do |option|
+        voted_for[option.id] = options.find_by_id(option.id) != nil
+      end
+    end
+    return voted_for
   end
 
 end

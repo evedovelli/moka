@@ -11,12 +11,12 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150818175656) do
+ActiveRecord::Schema.define(:version => 20150820195222) do
 
   create_table "battles", :force => true do |t|
+    t.datetime "starts_at"
     t.datetime "created_at",                    :null => false
     t.datetime "updated_at",                    :null => false
-    t.datetime "starts_at"
     t.integer  "duration",   :default => 60
     t.integer  "user_id"
     t.boolean  "hidden",     :default => false
@@ -90,8 +90,11 @@ ActiveRecord::Schema.define(:version => 20150818175656) do
     t.integer  "option_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.integer  "user_id"
   end
 
+  add_index "votes", ["option_id", "user_id"], :name => "index_votes_on_option_id_and_user_id", :unique => true
   add_index "votes", ["option_id"], :name => "index_votes_on_option_id"
+  add_index "votes", ["user_id"], :name => "index_votes_on_user_id"
 
 end

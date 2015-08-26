@@ -259,4 +259,55 @@ describe User do
     end
   end
 
+  describe 'votes_for' do
+    it 'should return the vote of the user for battle' do
+      user = User.create!(@attr)
+      other_user = FactoryGirl.create(:user)
+
+      @battle = FactoryGirl.create(:battle,
+                                   :starts_at => DateTime.now - 1.day,
+                                   :duration => 48*60,
+                                   :user => @user)
+      @other_battle = FactoryGirl.create(:battle,
+                                         :starts_at => DateTime.now - 1.day,
+                                         :duration => 48*60,
+                                         :user => @user)
+
+      @vote1 = FactoryGirl.create(:vote, user: user, option: @battle.options[0])
+      @vote2 = FactoryGirl.create(:vote, user: user, option: @other_battle.options[0])
+      @other_vote1 = FactoryGirl.create(:vote, user: other_user, option: @battle.options[0])
+      @other_vote2 = FactoryGirl.create(:vote, user: other_user, option: @other_battle.options[1])
+
+      expect(user.vote_for(@battle)).to eq(@vote1)
+    end
+  end
+
+  describe 'voted_for_options' do
+    it 'should return the vote of the user for battle' do
+      user = User.create!(@attr)
+      other_user = FactoryGirl.create(:user)
+
+      @battle = FactoryGirl.create(:battle,
+                                   :starts_at => DateTime.now - 1.day,
+                                   :duration => 48*60,
+                                   :user => @user)
+      @other_battle = FactoryGirl.create(:battle,
+                                         :starts_at => DateTime.now - 1.day,
+                                         :duration => 48*60,
+                                         :user => @user)
+
+      @vote1 = FactoryGirl.create(:vote, user: user, option: @battle.options[0])
+      @vote2 = FactoryGirl.create(:vote, user: user, option: @other_battle.options[1])
+      @other_vote1 = FactoryGirl.create(:vote, user: other_user, option: @battle.options[0])
+      @other_vote2 = FactoryGirl.create(:vote, user: other_user, option: @other_battle.options[0])
+
+      expect(user.voted_for_options([@battle, @other_battle])).to eq({
+        @battle.options[0].id => true,
+        @battle.options[1].id => false,
+        @other_battle.options[0].id => false,
+        @other_battle.options[1].id => true
+      })
+    end
+  end
+
 end

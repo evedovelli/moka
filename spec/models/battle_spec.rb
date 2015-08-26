@@ -79,6 +79,18 @@ describe Battle do
       battle = Battle.new(@attr.merge(:duration => '-10'))
       expect(battle).not_to be_valid
     end
+    it 'should fails for equal 144000' do
+      battle = Battle.new(@attr.merge(:duration => '144000'))
+      expect(battle).not_to be_valid
+    end
+    it 'should fails for above 144000' do
+      battle = Battle.new(@attr.merge(:duration => '144001'))
+      expect(battle).not_to be_valid
+    end
+    it 'should pass for above 143999' do
+      battle = Battle.new(@attr.merge(:duration => '143999'))
+      expect(battle).to be_valid
+    end
   end
 
   describe 'hide' do

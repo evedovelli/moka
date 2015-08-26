@@ -25,12 +25,3 @@ Background: There is a battle running
       And I should see "Devil" with 5 votes
       And I should see "Vader" with 10 votes
 
-    @javascript
-    Scenario: User votes to an option and then votes again
-      Given I am on the home page
-      When I vote for "Horror"
-      And I vote for "Devil"
-      Then I should see "Horror" with 1 vote
-      And I should see "Devil" with 1 vote
-      And I should see "Vader" with 0 votes
-

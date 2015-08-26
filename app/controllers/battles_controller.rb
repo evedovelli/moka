@@ -1,5 +1,5 @@
 class BattlesController < ApplicationController
-  before_filter :authenticate_user!, :except => [:show]
+  before_filter :authenticate_user!
   load_and_authorize_resource :battle, :except => [:create]
 
   def new
@@ -22,7 +22,7 @@ class BattlesController < ApplicationController
     if (not params[:battle][:title]) || (params[:battle][:title] == "")
       params[:battle][:title] = I18n.t('battles.default_title')
     end
-    params[:battle][:user] = current_user;
+    params[:battle][:user] = current_user
 
     @battle = Battle.new(params[:battle])
     authorize! :create, @battle

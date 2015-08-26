@@ -61,4 +61,3 @@ end
 Then /^I should see a big offset for first option form$/ do
   expect(all(".option-form-offsetable")[0]["class"]).to match("offset2")
 end
-

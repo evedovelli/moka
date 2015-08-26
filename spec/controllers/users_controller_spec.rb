@@ -17,6 +17,10 @@ describe UsersController do
       get :show, {:id => @fake_user.username}
       expect(response).to have_http_status(:success)
     end
+    it "should make the voted for battles available when accessing user page" do
+      get :show, {:id => @fake_user.username}
+      expect(assigns(:voted_for)).to eq({})
+    end
     it "should have success when accessing following page" do
       allow(controller).to receive(:authorize!).and_return(true)
       get :following, {:id => @fake_user.username}
@@ -89,7 +93,10 @@ describe UsersController do
       describe "home" do
         before (:each) do
           @battles = [double("b1"), double("b2"), double("b3"), double("b4")]
+          @voted_for = double("vf")
           allow(Battle).to receive(:user_home).and_return(@battles)
+          allow(@fake_user).to receive(:voted_for_options).with(@battles).and_return(@voted_for)
+          allow(controller).to receive(:current_user).and_return(@fake_user)
         end
         it "should respond to html" do
           get :home
@@ -112,6 +119,14 @@ describe UsersController do
           get :home, {page: "2"}
           expect(assigns(:battles)).to eq(@battles)
         end
+        it "should call voted_for_options with correct argument" do
+          expect(@fake_user).to receive(:voted_for_options).with(@battles).and_return(@voted_for)
+          get :home
+        end
+        it "should make the voted for battles available to that template" do
+          get :home
+          expect(assigns(:voted_for)).to eq(@voted_for)
+        end
         it "should make the user available to that template" do
           get :home
           expect(assigns(:user)).to eq(@fake_user)
@@ -128,6 +143,9 @@ describe UsersController do
           @battles = [double("b1"), double("b2"), double("b3"), double("b4")]
           allow(@other_user).to receive(:sorted_battles).and_return(@battles)
           allow(User).to receive(:find_by_username!).with(@other_user.username).and_return(@other_user)
+          @voted_for = double("vf")
+          allow(@fake_user).to receive(:voted_for_options).and_return(@voted_for)
+          allow(controller).to receive(:current_user).and_return(@fake_user)
         end
         it "should search user with correct user id" do
           expect(User).to receive(:find_by_username!).with("#{@other_user.username}")
@@ -152,6 +170,14 @@ describe UsersController do
         it "should call sorted_battles with the correct page" do
           expect(@other_user).to receive(:sorted_battles).with("3").and_return(@battles)
           get :show, {:id => @other_user.username, :page => "3"}
+        end
+        it "should call voted_for_options with correct argument" do
+          expect(@fake_user).to receive(:voted_for_options).with(@battles).and_return(@voted_for)
+          get :show, {:id => @other_user.username}
+        end
+        it "should make the voted for battles available to that template" do
+          get :show, {:id => @other_user.username}
+          expect(assigns(:voted_for)).to eq(@voted_for)
         end
         it "should make the user available to that template" do
           get :show, {:id => @other_user.username}
