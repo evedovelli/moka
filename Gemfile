@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-ruby '1.9.3'
+ruby '2.1.5'
 
 gem 'rails', '3.2.17'
 
@@ -27,7 +27,7 @@ group :test do
   gem "email_spec", ">= 1.4.0"
 
   # cucumber will be used for behavior tests
-  gem "cucumber-rails", ">= 1.3.0", :require => false
+  gem "cucumber-rails", ">= 1.4.2", :require => false
 
   gem "launchy", ">= 2.1.2"
   gem "capybara", ">= 2.2.1"
