@@ -10,10 +10,12 @@ Background: I exist as an user, and I have created some battles
     | name            | image              |
     | Devil Robot     | devil_robot.jpg    |
     | Darth Vader     | vader.jpg          |
+    And current time is 1985-10-21 08:28:00 -0300
     And a battle was created by "myself" with options:
     | name            | image              |
     | Dick Dastardly  | dick_dastardly.jpg |
     | Palpatine       | palpatine.jpg      |
+    And current time is 1985-10-21 09:28:00 -0300
 
     @javascript
     Scenario: I can vote in a battle from my user's profile
