@@ -43,11 +43,10 @@ end
 group :production do
   gem 'pg'
   gem 'rails_12factor'
-
-  # Use Unicorn as the app server
-  gem 'unicorn', '~> 4.8.3'
 end
 
+# Use Puma as the app server
+gem 'puma'
 
 # Gems used only for assets and not required
 # in production environments by default.

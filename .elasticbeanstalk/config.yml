@@ -1,0 +1,10 @@
+branch-defaults:
+  '18':
+    environment: moka-production
+global:
+  application_name: moka
+  default_ec2_keyname: moka
+  default_platform: Ruby 2.1 (Puma)
+  default_region: us-west-2
+  profile: eb-cli
+  sc: git
