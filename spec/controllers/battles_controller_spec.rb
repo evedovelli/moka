@@ -114,99 +114,121 @@ describe BattlesController do
           @fake_battle = FactoryGirl.create(:battle, {user: @fake_user})
           allow(Battle).to receive(:new).and_return(@fake_battle)
         end
-        it "should call new with correct starts_at and user" do
-          Timecop.freeze(Time.local(1994))
-          expect(Battle).to receive(:new).with({"duration" => (24*60).to_s,
-                                                "starts_at" => DateTime.now,
-                                                "user" => @fake_user,
-                                                "title" => "Who should win this battle?"})
-          post(:create, {battle: {}, :format => 'js'})
-        end
-        it "should call new with correct duration" do
-          Timecop.freeze(Time.local(1994))
-          expect(Battle).to receive(:new).with({"duration" => "23",
-                                                "starts_at" => DateTime.now,
-                                                "user" => @fake_user,
-                                                "title" => "Who should win this battle?"})
-          post(:create, {battle: {duration: "23"}, :format => 'js'})
-        end
-        it "should call new with correct title" do
-          Timecop.freeze(Time.local(1994))
-          expect(Battle).to receive(:new).with({"title" => "What?", "duration" => (24*60).to_s, "starts_at" => DateTime.now, "user" => @fake_user})
-          post(:create, {battle: {title: "What?"}, :format => 'js'})
-        end
-        it "should call new with default duration and title when they are empty" do
-          Timecop.freeze(Time.local(1994))
-          expect(Battle).to receive(:new).with({"duration" => (24*60).to_s,
-                                                "starts_at" => DateTime.now,
-                                                "user" => @fake_user,
-                                                "title" => "Who should win this battle?"})
-          post(:create, {battle: {duration: "", title: ""}, :format => 'js'})
-        end
-        it "should call new with default duration and title when not specified" do
-          Timecop.freeze(Time.local(1994))
-          expect(Battle).to receive(:new).with({"duration" => (24*60).to_s,
-                                                "starts_at" => DateTime.now,
-                                                "user" => @fake_user,
-                                                "title" => "Who should win this battle?"})
-          post(:create, {battle: {}, :format => 'js'})
-        end
-        describe "in success" do
-          before :each do
-            @fake_vote = double("vote")
-            allow(Vote).to receive(:new).and_return(@fake_vote)
-            allow(@fake_battle).to receive(:save).and_return(true)
-            post(:create, {battle: {}, :format => 'js'})
-          end
+
+        describe "battle is not specified" do
           it "should respond to js" do
-            expect(response.content_type).to eq(Mime::JS)
-          end
-          it "should render the create template" do
-            expect(response).to render_template('create')
-          end
-          it "should make battle available to that template" do
-            expect(assigns(:battle)).to eq(@fake_battle)
-          end
-          it "should make a new vote available to that template" do
-            expect(assigns(:vote)).to eq(@fake_vote)
-          end
-          it "should make empty battle options error available to that template" do
-            expect(assigns(:battle_options_error)).to match("")
-          end
-        end
-        describe "in error" do
-          before :each do
-            allow(@fake_battle).to receive(:save).and_return(false)
-          end
-          it "should respond to js" do
-            post(:create, {battle: {}, :format => 'js'})
+            post(:create, {:format => 'js'})
             expect(response.content_type).to eq(Mime::JS)
           end
           it "should render the reload_form for battle" do
-            post(:create, {battle: {}, :format => 'js'})
+            post(:create, {:format => 'js'})
             expect(response).to render_template('reload_form')
           end
-          it "should not have error for options when options are ok" do
-            @errors = double("Errors")
-            @messages = {'error1' => 'error'}
-            allow(@fake_battle).to receive(:errors).and_return(@errors)
-            allow(@errors).to receive(:any?).and_return(true)
-            allow(@errors).to receive(:messages).and_return(@messages)
-            post(:create, {battle: {}, :format => 'js'})
+          it "should make options_id available to that template" do
+            post(:create, {:format => 'js'})
+            expect(assigns(:options_id)).to match("options_new")
+          end
+          it "should make battle_options_error available to that template" do
+            post(:create, {:format => 'js'})
             expect(assigns(:battle_options_error)).to match("")
           end
-          it "should have error for options when options are not ok" do
-            @errors = double("Errors")
-            @messages = {name: 'error', options: 'error in options'}
-            allow(@fake_battle).to receive(:errors).and_return(@errors)
-            allow(@errors).to receive(:any?).and_return(true)
-            allow(@errors).to receive(:messages).and_return(@messages)
+        end
+
+        describe "battle is specified" do
+          it "should call new with correct starts_at and user" do
+            Timecop.freeze(Time.local(1994))
+            expect(Battle).to receive(:new).with({"duration" => (24*60).to_s,
+                                                  "starts_at" => DateTime.now,
+                                                  "user" => @fake_user,
+                                                  "title" => "Who should win this battle?"})
             post(:create, {battle: {}, :format => 'js'})
-            expect(assigns(:battle_options_error)).to match("battle-options-error")
           end
-          it "should make options_id available to that template" do
+          it "should call new with correct duration" do
+            Timecop.freeze(Time.local(1994))
+            expect(Battle).to receive(:new).with({"duration" => "23",
+                                                  "starts_at" => DateTime.now,
+                                                  "user" => @fake_user,
+                                                  "title" => "Who should win this battle?"})
+            post(:create, {battle: {duration: "23"}, :format => 'js'})
+          end
+          it "should call new with correct title" do
+            Timecop.freeze(Time.local(1994))
+            expect(Battle).to receive(:new).with({"title" => "What?", "duration" => (24*60).to_s, "starts_at" => DateTime.now, "user" => @fake_user})
+            post(:create, {battle: {title: "What?"}, :format => 'js'})
+          end
+          it "should call new with default duration and title when they are empty" do
+            Timecop.freeze(Time.local(1994))
+            expect(Battle).to receive(:new).with({"duration" => (24*60).to_s,
+                                                  "starts_at" => DateTime.now,
+                                                  "user" => @fake_user,
+                                                  "title" => "Who should win this battle?"})
+            post(:create, {battle: {duration: "", title: ""}, :format => 'js'})
+          end
+          it "should call new with default duration and title when not specified" do
+            Timecop.freeze(Time.local(1994))
+            expect(Battle).to receive(:new).with({"duration" => (24*60).to_s,
+                                                  "starts_at" => DateTime.now,
+                                                  "user" => @fake_user,
+                                                  "title" => "Who should win this battle?"})
             post(:create, {battle: {}, :format => 'js'})
-            expect(assigns(:options_id)).to match("options_new")
+          end
+          describe "in success" do
+            before :each do
+              @fake_vote = double("vote")
+              allow(Vote).to receive(:new).and_return(@fake_vote)
+              allow(@fake_battle).to receive(:save).and_return(true)
+              post(:create, {battle: {}, :format => 'js'})
+            end
+            it "should respond to js" do
+              expect(response.content_type).to eq(Mime::JS)
+            end
+            it "should render the create template" do
+              expect(response).to render_template('create')
+            end
+            it "should make battle available to that template" do
+              expect(assigns(:battle)).to eq(@fake_battle)
+            end
+            it "should make a new vote available to that template" do
+              expect(assigns(:vote)).to eq(@fake_vote)
+            end
+            it "should make empty battle options error available to that template" do
+              expect(assigns(:battle_options_error)).to match("")
+            end
+          end
+          describe "in error" do
+            before :each do
+              allow(@fake_battle).to receive(:save).and_return(false)
+            end
+            it "should respond to js" do
+              post(:create, {battle: {}, :format => 'js'})
+              expect(response.content_type).to eq(Mime::JS)
+            end
+            it "should render the reload_form for battle" do
+              post(:create, {battle: {}, :format => 'js'})
+              expect(response).to render_template('reload_form')
+            end
+            it "should not have error for options when options are ok" do
+              @errors = double("Errors")
+              @messages = {'error1' => 'error'}
+              allow(@fake_battle).to receive(:errors).and_return(@errors)
+              allow(@errors).to receive(:any?).and_return(true)
+              allow(@errors).to receive(:messages).and_return(@messages)
+              post(:create, {battle: {}, :format => 'js'})
+              expect(assigns(:battle_options_error)).to match("")
+            end
+            it "should have error for options when options are not ok" do
+              @errors = double("Errors")
+              @messages = {name: 'error', options: 'error in options'}
+              allow(@fake_battle).to receive(:errors).and_return(@errors)
+              allow(@errors).to receive(:any?).and_return(true)
+              allow(@errors).to receive(:messages).and_return(@messages)
+              post(:create, {battle: {}, :format => 'js'})
+              expect(assigns(:battle_options_error)).to match("battle-options-error")
+            end
+            it "should make options_id available to that template" do
+              post(:create, {battle: {}, :format => 'js'})
+              expect(assigns(:options_id)).to match("options_new")
+            end
           end
         end
       end
