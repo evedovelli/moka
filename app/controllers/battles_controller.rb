@@ -15,6 +15,16 @@ class BattlesController < ApplicationController
   end
 
   def create
+    @battle_options_error = ""
+
+    if not params[:battle]
+      @options_id = "options_new"
+      respond_to do |format|
+        format.js { render 'battles/reload_form' }
+      end
+      return
+    end
+
     params[:battle]["starts_at"] = DateTime.now
     if (not params[:battle][:duration]) || (params[:battle][:duration] == "")
       params[:battle][:duration] = (24*60).to_s
@@ -27,7 +37,6 @@ class BattlesController < ApplicationController
     @battle = Battle.new(params[:battle])
     authorize! :create, @battle
 
-    @battle_options_error = ""
     if @battle.save
       @vote = Vote.new()
       respond_to do |format|

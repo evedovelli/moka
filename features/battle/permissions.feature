@@ -28,6 +28,7 @@ Background: I exist as an user and there are battles in database
       And I confirm popup
       And I follow the link to remove 1st battle
       And I confirm popup
+      And I wait 1 second
       Then I should see 1 battle
 
     @javascript
