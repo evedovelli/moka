@@ -9,4 +9,5 @@ en:
       sign_up: 'Sign up'
     application:
       title: 'Batalharia'
-
+    cover:
+      title: 'Batalharia'

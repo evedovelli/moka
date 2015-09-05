@@ -1,9 +1,16 @@
 class UsersController < ApplicationController
-  before_filter :authenticate_user!, :except => [:show, :following, :followers]
+  before_filter :authenticate_user!, :only => [:edit, :update]
   load_and_authorize_resource :user, :find_by => :username
 
   def home
     @user = current_user
+    if not @user
+      respond_to do |format|
+        format.html { render 'users/cover', :layout => "cover" }
+      end
+      return
+    end
+
     @battles = Battle.user_home(@user, params[:page])
     @voted_for = current_user.voted_for_options(@battles)
     @vote = Vote.new()

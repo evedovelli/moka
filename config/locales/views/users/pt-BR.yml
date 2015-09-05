@@ -13,4 +13,11 @@ pt-BR:
       title: 'Seguindo'
     _form:
       title: 'Atualizar foto de perfil'
-
+    cover:
+      title_html: 'Crie suas batalhas!'
+      introduction_html: '<b>Batalharia</b> é uma forma simples e divertida de se criar batalhas para tudo e em qualquer momento.'
+      explanation_html: 'Se você quer descobrir com qual visual você fica melhor, ou qual é o super-herói mais poderoso, ou ainda, onde jantar hoje à noite, ou qual o próximo livro a ler, crie suas batalhas e descubra quais são os vencedores.'
+      share_html: 'Compartilhe suas batalhas no Facebook e chame seus amigos para votarem e determinar quem será o vencedor!'
+      free_html: "Cadastre-se agora. É grátis."
+      sign_up: "Criar conta"
+      login: "Entrar"

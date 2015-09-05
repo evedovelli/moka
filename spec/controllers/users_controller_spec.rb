@@ -7,10 +7,15 @@ describe UsersController do
   end
 
   describe "When user is not logged in" do
-    it "should be redirected to 'sign in' page if accessing home page" do
-      get :home
-      expect(flash[:alert]).to match("You need to sign in or sign up before continuing.")
-      expect(response).to redirect_to("/en/users/sign_in")
+    describe "home" do
+      it "should respond to html" do
+        get :home
+        expect(response.content_type).to eq(Mime::HTML)
+      end
+      it "should render the cover template" do
+        get :home
+        expect(response).to render_template('cover', 'cover')
+      end
     end
     it "should have success when accessing user page" do
       allow(controller).to receive(:authorize!).and_return(true)
@@ -102,13 +107,17 @@ describe UsersController do
           get :home
           expect(response.content_type).to eq(Mime::HTML)
         end
+        it "should render the home template" do
+          get :home
+          expect(response).to render_template('home')
+        end
         it "should respond to js" do
           get :home, :format => 'js'
           expect(response.content_type).to eq(Mime::JS)
         end
-        it "should render the home template" do
-          get :home
-          expect(response).to render_template('home')
+        it "should render the load_more_battles template with js" do
+          get :home, :format => 'js'
+          expect(response).to render_template('load_more_battles')
         end
         it "should make user_home battles available to that template" do
           get :home

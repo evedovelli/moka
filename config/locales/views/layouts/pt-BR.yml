@@ -9,4 +9,5 @@ pt-BR:
       sign_up: 'Criar conta'
     application:
       title: 'Batalharia'
-
+    cover:
+      title: 'Batalharia'

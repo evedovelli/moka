@@ -14,23 +14,23 @@
 </head>
 <body>
 
-  <div id="container" class="container">
-    <header class="navbar navbar-fixed-top navbar-inverse">
-      <%= render 'layouts/navigation' %>
-      <div id="flash_messages">
-        <%= render 'layouts/messages' %>
-      </div>
-    </header>
+  <header class="navbar navbar-fixed-top navbar-inverse">
+    <%= render 'layouts/navigation' %>
+    <div id="flash_messages">
+      <%= render 'layouts/messages' %>
+    </div>
+  </header>
 
+  <div id="container" class="container">
     <div id="main" role="main">
       <div class="row">
         <%= yield %>
       </div>
     </div>
-
-    <footer>
-    </footer>
   </div> <!--! end of #container -->
+
+  <footer>
+  </footer>
 
 </body>
 </html>
