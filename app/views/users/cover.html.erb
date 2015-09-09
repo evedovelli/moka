@@ -1,0 +1,51 @@
+<div id="container-cover-image" class="container visible-phone">
+  <div class="row">
+    <div class="span12 center">
+      <%= link_to image_tag("logo_medium.png", alt: t('layouts._navigation.page_title')) %>
+    </div>
+  </div>
+</div>
+
+<div id="cover-background">
+  <div id="container-cover" class="container">
+    <div id="main" role="main">
+      <div class="row">
+
+        <div class="span12">
+          <div class="row">
+            <div class="span6 offset1">
+              <p class="title"><%= t '.title_html' %></p>
+              <p class="introduction"><%= t '.introduction_html' %></p>
+              <p class="explanation"><%= t '.explanation_html' %></p>
+              <p class="explanation"><%= t '.share_html' %></p>
+              <p class="free"><%= t '.free_html' %></p>
+            </div>
+            <div class="span5">
+              <div class="login-buttons hidden-phone"></div>
+              <div class="row">
+                <div class="span2 offset2">
+                  <%= link_to(t('.sign_up'), new_user_registration_path, :class => 'btn btn-primary btn-large btn-block btn-login') %>
+                </div>
+              </div>
+              <div class="row">
+                <div class="span2 offset2">
+                  <%= link_to(t('.login'), new_user_session_path, :class => 'btn btn-primary btn-large btn-block btn-login') %>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="container-cover-image" class="container hidden-phone">
+  <div class="row">
+    <div class="span12 center">
+      <%= link_to image_tag("logo_medium.png", alt: t('layouts._navigation.page_title')) %>
+    </div>
+  </div>
+</div>
+

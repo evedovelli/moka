@@ -1,6 +1,10 @@
 class BattlesController < ApplicationController
-  before_filter :authenticate_user!
+  before_filter :authenticate_user!, :except => [:show]
   load_and_authorize_resource :battle, :except => [:create]
+
+  def show
+    @vote = Vote.new()
+  end
 
   def new
     2.times do

@@ -37,6 +37,9 @@ When /^I click the followers button$/ do
   find(".btn-followers").click
 end
 
+When /^I close the login form$/ do
+  find("#close-login-form").click
+end
 
 ### THEN ###
 
@@ -44,6 +47,12 @@ Then /^I should see "([^"]*)" with button to "([^"]*)"$/ do |user, button|
   within("#friend#{User.find_by_username(user).id}") do
     expect(page).to have_content(user)
     expect(page).to have_css(".btn-#{button}")
+  end
+end
+
+Then /^I should see "([^"]*)" in friendship list$/ do |user|
+  within("#friend#{User.find_by_username(user).id}") do
+    expect(page).to have_content(user)
   end
 end
 

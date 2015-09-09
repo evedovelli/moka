@@ -13,4 +13,15 @@ en:
       title: 'Following'
     _form:
       title: 'Update profile picture'
-
+    cover:
+      title_html: 'Battle everything!'
+      introduction_html: '<b>Batalharia</b> is a simple and fun way to create polls for everything and everywhere.'
+      explanation_html: 'Whether you want to find out your best look, or who is the most powerful superhero, or yet, where to dinner tonight, or what will be your next reading, create your battles and find out which are the winners.'
+      share_html: 'Share your battles on Facebook and invite your friends to vote and define who is gonna be victorious!'
+      free_html: "Sign up now. It's free."
+      sign_up: "Sign up"
+      login: "Login"
+    _overlay_sign_in:
+      not_a_member_html: "Not a member yet? %{link}. It's free!"
+      sign_up: "Sign up here"
+      title: "Sign in to vote!"

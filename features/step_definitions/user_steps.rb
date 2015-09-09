@@ -303,3 +303,17 @@ Then /^I should see the preview with the current "([^"]*)" image$/ do |image|
     expect(page).to have_xpath("//img[contains(@src, \"#{image}\")]")
   end
 end
+
+Then /^I should see the login form$/ do
+  expect(page).to have_css("#login-black-box")
+end
+
+Then /^I should not see the login form$/ do
+  expect(page).not_to have_css("#login-black-box")
+end
+
+Then /^I should not see any option selected$/ do
+  expect(page).not_to have_css('.outer_selected_picture')
+  expect(page).not_to have_css('.selected_picture')
+  expect(page).not_to have_css('.selected_box')
+end

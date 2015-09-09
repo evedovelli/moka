@@ -37,10 +37,6 @@ When /^I vote for "([^"]*)" for the (\d+)(?:st|nd|rd|th) battle$/ do |option, ba
   end
 end
 
-When /^I press the button to vote$/ do
-  find("#vote_button").click
-end
-
 When /^I close the results overlay$/ do
   find('#close_results').click
 end

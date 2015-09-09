@@ -1,6 +1,72 @@
 $boxesBorders: #333;
 $boxesBordersHover: #555;
 
+.title {
+  margin-top: 15px;
+  padding-top: 12px;
+  font-size: 28px;
+  letter-spacing: 1px;
+  height: 50px;
+  color: #fff;
+}
+
+.introduction {
+  margin-top: 10px;
+  padding-top: 6px;
+  font-size: 18px;
+  letter-spacing: 0.3px;
+  color: #eee;
+}
+
+.explanation {
+  margin-top: 10px;
+  padding-top: 6px;
+  font-size: 18px;
+  letter-spacing: 0.3px;
+  color: #999;
+}
+
+.free {
+  margin-top: 15px;
+  padding-top: 12px;
+  font-size: 20px;
+  letter-spacing: 1px;
+  height: 50px;
+  color: #fff;
+}
+
+#cover-background {
+  padding-top: 4%;
+  background-color: #333;
+  padding-top: 4%;
+  margin-left: -20px;
+  margin-right: -20px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+#cover-body {
+  padding-top: 0;
+  height: 100%;
+  margin: 0;
+  background-color: #ddd;
+}
+
+#container-cover-image {
+  padding-top: 3%;
+  padding-bottom: 5%;
+}
+
+.login-buttons {
+  padding-top: 40px;
+  padding-bottom: 40px;
+}
+
+.btn-login {
+  margin-top: 5px;
+  margin-bottom: 35px;
+}
+
 p.username {
   margin-top: 15px;
   padding-top: 12px;
@@ -60,6 +126,7 @@ a.btn-unfollow:hover .unfollow {
   background-color: #000;
   padding-top: 30px;
   padding-bottom: 30px;
+  text-align:center;
 }
 
 #close-user-form {
@@ -91,4 +158,18 @@ a.btn-edit-user-avatar:hover .icon-edit-avatar {
 
 .user-button {
   margin-bottom: 20px;
+}
+
+#login-black-box {
+  background-color: #fff;
+  padding-top: 30px;
+  padding-bottom: 20px;
+}
+
+#close-login-form {
+  padding-right: 4px;
+}
+
+#login-overlay-title {
+  margin-bottom: 30px;
 }

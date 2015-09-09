@@ -9,7 +9,7 @@ Moka::Application.routes.draw do
   get "users/:id/following" => "users#following", :as => :user_following
   get "users/:id/followers" => "users#followers", :as => :user_followers
 
-  resources :battles, :except => [:index, :show]
+  resources :battles, :except => [:index]
   resources :votes, :only => [:create]
 
   get "options/:id/votes" => "options#votes", :as => :option_votes

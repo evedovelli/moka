@@ -49,7 +49,7 @@ en:
         send_reset_instructions: 'Send me reset password instructions'
     shared:
       _links:
-        sign_in: 'Sign in'
+        sign_in: 'Login'
         sign_up: 'Sign up'
         recover: 'Forgot your password?'
         confirm: "Didn't receive confirmation instructions?"
