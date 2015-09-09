@@ -126,6 +126,7 @@ a.btn-unfollow:hover .unfollow {
   background-color: #000;
   padding-top: 30px;
   padding-bottom: 30px;
+  text-align:center;
 }
 
 #close-user-form {
@@ -157,4 +158,18 @@ a.btn-edit-user-avatar:hover .icon-edit-avatar {
 
 .user-button {
   margin-bottom: 20px;
+}
+
+#login-black-box {
+  background-color: #fff;
+  padding-top: 30px;
+  padding-bottom: 20px;
+}
+
+#close-login-form {
+  padding-right: 4px;
+}
+
+#login-overlay-title {
+  margin-bottom: 30px;
 }

@@ -26,11 +26,6 @@ selectablePicture = function(element) {
   element.closest('.battle-box').find('.selected_picture').removeClass('selected_picture');
   element.closest('.battle-box').find('.option-box').removeClass('selected_box');
 
-  // Add new selection
-  element.addClass('outer_selected_picture');
-  element.find('.vote_picture').addClass('selected_picture');
-  element.find('.option-box').addClass('selected_box');
-
   // Check box
   radio_button = element.find('.vote_radio');
   radio_button.prop('checked', true);
@@ -38,6 +33,11 @@ selectablePicture = function(element) {
 
   // Send vote
   element.closest('.new_vote').find('.vote_button').trigger('click');
+
+  // Add new selection
+  element.addClass('outer_selected_picture');
+  element.find('.vote_picture').addClass('selected_picture');
+  element.find('.option-box').addClass('selected_box');
 };
 
 jQuery(selectablePictureBattles);

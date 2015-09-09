@@ -21,3 +21,7 @@ pt-BR:
       free_html: "Cadastre-se agora. É grátis."
       sign_up: "Criar conta"
       login: "Entrar"
+    _overlay_sign_in:
+      not_a_member_html: "Ainda não está cadastrado? %{link}. É gratuito!"
+      sign_up: "Cadastre-se aqui"
+      title: "Entre na sua conta para votar!"

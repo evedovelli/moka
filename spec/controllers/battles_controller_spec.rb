@@ -3,6 +3,27 @@ require 'rails_helper'
 describe BattlesController do
 
   describe "When user is not logged in" do
+    describe "show" do
+      before (:each) do
+        @fake_battle = FactoryGirl.create(:battle)
+        allow(controller).to receive(:authorize!).and_return(true)
+        allow(Battle).to receive(:find).and_return(@fake_battle)
+        get :show, { :id => @fake_battle.id }
+      end
+      it "should respond to html" do
+        expect(response.content_type).to eq(Mime::HTML)
+      end
+      it "should render the cover template" do
+        expect(response).to render_template('show')
+      end
+      it "should make battle available to that template" do
+        expect(assigns(:battle)).to eq(@fake_battle)
+      end
+      it "should build a vote to the template" do
+        expect(assigns(:vote)).to be_new_record
+      end
+    end
+
     it "should be redirected to 'sign in' page if accessing new battle page" do
       get :new
       expect(flash[:alert]).to match("You need to sign in or sign up before continuing.")
@@ -42,6 +63,11 @@ describe BattlesController do
         allow(controller).to receive(:authorize!).and_raise(CanCan::AccessDenied)
       end
 
+      it "should be redirected to root page if showing the battle" do
+        get :show, {id: @fake_battle.id}
+        expect(flash[:alert]).to match("Access denied.")
+        expect(response).to redirect_to(root_url)
+      end
       it "should be redirected to root page if accessing new battle page" do
         get :new
         expect(flash[:alert]).to match("Access denied.")
@@ -75,6 +101,26 @@ describe BattlesController do
         @fake_options = [double('Option1'), double('Option2'), double('Option3')]
         allow(Option).to receive(:all).and_return(@fake_options)
         allow(controller).to receive(:authorize!).and_return(true)
+      end
+
+      describe "show" do
+        before (:each) do
+          @fake_battle = FactoryGirl.create(:battle)
+          allow(Battle).to receive(:find).and_return(@fake_battle)
+          get :show, { :id => @fake_battle.id }
+        end
+        it "should respond to html" do
+          expect(response.content_type).to eq(Mime::HTML)
+        end
+        it "should render the cover template" do
+          expect(response).to render_template('show')
+        end
+        it "should make battle available to that template" do
+          expect(assigns(:battle)).to eq(@fake_battle)
+        end
+        it "should build a vote to the template" do
+          expect(assigns(:vote)).to be_new_record
+        end
       end
 
       describe "new" do

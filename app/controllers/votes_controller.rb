@@ -1,9 +1,16 @@
 class VotesController < ApplicationController
-  before_filter :authenticate_user!
 
   def create
+    @user = current_user
+    if not @user
+      respond_to do |format|
+        format.js { render 'votes/unsigned_user' }
+      end
+      return
+    end
+
     if params[:vote] && params[:vote][:option_id]
-      params[:vote][:user] = current_user
+      params[:vote][:user] = @user
 
       @vote = Vote.new(params[:vote])
       authorize! :create, @vote

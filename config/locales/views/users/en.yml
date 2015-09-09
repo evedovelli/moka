@@ -21,3 +21,7 @@ en:
       free_html: "Sign up now. It's free."
       sign_up: "Sign up"
       login: "Login"
+    _overlay_sign_in:
+      not_a_member_html: "Not a member yet? %{link}. It's free!"
+      sign_up: "Sign up here"
+      title: "Sign in to vote!"

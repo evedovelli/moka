@@ -5,13 +5,12 @@ Feature: Welcome page and access for unsigned users
 Background: I am not a registered user and battles exist
     Given user "willywallace" exists
     And user "macewindu" exists
-    And the following battles were added:
-    | starts_at                 | duration  | user         | title     |
-    | 2015-10-12 10:30:00 -0300 | 30000     | willywallace | battle 2  |
-    | 2015-10-13 10:30:00 -0300 | 3000      | macewindu    | battle 3  |
-    | 2015-10-20 10:30:00 -0300 | 3000      | willywallace | battle 5  |
-    | 2015-10-22 10:30:00 -0300 | 4000      | macewindu    | battle 6  |
-    And current time is 2015-10-21 07:28:00 -0300
+    And current time is 1985-10-21 07:28:00 -0300
+    And a battle was created by "willywallace" with options:
+    | name            | image              |
+    | Devil Robot     | devil_robot.jpg    |
+    | Darth Vader     | vader.jpg          |
+    And current time is 1985-10-21 08:28:00 -0300
 
 
     Scenario: I access the website home and I am redirected to the welcome page
@@ -32,3 +31,36 @@ Background: I am not a registered user and battles exist
       Given I am on the home page
       When I follow "Login"
       Then I should be on the sign in page
+
+    @javascript
+    Scenario: I try to vote and I am redirected to the login page
+      Given I am on the "willywallace" profile page
+      When I vote for "Darth Vader" for the 1st battle
+      Then I should see the login form
+      And I should not see any option selected
+
+    @javascript
+    Scenario: I try to vote and I close the login form
+      Given I am on the "willywallace" profile page
+      When I vote for "Darth Vader" for the 1st battle
+      And I close the login form
+      Then I should not see the login form
+      And I should not see any option selected
+
+    Scenario: I should see following of users
+      Given "willywallace" is following "macewindu"
+      When I go to the "willywallace" following page
+      Then I should see "macewindu" in friendship list
+
+    Scenario: I should see following of users
+      Given "willywallace" is following "macewindu"
+      When I go to the "macewindu" followers page
+      Then I should see "willywallace" in friendship list
+
+    @javascript
+    Scenario: I can access a battle show page and try to vote
+      Given I am on the 1st battle page
+      When I vote for "Darth Vader" for the 1st battle
+      Then I should see the login form
+      And I should not see any option selected
+

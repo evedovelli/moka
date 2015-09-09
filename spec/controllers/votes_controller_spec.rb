@@ -7,10 +7,16 @@ describe VotesController do
   end
 
   describe "When user is not logged in" do
-    it "should be redirected to 'sign in' page if creating a vote" do
-      post :create, { vote: { option_id: @fake_battle.options[0].id, user_id: @fake_user.id } }
-      expect(flash[:alert]).to match("You need to sign in or sign up before continuing.")
-      expect(response).to redirect_to("/en/users/sign_in")
+    describe "create" do
+      before :each do
+        post :create, {format: 'js'}
+      end
+      it "should respond to js" do
+        expect(response.content_type).to eq(Mime::JS)
+      end
+      it "should render the unsigned user template" do
+        expect(response).to render_template('votes/unsigned_user')
+      end
     end
   end
 

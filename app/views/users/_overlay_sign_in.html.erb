@@ -1,0 +1,40 @@
+<div id="login-box" class="overlay">
+  <div id="container" class="container">
+    <div class="row">
+      <div class="span6 offset3 login-black-box-container">
+
+        <div class="row">
+          <div class="span6">
+            <div class="close-box">
+              <div class="pull-right">
+                <i id="close-login-form" class="icon-remove"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="login-black-box">
+          <h3 id="login-overlay-title" class="center"><%= t('users._overlay_sign_in.title') %></h3>
+
+          <%= render :partial => 'devise/sessions/form',
+                     :locals => {
+                       :resource => :user,
+                       :resource_name => :user
+                     } %>
+
+          <div class="form-horizontal">
+            <div class="control-group">
+              <div class="controls">
+                <p><%= t('users._overlay_sign_in.not_a_member_html', :link => link_to(t('users._overlay_sign_in.sign_up'), new_registration_path(:user))) %></p>
+                <p><%= link_to t('devise.shared._links.recover'), new_password_path(:user) %></p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+

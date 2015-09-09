@@ -1,0 +1,17 @@
+$('#login-box').replaceWith("<%= j (render :partial => 'users/overlay_sign_in') %>");
+
+jQuery(closeOverlayLoginForm);
+
+$(document).click(function(event) {
+  if (!$(event.target).closest('.login-black-box-container').length) {
+    if ($('#login-box').is(":visible")) {
+      $('#login-box').hide()
+    }
+  }
+})
+
+// Remove selections
+$('.outer_selected_picture').removeClass('outer_selected_picture');
+$('.selected_picture').removeClass('selected_picture');
+$('.option-box').removeClass('selected_box');
+
