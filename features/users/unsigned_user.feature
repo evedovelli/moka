@@ -60,7 +60,7 @@ Background: I am not a registered user and battles exist
     @javascript
     Scenario: I can access a battle show page and try to vote
       Given I am on the 1st battle page
-      When I vote for "Darth Vader" for the 1st battle
+      When I vote for "Darth Vader"
       Then I should see the login form
       And I should not see any option selected
 
