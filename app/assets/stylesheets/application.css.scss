@@ -96,11 +96,20 @@ a.extra-space {
   top: 0px;
   width: 100%;
   height: 100%;
-  padding-top: 140px;
-  padding-bottom: 140px;
   z-index: 1000;
   background-image: url(smoke.png);
   background-repeat: repeat;
+}
+
+.inner-box {
+  @media (min-width: 768px) {
+    position: fixed;
+    top: 10%;
+  }
+  @media (max-width: 767px) {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
 }
 
 .delete_picture {

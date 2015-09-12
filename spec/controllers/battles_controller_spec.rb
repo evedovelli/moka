@@ -292,6 +292,10 @@ describe BattlesController do
           get :edit, {id: @fake_battle.id, :format => 'js'}
           expect(response.content_type).to eq(Mime::JS)
         end
+        it "should respond to html" do
+          get :edit, {id: @fake_battle.id}
+          expect(response.content_type).to eq(Mime::HTML)
+        end
         it "should render the edit template" do
           get :edit, {id: @fake_battle.id, :format => 'js'}
           expect(response).to render_template('edit')

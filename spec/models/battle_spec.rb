@@ -199,6 +199,25 @@ describe Battle do
     end
   end
 
+  describe 'finished?' do
+    it 'should return true if battle is finished' do
+      Timecop.freeze(Time.local(2001))
+      battle = Battle.new(@attr.merge(
+                                      :starts_at => DateTime.now - 10.days,
+                                      :duration => 60
+                                     ))
+      expect(battle.finished?).to eq(true)
+    end
+    it 'should return false if battle is not finished' do
+      Timecop.freeze(Time.local(2001))
+      battle = Battle.new(@attr.merge(
+                                      :starts_at => DateTime.now - 1.day,
+                                      :duration => 48*60
+                                     ))
+      expect(battle.finished?).to eq(false)
+    end
+  end
+
   describe 'finishes_at' do
     it 'should return the date due to finish the battle' do
       Timecop.freeze(Time.local(2001))

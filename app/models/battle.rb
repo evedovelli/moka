@@ -25,11 +25,15 @@ class Battle < ActiveRecord::Base
   end
 
   def current?
-    (starts_at < DateTime.current) and (starts_at + duration.minutes > DateTime.current)
+    (starts_at <= DateTime.current) and (finishes_at >= DateTime.current)
   end
 
   def in_future?
     starts_at > DateTime.current
+  end
+
+  def finished?
+    DateTime.current > finishes_at
   end
 
   def finishes_at

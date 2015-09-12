@@ -47,6 +47,9 @@ module NavigationHelpers
     when /the (\d+)(?:st|nd|rd|th) battle page/
       battle_path($1)
 
+    when /the (\d+)(?:st|nd|rd|th) battle edit page/
+      edit_battle_path($1)
+
     else
       begin
         page_name =~ /the (.*) page/

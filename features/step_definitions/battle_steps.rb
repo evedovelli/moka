@@ -86,6 +86,9 @@ Given /^a battle was created by "([^"]*)" with options:$/ do |user, table|
   })
 end
 
+Given /^battle (\d+) is removed$/ do |battle_id|
+  Battle.find(battle_id.to_i).hide
+end
 
 ### WHEN ###
 

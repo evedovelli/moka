@@ -192,6 +192,11 @@ describe Ability do
         it "should not be able to update battles for other users" do
           expect(@ability).not_to be_able_to(:update, @other_battle)
         end
+        it "should not be able to update finished battles" do
+          t = Time.local(2015, 10, 26, 07, 28, 0)
+          Timecop.travel(t)
+          expect(@ability).not_to be_able_to(:update, @battle)
+        end
 
         it "should be able to destroy battles" do
           expect(@ability).to be_able_to(:destroy, @battle)
@@ -208,9 +213,18 @@ describe Ability do
           Timecop.travel(t)
           expect(@ability).to be_able_to(:show, @battle)
         end
-        it "should not be able to show future battles" do
+        it "should be able to show future battles from himself" do
           t = Time.local(2015, 10, 18, 07, 28, 0)
           Timecop.travel(t)
+          expect(@ability).to be_able_to(:show, @battle)
+        end
+        it "should not be able to show future battles from other users" do
+          t = Time.local(2015, 10, 18, 07, 28, 0)
+          Timecop.travel(t)
+          expect(@ability).not_to be_able_to(:show, @other_battle)
+        end
+        it "should not be able to show hidden battles" do
+          @battle.hide
           expect(@ability).not_to be_able_to(:show, @battle)
         end
 

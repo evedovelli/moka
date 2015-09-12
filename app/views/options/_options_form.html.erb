@@ -1,0 +1,25 @@
+<div id="options_container" class="span12 <%= @battle_options_error %>">
+  <div class="row">
+
+    <div id="<%= @options_id %>" class="options">
+      <%= f.simple_fields_for(:options) %>
+    </div>
+
+    <div class="span4 option-form-sizeable new-option-outer">
+      <div class="new-option-box option-box-editable add-option-box">
+        <div class="add_new_option_container">
+          <%= f.link_to_add(:options, {:id => "add_new_option",
+                                       :class => "btn btn-inverse btn-large",
+                                       :data => {:target => "##{@options_id}", :limit => 6}
+                                      }) do %>
+            <i class="icon-plus icon-inverse"></i><%= " #{t 'battles._form.add_option'}" %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+<div id="battle-options-error" class="span12 text-error" style="display:none;">
+  <p class="pull-right"><%= t('messages.min_options') %></p>
+</div>

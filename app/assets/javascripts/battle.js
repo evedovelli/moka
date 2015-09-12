@@ -290,3 +290,67 @@ $(document).on('nested:fieldRemoved', function(event){
   setOptionSizes(field.closest('.battle_form'));
 })
 
+
+/**********************************************************/
+/* Fixed battle title when scrolling the battle           */
+/**********************************************************/
+
+function moveScroller () {
+  function move (battle) {
+    offset = 0;
+    if ($(window).width() >= 980) {
+      offset = 66;
+    }
+
+    var battle_title_over = battle.find(".scroller-over");
+
+    var scroll_position = $(window).scrollTop() + offset;
+    var battle_top = battle_title_over.offset().top;
+    var battle_bottom_final = battle.offset().top + battle.height() - 10;
+
+    var battle_title = battle.find(".battle-title-row-container");
+    var battle_title_container = battle.find(".battle-title-container");
+    var battle_time_container = battle.find(".time-container");
+
+    var battle_title_height = battle_title.height();
+    var battle_bottom_initial = battle_bottom_final - battle_title_height;
+
+    if (scroll_position <= battle_top) {
+      battle_title.css({"top": ""});
+      battle_title.removeClass('sticky');
+      battle_title_container.removeClass('extra-margin');
+      battle_time_container.removeClass('extra-time-margin');
+      battle_title_over.css({"padding-top": ""});
+    } else if (scroll_position > battle_top && scroll_position <= battle_bottom_initial) {
+      battle_title.css({"top": ""});
+      battle_title.addClass('sticky');
+      battle_title_container.addClass('extra-margin');
+      battle_time_container.addClass('extra-time-margin');
+      battle_title_over.css({"padding-top": battle_title_height + "px"});
+    } else if (scroll_position > battle_bottom_initial && scroll_position <= battle_bottom_final) {
+      battle_title.css({"top": offset + (battle_bottom_initial - scroll_position) + "px"});
+      battle_title.addClass('sticky');
+      battle_title_container.addClass('extra-margin');
+      battle_time_container.addClass('extra-time-margin');
+      battle_title_over.css({"padding-top": battle_title_height + "px"});
+    } else if (scroll_position > battle_bottom_final) {
+      battle_title.css({"top": ""});
+      battle_title.removeClass('sticky');
+      battle_title_container.removeClass('extra-margin');
+      battle_time_container.removeClass('extra-time-margin');
+      battle_title_over.css({"padding-top": ""});
+    }
+  };
+
+  function stickyEachBattleTitle () {
+    var battle = $(".battle").each(function(){
+      move($(this));
+    });
+  };
+
+  $(window).scroll(stickyEachBattleTitle);
+  stickyEachBattleTitle();
+
+}
+
+jQuery(moveScroller);
