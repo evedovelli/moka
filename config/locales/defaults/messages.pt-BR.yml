@@ -15,6 +15,7 @@ pt-BR:
     required: 'Campo obrigatório'
     greater_than_zero: 'O valor deve ser maior que zero'
     invalid_username: 'é inválido'
+    invalid_characters: "é inválido. Apenas use letras, números e '_'"
     invalid_image: 'Imagem inválida'
     uniqueness_friend: 'Você já está seguindo este usuário'
     single_vote_per_battle: 'pode ter apenas um voto por batalha'

@@ -18,6 +18,14 @@ Background:
       When I sign up without an username
       Then I should see a missing username message
 
+    Scenario: User signs up with reserved username
+      When I sign up with username "sign_in"
+      Then I should see "Username is invalid"
+
+    Scenario: User signs up with invalid username
+      When I sign up with username "User.Name"
+      Then I should see "Username is invalid. Only use letters, numbers and '_'"
+
     Scenario: User signs up without password
       When I sign up without a password
       Then I should see a missing password message

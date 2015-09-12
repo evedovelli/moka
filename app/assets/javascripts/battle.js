@@ -76,7 +76,7 @@ $.validator.setDefaults({
   errorElement: 'span',
   errorClass: 'help-inline',
   errorPlacement: function(error, element) {
-    if(element.parent('.input-append').length) {
+    if (element.parent('.input-append').length) {
       error.insertAfter(element.parent());
     } else {
       error.insertAfter(element);

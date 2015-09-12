@@ -101,6 +101,10 @@ When /^(?:|I )sign out$/ do
   logout(:user)
 end
 
+When /^I sign up with username "([^"]+)"$/ do |username|
+  sign_up(username, "myself@email.com", "secretpassword")
+end
+
 When /^I sign up with valid user data$/ do
   sign_up("myself", "myself@email.com", "secretpassword")
 end

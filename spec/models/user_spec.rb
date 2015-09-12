@@ -158,20 +158,23 @@ describe User do
 
   describe 'authentication methods' do
     before (:each) do
-      @email = "foo@bar.com"
-      @warden_conditions = { :login => @email }
     end
     it "should finds user by email" do
+      @email = "foo@bar.com"
+      @warden_conditions = { :login => @email }
       user = FactoryGirl.create(:user, email: @email)
       authenticated = User.find_for_database_authentication(@warden_conditions)
       expect(authenticated).to eql(user)
     end
     it "should finds user by username" do
-      user = FactoryGirl.create(:user, username: @email)
+      @username = "foo"
+      @warden_conditions = { :login => @username }
+      user = FactoryGirl.create(:user, username: @username)
       authenticated = User.find_for_database_authentication(@warden_conditions)
       expect(authenticated).to eql(user)
     end
     it "should finds without login" do
+      @email = "foo@bar.com"
       user = FactoryGirl.create(:user, email: @email)
       @warden_conditions = { :email => @email }
       authenticated = User.find_for_database_authentication(@warden_conditions)
@@ -179,7 +182,30 @@ describe User do
     end
   end
 
-  describe 'username' do
+  describe 'has_valid_characters' do
+    it 'should reject .' do
+      user = User.new(@attr.merge(:username => "user.name"))
+      expect(user).not_to be_valid
+    end
+    it 'should reject special characters' do
+      user = User.new(@attr.merge(:username => "usernéime"))
+      expect(user).not_to be_valid
+    end
+    it 'should reject spaces' do
+      user = User.new(@attr.merge(:username => "user name"))
+      expect(user).not_to be_valid
+    end
+    it 'should reject bars' do
+      user = User.new(@attr.merge(:username => "user/name"))
+      expect(user).not_to be_valid
+    end
+    it 'should accept letters and underlines' do
+      user = User.new(@attr.merge(:username => "USER_name"))
+      expect(user).to be_valid
+    end
+  end
+
+  describe 'reserved_username' do
     it 'should reject sign_in' do
       user = User.new(@attr.merge(:username => "sign_in"))
       expect(user).not_to be_valid
