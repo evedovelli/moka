@@ -155,3 +155,35 @@ div.add_new_option_container a {
   font-size: 15px;
 }
 
+.sticky {
+  position: fixed;
+  @media (max-width: 979px) {
+      top: 0;
+  }
+  @media (min-width: 980px) {
+      top: 66px;
+  }
+  z-index: 100;
+  @media (max-width: 767px) {
+    width: 100%;
+  }
+}
+
+.extra-margin {
+  margin-right: 10px;
+}
+
+.extra-time-margin {
+  @media (max-width: 767px) {
+    margin-right: 20px;
+  }
+}
+
+@media (max-width: 767px) {
+  .battle-title-row-container {
+    margin-right: -20px;
+  }
+  .time-container {
+    margin-left: -20px;
+  }
+}

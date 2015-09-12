@@ -4,6 +4,11 @@
     <div class="row">
       <div class="span12">
         <h4 class="pull-left battle-user">
+          <% if @battle.new_record? %>
+            <%= link_to(image_tag(current_user.avatar.url(:icon), :class => "img-polaroid"), user_path(current_user)) %>
+          <% else %>
+            <%= link_to(image_tag(@battle.user.avatar.url(:icon), :class => "img-polaroid"), user_path(@battle.user)) %>
+          <% end %>
           <%= link_to(current_user.username, user_path(current_user), :class => "battle_user") %>
         </h4>
       </div>
@@ -43,33 +48,11 @@
 
     <%= f.error(:options, :id => 'battle-options-error', :class => "text-error") %>
     <div class="row">
-
-      <div id="options_container" class="span12 <%= @battle_options_error %>">
-        <div class="row">
-
-          <div id="<%= @options_id %>" class="options">
-            <%= f.simple_fields_for(:options) %>
-          </div>
-
-          <div class="span4 option-form-sizeable new-option-outer">
-            <div class="new-option-box option-box-editable add-option-box">
-              <div class="add_new_option_container">
-                <%= f.link_to_add(:options, {:id => "add_new_option",
-                                             :class => "btn btn-inverse btn-large",
-                                             :data => {:target => "##{@options_id}", :limit => 6}
-                                            }) do %>
-                  <i class="icon-plus icon-inverse"></i><%= " #{t 'battles._form.add_option'}" %>
-                <% end %>
-              </div>
-            </div>
-          </div>
-
-        </div>
-      </div>
-      <div id="battle-options-error" class="span12 text-error" style="display:none;">
-        <p class="pull-right"><%= t('messages.min_options') %></p>
-      </div>
-
+      <%= render :partial => "options/options_form",
+                 :locals => { :battle_options_error => @battle_options_error,
+                              :options_id => @options_id,
+                              :f => f,
+                            } %>
     </div>
 
     <div class="row">

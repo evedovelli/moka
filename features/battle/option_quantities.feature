@@ -81,6 +81,7 @@ Background:
       Given the following battles were added:
       | starts_at                 | duration  | title            |
       | 2015-05-18 10:30:14 -0300 | 5760      | Choose anything  |
+      And current time is 2015-05-18 12:28:00 -0300
       When I go to the home page
       And I press the button to edit 1st battle
       And I remove 2nd option
@@ -93,6 +94,7 @@ Background:
       Given the following battles were added:
       | starts_at                 | duration  | title            |
       | 2015-05-18 10:30:14 -0300 | 5760      | Choose anything  |
+      And current time is 2015-05-18 12:28:00 -0300
       When I go to the home page
       And I press the button to edit 1st battle
       Then the size of option forms should be big
@@ -103,6 +105,7 @@ Background:
       Given the following battles were added:
       | starts_at                 | duration  | title            |
       | 2015-05-18 10:30:14 -0300 | 5760      | Choose anything  |
+      And current time is 2015-05-18 12:28:00 -0300
       When I go to the home page
       And I press the button to edit 1st battle
       And I press the button to add option
@@ -114,6 +117,7 @@ Background:
       Given the following battles were added:
       | starts_at                 | duration  | title            |
       | 2015-05-18 10:30:14 -0300 | 5760      | Choose anything  |
+      And current time is 2015-05-18 12:28:00 -0300
       When I go to the home page
       And I press the button to edit 1st battle
       And I press the button to add option
@@ -126,6 +130,7 @@ Background:
       Given the following battles were added:
       | starts_at                 | duration  | title            |
       | 2015-05-18 10:30:14 -0300 | 5760      | Choose anything  |
+      And current time is 2015-05-18 12:28:00 -0300
       When I go to the home page
       And I press the button to edit 1st battle
       And I press the button to add option
@@ -139,6 +144,7 @@ Background:
       Given the following battles were added:
       | starts_at                 | duration  | title            |
       | 2015-05-18 10:30:14 -0300 | 5760      | Choose anything  |
+      And current time is 2015-05-18 12:28:00 -0300
       When I go to the home page
       And I press the button to edit 1st battle
       And I press the button to add option
@@ -154,6 +160,7 @@ Background:
       Given the following battles were added:
       | starts_at                 | duration  | title            |
       | 2015-05-18 10:30:14 -0300 | 5760      | Choose anything  |
+      And current time is 2015-05-18 12:28:00 -0300
       When I go to the home page
       And I press the button to edit 1st battle
       And I press the button to add option

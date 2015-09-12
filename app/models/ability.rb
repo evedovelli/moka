@@ -82,13 +82,13 @@ class Ability
     # Battles
     can :create, Battle
     can :update, Battle do |battle|
-      battle.try(:user) == user
+      (not battle.finished?) && (battle.try(:user) == user)
     end
     can :destroy, Battle do |battle|
       battle.try(:user) == user
     end
     can :show, Battle do |battle|
-      not battle.in_future?
+      ((not battle.in_future?) || (battle.try(:user) == user)) && (not battle.hidden)
     end
     can :show_results, Battle do |battle|
       (not battle.current?) || (battle.try(:user) == user) || (user.vote_for(battle))

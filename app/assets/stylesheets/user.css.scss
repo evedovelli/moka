@@ -164,6 +164,10 @@ a.btn-edit-user-avatar:hover .icon-edit-avatar {
   background-color: #fff;
   padding-top: 30px;
   padding-bottom: 20px;
+  @media (max-width: 767px) {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
 }
 
 #close-login-form {
