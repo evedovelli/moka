@@ -4,7 +4,7 @@ include ActionDispatch::TestProcess
 
 Given /^"([^"]*)" has (\d+) votes$/ do |option, votes|
   for i in 1..votes.to_i
-    user = FactoryGirl.create(:user, username: "user-#{option}-#{i}", email: "user.#{option}.#{i}@user.com")
+    user = FactoryGirl.create(:user, username: "user_#{option}_#{i}", email: "user.#{option}.#{i}@user.com")
     FactoryGirl.create(:vote, {:option_id => Option.find_by_name(option).id, :user => user})
   end
 end
