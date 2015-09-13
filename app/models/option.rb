@@ -6,7 +6,16 @@ class Option < ActiveRecord::Base
   has_many :users, through: :votes
 
   attr_accessible :name, :picture, :id
-  has_attached_file :picture, :styles => { :medium => "370x370#", :thumb => "120x120#" }
+  has_attached_file :picture, :styles => {
+                                :medium => {
+                                  :geometry => "370x370#",
+                                  :animated => false
+                                },
+                                :thumb => {
+                                  :geometry => "100x100#",
+                                  :animated => false
+                                }
+                              }
 
   validates :name, :presence => true
   validates_attachment :picture, :presence     => true,

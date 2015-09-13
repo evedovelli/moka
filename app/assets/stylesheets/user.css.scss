@@ -127,6 +127,10 @@ a.btn-unfollow:hover .unfollow {
   padding-top: 30px;
   padding-bottom: 30px;
   text-align:center;
+  @media (max-width: 767px) {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
 }
 
 #close-user-form {
