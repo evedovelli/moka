@@ -96,7 +96,7 @@ end
 Then /^I should see the (\d+) voters for "([^"]*)"$/ do |voters, option|
   within("#vote_index#{Option.find_by_name(option).id}") do
     for i in 1..voters.to_i
-      expect(page).to have_text("user-#{option}-#{i}")
+      expect(page).to have_text("user_#{option}_#{i}")
     end
   end
 end
