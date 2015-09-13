@@ -23,7 +23,14 @@ class User < ActiveRecord::Base
                                 :size         => { :in => 0..20.megabytes }
   validates :username, :uniqueness => { :case_sensitive => false },
                        :presence => true
+  validate :username, :has_valid_characters
   validate :username, :reserved_usernames
+
+  def has_valid_characters
+    if username !~ /^[a-zA-Z0-9_]+$/
+      errors.add(:username, I18n.t('messages.invalid_characters'))
+    end
+  end
 
   def reserved_usernames
     case username
