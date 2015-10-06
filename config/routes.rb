@@ -11,6 +11,8 @@ Moka::Application.routes.draw do
 
   resources :battles, :except => [:index]
   resources :votes, :only => [:create]
+  resources :notifications, :only => [:index]
+  get "notifications_dropdown" => "notifications#dropdown", :as => :notifications_dropdown
 
   get "options/:id/votes" => "options#votes", :as => :option_votes
 

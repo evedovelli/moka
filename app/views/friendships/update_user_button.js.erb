@@ -1,5 +1,7 @@
 if ($('#user-button<%= @friend.id %>').hasClass("profile-user-button")) {
   $('#user-button<%= @friend.id %>').html('<%= user_button_for(@friend, "") %>');
+} else if ($('#user-button<%= @friend.id %>').hasClass("mini-user-button")) {
+  $('#user-button<%= @friend.id %>').html('<%= mini_user_button_for(@friend) %>');
 } else {
   $('#user-button<%= @friend.id %>').html('<%= user_button_for(@friend) %>');
 }

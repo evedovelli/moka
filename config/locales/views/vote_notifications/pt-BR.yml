@@ -1,0 +1,4 @@
+pt-BR:
+  vote_notifications:
+    _vote_notification:
+      message_html: "%{user} votou em sua batalha."

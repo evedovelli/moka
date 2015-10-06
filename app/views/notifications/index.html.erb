@@ -1,0 +1,27 @@
+<div class="span12">
+  <div class="row">
+    <div class="span6 offset3">
+      <h4><%= t 'notifications.index.title' %></h4>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="span6 offset3">
+      <table id="notification-index" class="table">
+        <%= render @notifications %>
+      </table>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="span6 offset3">
+      <p class="notification-pagination">
+        <% if @notifications.last_page? %>
+          <p class='center notification-last_page'><%= image_tag("watermark_small.png") %></p>
+        <% else %>
+          <%= link_to_next_page(@notifications, 'Next Page', :remote => true, :class => "next_page") %>
+        <% end %>
+      </p>
+    </div>
+  </div>
+</div>

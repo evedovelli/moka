@@ -84,7 +84,10 @@ p.user-button {
   margin-left: 20px;
 }
 
-a.btn-unfollow .unfollow { display: none; }
+a.btn-unfollow .unfollow {
+  display: none;
+}
+
 a.btn-unfollow:hover .following {
   display: none;
 }
@@ -155,13 +158,20 @@ a.btn-unfollow:hover .unfollow {
   background: white;
 }
 
-a.btn-edit-user-avatar .icon-edit-avatar { display: none; }
+a.btn-edit-user-avatar .icon-edit-avatar {
+  display: none;
+}
+
 a.btn-edit-user-avatar:hover .icon-edit-avatar {
   display: inline;
 }
 
 .user-button {
   margin-bottom: 20px;
+}
+
+.mini-user-button {
+  margin-bottom: 6px;
 }
 
 #login-black-box {

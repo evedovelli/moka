@@ -46,7 +46,7 @@ group :production do
 end
 
 # Use Puma as the app server
-gem 'puma'
+gem 'puma', ">= 2.14.0"
 
 # Gems used only for assets and not required
 # in production environments by default.

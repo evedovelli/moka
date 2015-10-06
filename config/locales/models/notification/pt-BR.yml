@@ -1,0 +1,9 @@
+pt-BR:
+  activerecord:
+    models:
+      notification: "notificação"
+    attributes:
+      notification:
+        user: "Usuário"
+        sender: "Remetente"
+        vote: "Voto"

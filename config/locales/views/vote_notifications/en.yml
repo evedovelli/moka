@@ -1,0 +1,4 @@
+en:
+  vote_notifications:
+    _vote_notification:
+      message_html: "%{user} has voted in your battle."

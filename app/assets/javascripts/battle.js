@@ -170,6 +170,7 @@ var onEndless = function() {
 };
 
 $(window).on('scroll', onEndless);
+jQuery(onEndless);
 
 
 function avoidDuplicateBattle () {

@@ -1,0 +1,9 @@
+<tr id="notification<%= vote_notification.id %>" class="notification">
+  <td><%= link_to(image_tag(vote_notification.sender.avatar.url(:icon), :class => "img-polaroid"), user_path(vote_notification.sender)) %></td>
+  <td><%= t('vote_notifications._vote_notification.message_html', user: link_to(vote_notification.sender.username, user_path(vote_notification.sender))) %></td>
+  <td class="battle-icon">
+    <% if vote_notification.vote %>
+      <%= show_battle_icons(vote_notification.vote.battle, vote_notification.vote) %>
+    <% end %>
+  </td>
+</tr>

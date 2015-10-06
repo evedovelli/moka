@@ -1,0 +1,9 @@
+en:
+  activerecord:
+    models:
+      notification: "notification"
+    attributes:
+      notification:
+        user: "User"
+        sender: "Sender"
+        vote: "Vote"

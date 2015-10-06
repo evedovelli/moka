@@ -24,6 +24,10 @@ Given /^I have voted for "([^"]*)"$/ do |option|
   FactoryGirl.create(:vote, {:option_id => Option.find_by_name(option).id, :user => User.find_by_username("myself")})
 end
 
+Given /^"([^"]*)" has voted for "([^"]*)"$/ do |user, option|
+  FactoryGirl.create(:vote, {:option_id => Option.find_by_name(option).id, :user => User.find_by_username(user)})
+end
+
 ### WHEN ###
 
 When /^I vote for "([^"]*)"$/ do |option|

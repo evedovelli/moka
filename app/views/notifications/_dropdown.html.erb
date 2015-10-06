@@ -1,0 +1,37 @@
+<div id="notifications-group" class="btn-group visible-desktop">
+  <%= link_to(notifications_dropdown_path(),
+              id: "notifications-btn",
+              class: "notifications-btn dropdown-toggle",
+              "data-toggle" => "dropdown",
+              remote: true
+             ) do %>
+    <%= notifications_btn(current_user) %>
+  <% end %>
+
+  <div class="dropdown-menu">
+    <div class="span4">
+      <div class="row">
+        <div class="span4">
+          <h4><%= t 'notifications._dropdown.title' %></h4>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="span4">
+          <table id="notification-dropdown" class="table">
+          </table>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="span4">
+          <p class="notification-all">
+            <%= link_to t('notifications._dropdown.more'), notifications_path, class: "btn btn-primary btn-block" %>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+<li class="hidden-desktop"><%= link_to t('notifications._dropdown.notifications'), notifications_path %></li>

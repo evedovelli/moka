@@ -1,0 +1,11 @@
+<tr id="notification<%= friendship_notification.id %>" class="notification">
+  <td><%= link_to(image_tag(friendship_notification.sender.avatar.url(:icon), :class => "img-polaroid"), user_path(friendship_notification.sender)) %></td>
+  <td><%= t('friendship_notifications._friendship_notification.message_html', user: link_to(friendship_notification.sender.username, user_path(friendship_notification.sender))) %></td>
+  <td>
+    <div class="span1 pull-right">
+      <div id="user-button<%= friendship_notification.sender.id %>" class="mini-user-button">
+        <%= mini_user_button_for(friendship_notification.sender) %>
+      </div>
+    </div>
+  </td>
+</tr>

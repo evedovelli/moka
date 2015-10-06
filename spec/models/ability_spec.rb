@@ -60,6 +60,12 @@ describe Ability do
           expect(@ability).to be_able_to(:manage, Friendship)
         end
       end
+
+      describe "Resource Notification" do
+        it "should be able to manage notifications" do
+          expect(@ability).to be_able_to(:manage, Notification)
+        end
+      end
     end
 
     describe "other user" do
@@ -296,6 +302,35 @@ describe Ability do
         end
         it "should not be able to destroy others' Friendships" do
           expect(@ability).not_to be_able_to(:destroy, @f2)
+        end
+      end
+
+      describe "Resource Notification" do
+        before :each do
+          @notification = FactoryGirl.create(:notification, user: @user)
+          @other_user = FactoryGirl.create(:user, email: "another@ex.com", username: "second")
+          @other_notification = FactoryGirl.create(:notification, user: @other_user)
+        end
+        it "should be able to show his Notifications" do
+          expect(@ability).to be_able_to(:show, @notification)
+        end
+        it "should not be able to show others Notifications" do
+          expect(@ability).not_to be_able_to(:show, @other_notification)
+        end
+        it "should be able to index Notifications" do
+          expect(@ability).to be_able_to(:index, Notification)
+        end
+        it "should be able to create Notifications" do
+          expect(@ability).to be_able_to(:create, Notification)
+        end
+        it "should not be able to update Notifications" do
+          expect(@ability).not_to be_able_to(:update, @notification)
+        end
+        it "should not be able to destroy Notifications" do
+          expect(@ability).not_to be_able_to(:destroy, @notification)
+        end
+        it "should be able to dropdown Notifications" do
+          expect(@ability).to be_able_to(:dropdown, @notification)
         end
       end
 

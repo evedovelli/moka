@@ -61,4 +61,17 @@ describe BattlesHelper, :type => :helper do
       expect(helper.option_offset(6, "x")).to eq(0)
     end
   end
+
+  describe "show battle icons" do
+    it "should return all battle icons with extra class for voted one" do
+      @battle = FactoryGirl.create(:battle, {
+        starts_at: DateTime.now - 2.day,
+        duration: 96*60,
+        number_of_options: 3
+      })
+      user = FactoryGirl.create(:user, username: "u1", email: "user@u1.com")
+      vote = FactoryGirl.create(:vote, option: @battle.options[2], user: user)
+      expect(helper.show_battle_icons(@battle, vote)).to eq("<a href=\"/en/battles/1\" id=\"option#{@battle.options[0].id}-icon\">#{image_tag(@battle.options[0].picture.url(:icon), :class => "img-polaroid")}</a><a href=\"/en/battles/1\" id=\"option#{@battle.options[1].id}-icon\">#{image_tag(@battle.options[1].picture.url(:icon), :class => "img-polaroid")}</a><a href=\"/en/battles/1\" id=\"option#{@battle.options[2].id}-icon\">#{image_tag(@battle.options[2].picture.url(:icon), :class => "voted_battle img-polaroid")}</a>")
+    end
+  end
 end

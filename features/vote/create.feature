@@ -1,7 +1,6 @@
 Feature: Create vote
-  To incentivate users to watch the show and interact with it
-  Users should be able to vote in battles to eliminate
-  the options they want to get out of the house
+  To give their opinions in other users' battles
+  Users should be able to vote
 
 Background: There is a battle running
     Given I am logged in
