@@ -37,6 +37,12 @@ Given /^current time is (.+)$/ do |time|
   Timecop.travel(Time.parse(time))
 end
 
+Given /^the page size is (\d+)x(\d+)$/ do |width, height|
+  window = Capybara.current_session.driver.browser.manage.window
+  window.resize_to(width, height)
+end
+
+
 ### WHEN ###
 
 When /^I go to (.+)$/ do |page_name|

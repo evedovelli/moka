@@ -6,6 +6,7 @@ Background: There is a battle running and users signed up
     Given I am logged in
     And a battle was created with options "Doctor", "Rose" and "Mickey"
     And I have 36 notifications
+    And the page size is 1000x640
 
     @javascript
     Scenario: User can see last notifications in dropdown menu
