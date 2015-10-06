@@ -71,7 +71,7 @@ describe BattlesHelper, :type => :helper do
       })
       user = FactoryGirl.create(:user, username: "u1", email: "user@u1.com")
       vote = FactoryGirl.create(:vote, option: @battle.options[2], user: user)
-      expect(helper.show_battle_icons(@battle, vote)).to eq("<a href=\"/en/battles/1\" id=\"option#{@battle.options[0].id}-icon\">#{image_tag(@battle.options[0].picture.url(:icon), :class => "img-polaroid")}</a><a href=\"/en/battles/1\" id=\"option#{@battle.options[1].id}-icon\">#{image_tag(@battle.options[1].picture.url(:icon), :class => "img-polaroid")}</a><a href=\"/en/battles/1\" id=\"option#{@battle.options[2].id}-icon\">#{image_tag(@battle.options[2].picture.url(:icon), :class => "voted_battle img-polaroid")}</a>")
+      expect(helper.show_battle_icons(@battle, vote)).to eq("<a href=\"/en/battles/#{@battle.id}\" id=\"option#{@battle.options[0].id}-icon\">#{image_tag(@battle.options[0].picture.url(:icon), :class => "img-polaroid")}</a><a href=\"/en/battles/#{@battle.id}\" id=\"option#{@battle.options[1].id}-icon\">#{image_tag(@battle.options[1].picture.url(:icon), :class => "img-polaroid")}</a><a href=\"/en/battles/#{@battle.id}\" id=\"option#{@battle.options[2].id}-icon\">#{image_tag(@battle.options[2].picture.url(:icon), :class => "voted_battle img-polaroid")}</a>")
     end
   end
 end
