@@ -162,7 +162,7 @@ GEM
       mime-types
     pg (0.18.2)
     polyglot (0.3.5)
-    puma (2.13.4)
+    puma (2.14.0)
     rack (1.4.7)
     rack-cache (1.2)
       rack (>= 0.4)
@@ -299,7 +299,7 @@ DEPENDENCIES
   nprogress-rails
   paperclip (~> 3.5.3)
   pg
-  puma
+  puma (>= 2.14.0)
   rails (= 3.2.17)
   rails_12factor
   remotipart (~> 1.2)

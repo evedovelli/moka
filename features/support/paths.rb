@@ -50,6 +50,9 @@ module NavigationHelpers
     when /the (\d+)(?:st|nd|rd|th) battle edit page/
       edit_battle_path($1)
 
+    when /my notifications' page/
+      notifications_path
+
     else
       begin
         page_name =~ /the (.*) page/

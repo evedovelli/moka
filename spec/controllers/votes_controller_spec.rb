@@ -159,6 +159,25 @@ describe VotesController do
                   format: 'js'
                 }
               end
+              it "should destroy existing notification" do
+                @fake_notification = FactoryGirl.create(:notification, {user: @fake_user})
+                expect(@fake_user.sent_notifications).to receive(:find_by_vote_id).with(@fake_vote.id).and_return(@fake_notification)
+                expect(@fake_notification).to receive(:destroy)
+                post :create, {
+                  vote: { option_id: @fake_battle.options[0].id},
+                  format: 'js'
+                }
+              end
+              it "should not destroy non existing notification" do
+                @fake_notification = FactoryGirl.create(:notification, {user: @fake_user})
+                expect(@fake_user.sent_notifications).to receive(:find_by_vote_id).with(@fake_vote.id).and_return(@fake_notification)
+                expect(@fake_notification).to receive(:blank?).and_return(true)
+                expect(@fake_notification).not_to receive(:destroy)
+                post :create, {
+                  vote: { option_id: @fake_battle.options[0].id},
+                  format: 'js'
+                }
+              end
               it "should save the new vote" do
                 expect(@fake_vote).to receive(:save)
                 post :create, {
@@ -174,21 +193,50 @@ describe VotesController do
               @results = double("results")
               allow(@fake_vote).to receive(:save).and_return(true)
               allow(@fake_vote).to receive(:battle).and_return(@fake_battle)
+            end
+            it "should respond to js" do
+              post :create, {
+                vote: { option_id: @fake_battle.options[0].id},
+                format: 'js'
+              }
+              expect(response.content_type).to eq(Mime::JS)
+            end
+            it "should render the create template" do
+              post :create, {
+                vote: { option_id: @fake_battle.options[0].id},
+                format: 'js'
+              }
+              expect(response).to render_template('create')
+            end
+            it "should make battle available to that template" do
+              post :create, {
+                vote: { option_id: @fake_battle.options[0].id},
+                format: 'js'
+              }
+              expect(assigns(:battle)).to eq(@fake_battle)
+            end
+            it "should send notification to battle user" do
+              @fake_friend = FactoryGirl.create(:user, username: "friend", email: "friend@friend.com")
+              allow(@fake_battle).to receive(:user).and_return(@fake_friend)
+              expect(@fake_user).to receive(:send_vote_notification_to).with(@fake_battle.user, @fake_vote)
               post :create, {
                 vote: { option_id: @fake_battle.options[0].id},
                 format: 'js'
               }
             end
-            it "should respond to js" do
-              expect(response.content_type).to eq(Mime::JS)
-            end
-            it "should render the create template" do
-              expect(response).to render_template('create')
-            end
-            it "should make battle available to that template" do
-              expect(assigns(:battle)).to eq(@fake_battle)
+            it "should not send notification to itself" do
+              allow(@fake_battle).to receive(:user).and_return(@fake_user)
+              expect(@fake_user).not_to receive(:send_vote_notification_to).with(@fake_battle.user, @fake_vote)
+              post :create, {
+                vote: { option_id: @fake_battle.options[0].id},
+                format: 'js'
+              }
             end
             it "should make a new vote available to that template" do
+              post :create, {
+                vote: { option_id: @fake_battle.options[0].id},
+                format: 'js'
+              }
               expect(assigns(:vote)).to eq(@fake_vote)
             end
           end

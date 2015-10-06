@@ -40,4 +40,16 @@ module BattlesHelper
 
     end
   end
+
+  def show_battle_icons(battle, vote)
+    battle_icons = ""
+    battle.options.each do |option|
+      if vote.option == option
+        battle_icons += link_to(image_tag(option.picture.url(:icon), :class => "voted_battle img-polaroid"), battle_path(battle), :id => "option#{option.id}-icon")
+      else
+        battle_icons += link_to(image_tag(option.picture.url(:icon), :class => "img-polaroid"), battle_path(battle), :id => "option#{option.id}-icon")
+      end
+    end
+    return battle_icons.html_safe
+  end
 end

@@ -4,6 +4,11 @@ class BattlesController < ApplicationController
 
   def show
     @vote = Vote.new()
+    if current_user
+      @voted_for = current_user.voted_for_options([@battle])
+    else
+      @voted_for = nil
+    end
   end
 
   def new

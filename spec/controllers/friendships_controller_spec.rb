@@ -48,6 +48,7 @@ describe FriendshipsController do
       describe "create" do
         before :each do
           @friendships = double("friendships")
+          allow(@friendship).to receive(:friend).and_return(@fake_friend)
           allow(@friendships).to receive(:build).and_return(@friendship)
           allow(@fake_user).to receive(:friendships).and_return(@friendships)
           allow(controller).to receive(:current_user).and_return(@fake_user)
@@ -59,6 +60,15 @@ describe FriendshipsController do
         it "should call save for correct friendship" do
           expect(@friendship).to receive(:save)
           post :create, { :user_id => @fake_user.username, :friend_id => @fake_friend.id, :format => 'js' }
+        end
+        it "should send notification for befriended user" do
+          expect(@fake_user).to receive(:send_friendship_notification_to).with(@fake_friend)
+          post :create, { :user_id => @fake_user.username, :friend_id => @fake_friend.id, :format => 'js' }
+        end
+        it "should not send notification if befriended himself" do
+          allow(@friendship).to receive(:friend).and_return(@fake_user)
+          expect(@fake_user).not_to receive(:send_friendship_notification_to)
+          post :create, { :user_id => @fake_user.username, :friend_id => @fake_user.id, :format => 'js' }
         end
         describe "in success" do
           before :each do
@@ -115,6 +125,18 @@ describe FriendshipsController do
         end
         it "should call destroy for correct friendship" do
           expect(@friendship).to receive(:destroy)
+          delete :destroy, { :user_id => @fake_user.username, :id => @friendship.id, :format => 'js' }
+        end
+        it "should delete previous exiting notification if it exists" do
+          notification = double("notification")
+          expect(notification).to receive(:destroy)
+          expect(FriendshipNotification).to receive(:where).and_return([notification])
+          delete :destroy, { :user_id => @fake_user.username, :id => @friendship.id, :format => 'js' }
+        end
+        it "should not delete previous exiting notification if it does not exists" do
+          notification = double("notification")
+          expect(notification).not_to receive(:destroy)
+          expect(FriendshipNotification).to receive(:where).and_return([])
           delete :destroy, { :user_id => @fake_user.username, :id => @friendship.id, :format => 'js' }
         end
         it "should respond to js" do

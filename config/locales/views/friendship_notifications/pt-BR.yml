@@ -1,0 +1,4 @@
+pt-BR:
+  friendship_notifications:
+    _friendship_notification:
+      message_html: "%{user} começou a seguir você."

@@ -52,6 +52,10 @@ class Ability
 
       # Friendships
       can :manage, Friendship
+
+
+      # Notifications
+      can :manage, Notification
     end
 
     # Other users
@@ -105,5 +109,12 @@ class Ability
       friendship.try(:user) == user
     end
 
+
+    # Notifications
+    can :create, Notification
+    can :read, Notification do |notification|
+      notification.try(:user) == user
+    end
+    can :dropdown, Notification
   end
 end

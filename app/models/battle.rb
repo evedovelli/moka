@@ -5,6 +5,7 @@ class Battle < ActiveRecord::Base
   has_many :options, dependent: :destroy
   has_many :votes, :through => :options
   belongs_to :user
+  has_many :notifications
 
   accepts_nested_attributes_for :options, :allow_destroy => true
 

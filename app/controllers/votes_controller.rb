@@ -23,12 +23,17 @@ class VotesController < ApplicationController
           create_reload
           return
         else
+          existing_notification = @user.sent_notifications.find_by_vote_id(existing_vote.id)
+          if not existing_notification.blank?
+            existing_notification.destroy
+          end
           existing_vote.destroy
         end
       end
 
       if @vote.save
         @battle = @vote.battle
+        @user.send_vote_notification_to(@battle.user, @vote) unless @battle.user == @user
         @vote = Vote.new()
         respond_to do |format|
           format.js { render 'votes/create' }

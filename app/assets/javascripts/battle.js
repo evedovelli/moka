@@ -160,7 +160,7 @@ var onEndless = function() {
   $(window).off('scroll', onEndless);
   url = $('.next_page').attr('href');
   $('.next_page').hide();
-  if (url && $(window).scrollTop() > $(document).height() - $(window).height() - 500) {
+  if (url && $(window).scrollTop() > $(document).height() - $(window).height() - 300) {
     return $.getScript(url, function() {
       return $(window).on('scroll', onEndless);
     });
@@ -170,6 +170,7 @@ var onEndless = function() {
 };
 
 $(window).on('scroll', onEndless);
+jQuery(onEndless);
 
 
 function avoidDuplicateBattle () {

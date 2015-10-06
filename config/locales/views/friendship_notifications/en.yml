@@ -1,0 +1,4 @@
+en:
+  friendship_notifications:
+    _friendship_notification:
+      message_html: "%{user} is now following you."

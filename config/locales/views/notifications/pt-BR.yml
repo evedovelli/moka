@@ -1,0 +1,8 @@
+pt-BR:
+  notifications:
+    _dropdown:
+      title: "Suas notificações"
+      more: "Todas as notificações"
+      notifications: "Notificações"
+    index:
+      title: "Suas notificações"

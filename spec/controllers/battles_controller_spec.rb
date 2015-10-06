@@ -22,6 +22,9 @@ describe BattlesController do
       it "should build a vote to the template" do
         expect(assigns(:vote)).to be_new_record
       end
+      it "should make voted_for available to that template with nil" do
+        expect(assigns(:voted_for)).to eq(nil)
+      end
     end
 
     it "should be redirected to 'sign in' page if accessing new battle page" do
@@ -107,19 +110,29 @@ describe BattlesController do
         before (:each) do
           @fake_battle = FactoryGirl.create(:battle)
           allow(Battle).to receive(:find).and_return(@fake_battle)
-          get :show, { :id => @fake_battle.id }
         end
         it "should respond to html" do
+          get :show, { :id => @fake_battle.id }
           expect(response.content_type).to eq(Mime::HTML)
         end
         it "should render the cover template" do
+          get :show, { :id => @fake_battle.id }
           expect(response).to render_template('show')
         end
         it "should make battle available to that template" do
+          get :show, { :id => @fake_battle.id }
           expect(assigns(:battle)).to eq(@fake_battle)
         end
         it "should build a vote to the template" do
+          get :show, { :id => @fake_battle.id }
           expect(assigns(:vote)).to be_new_record
+        end
+        it "should make voted_for available to that template with current user votes" do
+          voted_for = double("voted_for")
+          expect(@fake_user).to receive(:voted_for_options).and_return(voted_for)
+          allow(controller).to receive(:current_user).and_return(@fake_user)
+          get :show, { :id => @fake_battle.id }
+          expect(assigns(:voted_for)).to eq(voted_for)
         end
       end
 

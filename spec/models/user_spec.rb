@@ -336,4 +336,63 @@ describe User do
     end
   end
 
+  describe 'send_vote_notification_to' do
+    before :each do
+      @user = User.create!(@attr)
+      @other_user = FactoryGirl.create(:user)
+      battle = FactoryGirl.create(:battle,
+                                  :starts_at => DateTime.now - 1.day,
+                                  :duration => 48*60,
+                                  :user => @other_user)
+      @vote = FactoryGirl.create(:vote, user: @user, option: battle.options[0])
+    end
+    it 'should create a new Vote Notification' do
+      expect(VoteNotification).to receive(:create).with(user: @other_user, sender: @user, vote: @vote)
+      @user.send_vote_notification_to(@other_user, @vote)
+    end
+    it 'should increment the unread notifications counter' do
+      expect(@other_user).to receive(:increment_unread_notification)
+      @user.send_vote_notification_to(@other_user, @vote)
+    end
+  end
+
+  describe 'send_friendship_notification_to' do
+    before :each do
+      @user = User.create!(@attr)
+      @other_user = FactoryGirl.create(:user)
+      battle = FactoryGirl.create(:battle,
+                                  :starts_at => DateTime.now - 1.day,
+                                  :duration => 48*60,
+                                  :user => @other_user)
+    end
+    it 'should create a new Vote Notification' do
+      expect(FriendshipNotification).to receive(:create).with(user: @other_user, sender: @user)
+      @user.send_friendship_notification_to(@other_user)
+    end
+    it 'should increment the unread notifications counter' do
+      expect(@other_user).to receive(:increment_unread_notification)
+      @user.send_friendship_notification_to(@other_user)
+    end
+  end
+
+  describe 'reset_unread_notifications' do
+    it 'should update unread_notifications' do
+      @user = User.create!(@attr)
+      @other_user = FactoryGirl.create(:user)
+      expect(@other_user.reset_unread_notifications).to eq(true)
+      expect(@other_user.unread_notifications).to eq(0)
+    end
+  end
+
+  describe 'increment_unread_notifications' do
+    it 'should update unread_notifications' do
+      @user = User.create!(@attr)
+      @other_user = FactoryGirl.create(:user)
+      expect(@other_user.increment_unread_notification).to eq(true)
+      expect(@other_user.unread_notifications).to eq(1)
+      expect(@other_user.increment_unread_notification).to eq(true)
+      expect(@other_user.unread_notifications).to eq(2)
+    end
+  end
+
 end

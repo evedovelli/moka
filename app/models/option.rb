@@ -14,6 +14,10 @@ class Option < ActiveRecord::Base
                                 :thumb => {
                                   :geometry => "100x100#",
                                   :animated => false
+                                },
+                                :icon => {
+                                  :geometry => "44x44#",
+                                  :animated => false
                                 }
                               }
 

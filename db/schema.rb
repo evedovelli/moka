@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150820195222) do
+ActiveRecord::Schema.define(:version => 20150926014727) do
 
   create_table "battles", :force => true do |t|
     t.datetime "starts_at"
@@ -31,6 +31,17 @@ ActiveRecord::Schema.define(:version => 20150820195222) do
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
+
+  create_table "notifications", :force => true do |t|
+    t.integer  "sender_id"
+    t.integer  "user_id"
+    t.string   "type"
+    t.integer  "vote_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "notifications", ["user_id"], :name => "index_notifications_on_user_id"
 
   create_table "options", :force => true do |t|
     t.string   "name"
@@ -73,6 +84,7 @@ ActiveRecord::Schema.define(:version => 20150820195222) do
     t.integer  "avatar_file_size"
     t.datetime "avatar_updated_at"
     t.string   "name"
+    t.integer  "unread_notifications",   :default => 0
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true

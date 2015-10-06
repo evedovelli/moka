@@ -1,0 +1,58 @@
+$selectedColor: #FF9522;
+
+.notification td {
+  vertical-align: middle;
+}
+
+td.battle-icon {
+  text-align: right;
+}
+
+.voted_battle {
+  box-shadow: 0px 0px 15px rgba(255, 149, 34, 1);
+  border: 1px solid darken($selectedColor, 20%);
+}
+
+#notifications-group {
+  white-space: normal;
+  padding-top: 0px;
+  padding-bottom: 0px;
+  padding-left: 15px;
+  padding-right: 7px;
+}
+
+#notifications-group .dropdown-menu {
+  margin-left: 25px;
+  padding-right: 25px;
+  @media (min-width: 1200px) {
+    left: -392px;
+  }
+  @media (min-width: 979px) and (max-width: 1199px) {
+    left: -312px;
+  }
+}
+
+#notifications-group {
+  margin-top: 0px;
+}
+
+#notifications-unread {
+  height: 40px;
+  width: 55px;
+  background: url('notifications_red.png') 0 0;
+  background-repeat: no-repeat;
+
+  .notifications-btn-text {
+    padding-top: 9px;
+    margin-left: 14px;
+    color: #fff;
+    font-size: 18px;
+  }
+}
+
+#notifications-none {
+  height: 40px;
+  width: 55px;
+  background: url('notifications_grey.png') 0 0;
+  background-repeat: no-repeat;
+}

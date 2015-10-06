@@ -9,7 +9,10 @@ class FriendshipsController < ApplicationController
     @friendship = current_user.friendships.build(:friend_id => params[:friend_id])
     authorize! :create, @friendship
     @friendship.save
+
     @friend = @friendship.friend
+    current_user.send_friendship_notification_to(@friend) unless current_user == @friend
+
     respond_to do |format|
       format.js { render 'friendships/update_user_button' }
     end
@@ -18,6 +21,11 @@ class FriendshipsController < ApplicationController
   def destroy
     @friend = @friendship.friend
     @friendship.destroy
+
+    if existing_notification = FriendshipNotification.where("sender_id = ? AND user_id = ?", current_user.id, @friend.id).first
+      existing_notification.destroy
+    end
+
     respond_to do |format|
       format.js { render 'friendships/update_user_button' }
     end

@@ -14,9 +14,11 @@ class User < ActiveRecord::Base
   has_many :inverse_friends, :through => :inverse_friendships, :source => :user
   has_many :votes, dependent: :destroy
   has_many :options, :through => :votes
+  has_many :notifications
+  has_many :sent_notifications, :class_name => "Notification", :foreign_key => "sender_id"
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :login, :username, :email, :password, :password_confirmation, :remember_me, :avatar, :name
+  attr_accessible :login, :username, :email, :password, :password_confirmation, :remember_me, :avatar, :name, :unread_notifications
   has_attached_file :avatar, :styles => {
                                :medium => {
                                  :geometry => "300x300#",
@@ -102,4 +104,28 @@ class User < ActiveRecord::Base
     return voted_for
   end
 
+  def send_vote_notification_to(receiver, vote)
+    VoteNotification.create(
+      user: receiver,
+      sender: self,
+      vote: vote
+    )
+    receiver.increment_unread_notification
+  end
+
+  def send_friendship_notification_to(receiver)
+    FriendshipNotification.create(
+      user: receiver,
+      sender: self
+    )
+    receiver.increment_unread_notification
+  end
+
+  def reset_unread_notifications
+    self.update_attributes({unread_notifications: 0})
+  end
+
+  def increment_unread_notification
+    self.update_attributes({unread_notifications: unread_notifications + 1})
+  end
 end
