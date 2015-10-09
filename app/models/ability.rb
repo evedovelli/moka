@@ -31,7 +31,10 @@ class Ability
 
     user ||= User.new # guest user
 
+
+    ################
     # Administrators
+
     if user.has_role? :admin
       # users
       can :manage, User
@@ -58,6 +61,8 @@ class Ability
       can :manage, Notification
     end
 
+
+    ################
     # Other users
 
     # users
