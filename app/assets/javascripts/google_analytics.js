@@ -11,13 +11,9 @@ this.GoogleAnalytics = (function() {
     ga.src = ("https:" === document.location.protocol ? "https://ssl" : "http://www") + ".google-analytics.com/ga.js";
     firstScript = document.getElementsByTagName("script")[0];
     firstScript.parentNode.insertBefore(ga, firstScript);
-    if (typeof Turbolinks !== 'undefined' && Turbolinks.supported) {
-      return document.addEventListener("page:change", (function() {
-        return GoogleAnalytics.trackPageview();
-      }), true);
-    } else {
+    return document.addEventListener("page:change", (function() {
       return GoogleAnalytics.trackPageview();
-    }
+    }), true);
   };
 
   GoogleAnalytics.trackPageview = function(url) {
@@ -32,7 +28,7 @@ this.GoogleAnalytics = (function() {
   };
 
   GoogleAnalytics.isLocalRequest = function() {
-    return GoogleAnalytics.documentDomainIncludes("local");
+    return GoogleAnalytics.documentDomainIncludes("local") || GoogleAnalytics.documentDomainIncludes("127.0.0.1");
   };
 
   GoogleAnalytics.documentDomainIncludes = function(str) {
