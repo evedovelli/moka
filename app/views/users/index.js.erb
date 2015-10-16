@@ -1,0 +1,8 @@
+$("<%= escape_javascript(render @users) %>").appendTo("#users-index");
+
+// Update pagination link
+<% if @users.last_page? %>
+  $('.user-pagination').html('<p class="center user-last_page"><%= image_tag("watermark_small.png") %></p>');
+<% else %>
+  $('.user-pagination').html("<%=j link_to_next_page(@users, t('users.index.next'), :remote => true, :class => "next_page") %>");
+<% end %>

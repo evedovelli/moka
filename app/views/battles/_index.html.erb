@@ -8,6 +8,6 @@
   <% if @battles.last_page? %>
     <p class='center last_page'><%= image_tag("watermark_small.png") %></p>
   <% else %>
-    <%= link_to_next_page(@battles, 'Next Page', :remote => true, :class => "next_page") %>
+    <%= link_to_next_page(@battles, t('battles._index.next'), :remote => true, :class => "next_page") %>
   <% end %>
 </p>

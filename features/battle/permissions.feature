@@ -45,6 +45,7 @@ Background: I exist as an user and there are battles in database
       When I go to my home page
       And I follow the link to remove 2nd battle
       And I confirm popup
+      And I wait 1 second
       Then I should see 2 battles
 
     @javascript

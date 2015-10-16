@@ -1,0 +1,12 @@
+<div id="search-form" class="search">
+  <%= form_tag(users_path, method: 'get', id: 'users_search', class: 'form-search') do %>
+
+    <div class="input-append">
+      <%= text_field_tag(:search, params[:search], class: 'span2 search-query', id: 'search-user', placeholder: t('layouts._search.user')) %>
+      <%= button_tag(:class => "btn", :id => "search-user-btn") do %>
+        <i class="icon-search"></i>
+      <% end %>
+    </div>
+
+  <% end %>
+</div>

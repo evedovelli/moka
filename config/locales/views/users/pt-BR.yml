@@ -25,3 +25,6 @@ pt-BR:
       not_a_member_html: "Ainda não está cadastrado? %{link}. É gratuito!"
       sign_up: "Cadastre-se aqui"
       title: "Entre na sua conta para votar!"
+    index:
+      title: "Usuários"
+      next: "Próxima página"

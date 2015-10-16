@@ -3,13 +3,14 @@ Warden.test_mode!
 
 ### UTILITY METHODS ###
 
-def create_user(username, email, password)
+def create_user(username, email, password, name=nil)
   delete_user(email)
   return FactoryGirl.create(:user,
                             :username => username,
                             :email => email,
                             :password => password,
-                            :password_confirmation => password)
+                            :password_confirmation => password,
+                            :name => name)
 end
 
 def delete_user(email)
@@ -56,7 +57,8 @@ Given /^the following users exist:$/ do |table|
   table.hashes.each do |user|
     create_user(user[:username],
                 user[:email] || "#{user[:username]}@email.com",
-                user[:password] || "#{user[:username]}password")
+                user[:password] || "#{user[:username]}password",
+                user[:name] || user[:username])
   end
 end
 
@@ -184,6 +186,12 @@ end
 When /^I remove the profile picture uploaded image$/ do
   find('.delete-picture-user').click
 end
+
+When /^I search for user with "([^"]*)"$/ do |user|
+  fill_in("search-user", :with => user)
+  click_button("search-user-btn")
+end
+
 
 ### THEN ###
 
@@ -320,4 +328,12 @@ Then /^I should not see any option selected$/ do
   expect(page).not_to have_css('.outer_selected_picture')
   expect(page).not_to have_css('.selected_picture')
   expect(page).not_to have_css('.selected_box')
+end
+
+Then /^I should find user "([^"]*)"$/ do |user|
+  expect(page).to have_css("#user#{User.find_by_username(user).id}-search")
+end
+
+Then /^I should not find user "([^"]*)"$/ do |user|
+  expect(page).not_to have_css("#user#{User.find_by_username(user).id}-search")
 end

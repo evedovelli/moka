@@ -11,3 +11,5 @@ pt-BR:
       title: 'Batalharia'
     cover:
       title: 'Batalharia'
+    _search:
+      user: "Procure usuários"
