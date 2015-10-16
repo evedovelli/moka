@@ -220,12 +220,7 @@ describe UsersController do
 
       describe "index" do
         before (:each) do
-#           @other_user = FactoryGirl.create(:user, {username: "other_user", email: "user@user.com"})
           @users = [double("b1"), double("b2"), double("b3"), double("b4")]
-#           allow(@other_user).to receive(:sorted_battles).and_return(@battles)
-#           allow(User).to receive(:find_by_username!).with(@other_user.username).and_return(@other_user)
-#           @voted_for = double("vf")
-#           allow(@fake_user).to receive(:voted_for_options).and_return(@voted_for)
           allow(controller).to receive(:current_user).and_return(@fake_user)
         end
         it "should not search user" do
