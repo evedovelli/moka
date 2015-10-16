@@ -44,6 +44,9 @@ module NavigationHelpers
     when /the "([^"]*)" followers page/
       user_followers_path($1)
 
+    when /the user index page/
+      users_path
+
     when /the (\d+)(?:st|nd|rd|th) battle page/
       battle_path($1)
 

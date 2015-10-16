@@ -11,3 +11,5 @@ en:
       title: 'Batalharia'
     cover:
       title: 'Batalharia'
+    _search:
+      user: "Search for users"

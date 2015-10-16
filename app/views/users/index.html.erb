@@ -1,0 +1,28 @@
+<div class="span12">
+  <div class="row">
+    <div class="span8 offset2">
+      <h4><%= t '.title' %></h4>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="span8 offset2">
+      <table id="users-index" class="table">
+        <%= render @users %>
+      </table>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="span8 offset2">
+      <p class="user-pagination">
+        <% if @users.last_page? %>
+          <p class='center user-last_page'><%= image_tag("watermark_small.png") %></p>
+        <% else %>
+          <%= link_to_next_page(@users, t('.next'), :remote => true, :class => "next_page") %>
+        <% end %>
+      </p>
+    </div>
+  </div>
+</div>
+

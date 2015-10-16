@@ -4,5 +4,5 @@ $("<%= escape_javascript(render @notifications) %>").appendTo("#notification-ind
 <% if @notifications.last_page? %>
   $('.notification-pagination').html('<p class="center notification-last_page"><%= image_tag("watermark_small.png") %></p>');
 <% else %>
-  $('.notification-pagination').html("<%=j link_to_next_page(@notifications, 'Next Page', :remote => true, :class => "next_page") %>");
+  $('.notification-pagination').html("<%=j link_to_next_page(@notifications, t('notifications.index.next'), :remote => true, :class => "next_page") %>");
 <% end %>

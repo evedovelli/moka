@@ -1,0 +1,14 @@
+<tr id="user<%= user.id %>-search" class="user-search">
+  <td><%= link_to(image_tag(user.avatar.url(:small), :class => "img-polaroid"), user_path(user)) %></td>
+  <td>
+    <h5><%= link_to(user.username, user_path(user)) %></h5>
+    <p class="name"><%= user.name %></p>
+  </td>
+  <td>
+    <div class="span3 pull-right">
+      <div id="user-button<%= user.id %>" class="user-button">
+        <%= user_button_for(user) %>
+      </div>
+    </div>
+  </td>
+</tr>

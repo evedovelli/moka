@@ -395,4 +395,45 @@ describe User do
     end
   end
 
+  describe 'search' do
+    before(:each) do
+      @l1 = []
+      @l2 = []
+      @l3 = []
+      @l4 = []
+      for i in 1..10 do
+        @l1 << FactoryGirl.create(:user, email: "user#{i}@us.com", username: "i_usEr#{i}")
+      end
+      for i in 11..15 do
+        @l2 << FactoryGirl.create(:user, email: "user#{i}@us.com", username: "u_usEr#{i}")
+      end
+      for i in 16..20 do
+        @l3 << FactoryGirl.create(:user, email: "user#{i}@us.com", username: "test#{i}", name: "e_User#{i}")
+      end
+      for i in 21..25 do
+        @l4 << FactoryGirl.create(:user, email: "user#{i}@us.com", username: "test#{i}", name: "i_User#{i}")
+      end
+    end
+    describe 'given search word' do
+      it 'should return users from correct page' do
+        expect(User.search("user", 2)).to eq(@l2.concat(@l3))
+      end
+      it 'should search for usernames' do
+        expect(User.search("u_user", 1)).to eq(@l2)
+      end
+      it 'should search for names' do
+        expect(User.search("e_user", 1)).to eq(@l3)
+      end
+      it 'should search for usernames plus names' do
+        expect(User.search("i_user", 1)).to eq(@l1)
+        expect(User.search("i_user", 2)).to eq(@l4)
+      end
+    end
+    describe 'no given search word' do
+      it 'should return users from correct page' do
+        expect(User.search(nil, 2)).to eq(@l2.concat(@l3))
+      end
+    end
+  end
+
 end

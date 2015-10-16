@@ -25,3 +25,6 @@ en:
       not_a_member_html: "Not a member yet? %{link}. It's free!"
       sign_up: "Sign up here"
       title: "Sign in to vote!"
+    index:
+      title: "Users"
+      next: "Next page"

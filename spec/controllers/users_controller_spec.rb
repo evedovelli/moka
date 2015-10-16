@@ -26,6 +26,11 @@ describe UsersController do
       get :show, {:id => @fake_user.username}
       expect(assigns(:voted_for)).to eq({})
     end
+    it "should have success when accessing user index page" do
+      allow(controller).to receive(:authorize!).and_return(true)
+      get :index
+      expect(response).to have_http_status(:success)
+    end
     it "should have success when accessing following page" do
       allow(controller).to receive(:authorize!).and_return(true)
       get :following, {:id => @fake_user.username}
@@ -65,6 +70,11 @@ describe UsersController do
       end
       it "should be redirected to root page if accessing show page" do
         get :show, {:id => @fake_user.username}
+        expect(flash[:alert]).to match("Access denied.")
+        expect(response).to redirect_to(root_url)
+      end
+      it "should be redirected to root page if accessing index page" do
+        get :index
         expect(flash[:alert]).to match("Access denied.")
         expect(response).to redirect_to(root_url)
       end
@@ -205,6 +215,67 @@ describe UsersController do
           allow(@other_user).to receive(:inverse_friends).and_return([double("1"), double("2"), double("3")])
           get :show, {:id => @other_user.username}
           expect(assigns(:number_of_followers)).to eq(3)
+        end
+      end
+
+      describe "index" do
+        before (:each) do
+#           @other_user = FactoryGirl.create(:user, {username: "other_user", email: "user@user.com"})
+          @users = [double("b1"), double("b2"), double("b3"), double("b4")]
+#           allow(@other_user).to receive(:sorted_battles).and_return(@battles)
+#           allow(User).to receive(:find_by_username!).with(@other_user.username).and_return(@other_user)
+#           @voted_for = double("vf")
+#           allow(@fake_user).to receive(:voted_for_options).and_return(@voted_for)
+          allow(controller).to receive(:current_user).and_return(@fake_user)
+        end
+        it "should not search user" do
+          expect(User).not_to receive(:find_by_username!)
+          get :index
+        end
+        it "should respond to html" do
+          get :index
+          expect(response.content_type).to eq(Mime::HTML)
+        end
+        it "should render the show user template with HTML" do
+          get :index
+          expect(response).to render_template('index')
+        end
+        it "should respond to js" do
+          get(:index, {:format => 'js'})
+          expect(response.content_type).to eq(Mime::JS)
+        end
+        it "should render the show user template with JS" do
+          get(:index, {:format => 'js'})
+          expect(response).to render_template('index')
+        end
+        it "should search users with search word param" do
+          expect(User).to receive(:search).with("calvin", "2")
+          get(:index, {search: "calvin", page: "2"})
+        end
+        it "should search users with search word from session" do
+          session[:user_search] = "hobbes"
+          expect(User).to receive(:search).with("hobbes", "3")
+          get(:index, {page: "3"})
+        end
+        it "should search users with search word param whenever it exists" do
+          session[:user_search] = "hobbes"
+          expect(User).to receive(:search).with("calvin", "1")
+          get(:index, {search: "calvin", page: "1"})
+        end
+        it "should replace search word from session with search word param whenever it exists" do
+          session[:user_search] = "hobbes"
+          get(:index, {search: "calvin", page: "1"})
+          expect(session[:user_search]).to match("calvin")
+        end
+        it "should not replace search word from session with no search word param" do
+          session[:user_search] = "hobbes"
+          get(:index, {page: "1"})
+          expect(session[:user_search]).to match("hobbes")
+        end
+        it "should return found users" do
+          allow(User).to receive(:search).and_return(@users)
+          get(:index, {search: "calvin", page: "2"})
+          expect(assigns(:users)).to eq(@users)
         end
       end
 

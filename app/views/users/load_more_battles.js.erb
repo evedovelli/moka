@@ -8,5 +8,5 @@ jQuery(startBattleCounters);
 <% if @battles.last_page? %>
   $('.pagination').html('<p class="center last_page"><%= image_tag("watermark_small.png") %></p>');
 <% else %>
-  $('.pagination').html("<%=j link_to_next_page(@battles, 'Next Page', :remote => true, :class => "next_page") %>");
+  $('.pagination').html("<%=j link_to_next_page(@battles, t('battles._index.next'), :remote => true, :class => "next_page") %>");
 <% end %>

@@ -37,6 +37,17 @@ class UsersController < ApplicationController
     end
   end
 
+  def index
+    search = params[:search] || session[:user_search]
+    session[:user_search] = search
+
+    @users = User.search(search, params[:page])
+    respond_to do |format|
+      format.js {}
+      format.html {}
+    end
+  end
+
   def following
     @following = @user.friends
   end

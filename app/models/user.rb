@@ -1,5 +1,7 @@
 class User < ActiveRecord::Base
   rolify
+  paginates_per 10
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
@@ -127,5 +129,14 @@ class User < ActiveRecord::Base
 
   def increment_unread_notification
     self.update_attributes({unread_notifications: unread_notifications + 1})
+  end
+
+  def self.search(user_name, page)
+    if user_name
+      user_name.downcase!
+      return where('LOWER(name) LIKE ? OR LOWER(username) LIKE ?', "%#{user_name}%", "%#{user_name}%").page(page)
+    else
+      return User.page(page)
+    end
   end
 end
