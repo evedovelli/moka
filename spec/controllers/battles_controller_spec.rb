@@ -52,6 +52,53 @@ describe BattlesController do
       expect(flash[:alert]).to match("You need to sign in or sign up before continuing.")
       expect(response).to redirect_to("/en/users/sign_in")
     end
+
+    describe "hashtag" do
+      before (:each) do
+        @fake_battle = FactoryGirl.create(:battle)
+        allow(controller).to receive(:authorize!).and_return(true)
+        allow(Battle).to receive(:with_hashtag).and_return([@fake_battle])
+      end
+      it "should respond to html" do
+        get :hashtag, {:hashtag => "notmyfault"}
+        expect(response.content_type).to eq(Mime::HTML)
+      end
+      it "should render the hashtag template with html" do
+        get :hashtag, {:hashtag => "notmyfault"}
+        expect(response).to render_template('hashtag')
+      end
+      it "should respond to js" do
+        get :hashtag, {:hashtag => "notmyfault", :format => 'js'}
+        expect(response.content_type).to eq(Mime::JS)
+      end
+      it "should render the hashtag template with js" do
+        get :hashtag, {:hashtag => "notmyfault", :format => 'js'}
+        expect(response).to render_template('users/load_more_battles')
+      end
+      it "should make hashtag available to that template" do
+        get :hashtag, {:hashtag => "notmyfault"}
+        expect(assigns(:hashtag)).to eq("notmyfault")
+      end
+      it "should make number of counts for a hashtag available to that template" do
+        expect(Battle).to receive(:hashtag_usage).with("notmyfault").and_return(3)
+        get :hashtag, {:hashtag => "notmyfault"}
+        expect(assigns(:hashtag_counts)).to eq(3)
+      end
+      it "should make battles with hashtag available to that template" do
+        expect(Battle).to receive(:with_hashtag).with("notmyfault", "3").and_return([@fake_battle])
+        get :hashtag, {:hashtag => "notmyfault", :page => "3"}
+        expect(assigns(:battles)).to eq([@fake_battle])
+      end
+      it "should build a vote to the template" do
+        get :hashtag, {:hashtag => "notmyfault"}
+        expect(assigns(:vote)).to be_new_record
+      end
+      it "should make voted_for available to that template with nil" do
+        get :hashtag, {:hashtag => "notmyfault"}
+        expect(assigns(:voted_for)).to eq(nil)
+      end
+    end
+
   end
 
   describe "When user is logged in" do
@@ -94,6 +141,11 @@ describe BattlesController do
       it "should be redirected to root page if destroying the battle" do
         allow(Battle).to receive(:find).and_return(@fake_battle)
         delete :destroy, { :id => 1 }
+        expect(flash[:alert]).to match("Access denied.")
+        expect(response).to redirect_to(root_url)
+      end
+      it "should be redirected to root page if search for a battle hashtag" do
+        get :hashtag, {:hashtag => "notmyfault"}
         expect(flash[:alert]).to match("Access denied.")
         expect(response).to redirect_to(root_url)
       end
@@ -231,6 +283,10 @@ describe BattlesController do
                                                   "title" => "Who should win this battle?"})
             post(:create, {battle: {}, :format => 'js'})
           end
+          it "should fetch hashtags" do
+            expect(@fake_battle).to receive(:fetch_hashtags)
+            post(:create, {battle: {}, :format => 'js'})
+          end
           describe "in success" do
             before :each do
               @fake_vote = double("vote")
@@ -332,8 +388,12 @@ describe BattlesController do
           @fake_battle = FactoryGirl.create(:battle)
           allow(Battle).to receive(:find).and_return(@fake_battle)
         end
-        it "should call update with correct id" do
+        it "should update correct battle" do
           expect(Battle).to receive(:find).with("#{@fake_battle.id}")
+          put(:update, { :id => @fake_battle.id, battle: {"starts_at" => "now"}, :format => 'js' })
+        end
+        it "should fetch hashtags" do
+          expect(@fake_battle).to receive(:fetch_hashtags)
           put(:update, { :id => @fake_battle.id, battle: {"starts_at" => "now"}, :format => 'js' })
         end
         it "should update attributes of the battle" do
@@ -423,9 +483,65 @@ describe BattlesController do
           delete :destroy, { :id => @fake_battle.id, :format => 'js' }
           expect(assigns(:battle_id)).to eq(@fake_battle.id)
         end
+        it "should destroy hashtags" do
+          @fake_battle.hashtag_list.add("notmyfault")
+          @fake_battle.save
+          @fake_battle.reload
+          expect(@fake_battle).to receive(:hide)
+          delete :destroy, { :id => @fake_battle.id, :format => 'js' }
+          expect(assigns(:battle).hashtag_list).to eq([])
+        end
         it "should redirect to the destroy js" do
           delete :destroy, { :id => @fake_battle.id, :format => 'js' }
           expect(response).to render_template('destroy')
+        end
+      end
+
+      describe "hashtag" do
+        before (:each) do
+          @fake_battle = FactoryGirl.create(:battle)
+          allow(Battle).to receive(:with_hashtag).and_return([@fake_battle])
+        end
+        it "should respond to html" do
+          get :hashtag, {:hashtag => "notmyfault"}
+          expect(response.content_type).to eq(Mime::HTML)
+        end
+        it "should render the hashtag template with html" do
+          get :hashtag, {:hashtag => "notmyfault"}
+          expect(response).to render_template('hashtag')
+        end
+        it "should respond to js" do
+          get :hashtag, {:hashtag => "notmyfault", :format => 'js'}
+          expect(response.content_type).to eq(Mime::JS)
+        end
+        it "should render the hashtag template with js" do
+          get :hashtag, {:hashtag => "notmyfault", :format => 'js'}
+          expect(response).to render_template('users/load_more_battles')
+        end
+        it "should make hashtag available to that template" do
+          get :hashtag, {:hashtag => "notmyfault"}
+          expect(assigns(:hashtag)).to eq("notmyfault")
+        end
+        it "should make number of counts for a hashtag available to that template" do
+          expect(Battle).to receive(:hashtag_usage).with("notmyfault").and_return(3)
+          get :hashtag, {:hashtag => "notmyfault"}
+          expect(assigns(:hashtag_counts)).to eq(3)
+        end
+        it "should make battles with hashtag available to that template" do
+          expect(Battle).to receive(:with_hashtag).with("notmyfault", "3").and_return([@fake_battle])
+          get :hashtag, {:hashtag => "notmyfault", :page => "3"}
+          expect(assigns(:battles)).to eq([@fake_battle])
+        end
+        it "should build a vote to the template" do
+          get :hashtag, {:hashtag => "notmyfault"}
+          expect(assigns(:vote)).to be_new_record
+        end
+        it "should make voted_for available to that template with current user votes" do
+          voted_for = double("voted_for")
+          expect(@fake_user).to receive(:voted_for_options).and_return(voted_for)
+          allow(controller).to receive(:current_user).and_return(@fake_user)
+          get :hashtag, {:hashtag => "notmyfault"}
+          expect(assigns(:voted_for)).to eq(voted_for)
         end
       end
 

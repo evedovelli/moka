@@ -180,6 +180,12 @@ Then /^"([^\"]*)" should link to (.+)$/ do |link_text, page_name|
   expect(URI.parse(page.find_link(link_text)['href']).path).to eq(path_to(page_name))
 end
 
+Then /^"([^\"]*)" within "([^\"]*)" should link to (.+)$/ do |link_text, container, page_name|
+  within(container) do
+    expect(URI.parse(page.find_link(link_text)['href']).path).to eq(path_to(page_name))
+  end
+end
+
 Then /^I should not see a link to (.+)$/ do |page_name|
   assert not(page.body =~ /#{path_to(page_name)}/m)
 end

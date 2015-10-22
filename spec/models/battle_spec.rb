@@ -229,4 +229,100 @@ describe Battle do
     end
   end
 
+  describe 'hashtag usage' do
+    before(:each) do
+      battle1 = Battle.new(@attr)
+      battle2 = Battle.new(@attr)
+      battle3 = Battle.new(@attr)
+      battle1.hashtag_list.add("Coffee")
+      battle2.hashtag_list.add("milk")
+      battle3.hashtag_list.add("Coffee")
+      battle1.save
+      battle2.save
+      battle3.save
+    end
+    it 'should return the number of battles with the hashtag' do
+      expect(Battle.hashtag_usage("milk")).to eq(1)
+    end
+    it 'should return the number of battles with the hashtag ignoring the case' do
+      expect(Battle.hashtag_usage("COFFEE")).to eq(2)
+    end
+    it 'should return 0 when tag is not used' do
+      expect(Battle.hashtag_usage("tea")).to eq(0)
+    end
+  end
+
+  describe 'with hashtag' do
+    before(:each) do
+      @battles = []
+      for i in 0..15
+        @battles << FactoryGirl.create(:battle,
+                                       :user => @user,
+                                       :starts_at => DateTime.new(2017,3,1,i,0))
+      end
+      for i in 1..2 do
+        @battles[i].hashtag_list.add("Coffee")
+        @battles[i].save
+      end
+      for i in 9..15 do
+        @battles[i].hashtag_list.add("Coffee")
+        @battles[i].save
+      end
+      for i in 10..13 do
+        @battles[i].hashtag_list.add("cookies")
+        @battles[i].save
+      end
+    end
+    it 'should return battles with hashtag ordered by creation' do
+      expect(Battle.with_hashtag("cookies", nil)).to eq([
+        @battles[13],
+        @battles[12],
+        @battles[11],
+        @battles[10]
+      ])
+    end
+    it 'should return battles from correct page' do
+      expect(Battle.with_hashtag("coffee", 2)).to eq([
+        @battles[10],
+        @battles[9],
+        @battles[2],
+        @battles[1]
+      ])
+    end
+  end
+
+  describe 'fetch hashtags' do
+    it 'should parse hashtags from title and option names' do
+      @o1 = FactoryGirl.create(:option, :name => "There is a #Beetle")
+      @o2 = FactoryGirl.create(:option, :name => "#Juice in my #glass")
+      @attr = {
+        :options => [@o1, @o2],
+        :starts_at => DateTime.now,
+        :duration => '60',
+        :title => "What are you #drinking?",
+        :user => @user
+      }
+      battle = Battle.new(@attr)
+      battle.fetch_hashtags
+      battle.save
+      expect(battle.hashtag_list).to eq(["drinking", "Beetle", "Juice", "glass"])
+    end
+    it 'should not parse hashtags when there are no hashtags' do
+      @o1 = FactoryGirl.create(:option, :name => "There is a Beetle")
+      @o2 = FactoryGirl.create(:option, :name => "Juice in my glass")
+      @attr = {
+        :options => [@o1, @o2],
+        :starts_at => DateTime.now,
+        :duration => '60',
+        :title => "What are you drinking?",
+        :user => @user
+      }
+      battle = Battle.new(@attr)
+      battle.fetch_hashtags
+      battle.save
+      expect(battle.hashtag_list).to eq([])
+    end
+
+  end
+
 end

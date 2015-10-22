@@ -17,3 +17,7 @@ pt-BR:
     _index:
       add_battle: 'Adicionar batalha'
       next: "Próxima página"
+    hashtag:
+      count_html:
+        one: '<b>%{count}</b> batalha'
+        other: '<b>%{count}</b> batalhas'

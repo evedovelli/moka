@@ -258,6 +258,10 @@ describe Ability do
         it "should not be able to index battles" do
           expect(@ability).not_to be_able_to(:index, Battle)
         end
+
+        it "should be able to hashtag battles" do
+          expect(@ability).to be_able_to(:hashtag, Battle)
+        end
       end
 
       describe "Resource Vote" do

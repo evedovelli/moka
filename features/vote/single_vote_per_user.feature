@@ -11,7 +11,6 @@ Background: There is a battle running
       Given I am on the home page
       When I vote for "Horror"
       And I vote for "Horror"
-      And I wait 1 second
       Then I should see "Horror" with 1 vote
       And I should see "Devil" with 0 votes
       And I should see "Vader" with 0 votes
@@ -22,7 +21,6 @@ Background: There is a battle running
       Given I am on the home page
       When I vote for "Horror"
       And I vote for "Devil"
-      And I wait 1 second
       Then I should see "Horror" with 0 votes
       And I should see "Devil" with 1 vote
       And I should see "Vader" with 0 votes

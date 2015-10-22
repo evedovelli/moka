@@ -79,7 +79,7 @@
             </div>
 
             <div class="battle-title-container span8">
-              <h2 class="pull-left battle-title"><%= battle.title %></h2>
+              <h2 class="pull-left battle-title"><%= auto_link_hashtags(battle.title, :hashtag_url_base => hashtag_path("")).html_safe %></h2>
             </div>
 
           </div>

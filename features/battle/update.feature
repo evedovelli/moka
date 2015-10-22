@@ -22,7 +22,7 @@ Background:
     Scenario: Update a battle
       When I add 1st option "Vader" with picture "vader.jpg"
       And I press "Update"
-      And I wait 4 seconds for uploading images
+      And I wait 2 seconds for uploading images
       Then I should be on the home page
       And I should see the image "vader.jpg"
 
@@ -30,7 +30,7 @@ Background:
     Scenario: Specify new battle title
       When I fill battle title with "Something something something Darkside?"
       And I press "Update"
-      And I wait 4 seconds for uploading images
+      And I wait 2 seconds for uploading images
       Then I should be on the home page
       And I should see the battle title "Something something something Darkside?"
 
@@ -38,7 +38,7 @@ Background:
     Scenario: Specify new battle title
       When I fill battle title with ""
       And I press "Update"
-      And I wait 4 seconds for uploading images
+      And I wait 2 seconds for uploading images
       Then I should be on the home page
       And I should see the battle title "Choose anything"
 

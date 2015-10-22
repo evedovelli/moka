@@ -1,6 +1,6 @@
 class BattlesController < ApplicationController
-  before_filter :authenticate_user!, :except => [:show]
-  load_and_authorize_resource :battle, :except => [:create]
+  before_filter :authenticate_user!, :except => [:show, :hashtag]
+  load_and_authorize_resource :battle, :except => [:create, :hashtag]
 
   def show
     @vote = Vote.new()
@@ -46,6 +46,8 @@ class BattlesController < ApplicationController
     @battle = Battle.new(params[:battle])
     authorize! :create, @battle
 
+    @battle.fetch_hashtags
+
     if @battle.save
       @vote = Vote.new()
       respond_to do |format|
@@ -66,6 +68,7 @@ class BattlesController < ApplicationController
 
   def destroy
     @battle_id = @battle.id
+    @battle.hashtag_list = nil
     @battle.hide
     respond_to do |format|
       format.js {}
@@ -89,6 +92,8 @@ class BattlesController < ApplicationController
       params[:battle][:title] = @battle.title
     end
 
+    @battle.fetch_hashtags
+
     @battle_options_error = ""
     if @battle.update_attributes(params[:battle])
       @vote = Vote.new()
@@ -105,6 +110,27 @@ class BattlesController < ApplicationController
       respond_to do |format|
         format.js { render 'battles/reload_update' }
       end
+    end
+  end
+
+  def hashtag
+    authorize! :hashtag, Battle
+
+    @hashtag = params[:hashtag]
+    @hashtag_counts = Battle.hashtag_usage(@hashtag)
+
+    @battles = Battle.with_hashtag(@hashtag, params[:page])
+
+    if current_user
+      @voted_for = current_user.voted_for_options(@battles)
+    else
+      @voted_for = nil
+    end
+    @vote = Vote.new()
+
+    respond_to do |format|
+      format.js { render "users/load_more_battles" }
+      format.html {}
     end
   end
 

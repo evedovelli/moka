@@ -29,8 +29,9 @@ Background: I exist as an user and there are battles in database
       And I confirm popup
       And I follow the link to remove 1st battle
       And I confirm popup
-      And I wait 1 second
-      Then I should see 1 battle
+      Then I should not see the battle title "battle 2"
+      And I should not see the battle title "battle 1"
+      And I should see 1 battle
 
     @javascript
     Scenario: Normal user can see button to remove its battle
@@ -45,8 +46,8 @@ Background: I exist as an user and there are battles in database
       When I go to my home page
       And I follow the link to remove 2nd battle
       And I confirm popup
-      And I wait 1 second
-      Then I should see 2 battles
+      Then I should not see the battle title "battle 2"
+      And I should see 2 battles
 
     @javascript
     Scenario: Admin can see button to edit any battle
@@ -67,7 +68,6 @@ Background: I exist as an user and there are battles in database
       And I press the button to edit 1st battle
       And I fill battle title with "1st battle"
       And I press "Update"
-      And I wait 1 second
       Then I should see "2nd battle"
       Then I should see "1st battle"
 
@@ -80,7 +80,6 @@ Background: I exist as an user and there are battles in database
       And I press the button to edit 1st battle
       And I fill battle title with "1st battle"
       And I press "Update"
-      And I wait 1 second
       Then I should see "1st battle"
 
     @javascript

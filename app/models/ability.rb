@@ -102,6 +102,7 @@ class Ability
     can :show_results, Battle do |battle|
       (not battle.current?) || (battle.try(:user) == user) || (user.vote_for(battle))
     end
+    can :hashtag, Battle
 
 
     # Votes

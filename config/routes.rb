@@ -10,11 +10,14 @@ Moka::Application.routes.draw do
   get "users/:id/followers" => "users#followers", :as => :user_followers
 
   resources :battles, :except => [:index]
+  get "hashtags/:hashtag" => "battles#hashtag", :as => :hashtag
+
   resources :votes, :only => [:create]
   resources :notifications, :only => [:index]
   get "notifications_dropdown" => "notifications#dropdown", :as => :notifications_dropdown
 
   get "options/:id/votes" => "options#votes", :as => :option_votes
+
 
   root :to => "users#home"
 end
