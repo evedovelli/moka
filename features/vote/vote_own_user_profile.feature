@@ -51,8 +51,8 @@ Background: I exist as an user, and I have created some battles
 
     @javascript
     Scenario: I create a battle from my profile and I vote in the new battle
-      When I am on my profile page
-      And I press the button to add new battle
+      Given I am on my profile page
+      When I press the button to add new battle
       And I add 1st option "Dastardly" with picture "dick_dastardly.jpg"
       And I add 2nd option "Robot" with picture "devil_robot.jpg"
       And I press "Create"
@@ -65,8 +65,8 @@ Background: I exist as an user, and I have created some battles
 
     @javascript
     Scenario: I create a battle from my profile and I vote in the previous battles
-      When I am on my profile page
-      And I press the button to add new battle
+      Given I am on my profile page
+      When I press the button to add new battle
       And I add 1st option "Dastardly" with picture "dick_dastardly.jpg"
       And I add 2nd option "Robot" with picture "devil_robot.jpg"
       And I press "Create"

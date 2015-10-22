@@ -6,13 +6,15 @@ Given /^the following battles were added:$/ do |table|
   table.hashes.each do |battle|
     o1 = FactoryGirl.create(:option, { name: "Potato", picture: Rack::Test::UploadedFile.new(create_path('chips.png'), 'image/png') })
     o2 = FactoryGirl.create(:option, { name: "Tomato", picture: Rack::Test::UploadedFile.new(create_path('tomato.png'), 'image/png') })
-    FactoryGirl.create(:battle, { options: [o1, o2],
+    b = FactoryGirl.create(:battle, { options: [o1, o2],
                                   number_of_options: 0,
                                   starts_at: battle[:starts_at],
                                   duration: battle[:duration],
                                   user: User.find_by_username(battle[:user] || "myself"),
                                   title: battle[:title] || "Choose your vegetable"
                                 })
+    b.fetch_hashtags
+    b.save
   end
 end
 
@@ -168,7 +170,7 @@ When /^I click in "([^"]*)" within (\d+)(?:st|nd|rd|th) battle$/ do |link, battl
   end
 end
 
-Then /^I fill battle title with "([^"]*)"$/ do |title|
+When /^I fill battle title with "([^"]*)"$/ do |title|
   fill_in("battle_title", :with => title)
 end
 

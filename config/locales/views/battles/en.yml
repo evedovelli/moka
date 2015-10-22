@@ -17,3 +17,7 @@ en:
     _index:
       add_battle: 'Add battle'
       next: "Next page"
+    hashtag:
+      count_html:
+        one: '<b>%{count}</b> battle'
+        other: '<b>%{count}</b> battles'

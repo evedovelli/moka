@@ -2,6 +2,8 @@ class Battle < ActiveRecord::Base
   resourcify
   paginates_per 5
 
+  acts_as_taggable_on :hashtags
+
   has_many :options, dependent: :destroy
   has_many :votes, :through => :options
   belongs_to :user
@@ -9,7 +11,7 @@ class Battle < ActiveRecord::Base
 
   accepts_nested_attributes_for :options, :allow_destroy => true
 
-  attr_accessible :starts_at, :duration, :options_attributes, :options, :user, :hidden, :title
+  attr_accessible :starts_at, :duration, :options_attributes, :options, :user, :hidden, :title, :tag_list
 
   validates :options,   :length   => { :minimum => 2, :maximum => 6 }
   validates :user,      :presence => true
@@ -39,6 +41,35 @@ class Battle < ActiveRecord::Base
 
   def finishes_at
     return self.starts_at + self.duration.minutes
+  end
+
+  def self.hashtag_usage(hashtag)
+    hashtags = Battle.hashtag_counts.where('LOWER(name) = LOWER(?)', "#{hashtag}")
+    hashtag_counts = 0
+    if hashtags.count > 0
+      hashtag_counts = hashtags[0].taggings_count
+    end
+    return hashtag_counts
+  end
+
+  def self.with_hashtag(hashtag, page)
+    return Battle.tagged_with(hashtag, on: :hashtags).order(:starts_at).reverse_order.page(page)
+  end
+
+  def fetch_hashtags
+    self.hashtag_list = nil
+    self.hashtag_list.add(
+      title,
+      parse: true,
+      parser: HashtagParser
+    )
+    options.each do |option|
+      self.hashtag_list.add(
+        option.name,
+        parse: true,
+        parser: HashtagParser
+      )
+    end
   end
 
 end

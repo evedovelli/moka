@@ -30,7 +30,7 @@
 
     <div class="row">
       <div class="option-sizeable span<%= size %>">
-        <h3 class="center option-name"><%= option.name %></h3>
+        <h3 class="center option-name"><%= auto_link_hashtags(option.name, :hashtag_url_base => hashtag_path("")).html_safe %></h3>
       </div>
     </div>
 

@@ -123,3 +123,8 @@ gem 'nprogress-rails'
 # To paginate index pages
 gem 'kaminari', '~> 0.16.3'
 
+# To create tags based on hashtags
+gem 'acts-as-taggable-on', '~> 3.4.2'
+
+# To filter hashtags into sentences
+gem 'twitter-text', '~> 1.13.0'

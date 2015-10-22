@@ -56,6 +56,9 @@ module NavigationHelpers
     when /my notifications' page/
       notifications_path
 
+    when /the "([^"]*)" hashtag page/
+      hashtag_path($1)
+
     else
       begin
         page_name =~ /the (.*) page/
