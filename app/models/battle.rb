@@ -44,7 +44,7 @@ class Battle < ActiveRecord::Base
   end
 
   def self.hashtag_usage(hashtag)
-    hashtags = Battle.hashtag_counts.where('LOWER(name) == LOWER(?)', "#{hashtag}")
+    hashtags = Battle.hashtag_counts.where('LOWER(name) = LOWER(?)', "#{hashtag}")
     hashtag_counts = 0
     if hashtags.count > 0
       hashtag_counts = hashtags[0].taggings_count
