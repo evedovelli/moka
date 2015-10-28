@@ -420,7 +420,9 @@ describe User do
     end
     describe 'given search word' do
       it 'should return users from correct page' do
+        expect(User.search("user", 1)).to eq(@l1)
         expect(User.search("user", 2)).to eq(@l2.concat(@l3))
+        expect(User.search("user", 3)).to eq(@l4)
       end
       it 'should search for usernames' do
         expect(User.search("u_user", 1)).to eq(@l2)
