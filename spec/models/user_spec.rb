@@ -403,15 +403,19 @@ describe User do
       @l4 = []
       for i in 1..10 do
         @l1 << FactoryGirl.create(:user, email: "user#{i}@us.com", username: "i_usEr#{i}")
+        Timecop.travel(Time.now + 1.minute)
       end
       for i in 11..15 do
         @l2 << FactoryGirl.create(:user, email: "user#{i}@us.com", username: "u_usEr#{i}")
+        Timecop.travel(Time.now + 1.minute)
       end
       for i in 16..20 do
         @l3 << FactoryGirl.create(:user, email: "user#{i}@us.com", username: "test#{i}", name: "e_User#{i}")
+        Timecop.travel(Time.now + 1.minute)
       end
       for i in 21..25 do
         @l4 << FactoryGirl.create(:user, email: "user#{i}@us.com", username: "test#{i}", name: "i_User#{i}")
+        Timecop.travel(Time.now + 1.minute)
       end
     end
     describe 'given search word' do
