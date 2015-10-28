@@ -39,7 +39,7 @@
 
   <div class="row">
     <div class="span4 option-form-sizeable">
-      <%= f.input(:name, label: false, input_html: { :class => "h3 input-block-level center option-name option-name-form", :placeholder => t('activerecord.attributes.option.name') }) %>
+      <%= f.input(:name, label: false, input_html: { :class => "h3 input-block-level center option-name option-name-form", :placeholder => t('activerecord.attributes.option.name'), :maxlength => "40" }) %>
     </div>
   </div>
 

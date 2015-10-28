@@ -12,6 +12,7 @@ pt-BR:
     _form:
       title: 'Monte sua batalha'
       add_option: 'Adicionar Opção'
+      description: 'Descreva sua batalha e adicione #hashtags aqui (opcional)'
     _option_fields:
       upload_image: 'Clique aqui para adicionar imagem'
     _index:

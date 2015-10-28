@@ -51,3 +51,16 @@ Background:
       And "#Vader" within ".battle-box" should link to the "Vader" hashtag page
       And "#Palpatine" within ".battle-box" should link to the "Palpatine" hashtag page
 
+    @javascript
+    Scenario: Add multiple hashtags in battle description
+      When I fill battle description with "Choose the most awesome #starwars #character!"
+      And I add 1st option "Vader" with picture "vader.jpg"
+      And I add 2nd option "Palpatine" with picture "palpatine.jpg"
+      And I press "Create"
+      And I go to the "starwars" hashtag page
+      Then I should see 1 battle
+      And I should see the battle title "Choose the most awesome #starwars #character!"
+      And I should not see the battle title "Choose anything"
+      And "#starwars" within ".battle-title-row-container" should link to the "starwars" hashtag page
+      And "#character" within ".battle-title-row-container" should link to the "character" hashtag page
+

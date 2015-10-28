@@ -70,3 +70,29 @@ Background:
       And I should see "Vader"
       And I should see "Palpatine"
 
+    @javascript
+    Scenario: Specify new battle with description
+      When I fill battle description with "Chose the evilest Sith"
+      And I add 1st option "Vader" with picture "vader.jpg"
+      And I add 2nd option "Palpatine" with picture "palpatine.jpg"
+      And I press "Create"
+      And I wait 2 seconds for uploading images
+      Then I should be on the home page
+      And I should see the battle title "Who should win this battle?"
+      And I should see the battle description "Chose the evilest Sith"
+
+    @javascript
+    Scenario: Specify battle with too long content in text fields
+      When I fill battle title with "longlonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglongWWWWW"
+      And I fill battle description with "greatgreatgreatgreatgreatgreatgreatgreatgreatgreatgreatgreatgreatgreatgreatgreatgreatgreatgreatgreatgreatgreatKKKKK"
+      And I add 1st option "bigbigbigbigbigbigbigbigbigbigbigbigbigbXX" with picture "vader.jpg"
+      And I add 2nd option "Palpatine" with picture "palpatine.jpg"
+      And I press "Create"
+      And I wait 2 seconds for uploading images
+      Then I should be on the home page
+      And I should see the battle title "longlonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglong"
+      And I should see the battle description "greatgreatgreatgreatgreatgreatgreatgreatgreatgreatgreatgreatgreatgreatgreatgreatgreatgreatgreatgreatgreatgreat"
+      And I should see "bigbigbigbigbigbigbigbigbigbigbigbigbigb"
+      And I should not see "W"
+      And I should not see "K"
+      And I should not see "X"

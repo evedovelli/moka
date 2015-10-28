@@ -14,6 +14,8 @@
       </div>
     </div>
 
+    <%= f.error_notification %>
+
     <div class="battle-title-row-container">
       <div class="row">
 
@@ -38,13 +40,20 @@
         </div>
 
         <div class="span8">
-          <%= f.input(:title, label: false, input_html: { :class => "h2 input-block-level battle-title battle-title-form", :placeholder => t('battles.default_title') }) %>
+          <div class="row">
+            <div class="span8">
+              <%= f.input(:title, label: false, input_html: { :class => "h2 input-block-level battle-title battle-title-form", :placeholder => t('battles.default_title'), :maxlength => "120" }) %>
+            </div>
+          </div>
+          <div class="row">
+            <div class="span8">
+              <%= f.input(:description, label: false, input_html: { :class => "h5 input-block-level battle-description battle-description-form", :placeholder => t('battles._form.description'), :maxlength => "110" }) %>
+            </div>
+          </div>
         </div>
 
       </div>
     </div>
-
-    <%= f.error_notification %>
 
     <%= f.error(:options, :id => 'battle-options-error', :class => "text-error") %>
     <div class="row">

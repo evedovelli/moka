@@ -26,6 +26,21 @@ describe Option do
     end
   end
 
+  describe 'validate name length' do
+    it 'should fails when over 40 chars' do
+      option = Option.new(@attr.merge(:name => 'yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy'))
+      expect(option).not_to be_valid
+    end
+    it 'should pass when exactly 40 chars' do
+      option = Option.new(@attr.merge(:name => 'yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy'))
+      expect(option).to be_valid
+    end
+    it 'should pass with small length' do
+      option = Option.new(@attr.merge(:name => 'yyyyyyyyy'))
+      expect(option).to be_valid
+    end
+  end
+
   describe 'validates attached picture' do
     it 'should validates attachment content type' do
       option = Option.new(@attr.merge(:picture => File.new(Rails.root + 'spec/fixtures/images/no_image.txt')))

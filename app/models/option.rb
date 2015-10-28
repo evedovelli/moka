@@ -22,6 +22,7 @@ class Option < ActiveRecord::Base
                               }
 
   validates :name, :presence => true
+  validates :name, :length   => { maximum: 40 }
   validates_attachment :picture, :presence     => true,
                                  :content_type => { :content_type => /\Aimage\/.*\Z/ },
                                  :size         => { :in => 0..20.megabytes }

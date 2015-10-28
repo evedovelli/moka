@@ -12,6 +12,7 @@ en:
     _form:
       title: 'Compose your battle'
       add_option: 'Add Option'
+      description: 'Describe your battle and add #hashtags here (optional)'
     _option_fields:
       upload_image: 'Click here to add image'
     _index:
