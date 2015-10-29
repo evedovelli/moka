@@ -93,6 +93,36 @@ describe Battle do
     end
   end
 
+  describe 'validate title length' do
+    it 'should fails when over 120 chars' do
+      battle = Battle.new(@attr.merge(:title => 'ttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt'))
+      expect(battle).not_to be_valid
+    end
+    it 'should pass when exactly 120 chars' do
+      battle = Battle.new(@attr.merge(:title => 'tttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt'))
+      expect(battle).to be_valid
+    end
+    it 'should pass with small length' do
+      battle = Battle.new(@attr.merge(:title => 'tttttttttttttttttt'))
+      expect(battle).to be_valid
+    end
+  end
+
+  describe 'validate description length' do
+    it 'should fails when over 110 chars' do
+      battle = Battle.new(@attr.merge(:description => 'ttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt'))
+      expect(battle).not_to be_valid
+    end
+    it 'should pass when exactly 110 chars' do
+      battle = Battle.new(@attr.merge(:description => 'tttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt'))
+      expect(battle).to be_valid
+    end
+    it 'should pass with small length' do
+      battle = Battle.new(@attr.merge(:description => 'tttttttttttttttttt'))
+      expect(battle).to be_valid
+    end
+  end
+
   describe 'hide' do
     it 'should make the battle hidden' do
       battle = Battle.new(@attr)
@@ -292,7 +322,7 @@ describe Battle do
   end
 
   describe 'fetch hashtags' do
-    it 'should parse hashtags from title and option names' do
+    it 'should parse hashtags from title, description and option names' do
       @o1 = FactoryGirl.create(:option, :name => "There is a #Beetle")
       @o2 = FactoryGirl.create(:option, :name => "#Juice in my #glass")
       @attr = {
@@ -300,12 +330,13 @@ describe Battle do
         :starts_at => DateTime.now,
         :duration => '60',
         :title => "What are you #drinking?",
+        :description => "Name the #beverage you like to drink",
         :user => @user
       }
       battle = Battle.new(@attr)
       battle.fetch_hashtags
       battle.save
-      expect(battle.hashtag_list).to eq(["drinking", "Beetle", "Juice", "glass"])
+      expect(battle.hashtag_list).to eq(["drinking", "beverage", "Beetle", "Juice", "glass"])
     end
     it 'should not parse hashtags when there are no hashtags' do
       @o1 = FactoryGirl.create(:option, :name => "There is a Beetle")
@@ -315,6 +346,7 @@ describe Battle do
         :starts_at => DateTime.now,
         :duration => '60',
         :title => "What are you drinking?",
+        :description => "Name the beverage you like to drink",
         :user => @user
       }
       battle = Battle.new(@attr)

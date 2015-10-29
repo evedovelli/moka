@@ -11,12 +11,14 @@ class Battle < ActiveRecord::Base
 
   accepts_nested_attributes_for :options, :allow_destroy => true
 
-  attr_accessible :starts_at, :duration, :options_attributes, :options, :user, :hidden, :title, :tag_list
+  attr_accessible :starts_at, :duration, :options_attributes, :options, :user, :hidden, :title, :tag_list, :description
 
-  validates :options,   :length   => { :minimum => 2, :maximum => 6 }
-  validates :user,      :presence => true
-  validates :starts_at, :presence => true
-  validates :duration,  :numericality => { :only_integer => true, :greater_than => 0, :less_than => 144000 }
+  validates :options,     :length       => { :minimum => 2, :maximum => 6 }
+  validates :user,        :presence     => true
+  validates :starts_at,   :presence     => true
+  validates :duration,    :numericality => { :only_integer => true, :greater_than => 0, :less_than => 144000 }
+  validates :title,       :length       => { :maximum => 120 }
+  validates :description, :length       => { :maximum => 110 }
 
   def hide
     self.update_attributes({hidden: true})
@@ -60,6 +62,11 @@ class Battle < ActiveRecord::Base
     self.hashtag_list = nil
     self.hashtag_list.add(
       title,
+      parse: true,
+      parser: HashtagParser
+    )
+    self.hashtag_list.add(
+      description,
       parse: true,
       parser: HashtagParser
     )

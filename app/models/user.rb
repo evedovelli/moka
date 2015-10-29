@@ -134,7 +134,7 @@ class User < ActiveRecord::Base
   def self.search(user_name, page)
     if user_name
       user_name.downcase!
-      return where('LOWER(name) LIKE ? OR LOWER(username) LIKE ?', "%#{user_name}%", "%#{user_name}%").page(page)
+      return where('LOWER(name) LIKE ? OR LOWER(username) LIKE ?', "%#{user_name}%", "%#{user_name}%").order(:created_at).page(page)
     else
       return User.page(page)
     end

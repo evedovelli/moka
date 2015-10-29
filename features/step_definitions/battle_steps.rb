@@ -174,6 +174,21 @@ When /^I fill battle title with "([^"]*)"$/ do |title|
   fill_in("battle_title", :with => title)
 end
 
+When /^I fill battle description with "([^"]*)"$/ do |title|
+  fill_in("battle_description", :with => title)
+end
+
+When /^I fill battle  with "([^"]*)"$/ do |title|
+  fill_in("battle_description", :with => title)
+end
+
+When /^I fill (\d+)(?:st|nd|rd|th) option with "([^"]*)"$/ do |option_number, option|
+  within(all('.options')[0]) do
+    within(all('.fields')[option_number.to_i - 1]) do
+      find(".option-name").set(option)
+    end
+  end
+end
 
 ### THEN ###
 
@@ -296,6 +311,12 @@ end
 
 Then /^I should not see the battle title "([^"]*)"$/ do |title|
   expect(page).not_to have_text(title)
+end
+
+Then /^I should see the battle description "([^"]*)"$/ do |description|
+  within(all('.battle-description')[0]) do
+    expect(page).to have_text(description)
+  end
 end
 
 Then /^I should see the button to add new battle$/ do
