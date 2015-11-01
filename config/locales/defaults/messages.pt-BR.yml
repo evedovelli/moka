@@ -19,3 +19,4 @@ pt-BR:
     invalid_image: 'Imagem inválida'
     uniqueness_friend: 'Você já está seguindo este usuário'
     single_vote_per_battle: 'pode ter apenas um voto por batalha'
+    invalid_search: 'Pesquisa inválida'

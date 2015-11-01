@@ -117,21 +117,26 @@ class BattlesController < ApplicationController
     authorize! :hashtag, Battle
 
     @hashtag = params[:hashtag]
-    @hashtag_counts = Battle.hashtag_usage(@hashtag)
+    if (@hashtag) && (@hashtag != "")
+      @search = @hashtag
+      @hashtag_counts = Battle.hashtag_usage(@hashtag)
 
-    @battles = Battle.with_hashtag(@hashtag, params[:page])
+      @battles = Battle.with_hashtag(@hashtag, params[:page])
 
-    if current_user
-      @voted_for = current_user.voted_for_options(@battles)
+      if current_user
+        @voted_for = current_user.voted_for_options(@battles)
+      else
+        @voted_for = nil
+      end
+      @vote = Vote.new()
+
+      respond_to do |format|
+        format.js { render "users/load_more_battles" }
+        format.html {}
+      end
     else
-      @voted_for = nil
-    end
-    @vote = Vote.new()
-
-    respond_to do |format|
-      format.js { render "users/load_more_battles" }
-      format.html {}
+      flash[:alert] = I18n.t('messages.invalid_search')
+      redirect_to root_url
     end
   end
-
 end

@@ -28,7 +28,7 @@ describe UsersController do
     end
     it "should have success when accessing user index page" do
       allow(controller).to receive(:authorize!).and_return(true)
-      get :index
+      get :index, {:search => "bob"}
       expect(response).to have_http_status(:success)
     end
     it "should have success when accessing following page" do
@@ -74,7 +74,7 @@ describe UsersController do
         expect(response).to redirect_to(root_url)
       end
       it "should be redirected to root page if accessing index page" do
-        get :index
+        get :index, {:search => "bob"}
         expect(flash[:alert]).to match("Access denied.")
         expect(response).to redirect_to(root_url)
       end
@@ -227,50 +227,68 @@ describe UsersController do
           expect(User).not_to receive(:find_by_username!)
           get :index
         end
-        it "should respond to html" do
-          get :index
-          expect(response.content_type).to eq(Mime::HTML)
+        describe "with search word" do
+          it "should respond to html" do
+            get :index, {:search => "bob"}
+            expect(response.content_type).to eq(Mime::HTML)
+          end
+          it "should render the show user template with HTML" do
+            get :index, {:search => "bob"}
+            expect(response).to render_template('index')
+          end
+          it "should respond to js" do
+            get :index, {:search => "bob", :format => 'js'}
+            expect(response.content_type).to eq(Mime::JS)
+          end
+          it "should render the show user template with JS" do
+            get :index, {:search => "bob", :format => 'js'}
+            expect(response).to render_template('index')
+          end
+          it "should search users with search word param" do
+            expect(User).to receive(:search).with("calvin", "2")
+            get(:index, {search: "calvin", page: "2"})
+          end
+          it "should search users with search word from session" do
+            session[:user_search] = "hobbes"
+            expect(User).to receive(:search).with("hobbes", "3")
+            get(:index, {page: "3"})
+          end
+          it "should search users with search word param whenever it exists" do
+            session[:user_search] = "hobbes"
+            expect(User).to receive(:search).with("calvin", "1")
+            get(:index, {search: "calvin", page: "1"})
+          end
+          it "should replace search word from session with search word param whenever it exists" do
+            session[:user_search] = "hobbes"
+            get(:index, {search: "calvin", page: "1"})
+            expect(session[:user_search]).to match("calvin")
+          end
+          it "should not replace search word from session with no search word param" do
+            session[:user_search] = "hobbes"
+            get(:index, {page: "1"})
+            expect(session[:user_search]).to match("hobbes")
+          end
+          it "should return found users" do
+            allow(User).to receive(:search).and_return(@users)
+            get(:index, {search: "calvin", page: "2"})
+            expect(assigns(:users)).to eq(@users)
+          end
         end
-        it "should render the show user template with HTML" do
-          get :index
-          expect(response).to render_template('index')
-        end
-        it "should respond to js" do
-          get(:index, {:format => 'js'})
-          expect(response.content_type).to eq(Mime::JS)
-        end
-        it "should render the show user template with JS" do
-          get(:index, {:format => 'js'})
-          expect(response).to render_template('index')
-        end
-        it "should search users with search word param" do
-          expect(User).to receive(:search).with("calvin", "2")
-          get(:index, {search: "calvin", page: "2"})
-        end
-        it "should search users with search word from session" do
-          session[:user_search] = "hobbes"
-          expect(User).to receive(:search).with("hobbes", "3")
-          get(:index, {page: "3"})
-        end
-        it "should search users with search word param whenever it exists" do
-          session[:user_search] = "hobbes"
-          expect(User).to receive(:search).with("calvin", "1")
-          get(:index, {search: "calvin", page: "1"})
-        end
-        it "should replace search word from session with search word param whenever it exists" do
-          session[:user_search] = "hobbes"
-          get(:index, {search: "calvin", page: "1"})
-          expect(session[:user_search]).to match("calvin")
-        end
-        it "should not replace search word from session with no search word param" do
-          session[:user_search] = "hobbes"
-          get(:index, {page: "1"})
-          expect(session[:user_search]).to match("hobbes")
-        end
-        it "should return found users" do
-          allow(User).to receive(:search).and_return(@users)
-          get(:index, {search: "calvin", page: "2"})
-          expect(assigns(:users)).to eq(@users)
+        describe "without search word" do
+          it "should respond to html" do
+            get :index
+            expect(response.content_type).to eq(Mime::HTML)
+          end
+          it "should be redirected to root page" do
+            get :index
+            expect(flash[:alert]).to match("Invalid search")
+            expect(response).to redirect_to(root_url)
+          end
+          it "should be redirected to root page when search is empty" do
+            get :index, {search: ""}
+            expect(flash[:alert]).to match("Invalid search")
+            expect(response).to redirect_to(root_url)
+          end
         end
       end
 
