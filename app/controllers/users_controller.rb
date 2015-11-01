@@ -38,13 +38,17 @@ class UsersController < ApplicationController
   end
 
   def index
-    search = params[:search] || session[:user_search]
-    session[:user_search] = search
-
-    @users = User.search(search, params[:page])
-    respond_to do |format|
-      format.js {}
-      format.html {}
+    @search = params[:search] || session[:user_search]
+    if (@search) && (@search != "")
+      session[:user_search] = @search
+      @users = User.search(@search, params[:page])
+      respond_to do |format|
+        format.js {}
+        format.html {}
+      end
+    else
+      flash[:alert] = I18n.t('messages.invalid_search')
+      redirect_to root_url
     end
   end
 

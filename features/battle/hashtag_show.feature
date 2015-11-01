@@ -1,6 +1,6 @@
 Feature: List battles with a hashtag
   To allow users to search battles of his interest
-  An user should be access the hash of interest page
+  An user should be access the page for the hashtag of interest
 
 Background:
     Given user "marty" exists

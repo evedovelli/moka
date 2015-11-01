@@ -90,3 +90,8 @@ Background: There are many users in database
       And I should find user "user12"
       And I should not find user "test1"
 
+    Scenario: User search without search word
+      Given I am on the "user1" profile page
+      When I search for user with ""
+      Then I should be on the home page
+

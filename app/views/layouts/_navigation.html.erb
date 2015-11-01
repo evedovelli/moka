@@ -11,7 +11,7 @@
     <div class="menu">
       <nav class="nav-collapse">
         <ul class="nav pull-right">
-          <li><%= render 'layouts/search' %></li>
+          <li><%= render 'searches/search' %></li>
           <% if user_signed_in? %>
             <li>
               <%= link_to(user_path(current_user)) do %>

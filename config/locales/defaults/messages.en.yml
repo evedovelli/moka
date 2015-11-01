@@ -19,3 +19,4 @@ en:
     invalid_image: 'Invalid image'
     uniqueness_friend: 'Already following this user'
     single_vote_per_battle: 'can have one vote per battle'
+    invalid_search: 'Invalid search'

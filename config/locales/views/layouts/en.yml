@@ -12,4 +12,4 @@ en:
     cover:
       title: 'Batalharia'
     _search:
-      user: "Search for users"
+      field: "Search"

@@ -59,43 +59,52 @@ describe BattlesController do
         allow(controller).to receive(:authorize!).and_return(true)
         allow(Battle).to receive(:with_hashtag).and_return([@fake_battle])
       end
-      it "should respond to html" do
-        get :hashtag, {:hashtag => "notmyfault"}
-        expect(response.content_type).to eq(Mime::HTML)
+      describe "valid" do
+        it "should respond to html" do
+          get :hashtag, {:hashtag => "notmyfault"}
+          expect(response.content_type).to eq(Mime::HTML)
+        end
+        it "should render the hashtag template with html" do
+          get :hashtag, {:hashtag => "notmyfault"}
+          expect(response).to render_template('hashtag')
+        end
+        it "should respond to js" do
+          get :hashtag, {:hashtag => "notmyfault", :format => 'js'}
+          expect(response.content_type).to eq(Mime::JS)
+        end
+        it "should render the hashtag template with js" do
+          get :hashtag, {:hashtag => "notmyfault", :format => 'js'}
+          expect(response).to render_template('users/load_more_battles')
+        end
+        it "should make hashtag available to that template" do
+          get :hashtag, {:hashtag => "notmyfault"}
+          expect(assigns(:hashtag)).to eq("notmyfault")
+        end
+        it "should make number of counts for a hashtag available to that template" do
+          expect(Battle).to receive(:hashtag_usage).with("notmyfault").and_return(3)
+          get :hashtag, {:hashtag => "notmyfault"}
+          expect(assigns(:hashtag_counts)).to eq(3)
+        end
+        it "should make battles with hashtag available to that template" do
+          expect(Battle).to receive(:with_hashtag).with("notmyfault", "3").and_return([@fake_battle])
+          get :hashtag, {:hashtag => "notmyfault", :page => "3"}
+          expect(assigns(:battles)).to eq([@fake_battle])
+        end
+        it "should build a vote to the template" do
+          get :hashtag, {:hashtag => "notmyfault"}
+          expect(assigns(:vote)).to be_new_record
+        end
+        it "should make voted_for available to that template with nil" do
+          get :hashtag, {:hashtag => "notmyfault"}
+          expect(assigns(:voted_for)).to eq(nil)
+        end
       end
-      it "should render the hashtag template with html" do
-        get :hashtag, {:hashtag => "notmyfault"}
-        expect(response).to render_template('hashtag')
-      end
-      it "should respond to js" do
-        get :hashtag, {:hashtag => "notmyfault", :format => 'js'}
-        expect(response.content_type).to eq(Mime::JS)
-      end
-      it "should render the hashtag template with js" do
-        get :hashtag, {:hashtag => "notmyfault", :format => 'js'}
-        expect(response).to render_template('users/load_more_battles')
-      end
-      it "should make hashtag available to that template" do
-        get :hashtag, {:hashtag => "notmyfault"}
-        expect(assigns(:hashtag)).to eq("notmyfault")
-      end
-      it "should make number of counts for a hashtag available to that template" do
-        expect(Battle).to receive(:hashtag_usage).with("notmyfault").and_return(3)
-        get :hashtag, {:hashtag => "notmyfault"}
-        expect(assigns(:hashtag_counts)).to eq(3)
-      end
-      it "should make battles with hashtag available to that template" do
-        expect(Battle).to receive(:with_hashtag).with("notmyfault", "3").and_return([@fake_battle])
-        get :hashtag, {:hashtag => "notmyfault", :page => "3"}
-        expect(assigns(:battles)).to eq([@fake_battle])
-      end
-      it "should build a vote to the template" do
-        get :hashtag, {:hashtag => "notmyfault"}
-        expect(assigns(:vote)).to be_new_record
-      end
-      it "should make voted_for available to that template with nil" do
-        get :hashtag, {:hashtag => "notmyfault"}
-        expect(assigns(:voted_for)).to eq(nil)
+      describe "invalid" do
+        it "should be redirected to root page with empty hashtag" do
+          get :hashtag, {:hashtag => ""}
+          expect(flash[:alert]).to match("Invalid search")
+          expect(response).to redirect_to(root_url)
+        end
       end
     end
 

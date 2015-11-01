@@ -187,11 +187,6 @@ When /^I remove the profile picture uploaded image$/ do
   find('.delete-picture-user').click
 end
 
-When /^I search for user with "([^"]*)"$/ do |user|
-  fill_in("search-user", :with => user)
-  click_button("search-user-btn")
-end
-
 
 ### THEN ###
 

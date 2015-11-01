@@ -11,13 +11,13 @@ Moka::Application.routes.draw do
 
   resources :battles, :except => [:index]
   get "hashtags/:hashtag" => "battles#hashtag", :as => :hashtag
+  get "search(/:search)" => "searches#search", :as => :search
 
   resources :votes, :only => [:create]
   resources :notifications, :only => [:index]
   get "notifications_dropdown" => "notifications#dropdown", :as => :notifications_dropdown
 
   get "options/:id/votes" => "options#votes", :as => :option_votes
-
 
   root :to => "users#home"
 end
