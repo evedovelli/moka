@@ -139,4 +139,12 @@ class User < ActiveRecord::Base
       return User.page(page)
     end
   end
+
+  def following(page)
+    return self.friends.order(:username).page(page)
+  end
+
+  def followers(page)
+    return self.inverse_friends.order(:username).page(page)
+  end
 end

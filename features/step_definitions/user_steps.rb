@@ -187,6 +187,10 @@ When /^I remove the profile picture uploaded image$/ do
   find('.delete-picture-user').click
 end
 
+When /^I close the login window$/ do
+  step %Q{I should see the login form}
+  step %Q{I close the modal window}
+end
 
 ### THEN ###
 
@@ -287,13 +291,13 @@ Then /^I should see the "([^"]*)" profile picture for (\d+)(?:st|nd|rd|th) battl
 end
 
 Then /^I should see the default profile picture for "([^"]*)"$/ do |user|
-  within("#friend#{User.find_by_username(user).id}") do
+  within("#user#{User.find_by_username(user).id}-search") do
     expect(page).to have_xpath("//img[contains(@src, \"missing.png\")]")
   end
 end
 
 Then /^I should see the "([^"]*)" profile picture for "([^"]*)"$/ do |image, user|
-  within("#friend#{User.find_by_username(user).id}") do
+  within("#user#{User.find_by_username(user).id}-search") do
     expect(page).to have_xpath("//img[contains(@src, \"#{image}\")]")
   end
 end
@@ -312,11 +316,11 @@ Then /^I should see the preview with the current "([^"]*)" image$/ do |image|
 end
 
 Then /^I should see the login form$/ do
-  expect(page).to have_css("#login-black-box")
+  expect(page).to have_css("#login-modal")
 end
 
 Then /^I should not see the login form$/ do
-  expect(page).not_to have_css("#login-black-box")
+  expect(page).not_to have_css("#login-modal")
 end
 
 Then /^I should not see any option selected$/ do

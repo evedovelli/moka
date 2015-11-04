@@ -6,3 +6,5 @@ $("<%= escape_javascript(render @users) %>").appendTo("#users-index");
 <% else %>
   $('.user-pagination').html("<%=j link_to_next_page(@users, t('users.index.next'), :remote => true, :class => "next_page") %>");
 <% end %>
+
+jQuery(showsUnfollowButton);

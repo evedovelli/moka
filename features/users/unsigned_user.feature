@@ -43,7 +43,7 @@ Background: I am not a registered user and battles exist
     Scenario: I try to vote and I close the login form
       Given I am on the "willywallace" profile page
       When I vote for "Darth Vader" for the 1st battle
-      And I close the login form
+      And I close the login window
       Then I should not see the login form
       And I should not see any option selected
 

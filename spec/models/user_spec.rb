@@ -442,4 +442,78 @@ describe User do
     end
   end
 
+  describe 'following' do
+    before(:each) do
+      @user = User.new(@attr)
+    end
+    it 'should return the ordered votes from correct page' do
+      @l1 = []
+      @l2 = []
+      @l3 = []
+      @l1 << FactoryGirl.create(:user, {username: "u1", email: "u1@email.com"})
+      @l1 << FactoryGirl.create(:user, {username: "u10", email: "u10@email.com"})
+      for i in 2..9 do
+        @l1 << FactoryGirl.create(:user, {username: "u#{i}", email: "u#{i}@email.com"})
+        Timecop.travel(Time.now + 1.minute)
+      end
+      for i in 11..20 do
+        @l2 << FactoryGirl.create(:user, {username: "a#{i}", email: "a#{i}@email.com"})
+        Timecop.travel(Time.now + 1.minute)
+      end
+      for i in 11..20 do
+        @l3 << FactoryGirl.create(:user, {username: "x#{i}", email: "x#{i}@email.com"})
+        Timecop.travel(Time.now + 1.minute)
+      end
+
+      @l1.each do |friend|
+        FactoryGirl.create(:friendship, user: @user, friend: friend)
+      end
+      @l2.each do |friend|
+        FactoryGirl.create(:friendship, user: @user, friend: friend)
+      end
+      @l3.each do |friend|
+        FactoryGirl.create(:friendship, user: @user, friend: friend)
+      end
+
+      expect(@user.following("2")).to eq(@l1)
+    end
+  end
+
+  describe 'following' do
+    before(:each) do
+      @user = User.new(@attr)
+    end
+    it 'should return the ordered votes from correct page' do
+      @l1 = []
+      @l2 = []
+      @l3 = []
+      @l1 << FactoryGirl.create(:user, {username: "u1", email: "u1@email.com"})
+      @l1 << FactoryGirl.create(:user, {username: "u10", email: "u10@email.com"})
+      for i in 2..9 do
+        @l1 << FactoryGirl.create(:user, {username: "u#{i}", email: "u#{i}@email.com"})
+        Timecop.travel(Time.now + 1.minute)
+      end
+      for i in 11..19 do
+        @l2 << FactoryGirl.create(:user, {username: "x#{i}", email: "x#{i}@email.com"})
+        Timecop.travel(Time.now + 1.minute)
+      end
+      for i in 11..20 do
+        @l3 << FactoryGirl.create(:user, {username: "a#{i}", email: "a#{i}@email.com"})
+        Timecop.travel(Time.now + 1.minute)
+      end
+
+      @l1.each do |friend|
+        FactoryGirl.create(:friendship, user: friend, friend: @user)
+      end
+      @l2.each do |friend|
+        FactoryGirl.create(:friendship, user: friend, friend: @user)
+      end
+      @l3.each do |friend|
+        FactoryGirl.create(:friendship, user: friend, friend: @user)
+      end
+
+      expect(@user.followers("3")).to eq(@l2)
+    end
+  end
+
 end

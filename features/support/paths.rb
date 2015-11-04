@@ -59,6 +59,9 @@ module NavigationHelpers
     when /the "([^"]*)" hashtag page/
       hashtag_path($1)
 
+    when /the votes page for option "([^"]*)"/
+      option_votes_path(Option.find_by_name($1))
+
     else
       begin
         page_name =~ /the (.*) page/

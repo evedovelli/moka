@@ -296,12 +296,16 @@ describe UsersController do
         before (:each) do
           @other_user = FactoryGirl.create(:user, {username: "other_user", email: "user@user.com"})
           @friends = [double("f1"), double("f2"), double("f3"), double("f4")]
-          allow(@other_user).to receive(:friends).and_return(@friends)
+          allow(@other_user).to receive(:following).and_return(@friends)
           allow(User).to receive(:find_by_username!).with(@other_user.username).and_return(@other_user)
         end
         it "should search user with correct user id" do
           expect(User).to receive(:find_by_username!).with("#{@other_user.username}")
           get :following, {:id => @other_user.username}
+        end
+        it "should get following with the correct page" do
+          expect(@other_user).to receive(:following).with("4")
+          get :following, {:id => @other_user.username, :page => 4}
         end
         it "should respond to html" do
           get :following, {:id => @other_user.username}
@@ -311,9 +315,17 @@ describe UsersController do
           get :following, {:id => @other_user.username}
           expect(response).to render_template('following')
         end
+        it "should respond to js" do
+          get :following, {:id => @other_user.username, format: 'js'}
+          expect(response.content_type).to eq(Mime::JS)
+        end
+        it "should render the index template" do
+          get :following, {:id => @other_user.username, format: 'js'}
+          expect(response).to render_template('users/index')
+        end
         it "should make the list of following users available to that template" do
           get :following, {:id => @other_user.username}
-          expect(assigns(:following)).to eq(@friends)
+          expect(assigns(:users)).to eq(@friends)
         end
         it "should make the user available to that template" do
           get :following, {:id => @other_user.username}
@@ -325,12 +337,16 @@ describe UsersController do
         before (:each) do
           @other_user = FactoryGirl.create(:user, {username: "other_user", email: "user@user.com"})
           @inverse_friends = [double("f1"), double("f2"), double("f3"), double("f4")]
-          allow(@other_user).to receive(:inverse_friends).and_return(@inverse_friends)
+          allow(@other_user).to receive(:followers).and_return(@inverse_friends)
           allow(User).to receive(:find_by_username!).with(@other_user.username).and_return(@other_user)
         end
         it "should search user with correct user id" do
           expect(User).to receive(:find_by_username!).with("#{@other_user.username}")
           get :followers, {:id => @other_user.username}
+        end
+        it "should get followers with the correct page" do
+          expect(@other_user).to receive(:followers).with("2")
+          get :followers, {:id => @other_user.username, :page => 2}
         end
         it "should respond to html" do
           get :followers, {:id => @other_user.username}
@@ -340,9 +356,17 @@ describe UsersController do
           get :followers, {:id => @other_user.username}
           expect(response).to render_template('followers')
         end
+        it "should respond to js" do
+          get :followers, {:id => @other_user.username, format: 'js'}
+          expect(response.content_type).to eq(Mime::JS)
+        end
+        it "should render the index template" do
+          get :followers, {:id => @other_user.username, format: 'js'}
+          expect(response).to render_template('users/index')
+        end
         it "should make the list of followers users available to that template" do
           get :followers, {:id => @other_user.username}
-          expect(assigns(:followers)).to eq(@inverse_friends)
+          expect(assigns(:users)).to eq(@inverse_friends)
         end
         it "should make the user available to that template" do
           get :followers, {:id => @other_user.username}

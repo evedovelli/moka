@@ -1,21 +1,21 @@
-<% for i in 0..1 %>
-  <div class="span6">
-
-    <table class="table">
-      <% friends.in_groups(2, false)[i].each do |user| %>
-        <tr id="friend<%= user.id %>" class="friend-index">
-          <td><%= link_to(image_tag(user.avatar.url(:small), :class => "img-polaroid"), user_path(user)) %></td>
-          <td><h5><%= link_to(user.username, user_path(user)) %></h5></td>
-          <td>
-            <div class="span3 pull-right">
-              <div id="user-button<%= user.id %>" class="user-button">
-                <%= user_button_for(user) %>
-              </div>
-            </div>
-          </td>
-        </tr>
-      <% end %>
-    </table>
-
+<div class="span12">
+  <div class="row">
+    <div class="span8 offset2">
+      <table id="users-index" class="table">
+        <%= render friends %>
+      </table>
+    </div>
   </div>
-<% end %>
+
+  <div class="row">
+    <div class="span8 offset2">
+      <p class="user-pagination">
+        <% if friends.last_page? %>
+          <p class='center user-last_page'><%= image_tag("watermark_small.png") %></p>
+        <% else %>
+          <%= link_to_next_page(friends, t('friendships._index.next'), :remote => true, :class => "next_page") %>
+        <% end %>
+      </p>
+    </div>
+  </div>
+</div>

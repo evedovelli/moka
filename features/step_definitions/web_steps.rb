@@ -119,6 +119,10 @@ When /^I scroll to the bottom of the page$/ do
   page.execute_script("window.scrollBy(0,10000)")
 end
 
+When /^I close the modal window$/ do
+  all(".close")[0].click
+end
+
 
 ### THEN ###
 

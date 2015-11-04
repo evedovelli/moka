@@ -1,5 +1,6 @@
 class Vote < ActiveRecord::Base
   resourcify
+  paginates_per 15
 
   belongs_to :option
   belongs_to :user
