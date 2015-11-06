@@ -120,6 +120,7 @@ When /^I scroll to the bottom of the page$/ do
 end
 
 When /^I close the modal window$/ do
+  expect(page).to have_css(".close")
   all(".close")[0].click
 end
 

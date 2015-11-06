@@ -188,7 +188,7 @@ When /^I remove the profile picture uploaded image$/ do
 end
 
 When /^I close the login window$/ do
-  step %Q{I should see the login form}
+  expect(page).to have_css(".close")
   step %Q{I close the modal window}
 end
 
