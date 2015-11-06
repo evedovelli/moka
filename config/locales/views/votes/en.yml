@@ -4,3 +4,7 @@ en:
       votes:
         one: "%{count} vote"
         other: "%{count} votes"
+    _index:
+      title_html: "Votes for <b>%{option}</b>"
+      close: "Close"
+      next: "Load more"

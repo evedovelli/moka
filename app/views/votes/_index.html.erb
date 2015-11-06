@@ -1,5 +1,20 @@
-<div id="vote_index<%=option.id%>">
-  <table class="table vote-table">
-    <%= render option.votes %>
-  </table>
+<div id="votes-modal-option<%= option.id %>" class="votes-modal modal hide fade" tabindex="-1" role="dialog" aria-labelledby="votes-modal-label" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+      <i id="close-login-form" class="icon-remove"></i>
+    </button>
+    <h3 id="votes-modal-label"><%= t('votes._index.title_html', option: option.name) %></h3>
+  </div>
+
+  <div id="modal-body-option<%= option.id %>" class="modal-body">
+    <table id="votes-option<%= option.id %>" class="table vote-table">
+      <%# render votes here %>
+    </table>
+
+    <p id="vote-pagination-option<%= option.id %>" class="center"></p>
+  </div>
+
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true"><%= t('votes._index.close') %></button>
+  </div>
 </div>

@@ -66,4 +66,21 @@ describe Option do
     end
   end
 
+  describe 'ordered votes' do
+    it 'should return the ordered votes from correct page' do
+      @l1 = []
+      @l2 = []
+      option = Option.new(@attr)
+      for i in 1..15 do
+        @l1 << FactoryGirl.create(:vote, {option: option, user: FactoryGirl.create(:user, {username: "u#{i}", email: "u#{i}@email.com"})})
+        Timecop.travel(Time.now + 1.minute)
+      end
+      for i in 16..25 do
+        @l2 << FactoryGirl.create(:vote, {option: option, user: FactoryGirl.create(:user, {username: "u#{i}", email: "u#{i}@email.com"})})
+        Timecop.travel(Time.now + 1.minute)
+      end
+      expect(option.ordered_votes("2")).to eq(@l2)
+    end
+  end
+
 end

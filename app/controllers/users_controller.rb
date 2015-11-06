@@ -53,11 +53,19 @@ class UsersController < ApplicationController
   end
 
   def following
-    @following = @user.friends
+    @users = @user.following(params[:page])
+    respond_to do |format|
+      format.js { render('users/index') }
+      format.html {}
+    end
   end
 
   def followers
-    @followers = @user.inverse_friends
+    @users = @user.followers(params[:page])
+    respond_to do |format|
+      format.js { render('users/index') }
+      format.html {}
+    end
   end
 
   def edit

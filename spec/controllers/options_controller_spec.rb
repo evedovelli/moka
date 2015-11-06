@@ -36,6 +36,8 @@ describe OptionsController do
 
       describe "votes" do
         before (:each) do
+          @votes = double('votes')
+          allow(@fake_option).to receive(:ordered_votes).and_return(@votes)
           allow(Option).to receive(:find).and_return(@fake_option)
         end
         it "should call find with correct arguments" do
@@ -50,9 +52,17 @@ describe OptionsController do
           get :votes, {id: @fake_option.id, :format => 'js'}
           expect(response).to render_template('votes')
         end
+        it "should call ordered_votes with correct arguments" do
+          expect(@fake_option).to receive(:ordered_votes).with("3").and_return(@votes)
+          get :votes, {id: @fake_option.id, page: "3", :format => 'js'}
+        end
         it "should make the option available to that template" do
           get :votes, {id: @fake_option.id, :format => 'js'}
           expect(assigns(:option)).to eq(@fake_option)
+        end
+        it "should make the votes available to that template" do
+          get :votes, {id: @fake_option.id, :format => 'js'}
+          expect(assigns(:votes)).to eq(@votes)
         end
       end
 

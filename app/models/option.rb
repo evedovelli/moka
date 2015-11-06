@@ -31,4 +31,7 @@ class Option < ActiveRecord::Base
     return votes.count
   end
 
+  def ordered_votes(page)
+    return self.votes.order(:created_at).page(page)
+  end
 end

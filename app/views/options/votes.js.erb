@@ -1,4 +1,20 @@
-$('<%="#vote_index#{@option.id}"%>').replaceWith("<%= j (render :partial => 'votes/index',
-                                                                :locals => {
-                                                                  :option => @option
-                                                                }) %>");
+$("<%= escape_javascript(render @votes) %>").appendTo('<%="#votes-option#{@option.id}"%>');
+
+// Update pagination link
+<% if @votes.last_page? %>
+  $('<%="#vote-pagination-option#{@option.id}"%>').html('<p class="center vote-last_page"></p>');
+<% else %>
+  $('<%="#vote-pagination-option#{@option.id}"%>').html("<%=j link_to_next_page(@votes, t('votes._index.next'), :remote => true, :id => "next_page-option#{@option.id}", :class => "btn") %>");
+<% end %>
+
+$('<%="#votes-modal-option#{@option.id}"%>').modal('show');
+
+$('<%="#votes-modal-option#{@option.id}"%>').on('hide', function () {
+  $('<%="#modal-body-option#{@option.id}"%>').scrollTop(0);
+});
+
+$('<%="#votes-modal-option#{@option.id}"%>').on('hidden', function () {
+  $('<%="#votes-option#{@option.id}"%>').empty();
+});
+
+jQuery(showsUnfollowButton);

@@ -4,3 +4,7 @@ pt-BR:
       votes:
         one: "%{count} voto"
         other: "%{count} votos"
+    _index:
+      title_html: "Votos para <b>%{option}</b>"
+      close: "Fechar"
+      next: "Carregar mais"

@@ -16,6 +16,23 @@ Given /^"([^"]*)" is following "([^"]*)"$/ do |user, friend|
                                   })
 end
 
+Given /^I am following the (\d+) users$/ do |num|
+  for i in 1..num.to_i
+    FactoryGirl.create(:friendship, {
+                                      :user => User.find_by_username("myself"),
+                                      :friend => User.find_by_username("user#{i}")
+                                    })
+  end
+end
+
+Given /^the (\d+) users are following me$/ do |num|
+  for i in 1..num.to_i
+    FactoryGirl.create(:friendship, {
+                                      :user => User.find_by_username("user#{i}"),
+                                      :friend => User.find_by_username("myself")
+                                    })
+  end
+end
 
 ### WHEN ###
 
@@ -37,21 +54,18 @@ When /^I click the followers button$/ do
   find(".btn-followers").click
 end
 
-When /^I close the login form$/ do
-  find("#close-login-form").click
-end
 
 ### THEN ###
 
 Then /^I should see "([^"]*)" with button to "([^"]*)"$/ do |user, button|
-  within("#friend#{User.find_by_username(user).id}") do
+  within("#user#{User.find_by_username(user).id}-search") do
     expect(page).to have_content(user)
     expect(page).to have_css(".btn-#{button}")
   end
 end
 
 Then /^I should see "([^"]*)" in friendship list$/ do |user|
-  within("#friend#{User.find_by_username(user).id}") do
+  within("#user#{User.find_by_username(user).id}-search") do
     expect(page).to have_content(user)
   end
 end

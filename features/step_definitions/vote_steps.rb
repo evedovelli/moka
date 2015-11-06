@@ -49,6 +49,11 @@ When /^I click to see voters for "([^"]*)"$/ do |option|
   find("#votes#{Option.find_by_name(option).id}").click
 end
 
+When /^I click to load more voters for "([^"]*)"$/ do |option|
+  find("#next_page-option#{Option.find_by_name(option).id}").click
+end
+
+
 ### THEN ###
 
 Then /^I should see "([^"]*)" with (\d+) vote(?:|s)$/ do |option, votes|
@@ -94,13 +99,29 @@ Then /^I should not see "([^"]*)" option selected for the (\d+)(?:st|nd|rd|th) b
 end
 
 Then /^I should not see voters for "([^"]*)"$/ do |option|
-  expect(page).not_to have_css("#vote_index#{Option.find_by_name(option).id}")
+  expect(page).not_to have_css("#votes-modal-option#{Option.find_by_name(option).id}")
 end
 
-Then /^I should see the (\d+) voters for "([^"]*)"$/ do |voters, option|
-  within("#vote_index#{Option.find_by_name(option).id}") do
+Then /^I should see the (\d+) (?:|first )voters for "([^"]*)"$/ do |voters, option|
+  within("#votes-modal-option#{Option.find_by_name(option).id}") do
     for i in 1..voters.to_i
       expect(page).to have_text("user_#{option}_#{i}")
+    end
+  end
+end
+
+Then /^I should see from the (\d+)(?:st|nd|rd|th) to the (\d+)(?:st|nd|rd|th) voter for "([^"]*)"$/ do |first, last, option|
+  within("#votes-modal-option#{Option.find_by_name(option).id}") do
+    for i in first.to_i..last.to_i
+      expect(page).to have_text("user_#{option}_#{i}")
+    end
+  end
+end
+
+Then /^I should not see from the (\d+)(?:st|nd|rd|th) to the (\d+)(?:st|nd|rd|th) voter for "([^"]*)"$/ do |first, last, option|
+  within("#votes-modal-option#{Option.find_by_name(option).id}") do
+    for i in first.to_i..last.to_i
+      expect(page).not_to have_text("user_#{option}_#{i}")
     end
   end
 end

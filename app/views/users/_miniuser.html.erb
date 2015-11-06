@@ -1,0 +1,13 @@
+<tr id="user<%= user.id %>-mini" class="user-mini">
+  <td><%= link_to(image_tag(user.avatar.url(:icon), :class => "img-polaroid"), user_path(user)) %></td>
+  <td>
+    <h5><%= link_to(user.username, user_path(user)) %></h5>
+  </td>
+  <td>
+    <div class="span2 pull-right">
+      <div id="user-button<%= user.id %>" class="user-button">
+        <%= user_button_for(user) %>
+      </div>
+    </div>
+  </td>
+</tr>
