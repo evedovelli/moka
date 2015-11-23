@@ -47,7 +47,7 @@ RSpec.describe FriendshipMailer, :type => :mailer do
                                                  :id => @follower.username))
     end
     it 'should contains follow back message' do
-      expect(mail.body.encoded).to match("friend is now following you on <span style=\"color:#ff5555; font-size:17px; letter-spacing:0.3px; font-weight:bold\">Batalharia</span>.")
+      expect(mail.body.encoded).to match("friend is now following you on Batalharia.")
     end
     it 'should contains visit profile message' do
       expect(mail.body.encoded).to match("Visit friend profile")
