@@ -52,6 +52,10 @@ describe FriendshipsController do
           allow(@friendships).to receive(:build).and_return(@friendship)
           allow(@fake_user).to receive(:friendships).and_return(@friendships)
           allow(controller).to receive(:current_user).and_return(@fake_user)
+
+          @mail = double("mail")
+          allow(@mail).to receive(:deliver)
+          allow(FriendshipMailer).to receive(:new_follower).and_return(@mail)
         end
         it "should call build with correct friend_id" do
           expect(@friendships).to receive(:build).with({:friend_id => @fake_friend.id})
@@ -73,37 +77,53 @@ describe FriendshipsController do
         describe "in success" do
           before :each do
             allow(@friendship).to receive(:save).and_return(true)
-            post :create, { :user_id => @fake_user.username, :friend_id => @fake_friend.id, :format => 'js' }
           end
           it "should respond to js" do
+            post :create, { :user_id => @fake_user.username, :friend_id => @fake_friend.id, :format => 'js' }
             expect(response.content_type).to eq(Mime::JS)
           end
           it "should render the update user button template" do
+            post :create, { :user_id => @fake_user.username, :friend_id => @fake_friend.id, :format => 'js' }
             expect(response).to render_template('friendships/update_user_button')
           end
           it "should make friendship available to that template" do
+            post :create, { :user_id => @fake_user.username, :friend_id => @fake_friend.id, :format => 'js' }
             expect(assigns(:friendship)).to eq(@friendship)
           end
           it "should make the friend available to that template" do
+            post :create, { :user_id => @fake_user.username, :friend_id => @fake_friend.id, :format => 'js' }
             expect(assigns(:friend)).to match(@fake_friend)
+          end
+          it "should send an email" do
+            expect(@mail).to receive(:deliver)
+            expect(FriendshipMailer).to receive(:new_follower).and_return(@mail)
+            post :create, { :user_id => @fake_user.username, :friend_id => @fake_friend.id, :format => 'js' }
           end
         end
         describe "in error" do
           before :each do
             allow(@friendship).to receive(:save).and_return(false)
-            post :create, { :user_id => @fake_user.username, :friend_id => @fake_friend.id, :format => 'js' }
           end
           it "should respond to js" do
+            post :create, { :user_id => @fake_user.username, :friend_id => @fake_friend.id, :format => 'js' }
             expect(response.content_type).to eq(Mime::JS)
           end
           it "should render the update user button template" do
+            post :create, { :user_id => @fake_user.username, :friend_id => @fake_friend.id, :format => 'js' }
             expect(response).to render_template('friendships/update_user_button')
           end
           it "should make friendship available to that template" do
+            post :create, { :user_id => @fake_user.username, :friend_id => @fake_friend.id, :format => 'js' }
             expect(assigns(:friendship)).to eq(@friendship)
           end
           it "should make the friend available to that template" do
+            post :create, { :user_id => @fake_user.username, :friend_id => @fake_friend.id, :format => 'js' }
             expect(assigns(:friend)).to match(@fake_friend)
+          end
+          it "should not send an email" do
+            expect(@mail).not_to receive(:deliver)
+            expect(FriendshipMailer).not_to receive(:new_follower)
+            post :create, { :user_id => @fake_user.username, :friend_id => @fake_friend.id, :format => 'js' }
           end
         end
       end

@@ -1,0 +1,10 @@
+en:
+  mailers:
+    url: "batalharia.com"
+    friendship:
+      from: "Batalharia <notification@batalharia.com>"
+      new: '%{follower} is now following you on Batalharia'
+      hello: "Hello %{name},"
+      message_follow_back_html: '%{follower} is now following you on <span style="color:#ff5555; font-size:17px; letter-spacing:0.3px; font-weight:bold">Batalharia</span>.'
+      visit_profile: "Visit %{follower} profile"
+      visit_profile_text: "Click on %{link} to visit %{follower} profile."

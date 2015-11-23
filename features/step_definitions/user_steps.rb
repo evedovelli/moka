@@ -212,10 +212,6 @@ Then /^I see a successful sign in message$/ do
   expect(page).to have_content "Signed in successfully."
 end
 
-Then /^I should see a successful sign up message$/ do
-  expect(page).to have_content "Welcome! You have signed up successfully."
-end
-
 Then /^I should see an invalid email message$/ do
   expect(page).to have_content "Email is invalid"
 end

@@ -8,7 +8,8 @@ Background:
 
     Scenario: User signs up with valid data
       When I sign up with valid user data
-      Then I should see a successful sign up message
+      Then I should be on the home page
+      And I should see "A message with a confirmation link has been sent to your email address. Please open the link to activate your account."
 
     Scenario: User signs up with invalid email
       When I sign up with an invalid email

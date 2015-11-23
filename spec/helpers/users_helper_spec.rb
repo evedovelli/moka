@@ -68,4 +68,15 @@ describe UsersHelper, :type => :helper do
       expect(helper.mini_user_button_for(@user)).to eq("<a href=\"/en/users/tester/friendships?friend_id=#{@user.id}\" class=\"btn btn-block btn-follow\" data-method=\"post\" data-remote=\"true\" rel=\"nofollow\"><i class=\"icon-plus\"></i><i class=\"icon-user\"></i></a>")
     end
   end
+
+  describe "user name for" do
+    it "should return name when user has name" do
+      @user = FactoryGirl.create(:user, email: "user@user.com", username: "user", name: "Kong")
+      expect(helper.user_name_for(@user)).to eq("Kong")
+    end
+    it "should return username when user has no name" do
+      @user = FactoryGirl.create(:user, email: "user@user.com", username: "user")
+      expect(helper.user_name_for(@user)).to eq("user")
+    end
+  end
 end
