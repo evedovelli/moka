@@ -137,7 +137,7 @@ class User < ActiveRecord::Base
       user_name.downcase!
       return where('LOWER(name) LIKE ? OR LOWER(username) LIKE ?', "%#{user_name}%", "%#{user_name}%").order(:confirmed_at).page(page)
     else
-      return User.page(page)
+      return User.order(:confirmed_at).page(page)
     end
   end
 
