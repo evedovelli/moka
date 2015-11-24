@@ -25,11 +25,11 @@ en:
     mailer:
       confirmation_instructions:
         title: "Welcome %{user}!"
-        confirmation_message: 'You can confirm your account email through the link below:'
+        confirmation_message_html: 'You can confirm your <span style="color:#ff5555; font-size:17px; letter-spacing:0.3px; font-weight:bold">Batalharia</span> account email through the link below:'
         confirm: 'Confirm my account'
       reset_password_instructions:
         title: "Hello %{user}!"
-        reset_message: 'Someone has requested a link to change your password. You can do this through the link below.'
+        reset_message_html: 'Someone has requested a link to change your password for <span style="color:#ff5555; font-size:17px; letter-spacing:0.3px; font-weight:bold">Batalharia</span>.<br>You can do this by clicking below.'
         reset: 'Change my password'
         ignore: "If you didn't request this, please ignore this email."
         explanation: "Your password won't change until you access the link above and create a new one."

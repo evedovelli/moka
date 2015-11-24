@@ -9,6 +9,9 @@ group :development do
   gem 'capistrano-rails', '~> 1.1.1'
   gem 'capistrano-bundler', '~> 1.1.2'
   gem 'capistrano-rbenv', '~> 2.0.2'
+
+  # To intercept and open sent emails on browser
+  gem 'letter_opener'
 end
 group :development, :test do
   gem 'sqlite3'
@@ -24,6 +27,8 @@ group :development, :test do
 end
 group :test do
   gem "database_cleaner", ">= 0.9.1"
+
+  # To test mailers
   gem "email_spec", ">= 1.4.0"
 
   # cucumber will be used for behavior tests

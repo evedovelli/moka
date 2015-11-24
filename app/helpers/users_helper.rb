@@ -44,4 +44,8 @@ module UsersHelper
       end
     end
   end
+
+  def user_name_for(user)
+    return user.name || user.username;
+  end
 end

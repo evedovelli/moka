@@ -25,14 +25,14 @@ pt-BR:
     mailer:
       confirmation_instructions:
         title: "Bem-vindo %{user}!"
-        confirmation_message: 'Você pode confirmar seu e-mail associado a sua conta através do link abaixo:'
-        confirm: 'Confirm my account'
+        confirmation_message_html: 'Confirme seu e-mail associado a sua conta no <span style="color:#ff5555; font-size:17px; letter-spacing:0.3px; font-weight:bold">Batalharia</span> através do link abaixo:'
+        confirm: 'Confirme minha conta'
       reset_password_instructions:
         title: "Olá %{user}!"
-        reset_message: 'Alguém solicitou um link para a troca de sua senha. Você trocar a senha através do link abaixo.'
+        reset_message_html: 'Alguém solicitou um link para a troca de sua senha no <span style="color:#ff5555; font-size:17px; letter-spacing:0.3px; font-weight:bold">Batalharia</span>.<br>Você pode trocar a senha clicando abaixo.'
         reset: 'Trocar minha senha'
         ignore: 'Se você não solicitou a troca de sua senha, por favor ignore esse e-mail.'
-        explanation: 'Seu password não será alterado a menos que você acesse o link abaixo e crie um novo passwrd.'
+        explanation: 'Seu password não será alterado a menos que você acesse o link acima e crie um novo password.'
       unlock_instructions:
         title: "Olá %{user}!"
         locked_message: 'Sua conta foi bloqueada devido a um excessivo número de falhas ao tentar conectar-se.'

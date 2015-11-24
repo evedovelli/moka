@@ -8,10 +8,14 @@ class FriendshipsController < ApplicationController
   def create
     @friendship = current_user.friendships.build(:friend_id => params[:friend_id])
     authorize! :create, @friendship
-    @friendship.save
+    did_save = @friendship.save
 
     @friend = @friendship.friend
     current_user.send_friendship_notification_to(@friend) unless current_user == @friend
+
+    if did_save
+      FriendshipMailer.new_follower(current_user, @friend).deliver
+    end
 
     respond_to do |format|
       format.js { render 'friendships/update_user_button' }

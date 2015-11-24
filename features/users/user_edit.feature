@@ -22,16 +22,28 @@ Background: I exist as an user
       And I sign in with username
       Then I see an invalid login message
 
-    Scenario: I sign in and change my email and log in with new email
+    Scenario: I sign in and change my email and log in without confirming new email
       When I edit my email with "lord@email.com"
       And I sign out
+      And I sign in with "myself@email.com"
+      Then I see a successful sign in message
+
+    Scenario: I sign in and change my email, confirm it, and log in with new email
+      Given no emails have been sent
+      When I edit my email with "lord@email.com"
+      And I sign out
+      And "lord@email.com" opens the email
+      And "lord@email.com" follows "Confirm my account" in the email
       And I sign in with "lord@email.com"
       Then I see a successful sign in message
 
-    Scenario: I sign in and change my email and fail to log in with old email
+    Scenario: I sign in and change my email, confirm it, and fail to log in with old email
+      Given no emails have been sent
       When I edit my email with "lord@email.com"
       And I sign out
-      And I sign in with valid credentials
+      And "lord@email.com" opens the email
+      And "lord@email.com" follows "Confirm my account" in the email
+      And I sign in with "myself@email.com"
       Then I see an invalid login message
 
     Scenario: I sign in and change my password and log in with new password

@@ -3,9 +3,10 @@ class User < ActiveRecord::Base
   paginates_per 10
 
   # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable and :omniauthable
+  # :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable
+         :recoverable, :rememberable, :trackable, :validatable,
+         :confirmable
 
   attr_accessor :login
 
@@ -134,9 +135,9 @@ class User < ActiveRecord::Base
   def self.search(user_name, page)
     if user_name
       user_name.downcase!
-      return where('LOWER(name) LIKE ? OR LOWER(username) LIKE ?', "%#{user_name}%", "%#{user_name}%").order(:created_at).page(page)
+      return where('LOWER(name) LIKE ? OR LOWER(username) LIKE ?', "%#{user_name}%", "%#{user_name}%").order(:confirmed_at).page(page)
     else
-      return User.page(page)
+      return User.order(:confirmed_at).page(page)
     end
   end
 
