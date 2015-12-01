@@ -19,7 +19,7 @@ Moka::Application.routes.draw do
 
   get "options/:id/votes" => "options#votes", :as => :option_votes
 
-  get '/.well-known/acme-challenge/LZo2V6ot7n7FVSE1zxyOlntTalOlcCiXANi9AY71jVY' => 'letsencrypt#challenge_0'
+  get '/.well-known/acme-challenge/:id' => 'letsencrypt#challenge'
 
   root :to => "users#home"
 end
