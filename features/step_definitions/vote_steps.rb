@@ -62,6 +62,13 @@ Then /^I should see "([^"]*)" with (\d+) vote(?:|s)$/ do |option, votes|
   end
 end
 
+Then /^I should see "([^"]*)" with (\d+) vote(?:|s) and class "([^"]*)"$/ do |option, votes, size_class|
+  within(find("#results#{Option.find_by_name(option).id}")) do
+    expect(page).to have_content("#{votes} vote")
+    expect(page).to have_css(".#{size_class}")
+  end
+end
+
 Then /^I should see (\d+) vote(?:|s) for "([^"]*)" for the (\d+)(?:st|nd|rd|th) battle$/ do |votes, option, battle_id|
   within(all('.battle')[battle_id.to_i - 1]) do
     within(find("#results#{Option.find_by_name(option).id}")) do

@@ -110,6 +110,7 @@ describe UsersController do
           @battles = [double("b1"), double("b2"), double("b3"), double("b4")]
           @voted_for = double("vf")
           allow(Battle).to receive(:user_home).and_return(@battles)
+          allow(Battle).to receive(:victorious).and_return(@battles)
           allow(@fake_user).to receive(:voted_for_options).with(@battles).and_return(@voted_for)
           allow(controller).to receive(:current_user).and_return(@fake_user)
         end
@@ -142,6 +143,11 @@ describe UsersController do
           expect(@fake_user).to receive(:voted_for_options).with(@battles).and_return(@voted_for)
           get :home
         end
+        it "should call victorious with list of battles" do
+          expect(Battle).to receive(:victorious).with(@battles).and_return(@battles)
+          get :home, {page: "2"}
+          expect(assigns(:victorious)).to eq(@battles)
+        end
         it "should make the voted for battles available to that template" do
           get :home
           expect(assigns(:voted_for)).to eq(@voted_for)
@@ -164,6 +170,7 @@ describe UsersController do
           allow(User).to receive(:find_by_username!).with(@other_user.username).and_return(@other_user)
           @voted_for = double("vf")
           allow(@fake_user).to receive(:voted_for_options).and_return(@voted_for)
+          allow(Battle).to receive(:victorious).and_return(@battles)
           allow(controller).to receive(:current_user).and_return(@fake_user)
         end
         it "should search user with correct user id" do
@@ -193,6 +200,11 @@ describe UsersController do
         it "should call voted_for_options with correct argument" do
           expect(@fake_user).to receive(:voted_for_options).with(@battles).and_return(@voted_for)
           get :show, {:id => @other_user.username}
+        end
+        it "should call victorious with list of battles" do
+          expect(Battle).to receive(:victorious).with(@battles).and_return(@battles)
+          get :show, {:id => @other_user.username}
+          expect(assigns(:victorious)).to eq(@battles)
         end
         it "should make the voted for battles available to that template" do
           get :show, {:id => @other_user.username}

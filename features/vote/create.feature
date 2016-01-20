@@ -20,7 +20,7 @@ Background: There is a battle running
       And "Vader" has 10 votes
       And I am on the home page
       When I vote for "Horror"
-      Then I should see "Horror" with 5 votes
-      And I should see "Devil" with 5 votes
-      And I should see "Vader" with 10 votes
+      Then I should see "Horror" with 5 votes and class "vote-size-small"
+      And I should see "Devil" with 5 votes and class "vote-size-small"
+      And I should see "Vader" with 10 votes and class "vote-size-medium"
 

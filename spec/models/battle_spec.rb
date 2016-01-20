@@ -354,7 +354,72 @@ describe Battle do
       battle.save
       expect(battle.hashtag_list).to eq([])
     end
+  end
 
+  describe 'victorious' do
+    before(:each) do
+      @user = FactoryGirl.create(:user, username: "charlie", email: "charlie@brown.com")
+      @other_user = FactoryGirl.create(:user, username: "patty", email: "patty@peppermint.com")
+
+      @battle = FactoryGirl.create(:battle,
+                                   :starts_at => DateTime.now - 1.day,
+                                   :duration => 48*60,
+                                   :user => @user)
+      @other_battle = FactoryGirl.create(:battle,
+                                         :starts_at => DateTime.now - 1.day,
+                                         :duration => 48*60,
+                                         :user => @user)
+    end
+    it 'should return a hash with winner options marked as victorious' do
+      @vote1 = FactoryGirl.create(:vote, user: @user, option: @battle.options[0])
+      @vote2 = FactoryGirl.create(:vote, user: @user, option: @other_battle.options[1])
+
+      expect(Battle.victorious([@battle, @other_battle])).to eq({
+        @battle.options[0].id => true,
+        @battle.options[1].id => false,
+        @other_battle.options[0].id => false,
+        @other_battle.options[1].id => true
+      })
+    end
+    it 'should return victorious when there are multiple winners per battle' do
+      @vote1 = FactoryGirl.create(:vote, user: @user, option: @battle.options[0])
+      @vote2 = FactoryGirl.create(:vote, user: @user, option: @other_battle.options[1])
+      @other_vote1 = FactoryGirl.create(:vote, user: @other_user, option: @battle.options[0])
+      @other_vote2 = FactoryGirl.create(:vote, user: @other_user, option: @other_battle.options[0])
+
+      expect(Battle.victorious([@battle, @other_battle])).to eq({
+        @battle.options[0].id => true,
+        @battle.options[1].id => false,
+        @other_battle.options[0].id => true,
+        @other_battle.options[1].id => true
+      })
+    end
+    it 'should not return victorious when there are no votes' do
+      expect(Battle.victorious([@battle, @other_battle])).to eq({
+        @battle.options[0].id => false,
+        @battle.options[1].id => false,
+        @other_battle.options[0].id => false,
+        @other_battle.options[1].id => false
+      })
+    end
+  end
+
+  describe 'number_of_votes' do
+    it 'should return the sum of votes for battle' do
+      @user = FactoryGirl.create(:user, username: "charlie", email: "charlie@brown.com")
+      @other_user = FactoryGirl.create(:user, username: "patty", email: "patty@peppermint.com")
+      @another_user = FactoryGirl.create(:user, username: "linus", email: "linus@peanuts.com")
+
+      @battle = FactoryGirl.create(:battle,
+                                   :starts_at => DateTime.now - 1.day,
+                                   :duration => 48*60,
+                                   :user => @user)
+      @vote1 = FactoryGirl.create(:vote, user: @user, option: @battle.options[0])
+      @other_vote1 = FactoryGirl.create(:vote, user: @other_user, option: @battle.options[0])
+      @another_vote1 = FactoryGirl.create(:vote, user: @another_user, option: @battle.options[1])
+
+      expect(@battle.number_of_votes).to eq(3)
+    end
   end
 
 end
