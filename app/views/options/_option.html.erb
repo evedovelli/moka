@@ -3,9 +3,9 @@
 
     <div class="vote_picture_frame <%= if battle.current?
                                          "current_battle"
-                                       end %> <%= fill_if_voted(option.id, "outer_selected_picture") %>">
+                                       end %> <%= fill_if_voted(option.id, "outer_selected_picture") %> <%= fill_if_victorious(option.id, "outer_victorious_picture", battle.current?) %>">
 
-      <div id="<%="vote_option#{option.id}"%>" class="vote_picture <%= fill_if_voted(option.id, "selected_picture") %>">
+      <div id="<%="vote_option#{option.id}"%>" class="vote_picture <%= fill_if_voted(option.id, "selected_picture") %> <%= fill_if_victorious(option.id, "victorious_picture", battle.current?) %>">
 
         <%= f.radio_button(
           :option,
@@ -15,7 +15,7 @@
           :class => "vote_radio"
         ) %>
 
-        <div class="option-box <%= fill_if_voted(option.id, "selected_box") %>">
+        <div class="option-box <%= fill_if_voted(option.id, "selected_box") %> <%= fill_if_victorious(option.id, "victorious_box", battle.current?) %>">
           <div class="row">
             <div class="option-sizeable span<%= size %>">
               <div class="picture-box">
@@ -35,7 +35,7 @@
     </div>
 
     <% if can? :show_results, battle %>
-      <%= render :partial => 'votes/results', :locals => { :option => option, :votes => option.number_of_votes, :size => size } %>
+      <%= render :partial => 'votes/results', :locals => { :option => option, :votes => option.number_of_votes, :total_votes => battle.number_of_votes, :size => size } %>
     <% else %>
       <div id='<%="results#{option.id}"%>' style='display:none;'></div>
     <% end %>

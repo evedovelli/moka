@@ -79,4 +79,33 @@ class Battle < ActiveRecord::Base
     end
   end
 
+  def self.victorious(battles)
+    victory_for = {}
+    battles.each do |battle|
+      most_votes = 0
+      victorious_options = []
+      battle.options.each do |option|
+        victory_for[option.id] = false
+        if option.number_of_votes() > most_votes
+          victorious_options = [option]
+          most_votes = option.number_of_votes()
+        elsif option.number_of_votes() == most_votes and most_votes > 0
+          victorious_options.push(option)
+        end
+      end
+      victorious_options.each do |option|
+        victory_for[option.id] = true
+      end
+    end
+    return victory_for
+  end
+
+  def number_of_votes
+    total = 0
+    options.each do |option|
+      total += option.number_of_votes
+    end
+    return total
+  end
+
 end

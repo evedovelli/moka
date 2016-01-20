@@ -11,9 +11,9 @@ Background: There is a battle running
       Given I am on the home page
       When I vote for "Horror"
       And I vote for "Horror"
-      Then I should see "Horror" with 1 vote
-      And I should see "Devil" with 0 votes
-      And I should see "Vader" with 0 votes
+      Then I should see "Horror" with 1 vote and class "vote-size-biggest"
+      And I should see "Devil" with 0 votes and class "vote-size-smallest"
+      And I should see "Vader" with 0 votes and class "vote-size-smallest"
       And I should see "Horror" option selected
 
     @javascript
@@ -21,9 +21,9 @@ Background: There is a battle running
       Given I am on the home page
       When I vote for "Horror"
       And I vote for "Devil"
-      Then I should see "Horror" with 0 votes
-      And I should see "Devil" with 1 vote
-      And I should see "Vader" with 0 votes
+      Then I should see "Horror" with 0 votes and class "vote-size-smallest"
+      And I should see "Devil" with 1 vote and class "vote-size-biggest"
+      And I should see "Vader" with 0 votes and class "vote-size-smallest"
       And I should see "Devil" option selected
       And I should not see "Horror" option selected
 

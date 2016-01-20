@@ -5,4 +5,11 @@ module OptionsHelper
     end
     return ""
   end
+
+  def fill_if_victorious(option_id, content, current)
+    if @victorious && @victorious[option_id] && (not current)
+      return content
+    end
+    return ""
+  end
 end

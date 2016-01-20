@@ -3,6 +3,7 @@
                                                               :locals => {
                                                                 :option => option,
                                                                 :votes => option.number_of_votes,
+                                                                :total_votes => @battle.number_of_votes,
                                                                 :size => option_size(@battle.options.count)
                                                               }) %>");
 <% end %>

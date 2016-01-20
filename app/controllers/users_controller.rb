@@ -13,6 +13,7 @@ class UsersController < ApplicationController
 
     @battles = Battle.user_home(@user, params[:page])
     @voted_for = current_user.voted_for_options(@battles)
+    @victorious = Battle.victorious(@battles)
     @vote = Vote.new()
     respond_to do |format|
       format.js { render "users/load_more_battles" }
@@ -27,6 +28,7 @@ class UsersController < ApplicationController
     if current_user
       @voted_for = current_user.voted_for_options(@battles)
     end
+    @victorious = Battle.victorious(@battles)
 
     @vote = Vote.new()
     @number_of_following = @user.friends.count

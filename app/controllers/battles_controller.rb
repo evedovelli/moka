@@ -9,6 +9,7 @@ class BattlesController < ApplicationController
     else
       @voted_for = nil
     end
+    @victorious = Battle.victorious([@battle])
   end
 
   def new
@@ -128,6 +129,7 @@ class BattlesController < ApplicationController
       else
         @voted_for = nil
       end
+      @victorious = Battle.victorious(@battles)
       @vote = Vote.new()
 
       respond_to do |format|
