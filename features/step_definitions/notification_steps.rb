@@ -4,31 +4,49 @@ include ActionDispatch::TestProcess
 
 Given /^"([^"]+)" logs in and votes for "([^"]+)"$/ do |user, option|
   click_link("Logout")
+  within("#flash_notice") do
+    expect(page).to have_content("Signed out successfully")
+  end
   step %Q{I go to the sign in page}
   sign_in("#{user}@email.com", "#{user}password")
   step %Q{I go to the 1st battle page}
   step %Q{I vote for "#{option}"}
   click_link("Logout")
+  within("#flash_notice") do
+    expect(page).to have_content("Signed out successfully")
+  end
   sign_in("myself@email.com", "secretpassword")
 end
 
 Given /^"([^"]+)" logs in and follows me$/ do |user|
   click_link("Logout")
+  within("#flash_notice") do
+    expect(page).to have_content("Signed out successfully")
+  end
   step %Q{I go to the sign in page}
   sign_in("#{user}@email.com", "#{user}password")
   step %Q{I go to my profile page}
   step %Q{I click the "follow" button}
   click_link("Logout")
+  within("#flash_notice") do
+    expect(page).to have_content("Signed out successfully")
+  end
   sign_in("myself@email.com", "secretpassword")
 end
 
 Given /^"([^"]+)" logs in and unfollows me$/ do |user|
   click_link("Logout")
+  within("#flash_notice") do
+    expect(page).to have_content("Signed out successfully")
+  end
   step %Q{I go to the sign in page}
   sign_in("#{user}@email.com", "#{user}password")
   step %Q{I go to my profile page}
   step %Q{I click the "unfollow" button}
   click_link("Logout")
+  within("#flash_notice") do
+    expect(page).to have_content("Signed out successfully")
+  end
   sign_in("myself@email.com", "secretpassword")
 end
 

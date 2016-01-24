@@ -44,6 +44,9 @@ group :test do
   gem "timecop", "~> 0.7.1"
 
   gem 'i18n-tasks', '~> 0.7.3'
+
+  # Mocks web requests for tests
+  gem 'webmock', '~> 1.22'
 end
 group :production do
   gem 'pg'
