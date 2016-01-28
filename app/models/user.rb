@@ -4,9 +4,9 @@ class User < ActiveRecord::Base
 
   # Include default devise modules. Others available are:
   # :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable, :registerable,
+  devise :database_authenticatable, :registerable, :confirmable,
          :recoverable, :rememberable, :trackable, :validatable,
-         :confirmable
+         :omniauthable, :omniauth_providers => [:facebook]
 
   attr_accessor :login
 
@@ -76,6 +76,16 @@ class User < ActiveRecord::Base
   # Overrides numeric id by username for referring to user in URLs
   def to_param
     username
+  end
+
+  def self.from_omniauth(auth)
+    where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
+      user.email = auth.info.email
+      user.password = Devise.friendly_token[0,20]
+      user.name = auth.info.name   # assuming the user model has a name
+      user.image = auth.info.image # assuming the user model has an image
+      user.username = auth.info.name.gsub(/\s/, '') # assuming the user model has a name
+    end
   end
 
   def sorted_battles(page)
