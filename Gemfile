@@ -110,6 +110,9 @@ gem 'remotipart', '~> 1.2'
 # For user authentication
 gem "devise", ">= 3.2.4"
 
+# Sign up with Facebook account
+gem 'omniauth-facebook'
+
 # Used to set roles for user
 gem 'rolify'
 

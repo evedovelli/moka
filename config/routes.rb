@@ -1,7 +1,7 @@
 Moka::Application.routes.draw do
   filter :locale
 
-  devise_for :users
+  devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
 
   resources :users, :only => [:show, :index, :edit, :update] do
     resources :friendships, :only => [:create, :destroy, :index]
