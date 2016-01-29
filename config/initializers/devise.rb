@@ -235,6 +235,7 @@ Devise.setup do |config|
   # config.omniauth :github, 'APP_ID', 'APP_SECRET', scope: 'user,public_repo'
   config.omniauth :facebook, ENV['FACEBOOK_KEY'], ENV['FACEBOOK_SECRET'],
                   scope: 'public_profile,user_friends,email',
+                  info_fields: 'email,name',
                   secure_image_url: true
 
   # ==> Warden configuration

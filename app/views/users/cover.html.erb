@@ -35,7 +35,7 @@
               <div class="row">
                 <div class="span2 offset2">
                   <%= link_to(t('devise.shared._links.omniauth', provider: :facebook),
-                              user_omniauth_authorize_path(:facebook),
+                              '/users/auth/facebook',
                               :class => 'btn btn-primary btn-large btn-block btn-login') %>
                 </div>
               </div>
