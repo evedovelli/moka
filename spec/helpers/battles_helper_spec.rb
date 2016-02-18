@@ -1,4 +1,4 @@
-require "spec_helper"
+require "rails_helper"
 
 describe BattlesHelper, :type => :helper do
   describe "visible battles" do

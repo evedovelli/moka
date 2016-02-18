@@ -1,7 +1,0 @@
-en:
-  recaptcha:
-    errors:
-      incorrect-captcha-sol: 'Fail'
-      verification_failed: "Are you a robot? If you aren't, please check option and try again!"
-      recaptcha_unreachable: "It wasn't possible to confirm you are not a robot. Please try again!"
-

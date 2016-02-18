@@ -1,4 +1,4 @@
-require "spec_helper"
+require "rails_helper"
 
 describe OptionsHelper, :type => :helper do
   describe "fill if voted" do

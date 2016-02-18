@@ -10,6 +10,22 @@
           <%= render "devise/shared/links" %>
         </div>
       </div>
+
+      <div class="control-group">
+        <div class="controls">
+          <%= link_to('/users/auth/facebook',
+                      :id => 'facebook-sign-in',
+                      :class => 'btn btn-primary btn-facebook btn-large btn-block') do %>
+            <table class="facebook-login-table">
+              <tr>
+                <td><%= fa_icon "facebook-square", class: "fa-1x" %></td>
+                <td></td>
+                <td><%= t('devise.shared._links.omniauth', provider: :Facebook) %></td>
+              </tr>
+            </table>
+          <% end %>
+        </div>
+      </div>
     </div>
 
   </div>

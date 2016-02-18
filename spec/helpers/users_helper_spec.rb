@@ -1,4 +1,4 @@
-require "spec_helper"
+require "rails_helper"
 
 describe UsersHelper, :type => :helper do
   describe "user button for" do
@@ -77,6 +77,28 @@ describe UsersHelper, :type => :helper do
     it "should return username when user has no name" do
       @user = FactoryGirl.create(:user, email: "user@user.com", username: "user")
       expect(helper.user_name_for(@user)).to eq("user")
+    end
+  end
+
+  describe "from omniauth?" do
+    it "should return false when user is nil" do
+      @user = nil
+      expect(helper.from_omniauth?(@user)).to eq(nil)
+    end
+    it "should return false when user identities is nil" do
+      @user = FactoryGirl.create(:user, email: "user@user.com", username: "user")
+      expect(@user).to receive(:identities).and_return(nil)
+      expect(helper.from_omniauth?(@user)).to eq(nil)
+    end
+    it "should return false when user identities is empty" do
+      @user = FactoryGirl.create(:user, email: "user@user.com", username: "user")
+      expect(@user).to receive(:identities).twice.and_return([])
+      expect(helper.from_omniauth?(@user)).to eq(false)
+    end
+    it "should return true when user identities has identities" do
+      @user = FactoryGirl.create(:user, email: "user@user.com", username: "user")
+      expect(@user).to receive(:identities).twice.and_return([double])
+      expect(helper.from_omniauth?(@user)).to eq(true)
     end
   end
 end

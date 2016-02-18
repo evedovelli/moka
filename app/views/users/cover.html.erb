@@ -23,20 +23,28 @@
             <div class="span5">
               <div class="login-buttons hidden-phone"></div>
               <div class="row">
-                <div class="span2 offset2">
+                <div class="span3 offset1">
+                  <%= link_to('/users/auth/facebook',
+                              :id => 'facebook-sign-in',
+                              :class => 'btn btn-primary btn-facebook btn-large btn-block btn-login') do %>
+                    <table class="facebook-login-table">
+                      <tr>
+                        <td><%= fa_icon "facebook-square", class: "fa-3x" %></td>
+                        <td></td>
+                        <td><%= t('devise.shared._links.omniauth', provider: :Facebook) %></td>
+                      </tr>
+                    </table>
+                  <% end %>
+                </div>
+              </div>
+              <div class="row">
+                <div class="span3 offset1">
                   <%= link_to(t('.sign_up'), new_user_registration_path, :class => 'btn btn-primary btn-large btn-block btn-login') %>
                 </div>
               </div>
               <div class="row">
-                <div class="span2 offset2">
+                <div class="span3 offset1">
                   <%= link_to(t('.login'), new_user_session_path, :class => 'btn btn-primary btn-large btn-block btn-login') %>
-                </div>
-              </div>
-              <div class="row">
-                <div class="span2 offset2">
-                  <%= link_to(t('devise.shared._links.omniauth', provider: :facebook),
-                              '/users/auth/facebook',
-                              :class => 'btn btn-primary btn-large btn-block btn-login') %>
                 </div>
               </div>
             </div>

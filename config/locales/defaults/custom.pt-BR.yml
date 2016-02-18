@@ -15,6 +15,8 @@ pt-BR:
         change_password_help: 'Sua senha atual é necessária para confirmar as mudanças'
         cancel_my_account: 'Cancelar minha conta'
         unhappy: 'Infeliz?'
+        facebook_connect: 'Conectar com sua conta do Facebook'
+        facebook_connected_html: 'Conectado ao %{icon}<b class="facebook-logo facebook-letters">acebook</b>'
     sessions:
       new:
         title: 'Entrar'
@@ -54,7 +56,7 @@ pt-BR:
         recover: 'Esqueceu a sua senha?'
         confirm: "Não recebeu as instruções de confirmação?"
         unlock: "Não recebeu as instruções para desbloqueio?"
-        omniauth: "Entrar com %{provider}"
+        omniauth: "Entrar usando %{provider}"
     unlocks:
       new:
         title: 'Reenviar instruções para desbloqueio'

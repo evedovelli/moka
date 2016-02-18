@@ -1,7 +1,0 @@
-pt-BR:
-  recaptcha:
-    errors:
-      incorrect-captcha-sol: 'Falha'
-      verification_failed: 'Você é um robô? Se não for, marque a opção e tente novamente!'
-      recaptcha_unreachable: 'Não foi possível confirmar que você não é um robô. Tente novamente!'
-

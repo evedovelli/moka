@@ -25,6 +25,12 @@
           <% else %>
             <li><%= link_to t('layouts._navigation.login'), new_user_session_path %></li>
             <li><%= link_to t('layouts._navigation.sign_up'), new_user_registration_path %></li>
+            <li>
+              <%= link_to('/users/auth/facebook') do %>
+                <%= fa_icon "facebook-square", class: "fa-1x facebook-icon-color" %>
+                <%= t('devise.shared._links.omniauth', provider: :Facebook) %>
+              <% end %>
+            </li>
           <% end %>
         </ul>
       </nav>

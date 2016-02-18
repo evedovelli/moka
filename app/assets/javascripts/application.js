@@ -30,5 +30,5 @@ function goBack()
 }
 
 jQuery(function() {
-  $('#flash_messages').fadeOut(5000)
+  $('#flash_messages').fadeOut(10000)
 });
