@@ -7,20 +7,28 @@
   </div>
   <div class="modal-body">
 
-    <%= render :partial => 'devise/sessions/form',
+    <div class="facebook-login-box">
+      <%= link_to('/users/auth/facebook',
+                  :id => 'facebook-sign-in',
+                  :class => 'btn btn-primary btn-facebook btn-large btn-block') do %>
+        <table class="facebook-login-table">
+          <tr>
+            <td><%= fa_icon "facebook-square", class: "fa-1x" %></td>
+            <td></td>
+            <td><%= t('devise.shared._links.omniauth', provider: :Facebook) %></td>
+          </tr>
+        </table>
+      <% end %>
+    </div>
+
+    <%= render :partial => 'devise/sessions/inline_form',
                :locals => {
                  :resource => :user,
                  :resource_name => :user
                } %>
 
-    <div class="form-horizontal">
-      <div class="control-group">
-        <div class="controls">
-          <p><%= t('users._overlay_sign_in.not_a_member_html', :link => link_to(t('users._overlay_sign_in.sign_up'), new_registration_path(:user))) %></p>
-          <p><%= link_to t('devise.shared._links.recover'), new_password_path(:user) %></p>
-        </div>
-      </div>
-    </div>
+    <p><%= t('users._overlay_sign_in.not_a_member_html', :link => link_to(t('users._overlay_sign_in.sign_up'), new_registration_path(:user))) %></p>
+    <p><%= link_to t('devise.shared._links.recover'), new_password_path(:user) %></p>
 
   </div>
 </div>

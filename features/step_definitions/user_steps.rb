@@ -35,6 +35,10 @@ def sign_in(email, password)
   click_button "Sign in"
 end
 
+def to_boolean(str)
+  str != 'false'
+end
+
 ### GIVEN ###
 Given /^I am not logged in$/ do
   logout(:user)
@@ -62,6 +66,15 @@ Given /^the following users exist:$/ do |table|
   end
 end
 
+Given /^I exist as an user with:$/ do |table|
+  table.hashes.each do |user|
+    create_user(user[:username],
+                user[:email] || "#{user[:username]}@email.com",
+                user[:password] || "#{user[:username]}password",
+                user[:name] || user[:username])
+  end
+end
+
 Given /^I do not exist as an user$/ do
   delete_user("myself@email.com")
 end
@@ -78,6 +91,51 @@ end
 Given /^I have uploaded the "([^"]*)" image as my profile picture$/ do |image|
   user = User.find_by_username("myself")
   user.update_attributes({:avatar => Rack::Test::UploadedFile.new(create_path(image), 'image/png')})
+end
+
+Given /^I accept to share my Facebook info:$/ do |table|
+  table.hashes.each do |user|
+    if user[:name]
+      OmniAuth.config.mock_auth[:facebook] = OmniAuth::AuthHash.new({
+        :provider => 'facebook',
+        :uid => '8734210',
+        :info => {
+          :email => user[:email],
+          :name => user[:name],
+          :image => user[:picture],
+          :verified => to_boolean(user[:verified])
+        },
+      })
+    else
+      OmniAuth.config.mock_auth[:facebook] = OmniAuth::AuthHash.new({
+        :provider => 'facebook',
+        :uid => '8734210',
+        :info => {
+          :email => user[:email],
+          :verified => to_boolean(user[:verified])
+        },
+      })
+    end
+  end
+end
+
+Given /^I have signed up with my Facebook account$/ do
+  step %Q{I am on the home page}
+  OmniAuth.config.mock_auth[:facebook] = OmniAuth::AuthHash.new({
+    :provider => 'facebook',
+    :uid => '8734210',
+    :info => {
+      :email => "myself@email.com",
+      :name => "I Myself",
+      :image => "profile.jpg",
+      :verified => true
+    },
+  })
+  step %Q{I click in the Sign in with Facebook button}
+end
+
+Given /^I am not signed in$/ do
+  step %Q{I sign out}
 end
 
 
@@ -192,6 +250,19 @@ When /^I close the login window$/ do
   step %Q{I close the modal window}
 end
 
+When /^I click in the Sign in with Facebook button$/ do
+  find('#facebook-sign-in').click
+end
+
+Then /^I should see my Facebook account connected$/ do
+  expect(page).to have_css(".facebook-connected")
+end
+
+When /^I click to connect my Facebook account$/ do
+  find('#facebook-sign-in').click
+end
+
+
 ### THEN ###
 
 Then /^I should be signed in$/ do
@@ -254,6 +325,12 @@ end
 
 Then /^I should see my username$/ do
   expect(page).to have_content "myself"
+end
+
+Then /^I should see "([^"]*)" as my username$/ do |username|
+  within(".username") do
+    expect(page).to have_content username
+  end
 end
 
 Then /^I should see "([^"]*)" as my name$/ do |name|
@@ -331,4 +408,8 @@ end
 
 Then /^I should not find user "([^"]*)"$/ do |user|
   expect(page).not_to have_css("#user#{User.find_by_username(user).id}-search")
+end
+
+Then /^I should be redirected to Facebook again$/ do
+  expect(URI.parse(current_url).path).to eq("users/auth/facebook")
 end

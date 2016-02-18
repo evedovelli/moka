@@ -139,3 +139,6 @@ gem 'acts-as-taggable-on', '~> 3.4.2'
 
 # To filter hashtags into sentences
 gem 'twitter-text', '~> 1.13.0'
+
+# FontAwesome Web fonts and stylesheets
+gem 'font-awesome-rails'

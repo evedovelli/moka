@@ -48,4 +48,8 @@ module UsersHelper
   def user_name_for(user)
     return user.name || user.username;
   end
+
+  def from_omniauth?(user)
+    return user && user.identities && user.identities.count > 0
+  end
 end

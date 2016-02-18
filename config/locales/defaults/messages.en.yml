@@ -20,3 +20,7 @@ en:
     uniqueness_friend: 'Already following this user'
     single_vote_per_battle: 'can have one vote per battle'
     invalid_search: 'Invalid search'
+    profile_updated: 'Your profile was successfully updated'
+    omniauth_unknown_error: 'an unknown error occurred'
+    omniauth_error: 'an error occurred'
+    omniauth_already_exists_error: 'the account is already connected to an user'

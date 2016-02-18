@@ -19,6 +19,7 @@ class User < ActiveRecord::Base
   has_many :options, :through => :votes
   has_many :notifications
   has_many :sent_notifications, :class_name => "Notification", :foreign_key => "sender_id"
+  has_many :identities
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :login, :username, :email, :password, :password_confirmation, :remember_me, :avatar, :name, :unread_notifications
@@ -78,18 +79,58 @@ class User < ActiveRecord::Base
     username
   end
 
-  def self.from_omniauth(auth)
-    where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
-      user.email = auth.info.email
-      user.password = Devise.friendly_token[0,20]
-      user.name = auth.info.name   # assuming the user model has a name
-#       user.avatar = auth.info.image # assuming the user model has an image
-      if (auth.extra && auth.extra.raw_info && auth.extra.raw_info.username)
-        user.username = auth.extra.raw_info.username
-      else
-        user.username = "changeme"
+  def self.find_for_oauth(auth, signed_in_resource)
+    # Get the identity and user if they exist
+    identity = Identity.find_for_oauth(auth)
+
+    # If a signed_in_resource is provided it always overrides the existing user
+    # to prevent the identity being locked with accidentally created accounts.
+    # Note that this may leave zombie accounts (with no associated identity) which
+    # can be cleaned up at a later date.
+    user = signed_in_resource ? signed_in_resource : identity.user
+
+    # Create the user if needed
+    if user.nil?
+      email = auth.info.email
+      user = User.where(:email => email).first if email
+
+      # Create the user if it's a new registration
+      if user.nil?
+        # Get an initial unique username (there is a small chance this username
+        # gets used inbetween User.new and user.save!)
+        username_part = email.split("@").first.parameterize.underscore
+        username = username_part.dup
+        num = 1
+        while (User.where(username: username).count > 0)
+          username = "#{username_part}#{num}"
+          num = num + 1
+        end
+
+        user = User.new(
+          name: auth.info.name,
+          email: email,
+          username: username,
+          password: Devise.friendly_token[0,20]
+        )
+        user.skip_confirmation! if auth.info.verified
+        user.save!
       end
     end
+
+    # Associate the identity with the user if needed
+    if (identity.user == nil)
+      identity.user = user
+      identity.save!
+    elsif (identity.user != user)
+      return nil
+    end
+
+    # Fill up user info when missing
+    if not user.name
+      user.update_attributes(name: auth.info.name)
+    end
+
+    return user
   end
 
   def sorted_battles(page)
@@ -162,4 +203,9 @@ class User < ActiveRecord::Base
   def followers(page)
     return self.inverse_friends.order(:username).page(page)
   end
+
+  def connected_to_facebook?
+    return self.identities.where(:provider => "facebook").size > 0
+  end
+
 end

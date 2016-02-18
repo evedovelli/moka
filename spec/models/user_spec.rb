@@ -227,6 +227,112 @@ describe User do
     end
   end
 
+  describe 'find_for_oauth' do
+    before :each do
+      @fake_user = FactoryGirl.create(:user)
+      @auth = OmniAuth::AuthHash.new({
+        :provider => 'fakebook',
+        :uid => '92312312',
+        :info => {
+          :name => 'Pamela Anderson',
+          :email => 'pamela@malibu.com',
+          :verified => true
+        }
+      })
+    end
+
+    describe 'signed in resource' do
+      it 'should save identity to current user if not saved' do
+        @identity = FactoryGirl.create(:identity)
+        expect(Identity).to receive(:find_for_oauth).with(@auth).and_return(@identity)
+
+        @other_user = FactoryGirl.create(:user, username: "other", email: "other@email.com")
+        expect(@identity).to receive(:save!).and_return(true)
+        user = User.find_for_oauth(@auth, @other_user)
+        expect(@identity.user).to eq user
+        expect(user).to eq @other_user
+      end
+      it 'should not save identity to current user if saved' do
+        @identity = FactoryGirl.create(:identity, user: @fake_user)
+        expect(Identity).to receive(:find_for_oauth).with(@auth).and_return(@identity)
+
+        expect(@identity).not_to receive(:save!)
+        user = User.find_for_oauth(@auth, @fake_user)
+        expect(@identity.user).to eq user
+      end
+      it 'should return nil if identity user exists and is different to current user' do
+        @identity = FactoryGirl.create(:identity, user: @fake_user)
+        expect(Identity).to receive(:find_for_oauth).with(@auth).and_return(@identity)
+
+        @other_user = FactoryGirl.create(:user, username: "other", email: "other@email.com")
+        expect(@identity).not_to receive(:save!)
+        user = User.find_for_oauth(@auth, @other_user)
+        expect(user).to eq nil
+      end
+    end
+
+    describe 'existing user not signed in' do
+      before :each do
+        @identity = FactoryGirl.create(:identity)
+        expect(Identity).to receive(:find_for_oauth).with(@auth).and_return(@identity)
+      end
+      it 'should save identity to current user if not saved' do
+        @other_user = FactoryGirl.create(:user, username: "pan", email: "pamela@malibu.com")
+        expect(@identity).to receive(:save!).and_return(true)
+        user = User.find_for_oauth(@auth, nil)
+        expect(@identity.user).to eq user
+        expect(user).to eq @other_user
+      end
+    end
+
+    describe 'new user' do
+      before :each do
+        @identity = FactoryGirl.create(:identity)
+      end
+      it 'should create new user' do
+        expect(Identity).to receive(:find_for_oauth).with(@auth).and_return(@identity)
+        expect(@identity).to receive(:save!).and_return(true)
+        expect(User).to receive(:where).once.ordered.with(email: 'pamela@malibu.com').and_return([])
+        expect(User).to receive(:where).once.ordered.with(username: 'pamela').and_return([])
+        expect(User).to receive(:new).and_return(@fake_user)
+        expect(@fake_user).to receive(:skip_confirmation!)
+        expect(@fake_user).to receive(:save!)
+        User.find_for_oauth(@auth, nil)
+      end
+      it 'should create new user with first option username taken' do
+        @other_user = FactoryGirl.create(:user, username: "pamela", email: "pam@malibu.com")
+        expect(Identity).to receive(:find_for_oauth).with(@auth).and_return(@identity)
+        expect(@identity).to receive(:save!).and_return(true)
+        expect(User).to receive(:where).once.ordered.with(email: 'pamela@malibu.com').and_return([])
+        expect(User).to receive(:where).once.ordered.with(username: 'pamela').and_return([@other_user])
+        expect(User).to receive(:where).once.ordered.with(username: 'pamela1').and_return([])
+        expect(User).to receive(:new).and_return(@fake_user)
+        expect(@fake_user).to receive(:skip_confirmation!)
+        expect(@fake_user).to receive(:save!)
+        User.find_for_oauth(@auth, nil)
+      end
+      it 'should create new user non-verified' do
+        @auth_unverified = OmniAuth::AuthHash.new({
+          :provider => 'fakebook',
+          :uid => '92312312',
+          :info => {
+            :name => 'Pamela Anderson',
+            :email => 'pamela@malibu.com'
+          }
+        })
+        expect(Identity).to receive(:find_for_oauth).with(@auth_unverified).and_return(@identity)
+        expect(@identity).to receive(:save!).and_return(true)
+        expect(User).to receive(:where).once.ordered.with(email: 'pamela@malibu.com').and_return([])
+        expect(User).to receive(:where).once.ordered.with(username: 'pamela').and_return([])
+        expect(User).to receive(:new).and_return(@fake_user)
+        expect(@fake_user).not_to receive(:skip_confirmation!)
+        expect(@fake_user).to receive(:save!)
+        User.find_for_oauth(@auth_unverified, nil)
+      end
+    end
+
+  end
+
   describe 'sorted_battles' do
     it 'should return the battles sorted according to start_at' do
       user = User.create!(@attr)
@@ -479,7 +585,7 @@ describe User do
     end
   end
 
-  describe 'following' do
+  describe 'followers' do
     before(:each) do
       @user = User.new(@attr)
     end
@@ -516,4 +622,17 @@ describe User do
     end
   end
 
+  describe 'connected_to_facebook?' do
+    before(:each) do
+      @user = User.new(@attr)
+    end
+    it 'should return true when an identity from facebook is found' do
+      @identity = FactoryGirl.create(:identity, {user: @user, provider: 'facebook'})
+      expect(@user.connected_to_facebook?).to eq(true)
+    end
+    it 'should return false when an identity from facebook is not found' do
+      @identity = FactoryGirl.create(:identity, {user: @user, provider: 'twitter'})
+      expect(@user.connected_to_facebook?).to eq(false)
+    end
+  end
 end

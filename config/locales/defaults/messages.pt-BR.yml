@@ -20,3 +20,7 @@ pt-BR:
     uniqueness_friend: 'Você já está seguindo este usuário'
     single_vote_per_battle: 'pode ter apenas um voto por batalha'
     invalid_search: 'Pesquisa inválida'
+    profile_updated: 'Seu perfil for atualizado com sucesso'
+    omniauth_unknown_error: 'ocorreu um erro desconhecido'
+    omniauth_error: 'ocorreu um erro'
+    omniauth_already_exists_error: 'a conta já está associada a um usuário'

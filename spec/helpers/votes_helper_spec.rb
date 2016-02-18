@@ -1,4 +1,4 @@
-require "spec_helper"
+require "rails_helper"
 
 describe VotesHelper, :type => :helper do
   describe "votes size" do
