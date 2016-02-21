@@ -9,6 +9,7 @@ describe Users::OmniauthCallbacksController do
   describe "connect with facebook" do
     describe "success" do
       it "should sign in and redirect to home page when authentication is ok" do
+        request.env["HTTP_REFERER"] = root_path
         @fake_user = FactoryGirl.create(:user)
         expect(@fake_user).to receive(:persisted?).and_return(true)
         expect(User).to receive(:find_for_oauth).and_return(@fake_user)
