@@ -113,6 +113,9 @@ gem "devise", ">= 3.2.4"
 # Sign up with Facebook account
 gem 'omniauth-facebook'
 
+# For posting on Facebook
+gem 'koala', '~> 2.2'
+
 # Used to set roles for user
 gem 'rolify'
 
@@ -142,3 +145,4 @@ gem 'twitter-text', '~> 1.13.0'
 
 # FontAwesome Web fonts and stylesheets
 gem 'font-awesome-rails'
+

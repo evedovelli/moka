@@ -77,5 +77,8 @@ module Moka
     # Devise Authentication -> forcing the application to not access the DB
     # or load models when precompiling your assets.
     config.assets.initialize_on_precompile = false
+
+    # Specify the version of Facebook's API to be used within Koala
+    Koala.config.api_version = 'v2.0'
   end
 end
