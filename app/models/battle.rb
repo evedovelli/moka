@@ -11,7 +11,8 @@ class Battle < ActiveRecord::Base
 
   accepts_nested_attributes_for :options, :allow_destroy => true
 
-  attr_accessible :starts_at, :duration, :options_attributes, :options, :user, :hidden, :title, :tag_list, :description
+  attr_accessible :starts_at, :duration, :options_attributes, :options, :user, :hidden,
+                  :title, :tag_list, :description
 
   validates :options,     :length       => { :minimum => 2, :maximum => 6 }
   validates :user,        :presence     => true

@@ -24,3 +24,6 @@ pt-BR:
     omniauth_unknown_error: 'ocorreu um erro desconhecido'
     omniauth_error: 'ocorreu um erro'
     omniauth_already_exists_error: 'a conta já está associada a um usuário'
+    or: "ou"
+    share: "Compartilhar"
+    error_share: "Erro ao compartilhar batalha no %{provider}"

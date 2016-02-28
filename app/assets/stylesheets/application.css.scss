@@ -128,3 +128,23 @@ a.extra-space {
 #search-form form {
   margin-bottom: 0px;
 }
+
+.divider {
+  width: 100%;
+  text-align: center;
+  border-bottom: 1px solid #ccc;
+  line-height: 0.1em;
+  margin: 10px 0 20px;
+}
+
+.divider .divider-text {
+  background: #fff;
+  padding: 0 10px;
+  color: #999;
+}
+
+.divider .divider-text-main-box {
+  background: $background-color;
+  padding: 0 10px;
+  color: #999;
+}

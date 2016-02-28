@@ -24,3 +24,6 @@ en:
     omniauth_unknown_error: 'an unknown error occurred'
     omniauth_error: 'an error occurred'
     omniauth_already_exists_error: 'the account is already connected to an user'
+    or: "or"
+    share: "Share"
+    error_share: "Error while sharing battle on %{provider}"

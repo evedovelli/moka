@@ -50,6 +50,9 @@ module NavigationHelpers
     when /the (\d+)(?:st|nd|rd|th) battle page/
       battle_path($1)
 
+    when /the "([^"]*)" battle page/
+      battle_path(Battle.find_by_title($1))
+
     when /the (\d+)(?:st|nd|rd|th) battle edit page/
       edit_battle_path($1)
 

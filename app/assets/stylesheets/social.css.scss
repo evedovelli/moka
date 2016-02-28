@@ -1,6 +1,15 @@
+$facebook-color: #3B5998;
+
 .btn-facebook.btn-primary {
-  background-color: #3B5998;
-  background-image: linear-gradient(to bottom, #3B5998, #3B5998)
+  background-color: $facebook-color;
+  background-image: linear-gradient(to bottom, $facebook-color, $facebook-color)
+}
+
+.btn-facebook-share.btn-primary {
+  background-color: #FFF;
+  background-image: linear-gradient(to bottom, #FFF, #FFF);
+  color: $facebook-color;
+  border-color: $facebook-color;
 }
 
 .facebook-login-table {
@@ -9,16 +18,14 @@
 }
 
 .facebook-login-box {
-  padding-bottom: 20px;
-  border-bottom: 1px solid #eee;
   margin-bottom: 20px;
 }
 
 .facebook-logo {
-  color: #3B5998;
+  color: $facebook-color;
 }
 
-.facebook-logo.facebook-letters {
+.facebook-letters {
   font-size: 16px;
 }
 
