@@ -36,6 +36,11 @@ describe Users::RegistrationsController do
           :email => 'joe@leo.com',
           :name => 'Shell',
           :verified => true
+          },
+          :credentials => {
+            :token => 'ABCDEF',
+            :expires_at => 1321747205,
+            :expires => true
         }
       })
       request.env["omniauth.auth"] = OmniAuth.config.mock_auth[:facebook]

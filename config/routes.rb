@@ -7,8 +7,7 @@ Moka::Application.routes.draw do
                                   }
 
   devise_scope :user do
-    get '/users/auth/:provider/post_callback' => 'users/omniauth_callbacks#post_callback'
-    get '/users/auth/:provider/battles/:id' => 'users/omniauth_callbacks#post_battle', as: :user_omniauth_post_battle
+    get '/users/auth/:provider/battles/:battle_id' => 'users/omniauth_callbacks#share_battle'
     get '/users/auth/:provider/setup', :to => 'users/omniauth_callbacks#setup'
   end
 

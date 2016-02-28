@@ -1,3 +1,5 @@
+<meta property="og:type" content="article" />
+
 <div class="span12">
   <div id="login-box" style='display:none;'></div>
 
@@ -9,3 +11,33 @@
     <p class='center last_page'><%= image_tag("watermark_small.png") %></p>
   </p>
 </div>
+
+
+<% content_for :head do %>
+  <!-- for Google -->
+  <meta name="description" content="<%= @battle.title %>" />
+  <meta name="keywords" content="<%= @battle.description %>" />
+  <meta name="author" content="<%= @battle.user.name %>" />
+  <meta name="application-name" content="Batalharia" />
+
+  <!-- for Facebook -->
+  <meta property="og:url" content="<%= battle_url(@battle.id) %>" />
+  <meta property="og:title" content="<%= @battle.title %>" />
+  <meta property="og:description" content="<%= @battle.description %>" />
+  <% @battle.options.each do |option| %>
+    <meta property="og:image" content="<%= option.picture.url(:original) %>" />
+  <% end %>
+  <meta property="og:site_name" content="Batalharia" />
+  <meta property="fb:app_id" content="<%= ENV['FACEBOOK_KEY'] %>" />
+  <meta property="og:type" content="batalharia:battle" />
+  <meta property="og:locale" content="<%= I18n.t('og.locale') %>" />
+  <meta property="og:locale:alternate" content="<%= I18n.t('og.locale_alternate1') %>" />
+  <meta property="og:rich_attachment" content="true" />
+
+  <!-- for Twitter -->
+  <meta name="twitter:card" content="image" />
+  <meta name="twitter:url" content="<%= battle_url(@battle.id) %>" />
+  <meta name="twitter:title" content="<%= @battle.title %>" />
+  <meta name="twitter:description" content="<%= @battle.description %>" />
+  <meta name="twitter:image" content="<%= @battle.options[0].picture.url(:medium) %>" />
+<% end %>

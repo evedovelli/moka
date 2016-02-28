@@ -105,6 +105,11 @@ Given /^I accept to share my Facebook info:$/ do |table|
           :image => user[:picture],
           :verified => to_boolean(user[:verified])
         },
+        :credentials => {
+          :token => 'ABCDEF',
+          :expires_at => 1321747205,
+          :expires => true
+        },
       })
     else
       OmniAuth.config.mock_auth[:facebook] = OmniAuth::AuthHash.new({
@@ -113,6 +118,11 @@ Given /^I accept to share my Facebook info:$/ do |table|
         :info => {
           :email => user[:email],
           :verified => to_boolean(user[:verified])
+        },
+        :credentials => {
+          :token => 'ABCDEF',
+          :expires_at => 1321747205,
+          :expires => true
         },
       })
     end
@@ -129,6 +139,11 @@ Given /^I have signed up with my Facebook account$/ do
       :name => "I Myself",
       :image => "profile.jpg",
       :verified => true
+    },
+    :credentials => {
+      :token => 'ABCDEF',
+      :expires_at => 1321747205,
+      :expires => true
     },
   })
   step %Q{I click in the Sign in with Facebook button}

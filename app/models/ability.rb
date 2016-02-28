@@ -103,6 +103,9 @@ class Ability
       (not battle.current?) || (battle.try(:user) == user) || (user.vote_for(battle))
     end
     can :hashtag, Battle
+    can :share, Battle do |battle|
+      battle.try(:user) == user
+    end
 
 
     # Votes

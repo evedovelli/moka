@@ -115,6 +115,26 @@
 
       </div>
     </div>
+
+    <% if can? :share, battle %>
+      <h5 class="divider"><span class="divider-text-main-box"><%= t('messages.share') %></span></h5>
+
+      <div class="row">
+        <div class="span2 offset5">
+          <%= link_to("/users/auth/facebook/battles/#{battle.id}",
+                      class: "btn btn-block btn-default btn-primary btn-facebook-share") do %>
+            <table class='facebook-login-table'>
+              <tr>
+                <td><%= fa_icon("facebook-square", class: "fa-lg") %></td>
+                <td></td>
+                <td>Facebook</td>
+              </tr>
+            </table>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+
   </div>
 
 </div>

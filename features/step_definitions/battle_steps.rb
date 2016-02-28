@@ -1,4 +1,5 @@
 include ActionDispatch::TestProcess
+require 'cucumber/rspec/doubles'
 
 ### GIVEN ###
 
@@ -190,6 +191,17 @@ When /^I fill (\d+)(?:st|nd|rd|th) option with "([^"]*)"$/ do |option_number, op
   end
 end
 
+When /^I follow the link to share the (\d+)(?:st|nd|rd|th) battle$/ do |battle_id|
+  @graph = double("graph")
+  allow(@graph).to receive(:put_connections)
+  allow(Koala::Facebook::API).to receive(:new).with('ABCDEF').and_return(@graph)
+
+  within(all('.battle')[battle_id.to_i - 1]) do
+    find(".btn-facebook-share").click
+  end
+end
+
+
 ### THEN ###
 
 Then /^I should not see the new battle form$/ do
@@ -339,3 +351,8 @@ Then /^I should see the button to add option$/ do
   expect(page).to have_css("#add_new_option")
 end
 
+Then /^I should not see a button to share the (\d+)(?:st|nd|rd|th) battle$/ do |battle_id|
+  within(all('.battle')[battle_id.to_i - 1]) do
+    expect(page).not_to have_css('.btn-facebook-share')
+  end
+end

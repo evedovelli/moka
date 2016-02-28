@@ -262,6 +262,13 @@ describe Ability do
         it "should be able to hashtag battles" do
           expect(@ability).to be_able_to(:hashtag, Battle)
         end
+
+        it "should be able to share battles" do
+          expect(@ability).to be_able_to(:share, @battle)
+        end
+        it "should not be able to share battles for other users" do
+          expect(@ability).not_to be_able_to(:share, @other_battle)
+        end
       end
 
       describe "Resource Vote" do
