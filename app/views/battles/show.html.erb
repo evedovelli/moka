@@ -7,22 +7,22 @@
     <%= render @battle %>
   </div>
 
-  <p class="pagination">
+  <div class="pagination">
     <p class='center last_page'><%= image_tag("watermark_small.png") %></p>
-  </p>
+  </div>
 </div>
 
 
 <% content_for :head do %>
-  <!-- for Google -->
+  <%# for Google %>
   <meta name="description" content="<%= @battle.title %>" />
   <meta name="keywords" content="<%= @battle.description %>" />
   <meta name="author" content="<%= @battle.user.name %>" />
   <meta name="application-name" content="Batalharia" />
 
-  <!-- for Facebook -->
-  <meta property="og:url" content="<%= battle_url(@battle.id) %>" />
+  <%# for Facebook %>
   <meta property="og:title" content="<%= @battle.title %>" />
+  <meta property="og:url" content="<%= battle_url(@battle.id) %>" />
   <meta property="og:description" content="<%= @battle.description %>" />
   <% @battle.options.each do |option| %>
     <meta property="og:image" content="<%= option.picture.url(:original) %>" />
@@ -34,7 +34,7 @@
   <meta property="og:locale:alternate" content="<%= I18n.t('og.locale_alternate1') %>" />
   <meta property="og:rich_attachment" content="true" />
 
-  <!-- for Twitter -->
+  <%# for Twitter %>
   <meta name="twitter:card" content="image" />
   <meta name="twitter:url" content="<%= battle_url(@battle.id) %>" />
   <meta name="twitter:title" content="<%= @battle.title %>" />

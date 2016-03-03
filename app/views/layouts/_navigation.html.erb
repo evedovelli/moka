@@ -19,7 +19,7 @@
               <% end %>
             </li>
             <li><%= link_to t('layouts._navigation.home'), root_path %></li>
-            <li><%= render 'notifications/dropdown' %></li>
+            <%= render 'notifications/dropdown' %>
             <li><%= link_to t('layouts._navigation.logout'), destroy_user_session_path, :method=>'delete' %></li>
             <li><%= link_to t('layouts._navigation.edit_account'), edit_user_registration_path %></li>
           <% else %>

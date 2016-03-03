@@ -94,7 +94,7 @@
           </div>
         </div>
 
-        <%= simple_form_for(@vote, remote: true) do |f| %>
+        <%= simple_form_for(@vote, remote: true, html: {id: "new_vote_#{battle.id}"}) do |f| %>
           <div class="battle-box">
             <div class="row">
               <% option_number = 0 %>

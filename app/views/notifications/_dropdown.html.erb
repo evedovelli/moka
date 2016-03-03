@@ -1,4 +1,4 @@
-<div id="notifications-group" class="btn-group visible-desktop">
+<li class="visible-desktop"><div id="notifications-group" class="btn-group">
   <%= link_to(notifications_dropdown_path(),
               id: "notifications-btn",
               class: "notifications-btn dropdown-toggle",
@@ -33,5 +33,5 @@
     </div>
   </div>
 
-</div>
+</div></li>
 <li class="hidden-desktop"><%= link_to t('notifications._dropdown.notifications'), notifications_path %></li>
