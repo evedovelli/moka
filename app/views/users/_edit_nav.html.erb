@@ -1,0 +1,17 @@
+<ul class="nav nav-tabs">
+  <li class=<%= is_active?(edit_user_registration_path) %>>
+    <%= link_to(t('users._edit_nav.account'),
+                edit_user_registration_path,
+                id: 'edit_user_registration_tab') %>
+  </li>
+  <li class=<%= is_active?(edit_user_path(current_user)) %>>
+    <%= link_to(t('users._edit_nav.profile'),
+                edit_user_path(current_user),
+                id: 'user_edit_tab') %>
+  </li>
+  <li class=<%= is_active?(user_social_path) %>>
+    <%= link_to(t('users._edit_nav.social'),
+                user_social_path,
+                id: 'user_social_tab') %>
+  </li>
+</ul>

@@ -51,6 +51,11 @@ describe UsersController do
       expect(flash[:alert]).to match("You need to sign in or sign up before continuing.")
       expect(response).to redirect_to("/en/users/sign_in")
     end
+    it "should be redirected to 'sign in' page if accessing social page for user" do
+      get :social
+      expect(flash[:alert]).to match("You need to sign in or sign up before continuing.")
+      expect(response).to redirect_to("/en/users/sign_in")
+    end
   end
 
   describe "When user is logged in" do
@@ -95,6 +100,11 @@ describe UsersController do
       end
       it "should be redirected to root page if updating user" do
         put :update, { :id => @fake_user.username, :user => {} }
+        expect(flash[:alert]).to match("Access denied.")
+        expect(response).to redirect_to(root_url)
+      end
+      it "should be redirected to root page if accessing social page for user" do
+        get :social
         expect(flash[:alert]).to match("Access denied.")
         expect(response).to redirect_to(root_url)
       end
@@ -394,12 +404,20 @@ describe UsersController do
           expect(User).to receive(:find_by_username!).with("#{@fake_user.username}")
           get :edit, {:id => @fake_user.username, :format => 'js'}
         end
-        it "should respond to html" do
+        it "should respond to JS" do
           get :edit, {:id => @fake_user.username, :format => 'js'}
           expect(response.content_type).to eq(Mime::JS)
         end
-        it "should render the following template" do
+        it "should render the edit template for JS" do
           get :edit, {:id => @fake_user.username, :format => 'js'}
+          expect(response).to render_template('edit')
+        end
+        it "should respond to HTML" do
+          get :edit, {:id => @fake_user.username}
+          expect(response.content_type).to eq(Mime::HTML)
+        end
+        it "should render the edit template for HTML" do
+          get :edit, {:id => @fake_user.username}
           expect(response).to render_template('edit')
         end
         it "should make the user available to that template" do
@@ -464,6 +482,21 @@ describe UsersController do
           it "should make the user available to that template" do
             expect(assigns(:user)).to eq(@fake_user)
           end
+        end
+      end
+
+      describe "social" do
+        it "should respond to HTML" do
+          get :social
+          expect(response.content_type).to eq(Mime::HTML)
+        end
+        it "should render the social template for HTML" do
+          get :social
+          expect(response).to render_template('social')
+        end
+        it "should make the user available to that template" do
+          get :social
+          expect(assigns(:user)).to eq(@fake_user)
         end
       end
 

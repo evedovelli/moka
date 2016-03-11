@@ -1,0 +1,19 @@
+<%= render 'users/edit_nav' %>
+
+<div class="span4">
+  <% if @user.connected_to_facebook? %>
+    <p class="facebook-connected"><%= fa_icon "check", class: "fa-2x checked" %> <%= t(".facebook_connected_html", icon: fa_icon("facebook-square", class: "fa-2x facebook-logo")) %></p>
+  <% else %>
+    <%= link_to('/users/auth/facebook',
+                :id => 'facebook-sign-in',
+                :class => 'btn btn-primary btn-large btn-facebook btn-block') do %>
+      <table class="facebook-login-table">
+        <tr>
+          <td><%= fa_icon "facebook-square", class: "fa-2x" %></td>
+          <td></td>
+          <td><%= t('.facebook_connect', provider: :Facebook) %></td>
+        </tr>
+      </table>
+    <% end %>
+  <% end %>
+</div>

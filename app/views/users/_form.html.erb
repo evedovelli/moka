@@ -1,13 +1,7 @@
 <%= form_for(user, :html => { :class => "avatar_form", :multipart => true }) do |f| %>
 
   <div class="row">
-    <div class="span6 center">
-      <h4 class="profile-picture-title"><%= t 'users._form.title' %></h4>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="span2 offset2">
+    <div class="span2">
 
       <div class="avatar-box editable">
         <div class="row">
@@ -33,7 +27,7 @@
   </div>
 
   <div class="row">
-    <div class="span2 offset2">
+    <div class="span2">
       <%= f.button(t('buttons.update'), :class => "btn btn-primary btn-block submit_form") %>
     </div>
   </div>

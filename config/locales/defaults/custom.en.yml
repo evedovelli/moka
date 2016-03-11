@@ -10,13 +10,11 @@ en:
       new:
         title: 'Sign up'
       edit:
-        title: 'Edit profile'
+        title: 'Edit account'
         password_help: "Leave blank if you don't want to change it"
         change_password_help: 'We need your current password to confirm your changes'
         cancel_my_account: 'Cancel my account'
         unhappy: 'Unhappy?'
-        facebook_connect: 'Connect to your Facebook account'
-        facebook_connected_html: 'Connected to %{icon}<b class="facebook-logo facebook-letters">acebook</b>'
     sessions:
       new:
         title: 'Sign in'

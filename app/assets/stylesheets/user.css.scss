@@ -1,5 +1,5 @@
 $boxesBorders: #333;
-$boxesBordersHover: #555;
+$boxesBordersHover: #777;
 
 .title {
   margin-top: 15px;
@@ -110,7 +110,7 @@ a.btn-unfollow:hover .unfollow {
 }
 
 .avatar-box.editable:hover {
-  border: 4px solid $boxesBordersHover;
+  border: 4px dashed $boxesBordersHover;
   cursor: pointer;
 }
 .avatar-box.editable {
@@ -177,9 +177,3 @@ a.btn-edit-user-avatar:hover .icon-edit-avatar {
 .user-search td {
   vertical-align: middle;
 }
-
-.social-edit-buttons {
-  padding-top: 27px;
-  padding-bottom: 27px;
-}
-

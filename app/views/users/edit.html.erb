@@ -1,0 +1,7 @@
+<%= render 'users/edit_nav' %>
+
+<div class="span12">
+  <h3><%= t('.title') %></h3>
+
+  <%= render :partial => "users/form", :locals => { :user => @user } %>
+</div>

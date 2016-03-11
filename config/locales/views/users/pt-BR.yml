@@ -1,7 +1,7 @@
 pt-BR:
   users:
     show:
-      edit_account: 'Editar perfil'
+      edit_account: 'Editar conta'
       follow: 'Seguir'
       following: 'Seguindo'
       unfollow: 'Deixar de seguir'
@@ -11,7 +11,7 @@ pt-BR:
       title: 'Seguidores'
     following:
       title: 'Seguindo'
-    _form:
+    _overlay_form:
       title: 'Atualizar foto de perfil'
     cover:
       title_html: 'Crie suas batalhas!'
@@ -28,3 +28,12 @@ pt-BR:
     index:
       title: "Usuários"
       next: "Próxima página"
+    social:
+      facebook_connect: 'Conectar com sua conta do Facebook'
+      facebook_connected_html: 'Conectado ao %{icon}<b class="facebook-logo facebook-letters">acebook</b>'
+    _edit_nav:
+      account: "Cadastro"
+      profile: "Foto de perfil"
+      social: "Redes sociais"
+    edit:
+      title: "Editar foto de perfil"
