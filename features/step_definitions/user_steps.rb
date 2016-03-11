@@ -217,27 +217,27 @@ When /^I sign in with a wrong password$/ do
 end
 
 When /^I edit my account details$/ do
-  click_link "Edit profile"
+  click_link "Edit account"
   fill_in "user_current_password", :with => "secretpassword"
   click_button "Update"
 end
 
 When /^I edit my username with "([^"]+)"$/ do |username|
-  click_link "Edit profile"
+  click_link "Edit account"
   fill_in "user_username", :with => username
   fill_in "user_current_password", :with => "secretpassword"
   click_button "Update"
 end
 
 When /^I edit my email with "([^"]+)"$/ do |email|
-  click_link "Edit profile"
+  click_link "Edit account"
   fill_in "user_email", :with => email
   fill_in "user_current_password", :with => "secretpassword"
   click_button "Update"
 end
 
 When /^I edit my password with "([^"]+)"$/ do |password|
-  click_link "Edit profile"
+  click_link "Edit account"
   fill_in "user_password", :with => password
   fill_in "user_password_confirmation", :with => password
   fill_in "user_current_password", :with => "secretpassword"

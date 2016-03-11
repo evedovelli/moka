@@ -52,7 +52,7 @@ Background:
       | email             | name          | picture      | verified  |
       | myself@email.com  | Walter White  | profile.jpg  | true      |
       When I click in the Sign in with Facebook button
-      And I go to the edit account page
+      And I go to the social settings page
       Then I should see my Facebook account connected
       And I go to my profile page
       And I should see "Heisenberg" as my name
@@ -64,19 +64,19 @@ Background:
       | email             | name          | picture      | verified  |
       | myself@email.com  | Walter White  | profile.jpg  | true      |
       When I click in the Sign in with Facebook button
-      And I go to the edit account page
+      And I go to the social settings page
       Then I should see my Facebook account connected
       And I go to my profile page
       And I should see "Walter White" as my name
 
     Scenario: connect Facebook account
       Given I am logged in
-      And I am on the edit account page
+      And I am on the social settings page
       And I accept to share my Facebook info:
       | email             | name          | picture      | verified  |
       | myself@email.com  | Walter White  | profile.jpg  | true      |
       When I click to connect my Facebook account
-      And I go to the edit account page
+      And I go to the social settings page
       Then I should see my Facebook account connected
 
     Scenario: Facebook's unconfirmed account

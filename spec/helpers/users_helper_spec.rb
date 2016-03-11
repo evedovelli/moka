@@ -9,7 +9,7 @@ describe UsersHelper, :type => :helper do
     it "should return link to edit for current user" do
       @current_user = FactoryGirl.create(:user)
       allow(helper).to receive(:current_user).and_return(@current_user)
-      expect(helper.user_button_for(@current_user)).to eq("<a href=\"/en/users/edit\" class=\"btn btn-info btn-block btn-large btn-edit-profile\">Edit profile</a>")
+      expect(helper.user_button_for(@current_user)).to eq("<a href=\"/en/users/edit\" class=\"btn btn-info btn-block btn-large btn-edit-profile\">Edit account</a>")
     end
     it "should return link to unfollow when following the user" do
       @user = FactoryGirl.create(:user, email: "user@user.com", username: "user")
@@ -27,7 +27,7 @@ describe UsersHelper, :type => :helper do
     it "should return link to edit for current user with specific classes" do
       @current_user = FactoryGirl.create(:user)
       allow(helper).to receive(:current_user).and_return(@current_user)
-      expect(helper.user_button_for(@current_user, "my_class")).to eq("<a href=\"/en/users/edit\" class=\"btn btn-info btn-block my_class btn-edit-profile\">Edit profile</a>")
+      expect(helper.user_button_for(@current_user, "my_class")).to eq("<a href=\"/en/users/edit\" class=\"btn btn-info btn-block my_class btn-edit-profile\">Edit account</a>")
     end
     it "should return link to unfollow when following the user with specific classes" do
       @user = FactoryGirl.create(:user, email: "user@user.com", username: "user")

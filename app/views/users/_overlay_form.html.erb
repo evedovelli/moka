@@ -15,7 +15,17 @@
           </div>
 
           <div id="user-black-box">
-            <%= render :partial => "users/form", :locals => { :user => user } %>
+            <div class="row">
+              <div class="span6 center">
+                <h4 class="profile-picture-title"><%= t 'users._overlay_form.title' %></h4>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="span2 offset2">
+                <%= render :partial => "users/form", :locals => { :user => user } %>
+              </div>
+            </div>
           </div>
 
         </div>

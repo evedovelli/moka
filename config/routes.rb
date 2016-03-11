@@ -16,6 +16,7 @@ Moka::Application.routes.draw do
   end
   get "users/:id/following" => "users#following", :as => :user_following
   get "users/:id/followers" => "users#followers", :as => :user_followers
+  get "users/edit/social"   => "users#social",    :as => :user_social
 
   resources :battles, :except => [:index]
   get "hashtags/:hashtag" => "battles#hashtag", :as => :hashtag

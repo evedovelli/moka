@@ -1,7 +1,7 @@
 en:
   users:
     show:
-      edit_account: 'Edit profile'
+      edit_account: 'Edit account'
       follow: 'Follow'
       following: 'Following'
       unfollow: 'Unfollow'
@@ -11,7 +11,7 @@ en:
       title: 'Followers'
     following:
       title: 'Following'
-    _form:
+    _overlay_form:
       title: 'Update profile picture'
     cover:
       title_html: 'Battle everything!'
@@ -28,3 +28,12 @@ en:
     index:
       title: "Users"
       next: "Next page"
+    social:
+      facebook_connect: 'Connect to your Facebook account'
+      facebook_connected_html: 'Connected to %{icon}<b class="facebook-logo facebook-letters">acebook</b>'
+    _edit_nav:
+      account: "Account"
+      profile: "Profile picture"
+      social: "Social"
+    edit:
+      title: "Edit profile picture"

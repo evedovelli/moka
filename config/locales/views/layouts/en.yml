@@ -4,7 +4,7 @@ en:
       page_title: 'Batalharia'
       home: 'Home'
       logout: 'Logout'
-      edit_account: 'Edit profile'
+      edit_account: 'Edit account'
       login: 'Login'
       sign_up: 'Sign up'
     application:

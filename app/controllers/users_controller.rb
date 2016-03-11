@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
-  before_filter :authenticate_user!, :only => [:edit, :update]
-  load_and_authorize_resource :user, :find_by => :username
+  before_filter :authenticate_user!, :only => [:edit, :update, :social]
+  load_and_authorize_resource :user, :find_by => :username, :expect => [:home, :social]
 
   def home
     @user = current_user
@@ -10,6 +10,8 @@ class UsersController < ApplicationController
       end
       return
     end
+
+    authorize! :home, @user
 
     @battles = Battle.user_home(@user, params[:page])
     @voted_for = current_user.voted_for_options(@battles)
@@ -73,6 +75,7 @@ class UsersController < ApplicationController
   def edit
     respond_to do |format|
       format.js {}
+      format.html {}
     end
   end
 
@@ -83,4 +86,8 @@ class UsersController < ApplicationController
     redirect_to user_path(@user)
   end
 
+  def social
+    @user = current_user
+    authorize! :social, @user
+  end
 end

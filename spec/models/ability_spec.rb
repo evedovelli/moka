@@ -98,6 +98,9 @@ describe Ability do
         it "should be able to destroy its User" do
           expect(@ability).to be_able_to(:destroy, @user)
         end
+        it "should be able to access social for its User" do
+          expect(@ability).to be_able_to(:social, @user)
+        end
 
         it "should not be able to to access home from other User" do
           expect(@ability).not_to be_able_to(:home, @other_user)
@@ -116,6 +119,9 @@ describe Ability do
         end
         it "should not be able to destroy other User" do
           expect(@ability).not_to be_able_to(:destroy, @other_user)
+        end
+        it "should not be able to access social for other User" do
+          expect(@ability).not_to be_able_to(:social, @other_user)
         end
       end
 

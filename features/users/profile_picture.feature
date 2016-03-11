@@ -48,7 +48,7 @@ Background: User exists and is logged in
       And I select "wario.png" image for my profile picture
       And I click "Update"
       Then I should be on my profile page
-      Then I should see the "wario.png" profile picture for profile
+      And I should see the "wario.png" profile picture for profile
 
     Scenario: User should see his profile picture in his profile
       Given I have uploaded the "wario.png" image as my profile picture
@@ -70,3 +70,34 @@ Background: User exists and is logged in
       And I go to the the "omailey" following page
       Then I should see the "wario.png" profile picture for "myself"
 
+
+    Scenario: User should see default picture in profile when no picture was uploaded
+      When I go to the edit profile picture page for "myself"
+      Then I should see the default profile picture for profile
+
+    @javascript
+    Scenario: User can see preview when uploading profile picture from edit profile picture page
+      When I go to the edit profile picture page for "myself"
+      And I select "wario.png" image for my profile picture
+      Then I should see the preview of the image for my profile picture
+
+    @javascript
+    Scenario: User sees previous picture after removing profile picture preview from edit profile picture page
+      Given I have uploaded the "wario.png" image as my profile picture
+      When I go to the edit profile picture page for "myself"
+      And I select "vader.jpg" image for my profile picture
+      And I remove the profile picture uploaded image
+      Then I should see the preview with the current "wario.png" image
+
+    @javascript
+    Scenario: User can update his profile picture from edit profile picture page
+      When I go to the edit profile picture page for "myself"
+      And I select "wario.png" image for my profile picture
+      And I click "Update"
+      And I go to my profile page
+      Then I should see the "wario.png" profile picture for profile
+
+    Scenario: User should see his profile picture in his profile from edit profile picture page
+      Given I have uploaded the "wario.png" image as my profile picture
+      When I go to the edit profile picture page for "myself"
+      Then I should see the "wario.png" profile picture for profile

@@ -79,6 +79,9 @@ class Ability
     can :destroy, User do |u|
       u == user
     end
+    can :social, User do |u|
+      u == user
+    end
 
 
     # Options

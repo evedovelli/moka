@@ -29,6 +29,12 @@ module NavigationHelpers
     when /the edit account page/
       edit_user_registration_path
 
+    when /the edit profile picture page for "([^"]*)"/
+      edit_user_path($1)
+
+    when /the social settings page/
+      user_social_path
+
     when /the option index page/
       options_path
 

@@ -1,28 +1,4 @@
-<div class="span6 pull-right">
-  <div class="row">
-    <div class="social-edit-buttons hidden-phone"></div>
-
-    <div class="span4 offset1">
-      <% if resource.connected_to_facebook? %>
-        <p class="facebook-connected"><%= fa_icon "check", class: "fa-2x checked" %> <%= t(".facebook_connected_html", icon: fa_icon("facebook-square", class: "fa-2x facebook-logo")) %></p>
-      <% else %>
-        <%= link_to('/users/auth/facebook',
-                    :id => 'facebook-sign-in',
-                    :class => 'btn btn-primary btn-large btn-facebook btn-block') do %>
-          <table class="facebook-login-table">
-            <tr>
-              <td><%= fa_icon "facebook-square", class: "fa-2x" %></td>
-              <td></td>
-              <td><%= t('.facebook_connect', provider: :Facebook) %></td>
-            </tr>
-          </table>
-        <% end %>
-      <% end %>
-    </div>
-    <div class="span1"></div>
-
-  </div>
-</div>
+<%= render 'users/edit_nav' %>
 
 <div class="span6 pull-left">
   <div class="main-frame">
