@@ -10,19 +10,21 @@ class User < ActiveRecord::Base
 
   attr_accessor :login
 
-  has_many :battles, dependent: :destroy
+  has_many :battles
   has_many :friendships, dependent: :destroy
   has_many :friends, :through => :friendships
   has_many :inverse_friendships, :class_name => "Friendship", :foreign_key => "friend_id", dependent: :destroy
   has_many :inverse_friends, :through => :inverse_friendships, :source => :user
-  has_many :votes, dependent: :destroy
+  has_many :votes
   has_many :options, :through => :votes
   has_many :notifications
   has_many :sent_notifications, :class_name => "Notification", :foreign_key => "sender_id"
-  has_many :identities
+  has_many :identities, dependent: :destroy
+  has_one  :email_settings, dependent: :destroy
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :login, :username, :email, :password, :password_confirmation, :remember_me, :avatar, :name, :unread_notifications
+  attr_accessible :login, :username, :email, :password, :password_confirmation,
+                  :remember_me, :avatar, :name, :unread_notifications
   has_attached_file :avatar, :styles => {
                                :medium => {
                                  :geometry => "300x300#",
@@ -114,6 +116,7 @@ class User < ActiveRecord::Base
         )
         user.skip_confirmation! if auth.info.verified
         user.save!
+        user.email_settings = EmailSettings.create(user_id: user.id)
       end
     end
 
@@ -162,25 +165,31 @@ class User < ActiveRecord::Base
     return voted_for
   end
 
-  def send_vote_notification_to(receiver, vote)
+  def receive_vote_notification_from(sender, vote)
     VoteNotification.create(
-      user: receiver,
-      sender: self,
+      user: self,
+      sender: sender,
       vote: vote
     )
-    receiver.increment_unread_notification
+    self.increment_unread_notification
   end
 
-  def send_friendship_notification_to(receiver)
+  def receive_friendship_notification_from(sender)
     FriendshipNotification.create(
-      user: receiver,
-      sender: self
+      user: self,
+      sender: sender
     )
-    receiver.increment_unread_notification
+    self.increment_unread_notification
   end
 
   def reset_unread_notifications
     self.update_attributes({unread_notifications: 0})
+  end
+
+  def receive_friendship_email_from(sender)
+    if (not self.email_settings) || (self.email_settings.new_follower)
+      FriendshipMailer.new_follower(sender, self).deliver
+    end
   end
 
   def increment_unread_notification

@@ -145,4 +145,3 @@ gem 'twitter-text', '~> 1.13.0'
 
 # FontAwesome Web fonts and stylesheets
 gem 'font-awesome-rails'
-

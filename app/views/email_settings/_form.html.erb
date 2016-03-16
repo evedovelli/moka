@@ -1,0 +1,9 @@
+<%= simple_form_for([@user, @email_settings], :html => {:class => "form-horizontal"}) do |f| %>
+  <%= f.input :new_follower, as: :boolean, boolean_style: :inline %>
+
+  <div class="control-group">
+    <div class="controls">
+      <%= f.submit(t('buttons.update'), :class => "btn btn-primary", :id => "update_email_settings") %>
+    </div>
+  </div>
+<% end %>

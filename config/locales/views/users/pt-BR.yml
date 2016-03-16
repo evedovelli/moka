@@ -35,5 +35,6 @@ pt-BR:
       account: "Cadastro"
       profile: "Foto de perfil"
       social: "Redes sociais"
+      email_settings: "Configurações de Email"
     edit:
       title: "Editar foto de perfil"

@@ -13,6 +13,7 @@ Moka::Application.routes.draw do
 
   resources :users, :only => [:show, :index, :edit, :update] do
     resources :friendships, :only => [:create, :destroy, :index]
+    resource :email_settings, :only => [:edit, :update]
   end
   get "users/:id/following" => "users#following", :as => :user_following
   get "users/:id/followers" => "users#followers", :as => :user_followers

@@ -10,11 +10,10 @@ class FriendshipsController < ApplicationController
     authorize! :create, @friendship
     did_save = @friendship.save
 
-    @friend = @friendship.friend
-    current_user.send_friendship_notification_to(@friend) unless current_user == @friend
-
-    if did_save
-      FriendshipMailer.new_follower(current_user, @friend).deliver
+    if did_save && (current_user != @friend)
+      @friend = @friendship.friend
+      @friend.receive_friendship_notification_from(current_user)
+      @friend.receive_friendship_email_from(current_user)
     end
 
     respond_to do |format|

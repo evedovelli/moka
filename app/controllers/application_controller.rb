@@ -24,5 +24,4 @@ class ApplicationController < ActionController::Base
     flash[:alert] = I18n.t('messages.invalid_image')
     redirect_to request.referer
   end
-
 end

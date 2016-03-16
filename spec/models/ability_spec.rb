@@ -25,6 +25,12 @@ describe Ability do
         end
       end
 
+      describe "Resource EmailSettings" do
+        it "should be able to manage email settings" do
+          expect(@ability).to be_able_to(:manage, EmailSettings)
+        end
+      end
+
       describe "Resource Option" do
         it "should be able to manage options" do
           expect(@ability).to be_able_to(:manage, Option)
@@ -122,6 +128,32 @@ describe Ability do
         end
         it "should not be able to access social for other User" do
           expect(@ability).not_to be_able_to(:social, @other_user)
+        end
+      end
+
+      describe "Resource EmailSettings" do
+        before :each do
+          @u1 = FactoryGirl.create(:user, email: "u1@u1.com", username: "u1")
+          @my_email_settings = FactoryGirl.create(:email_settings, user: @user)
+          @other_email_settings = FactoryGirl.create(:email_settings, user: @u1)
+        end
+        it "should not be able to show EmailSettings" do
+          expect(@ability).not_to be_able_to(:show, @my_email_settings)
+        end
+        it "should not be able to index EmailSettings" do
+          expect(@ability).not_to be_able_to(:index, EmailSettings)
+        end
+        it "should not be able to create EmailSettings" do
+          expect(@ability).not_to be_able_to(:create, EmailSettings)
+        end
+        it "should be able to update EmailSettings" do
+          expect(@ability).to be_able_to(:update, @my_email_settings)
+        end
+        it "should not be able to update others' EmailSettings" do
+          expect(@ability).not_to be_able_to(:update, @other_email_settings)
+        end
+        it "should not be able to destroy his Friendships" do
+          expect(@ability).not_to be_able_to(:destroy, @my_email_settings)
         end
       end
 

@@ -36,7 +36,7 @@ class Ability
     # Administrators
 
     if user.has_role? :admin
-      # users
+      # Users
       can :manage, User
 
 
@@ -59,13 +59,17 @@ class Ability
 
       # Notifications
       can :manage, Notification
+
+
+      # EmailSettings
+      can :manage, EmailSettings
     end
 
 
     ################
     # Other users
 
-    # users
+    # Users
     can :read, User
     can :following, User
     can :followers, User
@@ -81,6 +85,12 @@ class Ability
     end
     can :social, User do |u|
       u == user
+    end
+
+
+    # EmailSettings
+    can :update, EmailSettings do |settings|
+      settings.try(:user) == user
     end
 
 

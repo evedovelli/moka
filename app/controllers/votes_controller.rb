@@ -33,7 +33,7 @@ class VotesController < ApplicationController
 
       if @vote.save
         @battle = @vote.battle
-        @user.send_vote_notification_to(@battle.user, @vote) unless @battle.user == @user
+        @battle.user.receive_vote_notification_from(@user, @vote) unless @battle.user == @user
         @vote = Vote.new()
         respond_to do |format|
           format.js { render 'votes/create' }
