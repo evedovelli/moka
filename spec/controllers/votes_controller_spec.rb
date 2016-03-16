@@ -218,7 +218,7 @@ describe VotesController do
             it "should send notification to battle user" do
               @fake_friend = FactoryGirl.create(:user, username: "friend", email: "friend@friend.com")
               allow(@fake_battle).to receive(:user).and_return(@fake_friend)
-              expect(@fake_user).to receive(:send_vote_notification_to).with(@fake_battle.user, @fake_vote)
+              expect(@fake_battle.user).to receive(:receive_vote_notification_from).with(@fake_user, @fake_vote)
               post :create, {
                 vote: { option_id: @fake_battle.options[0].id},
                 format: 'js'
@@ -226,7 +226,7 @@ describe VotesController do
             end
             it "should not send notification to itself" do
               allow(@fake_battle).to receive(:user).and_return(@fake_user)
-              expect(@fake_user).not_to receive(:send_vote_notification_to).with(@fake_battle.user, @fake_vote)
+              expect(@fake_battle.user).not_to receive(:receive_vote_notification_from).with(@fake_user, @fake_vote)
               post :create, {
                 vote: { option_id: @fake_battle.options[0].id},
                 format: 'js'

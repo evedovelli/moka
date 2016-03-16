@@ -1,0 +1,7 @@
+pt-BR:
+  activerecord:
+    models:
+      email_settings: "configurações de usuário"
+    attributes:
+      email_settings:
+        new_follower: "Novos seguidores"

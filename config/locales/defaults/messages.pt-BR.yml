@@ -21,6 +21,7 @@ pt-BR:
     single_vote_per_battle: 'pode ter apenas um voto por batalha'
     invalid_search: 'Pesquisa inválida'
     profile_updated: 'Seu perfil for atualizado com sucesso'
+    email_settings_successfully_updated: 'Suas configurações de email foram atualizadas com sucesso!'
     omniauth_unknown_error: 'ocorreu um erro desconhecido'
     omniauth_error: 'ocorreu um erro'
     omniauth_already_exists_error: 'a conta já está associada a um usuário'

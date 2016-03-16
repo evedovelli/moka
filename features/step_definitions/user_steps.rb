@@ -5,12 +5,13 @@ Warden.test_mode!
 
 def create_user(username, email, password, name=nil)
   delete_user(email)
-  return FactoryGirl.create(:user,
-                            :username => username,
-                            :email => email,
-                            :password => password,
-                            :password_confirmation => password,
-                            :name => name)
+  u = FactoryGirl.create(:user,
+                         :username => username,
+                         :email => email,
+                         :password => password,
+                         :password_confirmation => password,
+                         :name => name)
+  FactoryGirl.create(:email_settings, user: u)
 end
 
 def delete_user(email)

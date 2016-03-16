@@ -71,6 +71,9 @@ module NavigationHelpers
     when /the votes page for option "([^"]*)"/
       option_votes_path(Option.find_by_name($1))
 
+    when /my email settings page/
+      edit_user_email_settings_path("myself")
+
     else
       begin
         page_name =~ /the (.*) page/

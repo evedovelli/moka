@@ -449,16 +449,16 @@ describe User do
       battle = FactoryGirl.create(:battle,
                                   :starts_at => DateTime.now - 1.day,
                                   :duration => 48*60,
-                                  :user => @other_user)
+                                  :user => @user)
       @vote = FactoryGirl.create(:vote, user: @user, option: battle.options[0])
     end
     it 'should create a new Vote Notification' do
-      expect(VoteNotification).to receive(:create).with(user: @other_user, sender: @user, vote: @vote)
-      @user.send_vote_notification_to(@other_user, @vote)
+      expect(VoteNotification).to receive(:create).with(user: @user, sender: @other_user, vote: @vote)
+      @user.receive_vote_notification_from(@other_user, @vote)
     end
     it 'should increment the unread notifications counter' do
-      expect(@other_user).to receive(:increment_unread_notification)
-      @user.send_vote_notification_to(@other_user, @vote)
+      expect(@user).to receive(:increment_unread_notification)
+      @user.receive_vote_notification_from(@other_user, @vote)
     end
   end
 
@@ -466,18 +466,14 @@ describe User do
     before :each do
       @user = User.create!(@attr)
       @other_user = FactoryGirl.create(:user)
-      battle = FactoryGirl.create(:battle,
-                                  :starts_at => DateTime.now - 1.day,
-                                  :duration => 48*60,
-                                  :user => @other_user)
     end
     it 'should create a new Vote Notification' do
-      expect(FriendshipNotification).to receive(:create).with(user: @other_user, sender: @user)
-      @user.send_friendship_notification_to(@other_user)
+      expect(FriendshipNotification).to receive(:create).with(user: @user, sender: @other_user)
+      @user.receive_friendship_notification_from(@other_user)
     end
     it 'should increment the unread notifications counter' do
-      expect(@other_user).to receive(:increment_unread_notification)
-      @user.send_friendship_notification_to(@other_user)
+      expect(@user).to receive(:increment_unread_notification)
+      @user.receive_friendship_notification_from(@other_user)
     end
   end
 

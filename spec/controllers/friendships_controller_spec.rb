@@ -66,12 +66,12 @@ describe FriendshipsController do
           post :create, { :user_id => @fake_user.username, :friend_id => @fake_friend.id, :format => 'js' }
         end
         it "should send notification for befriended user" do
-          expect(@fake_user).to receive(:send_friendship_notification_to).with(@fake_friend)
+          expect(@fake_friend).to receive(:receive_friendship_notification_from).with(@fake_user)
           post :create, { :user_id => @fake_user.username, :friend_id => @fake_friend.id, :format => 'js' }
         end
         it "should not send notification if befriended himself" do
           allow(@friendship).to receive(:friend).and_return(@fake_user)
-          expect(@fake_user).not_to receive(:send_friendship_notification_to)
+          expect(@fake_friend).not_to receive(:receive_friendship_notification_from)
           post :create, { :user_id => @fake_user.username, :friend_id => @fake_user.id, :format => 'js' }
         end
         describe "in success" do
@@ -116,9 +116,9 @@ describe FriendshipsController do
             post :create, { :user_id => @fake_user.username, :friend_id => @fake_friend.id, :format => 'js' }
             expect(assigns(:friendship)).to eq(@friendship)
           end
-          it "should make the friend available to that template" do
+          it "should not make the friend available to that template" do
             post :create, { :user_id => @fake_user.username, :friend_id => @fake_friend.id, :format => 'js' }
-            expect(assigns(:friend)).to match(@fake_friend)
+            expect(assigns(:friend)).to match(nil)
           end
           it "should not send an email" do
             expect(@mail).not_to receive(:deliver)

@@ -4,14 +4,19 @@
                 edit_user_registration_path,
                 id: 'edit_user_registration_tab') %>
   </li>
-  <li class=<%= is_active?(edit_user_path(current_user)) %>>
+  <li class=<%= is_active?(edit_user_path(@user)) %>>
     <%= link_to(t('users._edit_nav.profile'),
-                edit_user_path(current_user),
+                edit_user_path(@user),
                 id: 'user_edit_tab') %>
   </li>
   <li class=<%= is_active?(user_social_path) %>>
     <%= link_to(t('users._edit_nav.social'),
                 user_social_path,
                 id: 'user_social_tab') %>
+  </li>
+  <li class=<%= is_active?(edit_user_email_settings_path(@user)) %>>
+    <%= link_to(t('users._edit_nav.email_settings'),
+                edit_user_email_settings_path(@user),
+                id: 'user_email_settings_tab') %>
   </li>
 </ul>

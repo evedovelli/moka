@@ -35,5 +35,6 @@ en:
       account: "Account"
       profile: "Profile picture"
       social: "Social"
+      email_settings: "Email settings"
     edit:
       title: "Edit profile picture"
