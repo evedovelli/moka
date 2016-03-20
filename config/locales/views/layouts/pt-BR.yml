@@ -12,4 +12,7 @@ pt-BR:
     cover:
       title: 'Batalharia'
     _search:
-      field: "Pesquisar"
+      field: 'Pesquisar'
+    _pages:
+      privacy_policy: 'Política de Privacidade'
+      terms_of_use: 'Termos de Uso'

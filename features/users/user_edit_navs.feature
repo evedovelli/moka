@@ -20,3 +20,8 @@ Background: I exist as an user
       Given I am on the social settings page
       When I follow "Account"
       Then I should be on the edit account page
+
+    Scenario: Go to the edit email settings page
+      Given I am on the edit profile picture page for "myself"
+      When I follow "Email settings"
+      Then I should be on my email settings page

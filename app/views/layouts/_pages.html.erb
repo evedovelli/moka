@@ -1,0 +1,8 @@
+<ul class="nav nav-pills">
+  <li class="<%= is_active?(page_path('privacy_policy')) %>">
+    <%= link_to t('layouts._pages.privacy_policy'), page_path('privacy_policy') %>
+  </li>
+  <li class="<%= is_active?(page_path('terms_of_use')) %>">
+    <%= link_to t('layouts._pages.terms_of_use'), page_path('terms_of_use') %>
+  </li>
+</ul>

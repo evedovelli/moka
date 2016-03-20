@@ -74,6 +74,12 @@ module NavigationHelpers
     when /my email settings page/
       edit_user_email_settings_path("myself")
 
+    when /the privacy policy page/
+      page_path('privacy_policy')
+
+    when /the terms of use page/
+      page_path('terms_of_use')
+
     else
       begin
         page_name =~ /the (.*) page/
