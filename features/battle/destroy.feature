@@ -16,6 +16,7 @@ Background:
     Scenario: User can destroy battle
       When I follow the link to remove 1st battle
       And I confirm popup
+      And I wait 1 second
       Then I should not see the battle title "battle 1"
       And I should be on the home page
       And I should see 2 battles

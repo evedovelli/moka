@@ -145,3 +145,6 @@ gem 'twitter-text', '~> 1.13.0'
 
 # FontAwesome Web fonts and stylesheets
 gem 'font-awesome-rails'
+
+# Danger! Danger!
+gem 'high_voltage', '~> 2.4.0'

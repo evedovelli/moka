@@ -12,4 +12,7 @@ en:
     cover:
       title: 'Batalharia'
     _search:
-      field: "Search"
+      field: 'Search'
+    _pages:
+      privacy_policy: 'Privacy Policy'
+      terms_of_use: 'Terms of Use'

@@ -36,7 +36,6 @@ $boxesBordersHover: #777;
 }
 
 #cover-background {
-  padding-top: 4%;
   background-color: #333;
   padding-top: 4%;
   margin-left: -20px;
@@ -176,4 +175,16 @@ a.btn-edit-user-avatar:hover .icon-edit-avatar {
 
 .user-search td {
   vertical-align: middle;
+}
+
+.edit-avatar-container {
+  padding-bottom: 40px;
+}
+
+.edit-social-container {
+  padding-bottom: 40px;
+}
+
+.edit-emailsettings-container {
+  padding-bottom: 40px;
 }
