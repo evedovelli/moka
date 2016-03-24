@@ -77,8 +77,8 @@ module NavigationHelpers
     when /the privacy policy page/
       page_path('privacy_policy')
 
-    when /the terms of use page/
-      page_path('terms_of_use')
+    when /the terms of service page/
+      page_path('terms_of_service')
 
     else
       begin
