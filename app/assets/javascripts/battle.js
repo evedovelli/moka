@@ -201,8 +201,8 @@ startBattleCounters = function(element) {
       caption = caption + '<span class="timer-range">' + min + '%!M' + '</span>';
       caption = caption + '<span class="timer-range">' + sec + '%!S' + '</span>';
       if (event.offset.days > 0) {
-        format = '<span class="digit">%D</span>:' + format;
-        caption = '<span class="timer-range">' + day + '%!D' + '</span>' + caption;
+        format = '<span class="digit">%d</span>:' + format;
+        caption = '<span class="timer-range">' + day + '%!d' + '</span>' + caption;
       }
       $(this).html(event.strftime(format + '<br></br>' + caption));
 
