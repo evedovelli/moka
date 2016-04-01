@@ -179,8 +179,10 @@ When /^I fill battle description with "([^"]*)"$/ do |title|
   fill_in("battle_description", :with => title)
 end
 
-When /^I fill battle  with "([^"]*)"$/ do |title|
-  fill_in("battle_description", :with => title)
+When /^I fill battle duration with (\d+) day(?:|s), (\d+) hour(?:|s) and (\d+) min(?:|s)$/ do |days, hours, mins|
+  all(".digit-days").first.set(days)
+  all(".digit-hours").first.set(hours)
+  all(".digit-mins").first.set(mins)
 end
 
 When /^I fill (\d+)(?:st|nd|rd|th) option with "([^"]*)"$/ do |option_number, option|
@@ -216,12 +218,34 @@ Then /^I should see an error for the number of options$/ do
   expect(page).to have_content("You must specify at least 2 and at most 6 options")
 end
 
-Then /^I should see an error for duration$/ do
-  expect(page).to have_content("Value must be greater than zero")
+Then /^I should see error for days and no error for hours and mins$/ do
+  within(all('.battle-countdown-running').first) do
+    expect(page).to have_content("Specify number of days from 0 up to 99")
+    expect(page).not_to have_content("Specify number of hours from 0 up to 23")
+    expect(page).not_to have_content("Specify number of mins from 0 up to 59")
+  end
 end
 
-Then /^I should see an error for exceeded duration$/ do
-  expect(page).to have_content("Please enter a value less than or equal to 143999")
+Then /^I should see error for days and hours and no error for mins$/ do
+  within(all('.battle-countdown-running').first) do
+    expect(page).to have_content("Specify number of days from 0 up to 99")
+    expect(page).to have_content("Specify number of hours from 0 up to 23")
+    expect(page).not_to have_content("Specify number of mins from 0 up to 59")
+  end
+end
+
+Then /^I should see error for days, hours and mins$/ do
+  within(all('.battle-countdown-running').first) do
+    expect(page).to have_content("Specify number of days from 0 up to 99")
+    expect(page).to have_content("Specify number of hours from 0 up to 23")
+    expect(page).to have_content("Specify number of mins from 0 up to 59")
+  end
+end
+
+Then /^I should see error for empty duration$/ do
+  within(all('.battle-countdown-running').first) do
+    expect(page).to have_content("Remaining time should be at least 1 min")
+  end
 end
 
 Then /^I should see (\d+) battle(?:s|)$/ do |number|

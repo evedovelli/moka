@@ -184,11 +184,49 @@ div.add_new_option_container a {
 }
 
 .battle-countdown-new {
-  line-height: 1.2;
+  line-height: 8px;
   margin-bottom: 10px;
-  padding-left: 10px;
-  margin-bottom: -5px;
+  padding-top: 0px;
+  padding-bottom: 0px;
   text-align: center;
+  .battle-countdown-running {
+    color: $countdown-color;
+    font-size: 16px;
+    letter-spacing: 1px;
+    .digit.error {
+      border: 1px dashed #B94A48;
+    }
+    .digit {
+      font-size: 20px;
+      border-radius: 4px;
+      background-color: darken(#222, 10%);
+      padding-left: 5px;
+      padding-right: 5px;
+      margin-bottom: 0px;
+      margin-left: 2px;
+      margin-right: 2px;
+      width: 23px;
+      line-height: 16px;
+      height: 16px;
+      color: #FFF;
+      border: 1px dashed #AAA;
+      text-align: right;
+    }
+    .timer-range {
+      letter-spacing: 0.5px;
+      font-size: 10px;
+      padding-left: 5px;
+      display: inline-block;
+      width: 30px;
+      padding-right: 5px;
+      color: $remaining-time-color;
+    }
+    .error-description {
+      font-size: 11px;
+      line-height: 16px;
+      color: #B94A48;
+    }
+  }
 }
 
 .battle-user {

@@ -10,9 +10,15 @@ pt-BR:
       finished: 'Batalha encerrada!'
       finished_ago: '%{distance} atrás'
     _form:
-      title: 'Monte sua batalha'
       add_option: 'Adicionar Opção'
       description: 'Descreva sua batalha e adicione #hashtags aqui (opcional)'
+      days: 'dias'
+      hours: 'horas'
+      mins: 'mins'
+      days_error: 'Especifique o número de dias entre 0 e 99'
+      hours_error: 'Especifique o número de horas entre 0 e 23'
+      mins_error: 'Especifique o número de minutos entre 0 e 59'
+      duration_error: 'O tempo restante deve ser no mínimo 1 min'
     _option_fields:
       upload_image: 'Clique aqui para adicionar imagem'
     _index:
