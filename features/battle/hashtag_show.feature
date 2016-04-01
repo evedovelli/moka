@@ -21,28 +21,27 @@ Background:
     @javascript
     Scenario: First battles with are loaded when accessing hashtag page
       When I go to the "anything" hashtag page
-      Then I should see 5 battles
-      And I should see the battle title "Choose #anything 1"
+      Then I should see the battle title "Choose #anything 1"
       And I should see the battle title "Choose #anything 5"
       And I should not see the battle title "#Choose anything 0"
       And I should not see the battle title "Choose #anything 6"
+      And I should see 5 battles
       And I should be on the "anything" hashtag page
 
     @javascript
     Scenario: Auto scrolling for hashtag page
       When I go to the "anything" hashtag page
       And I scroll to the bottom of the page
-      And I wait 1 second
-      Then I should see 7 battles
-      And I should see the battle title "Choose #anything 1"
+      Then I should see the battle title "Choose #anything 1"
       And I should see the battle title "Choose #anything 5"
       And I should see the battle title "Choose #anything 6"
       And I should not see the battle title "#Choose anything 0"
+      And I should see 7 battles
       And I should be on the "anything" hashtag page
 
     @javascript
     Scenario: No battles are displayed for inexisting hashtag
       When I go to the "delorean" hashtag page
       Then I should be on the "delorean" hashtag page
-      Then I should see 0 battles
+      And I should see 0 battles
 

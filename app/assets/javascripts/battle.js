@@ -109,15 +109,52 @@ function validateImagePresence (battle_form) {
   return ok;
 }
 
+function validateInterval (input, error) {
+  var min = input.data('min');
+  var max = input.data('max');
+  var val = input.val();
+  if ((val >= min) && (val <= max)) {
+    input.removeClass('error');
+    error.hide();
+    return true;
+  }
+  error.show();
+  input.addClass('error');
+  return false;
+}
+
+function validateDuration (battle_form) {
+  var days = battle_form.find(".digit-days");
+  var hours = battle_form.find(".digit-hours");
+  var mins = battle_form.find(".digit-mins");
+  var ret0, ret1, ret2, ret3;
+
+  if ((days.val() > 0) || (hours.val() > 0) || (mins.val() > 0)) {
+    battle_form.find(".battle-duration-error").hide();
+    ret0 = true;
+  }
+  else {
+    battle_form.find(".battle-duration-error").show();
+    ret0 = false;
+  }
+
+  ret1 = validateInterval(days, battle_form.find(".battle-days-error"));
+  ret2 = validateInterval(hours, battle_form.find(".battle-hours-error"));
+  ret3 = validateInterval(mins, battle_form.find(".battle-mins-error"));
+
+  return (ret0 && ret1 && ret2 && ret3);
+}
+
 function validateNewBattle () {
   $('.battle_form').validate({});
   $('.submit_form').click(function() {
-    var ret0, ret1, ret2;
+    var ret0, ret1, ret2, ret3;
     var battle_form = $(this).closest('.battle_form');
     ret0 = validateImagePresence(battle_form);
     ret1 = validateNumberOfOptions(battle_form);
-    ret2 = battle_form.valid();
-    return (ret0 && ret1 && ret2);
+    ret2 = validateDuration(battle_form);
+    ret3 = battle_form.valid();
+    return (ret0 && ret1 && ret2 && ret3);
   });
 }
 
@@ -201,8 +238,8 @@ startBattleCounters = function(element) {
       caption = caption + '<span class="timer-range">' + min + '%!M' + '</span>';
       caption = caption + '<span class="timer-range">' + sec + '%!S' + '</span>';
       if (event.offset.days > 0) {
-        format = '<span class="digit">%d</span>:' + format;
-        caption = '<span class="timer-range">' + day + '%!d' + '</span>' + caption;
+        format = '<span class="digit">%D</span>:' + format;
+        caption = '<span class="timer-range">' + day + '%!D' + '</span>' + caption;
       }
       $(this).html(event.strftime(format + '<br></br>' + caption));
 
@@ -355,3 +392,39 @@ function moveScroller () {
 }
 
 jQuery(moveScroller);
+
+
+/**********************************************************/
+/* Exhibit duration in days:hours:minutes                 */
+/**********************************************************/
+
+function setupDurationInput(battle_form) {
+  var days_field = battle_form.find('.digit-days');
+  var hours_field = battle_form.find('.digit-hours');
+  var mins_field = battle_form.find('.digit-mins');
+  var duration_field = battle_form.find('.battle-duration');
+
+  function initializeDurationFields(duration_field, days_field, hours_field, mins_field) {
+    left_mins = (parseInt(duration_field.val()) || 0) % 60;
+    mins_field.val(left_mins);
+    hours = Math.round(((parseInt(duration_field.val()) || 0) - left_mins) / 60);
+    left_hours = hours % 24;
+    hours_field.val(left_hours);
+    days = Math.round((hours - left_hours) / 24);
+    days_field.val(days);
+  }
+
+  function updateDuration() {
+    var days = (parseInt(days_field.val()) || 0) * 24 * 60;
+    var hours = (parseInt(hours_field.val()) || 0) * 60;
+    var mins = (parseInt(mins_field.val()) || 0);
+    duration_field.val(days + hours + mins);
+    validateDuration(battle_form);
+  }
+
+  initializeDurationFields(duration_field, days_field, hours_field, mins_field);
+
+  days_field.on("change, keyup", updateDuration);
+  hours_field.on("change, keyup ", updateDuration);
+  mins_field.on("change, keyup", updateDuration);
+};

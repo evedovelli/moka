@@ -13,7 +13,6 @@ Background:
       When I add 1st option "Vader" with picture "vader.jpg"
       And I add 2nd option "Palpatine" with picture "palpatine.jpg"
       And I press "Create"
-      And I wait 2 seconds for uploading images
       Then I should see "Vader"
       And I should see the image "vader.jpg"
       And I should see "Palpatine"
@@ -30,22 +29,26 @@ Background:
       And I should see an error for the number of options
 
     @javascript
-    Scenario: Invalid duration
+    Scenario: Invalid duration fields
       When I add 1st option "Vader" with picture "vader.jpg"
       And I add 2nd option "Palpatine" with picture "palpatine.jpg"
-      And I fill in "battle_duration" with "-1"
+      And I fill battle duration with 100 days, 23 hours and 59 mins
+      And I should see error for days and no error for hours and mins
+      And I fill battle duration with 100 days, 24 hours and 59 mins
+      And I should see error for days and hours and no error for mins
+      And I fill battle duration with 100 days, 24 hours and 60 mins
       And I press "Create"
       Then I should be on the home page
-      And I should see an error for duration
+      And I should see error for days, hours and mins
 
     @javascript
-    Scenario: Duration too long
+    Scenario: Zeroed duration
       When I add 1st option "Vader" with picture "vader.jpg"
       And I add 2nd option "Palpatine" with picture "palpatine.jpg"
-      And I fill in "battle_duration" with "144000"
+      And I fill battle duration with 0 days, 0 hours and 0 mins
       And I press "Create"
       Then I should be on the home page
-      And I should see an error for exceeded duration
+      And I should see error for empty duration
 
     @javascript
     Scenario: Specify new battle title
@@ -53,7 +56,6 @@ Background:
       And I add 1st option "Vader" with picture "vader.jpg"
       And I add 2nd option "Palpatine" with picture "palpatine.jpg"
       And I press "Create"
-      And I wait 2 seconds for uploading images
       Then I should be on the home page
       And I should see the battle title "Who is the most devil?"
       And I should see "Vader"
@@ -64,7 +66,6 @@ Background:
       When I add 1st option "Vader" with picture "vader.jpg"
       And I add 2nd option "Palpatine" with picture "palpatine.jpg"
       And I press "Create"
-      And I wait 2 seconds for uploading images
       Then I should be on the home page
       And I should see the battle title "Who should win this battle?"
       And I should see "Vader"
@@ -76,7 +77,6 @@ Background:
       And I add 1st option "Vader" with picture "vader.jpg"
       And I add 2nd option "Palpatine" with picture "palpatine.jpg"
       And I press "Create"
-      And I wait 2 seconds for uploading images
       Then I should be on the home page
       And I should see the battle title "Who should win this battle?"
       And I should see the battle description "Chose the evilest Sith"
@@ -88,7 +88,6 @@ Background:
       And I add 1st option "bigbigbigbigbigbigbigbigbigbigbigbigbigbXX" with picture "vader.jpg"
       And I add 2nd option "Palpatine" with picture "palpatine.jpg"
       And I press "Create"
-      And I wait 2 seconds for uploading images
       Then I should be on the home page
       And I should see the battle title "longlonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglong"
       And I should see the battle description "greatgreatgreatgreatgreatgreatgreatgreatgreatgreatgreatgreatgreatgreatgreatgreatgreatgreatgreatgreatgreatgreat"

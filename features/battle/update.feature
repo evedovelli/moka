@@ -13,7 +13,7 @@ Background:
 
     @javascript
     Scenario: Update a battle
-      When I fill in "battle_duration" with "300"
+      When I fill battle duration with 0 days, 5 hours and 0 mins
       And I press "Update"
       Then I should be on the home page
       And I should see the battle ends in "2015/05/18 15:30:14"
@@ -22,7 +22,6 @@ Background:
     Scenario: Update a battle
       When I add 1st option "Vader" with picture "vader.jpg"
       And I press "Update"
-      And I wait 2 seconds for uploading images
       Then I should be on the home page
       And I should see the image "vader.jpg"
 
@@ -30,7 +29,6 @@ Background:
     Scenario: Specify new battle title
       When I fill battle title with "Something something something Darkside?"
       And I press "Update"
-      And I wait 2 seconds for uploading images
       Then I should be on the home page
       And I should see the battle title "Something something something Darkside?"
 
@@ -38,7 +36,6 @@ Background:
     Scenario: Specify new battle title
       When I fill battle title with ""
       And I press "Update"
-      And I wait 2 seconds for uploading images
       Then I should be on the home page
       And I should see the battle title "Choose anything"
 
@@ -46,7 +43,6 @@ Background:
     Scenario: Specify new battle with description
       When I fill battle description with "Chose the evilest Sith"
       And I press "Update"
-      And I wait 2 seconds for uploading images
       Then I should be on the home page
       And I should see the battle description "Chose the evilest Sith"
 
@@ -56,7 +52,6 @@ Background:
       And I fill battle description with "greatgreatgreatgreatgreatgreatgreatgreatgreatgreatgreatgreatgreatgreatgreatgreatgreatgreatgreatgreatgreatgreatKKKKK"
       And I fill 1st option with "bigbigbigbigbigbigbigbigbigbigbigbigbigbXX"
       And I press "Update"
-      And I wait 2 seconds for uploading images
       Then I should be on the home page
       And I should see the battle title "longlonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglong"
       And I should see the battle description "greatgreatgreatgreatgreatgreatgreatgreatgreatgreatgreatgreatgreatgreatgreatgreatgreatgreatgreatgreatgreatgreat"
@@ -64,3 +59,21 @@ Background:
       And I should not see "W"
       And I should not see "K"
       And I should not see "X"
+
+    @javascript
+    Scenario: Invalid duration fields
+      When I fill battle duration with 100 days, 23 hours and 59 mins
+      And I should see error for days and no error for hours and mins
+      And I fill battle duration with 100 days, 24 hours and 59 mins
+      And I should see error for days and hours and no error for mins
+      And I fill battle duration with 100 days, 24 hours and 60 mins
+      And I press "Update"
+      Then I should be on the home page
+      And I should see error for days, hours and mins
+
+    @javascript
+    Scenario: Zeroed duration
+      When I fill battle duration with 0 days, 0 hours and 0 mins
+      And I press "Update"
+      Then I should be on the home page
+      And I should see error for empty duration

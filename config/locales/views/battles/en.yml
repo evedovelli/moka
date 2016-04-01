@@ -10,9 +10,15 @@ en:
       finished: 'Finished battle!'
       finished_ago: '%{distance} ago'
     _form:
-      title: 'Compose your battle'
       add_option: 'Add Option'
       description: 'Describe your battle and add #hashtags here (optional)'
+      days: 'days'
+      hours: 'hours'
+      mins: 'mins'
+      days_error: 'Specify number of days from 0 up to 99'
+      hours_error: 'Specify number of hours from 0 up to 23'
+      mins_error: 'Specify number of mins from 0 up to 59'
+      duration_error: 'Remaining time should be at least 1 min'
     _option_fields:
       upload_image: 'Click here to add image'
     _index:
