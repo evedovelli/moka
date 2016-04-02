@@ -123,6 +123,16 @@ describe Battle do
     end
   end
 
+  describe "destroy" do
+    before(:each) do
+      @battle = Battle.new(@attr)
+    end
+    it "should destroy battle's options" do
+      expect{ @battle.destroy }.to change{ Option.count }.by(-2)
+    end
+  end
+
+
   describe 'hide' do
     it 'should make the battle hidden' do
       battle = Battle.new(@attr)
