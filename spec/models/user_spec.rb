@@ -105,6 +105,65 @@ describe User do
     expect(user_with_duplicate_username).not_to be_valid
   end
 
+  describe "destroy" do
+    before(:each) do
+      @user = User.new(@attr)
+      @user.save
+    end
+    it "should destroy user's battles" do
+      battle = FactoryGirl.create(:battle, user: @user)
+      expect(battle).not_to be_nil
+      expect{ @user.destroy }.to change {Battle.count}.by(-1)
+    end
+    it "should destroy user's friendships" do
+      friendship = FactoryGirl.create(:friendship, user: @user)
+      expect(friendship).not_to be_nil
+      expect{ @user.destroy }.to change{ Friendship.count }.by(-1)
+    end
+    it "should destroy user's inverse friendships" do
+      friendship = FactoryGirl.create(:friendship, friend: @user)
+      expect(friendship).not_to be_nil
+      expect{ @user.destroy }.to change{ Friendship.count }.by(-1)
+    end
+    it "should destroy user's votes" do
+      vote = FactoryGirl.create(:vote, user: @user)
+      expect(vote).not_to be_nil
+      expect{ @user.destroy }.to change{ Vote.count }.by(-1)
+    end
+    it "should destroy user's notifications" do
+      friend = FactoryGirl.create(:user)
+      @vote = FactoryGirl.create(:vote, user: friend)
+      notification = VoteNotification.new({ :user => @user,
+                                            :vote => @vote,
+                                            :sender => friend
+                                          })
+      notification.save
+      expect(notification).not_to be_nil
+      expect{ @user.destroy }.to change{ VoteNotification.count }.by(-1)
+    end
+    it "should destroy user's sent notifications" do
+      friend = FactoryGirl.create(:user)
+      @vote = FactoryGirl.create(:vote, user: @user)
+      notification = VoteNotification.new({ :user => friend,
+                                            :vote => @vote,
+                                            :sender => @user
+                                          })
+      notification.save
+      expect(notification).not_to be_nil
+      expect{ @user.destroy }.to change{ VoteNotification.count }.by(-1)
+    end
+    it "should destroy user's identities" do
+      identity = FactoryGirl.create(:identity, user: @user)
+      expect(identity).not_to be_nil
+      expect{ @user.destroy }.to change{ Identity.count }.by(-1)
+    end
+    it "should destroy user's email_settings" do
+      email_settings = FactoryGirl.create(:email_settings, user: @user)
+      expect(email_settings).not_to be_nil
+      expect{ @user.destroy }.to change{ EmailSettings.count }.by(-1)
+    end
+  end
+
   describe "passwords" do
 
     before(:each) do

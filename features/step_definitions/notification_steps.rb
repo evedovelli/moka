@@ -69,6 +69,17 @@ Given /^I have 36 notifications$/ do
   end
 end
 
+Given /^"([^"]+)" has logged in and voted for "([^"]+)"$/ do |user, option|
+  step %Q{I go to the sign in page}
+  sign_in("#{user}@email.com", "#{user}password")
+  step %Q{I go to the 1st battle page}
+  step %Q{I vote for "#{option}"}
+  click_link("Logout")
+  within("#flash_notice") do
+    expect(page).to have_content("Signed out successfully")
+  end
+end
+
 
 ### WHEN ###
 

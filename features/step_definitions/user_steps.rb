@@ -169,6 +169,10 @@ When /^I sign in with "([^"]+)"$/ do |username|
   sign_in(username, "secretpassword")
 end
 
+When /^I sign in with username "([^"]+)" and password "([^"]+)"$/ do |username, password|
+  sign_in(username, password)
+end
+
 When /^I sign in with password "([^"]+)"$/ do |password|
   sign_in("myself@email.com", password)
 end
@@ -276,6 +280,14 @@ end
 
 When /^I click to connect my Facebook account$/ do
   find('#facebook-sign-in').click
+end
+
+When /^user "([^"]*)" cancels his account$/ do |user|
+  step %Q{I sign in with username "#{user}" and password "#{user}password"}
+  step %Q{I go to the edit account page}
+  step %Q{I should be on the edit account page}
+  find("#destroy-account").click
+  step %Q{I confirm popup}
 end
 
 

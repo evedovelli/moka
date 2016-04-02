@@ -48,6 +48,24 @@ describe Option do
     end
   end
 
+  describe "destroy" do
+    before(:each) do
+      @option = Option.new(@attr)
+      @user = FactoryGirl.create(:user)
+      @other_user = FactoryGirl.create(:user, username: "patty", email: "patty@peppermint.com")
+      @battle = FactoryGirl.create(:battle,
+                                   :starts_at => DateTime.now - 1.day,
+                                   :duration => 48*60,
+                                   :user => @user)
+      @battle.options << @option
+    end
+    it "should destroy options's votes" do
+      FactoryGirl.create(:vote, user: @user, option: @option)
+      FactoryGirl.create(:vote, user: @other_user, option: @option)
+      expect{ @option.destroy }.to change{ Vote.count }.by(-2)
+    end
+  end
+
   describe 'number of votes' do
     it 'should return the number of votes for this option' do
       option = Option.new(@attr)

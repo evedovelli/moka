@@ -10,15 +10,15 @@ class User < ActiveRecord::Base
 
   attr_accessor :login
 
-  has_many :battles
+  has_many :battles, dependent: :destroy
   has_many :friendships, dependent: :destroy
   has_many :friends, :through => :friendships
   has_many :inverse_friendships, :class_name => "Friendship", :foreign_key => "friend_id", dependent: :destroy
   has_many :inverse_friends, :through => :inverse_friendships, :source => :user
-  has_many :votes
+  has_many :votes, dependent: :destroy
   has_many :options, :through => :votes
-  has_many :notifications
-  has_many :sent_notifications, :class_name => "Notification", :foreign_key => "sender_id"
+  has_many :notifications, dependent: :destroy
+  has_many :sent_notifications, :class_name => "Notification", :foreign_key => "sender_id", dependent: :destroy
   has_many :identities, dependent: :destroy
   has_one  :email_settings, dependent: :destroy
 

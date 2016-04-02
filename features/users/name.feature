@@ -4,7 +4,7 @@ Feature: Name
 
 Background: User exists and is logged in
     Given I am logged in
-      Given I am on my profile page
+    And I am on my profile page
 
     Scenario: User adds a name to his profile
       When I go to the edit account page
