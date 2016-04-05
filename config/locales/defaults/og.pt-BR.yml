@@ -2,3 +2,9 @@ pt-BR:
   og:
     locale: 'pt_BR'
     locale_alternate1: 'en_US'
+    title: 'Batalharia: Crie suas batalhas!'
+    description_short: 'Batalharia é uma forma simples e divertida de se criar batalhas para tudo e em qualquer momento.'
+    description_long: 'Batalharia é uma forma simples e divertida de se criar batalhas para tudo e em qualquer momento. Se você quer descobrir com qual visual você fica melhor, ou qual é o super-herói mais poderoso, ou ainda, onde jantar hoje à noite, ou qual o próximo livro a ler, crie suas batalhas e descubra quais são os vencedores. Compartilhe suas batalhas no Facebook e chame seus amigos para votarem e determinar quem será o vencedor!'
+    keywords: 'batalha enquete opções escolhas social'
+    profile_title: "Página de perfil do usuário %{user} em Batalharia!"
+    profile_description: "Veja e vote nas batalhas criadas por %{user} em Batalharia!"

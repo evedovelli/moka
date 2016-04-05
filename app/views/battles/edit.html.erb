@@ -10,3 +10,33 @@
   </p>
 </div>
 
+
+<% content_for :head do %>
+  <%# for Google %>
+  <meta name="description" content="<%= @battle.title %>" />
+  <meta name="keywords" content="<%= @battle.description %>" />
+  <meta name="author" content="<%= @battle.user.name %>" />
+  <meta name="application-name" content="Batalharia" />
+
+  <%# for Facebook %>
+  <meta property="og:title" content="<%= @battle.title %>" />
+  <meta property="og:url" content="<%= battle_url(@battle.id) %>" />
+  <meta property="fb:app_id" content="<%= ENV['FACEBOOK_KEY'] %>" />
+  <meta property="og:type" content="batalharia:battle" />
+  <meta property="og:description" content="<%= @battle.description %>" />
+  <meta property="og:image" content="<%= @battle.options.first.picture.url(:facebook) %>" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:site_name" content="Batalharia" />
+  <meta property="og:locale" content="<%= I18n.t('og.locale') %>" />
+  <meta property="og:locale:alternate" content="<%= I18n.t('og.locale_alternate1') %>" />
+  <meta property="og:rich_attachment" content="true" />
+
+  <%# for Twitter %>
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@batalharia">
+  <meta name="twitter:url" content="<%= battle_url(@battle.id) %>" />
+  <meta name="twitter:title" content="<%= @battle.title %>" />
+  <meta name="twitter:description" content="<%= @battle.description %>" />
+  <meta name="twitter:image" content="<%= @battle.options.first.picture.url(:medium) %>" />
+<% end %>

@@ -11,4 +11,10 @@ describe ApplicationHelper, :type => :helper do
       expect(helper.is_active?("path")).to eql(nil)
     end
   end
+
+  describe "image_url" do
+    it "should return the complete image url" do
+      expect(helper.image_url("logo_box.png")).to eql(URI.join("http://test.host", "assets/logo_box.png"))
+    end
+  end
 end

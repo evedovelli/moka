@@ -28,3 +28,4 @@ en:
     or: "or"
     share: "Share"
     error_share: "Error while sharing battle on %{provider}"
+    facebook_share_timeout: 'Failed to share image on Facebook. Please try again!'

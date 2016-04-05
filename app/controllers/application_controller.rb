@@ -24,4 +24,15 @@ class ApplicationController < ActionController::Base
     flash[:alert] = I18n.t('messages.invalid_image')
     redirect_to request.referer
   end
+
+  rescue_from Faraday::ConnectionFailed do |exception|
+    flash[:alert] = I18n.t('messages.facebook_share_timeout')
+    redirect_to request.referer
+  end
+
+  rescue_from Faraday::TimeoutError do |exception|
+    flash[:alert] = I18n.t('messages.facebook_share_timeout')
+    redirect_to request.referer
+  end
+
 end

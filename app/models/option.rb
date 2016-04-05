@@ -7,6 +7,10 @@ class Option < ActiveRecord::Base
 
   attr_accessible :name, :picture, :id
   has_attached_file :picture, :styles => {
+                                :facebook => {
+                                  :geometry => "1200x630#",
+                                  :animated => false
+                                },
                                 :medium => {
                                   :geometry => "370x370#",
                                   :animated => false
