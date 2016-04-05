@@ -2,3 +2,9 @@ en:
   og:
     locale: 'en_US'
     locale_alternate1: 'pt_BR'
+    title: 'Batalharia: Battle everything!'
+    description_short: 'Batalharia is a simple and fun way to create polls for everything and everywhere.'
+    description_long: 'Batalharia is a simple and fun way to create polls for everything and everywhere. Whether you want to find out your best look, or who is the most powerful superhero, or yet, where to dinner tonight, or what will be your next reading, create your battles and find out which are the winners. Share your battles on Facebook and invite your friends to vote and define who is gonna be victorious!'
+    keywords: 'battle poll options choices social'
+    profile_title: "%{user}'s profile page on Batalharia!"
+    profile_description: "See and vote on the battles created by %{user} on Batalharia!"

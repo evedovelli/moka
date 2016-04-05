@@ -28,3 +28,4 @@ pt-BR:
     or: "ou"
     share: "Compartilhar"
     error_share: "Erro ao compartilhar batalha no %{provider}"
+    facebook_share_timeout: 'Falha ao compartilhar imagem no Facebook. Por favor, tente novamente!'
