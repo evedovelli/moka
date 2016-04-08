@@ -17,4 +17,11 @@ describe ApplicationHelper, :type => :helper do
       expect(helper.image_url("logo_box.png")).to eql(URI.join("http://test.host", "assets/logo_box.png"))
     end
   end
+
+  describe "canonical_url" do
+    it "should return the canonial url" do
+      @locale = "pt-BR"
+      expect(helper.canonical_url("/pt-BR/battles/23")).to eql(URI.join("https://batalharia.com", "/battles/23"))
+    end
+  end
 end

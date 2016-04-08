@@ -39,7 +39,7 @@ jQuery(deletePhoto);
 jQuery(configurePictureForm);
 
 closeOverlayLoginForm = function() {
-  $('#close-login-form').click(function() {
+  $('.close-login-form').click(function() {
     $('#login-box').css("display","none");
   });
 }

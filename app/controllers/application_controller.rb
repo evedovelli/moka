@@ -13,6 +13,7 @@ class ApplicationController < ActionController::Base
       params[:locale] = nil
     end
     I18n.locale = params[:locale] || I18n.default_locale
+    @locale = I18n.locale
   end
 
   rescue_from CanCan::AccessDenied do |exception|

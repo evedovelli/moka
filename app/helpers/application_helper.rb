@@ -8,4 +8,8 @@ module ApplicationHelper
   def image_url(source)
     URI.join(root_url, image_path(source))
   end
+
+  def canonical_url(path)
+    URI.join("https://batalharia.com", path.sub("\/#{@locale}", ""))
+  end
 end

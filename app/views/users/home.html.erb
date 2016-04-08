@@ -6,29 +6,29 @@
 
 <% content_for :head do %>
   <%# for Google %>
-  <meta name="description" content="<%= t('og.description_long') %>" />
-  <meta name="keywords" content="<%= t('og.keywords') %>" />
-  <meta name="application-name" content="Batalharia" />
+  <meta name="description" content="<%= t('og.description_long') %>"></meta>
+  <meta name="keywords" content="<%= t('og.keywords') %>"></meta>
+  <meta name="application-name" content="Batalharia"></meta>
 
   <%# for Facebook %>
-  <meta property="og:title" content="<%= t('og.title') %>" />
-  <meta property="og:url" content="https://batalharia.com" />
-  <meta property="fb:app_id" content="<%= ENV['FACEBOOK_KEY'] %>" />
-  <meta property="og:type" content="website" />
-  <meta property="og:description" content="<%= t('og.description_long') %>" />
-  <meta property="og:image" content="<%= image_url("logo_banner.png") %>" />
-  <meta property="og:image:width" content="1200" />
-  <meta property="og:image:height" content="630" />
-  <meta property="og:site_name" content="Batalharia" />
-  <meta property="og:locale" content="<%= I18n.t('og.locale') %>" />
-  <meta property="og:locale:alternate" content="<%= I18n.t('og.locale_alternate1') %>" />
-  <meta property="og:rich_attachment" content="true" />
+  <meta property="og:title" content="<%= t('og.title') %>"></meta>
+  <meta property="og:url" content="https://batalharia.com"></meta>
+  <meta property="fb:app_id" content="<%= ENV['FACEBOOK_KEY'] %>"></meta>
+  <meta property="og:type" content="website"></meta>
+  <meta property="og:description" content="<%= t('og.description_long') %>"></meta>
+  <meta property="og:image" content="<%= image_url("logo_banner.png") %>"></meta>
+  <meta property="og:image:width" content="1200"></meta>
+  <meta property="og:image:height" content="630"></meta>
+  <meta property="og:site_name" content="Batalharia"></meta>
+  <meta property="og:locale" content="<%= I18n.t('og.locale') %>"></meta>
+  <meta property="og:locale:alternate" content="<%= I18n.t('og.locale_alternate1') %>"></meta>
+  <meta property="og:rich_attachment" content="true"></meta>
 
   <%# for Twitter %>
-  <meta name="twitter:card" content="summary" />
-  <meta name="twitter:site" content="@batalharia" />
-  <meta name="twitter:url" content="https://batalharia.com" />
-  <meta name="twitter:title" content="<%= t('og.title') %>" />
-  <meta name="twitter:description" content="<%= t('og.description_short') %>" />
-  <meta name="twitter:image" content="<%= image_url("logo_box.png") %>" />
+  <meta name="twitter:card" content="summary"></meta>
+  <meta name="twitter:site" content="@batalharia"></meta>
+  <meta name="twitter:url" content="https://batalharia.com"></meta>
+  <meta name="twitter:title" content="<%= t('og.title') %>"></meta>
+  <meta name="twitter:description" content="<%= t('og.description_short') %>"></meta>
+  <meta name="twitter:image" content="<%= image_url("logo_box.png") %>"></meta>
 <% end %>
