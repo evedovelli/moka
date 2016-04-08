@@ -16,7 +16,7 @@
             </h4>
 
             <% if can? :destroy, battle %>
-              <h3 class="remove pull-right">
+              <div class="battle-remove pull-right">
                 <%= link_to(battle_path(battle),
                             :confirm => t('battles._battle.destroy'),
                             :method => :delete,
@@ -25,17 +25,17 @@
                             :class => "delete_battle") do %>
                   <i class="icon-remove pull-right"></i>
                 <% end %>
-              </h3>
+              </div>
             <% end %>
 
             <% if can? :update, battle %>
-              <h3 class="update pull-right">
+              <div class="battle-update pull-right">
                 <%= link_to(edit_battle_path(battle),
                             :remote => true,
                             :id => "edit_battle#{battle[:id]}") do %>
                   <i class="icon-edit pull-right"></i>
                 <% end %>
-              </h3>
+              </div>
             <% end %>
 
           </div>
@@ -81,12 +81,12 @@
             <div class="battle-title-container span8">
               <div class="row">
                 <div class="span8">
-                  <h2 class="pull-left battle-title"><%= auto_link_hashtags(battle.title || "", :hashtag_url_base => hashtag_path("")).html_safe %></h2>
+                  <h2 class="pull-left battle-title"><%= auto_link_hashtags(battle.title || " ", :hashtag_url_base => hashtag_path("")).html_safe %></h2>
                 </div>
               </div>
               <div class="row">
                 <div class="span8">
-                  <h5 class="pull-left battle-description"><%= auto_link_hashtags(battle.description || "", :hashtag_url_base => hashtag_path("")).html_safe %></h5>
+                  <h5 class="pull-left battle-description"><%= auto_link_hashtags(battle.description || " ", :hashtag_url_base => hashtag_path("")).html_safe %></h5>
                 </div>
               </div>
             </div>
