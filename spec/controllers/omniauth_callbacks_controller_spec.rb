@@ -294,11 +294,16 @@ describe Users::OmniauthCallbacksController do
           "battle_id" => @fake_battle.id
         }
         allow(controller).to receive(:authorize!).and_return(true)
+        @resp = double("resp")
+        @access_token = double("access_token")
+        allow(@access_token).to receive(:[]).and_return("token")
+        expect(Net::HTTP).to receive(:get).and_return(@resp)
+        expect(Rack::Utils).to receive(:parse_nested_query).and_return(@access_token)
         expect(Net::HTTP).to receive(:post_form).with(
             URI('https://graph.facebook.com'),
             'id' => battle_url(@fake_battle.id),
             'scrape' => 'true',
-            'access_token' => 'ABCDEF',
+            'access_token' => 'token',
             'max' => '500').and_return(true)
         @graph = double("graph")
         expect(@graph).to receive(:put_connections).with("me", "batalharia:create", battle: battle_url(@fake_battle.id))
