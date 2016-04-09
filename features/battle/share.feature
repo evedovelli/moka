@@ -21,7 +21,7 @@ Background:
       And I follow the link to share the 1st battle
       Then I should be on the "battle 1" battle page
 
-    Scenario: User can cancel destruction of battle
+    Scenario: User cannot share others' battles
       When I go to the home page
       Then I should not see a button to share the 2nd battle
 

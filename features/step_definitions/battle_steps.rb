@@ -197,6 +197,7 @@ When /^I follow the link to share the (\d+)(?:st|nd|rd|th) battle$/ do |battle_i
   @graph = double("graph")
   allow(@graph).to receive(:put_connections)
   allow(Koala::Facebook::API).to receive(:new).with('ABCDEF').and_return(@graph)
+  allow(Net::HTTP).to receive(:post_form).and_return(:status => 200, :body => "", :headers => {})
 
   within(all('.battle')[battle_id.to_i - 1]) do
     find(".btn-facebook-share").click

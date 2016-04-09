@@ -91,7 +91,18 @@ private
 
   def share_battle_on_facebook(credentials, battle_id)
     authorize! :share, Battle.find_by_id(battle_id)
+    facebook_scrape(battle_url(battle_id), credentials.token)
     @graph = Koala::Facebook::API.new(credentials.token)
     @graph.put_connections("me", "batalharia:create", battle: battle_url(battle_id))
+  end
+
+  def facebook_scrape(url, access_token)
+    uri = URI('https://graph.facebook.com')
+    puts Net::HTTP.post_form(
+        uri,
+        'id' => "#{url}",
+        'scrape' => 'true',
+        'access_token' => "#{access_token}",
+        'max' => '500')
   end
 end
