@@ -294,6 +294,12 @@ describe Users::OmniauthCallbacksController do
           "battle_id" => @fake_battle.id
         }
         allow(controller).to receive(:authorize!).and_return(true)
+        expect(Net::HTTP).to receive(:post_form).with(
+            URI('https://graph.facebook.com'),
+            'id' => battle_url(@fake_battle.id),
+            'scrape' => 'true',
+            'access_token' => 'ABCDEF',
+            'max' => '500').and_return(true)
         @graph = double("graph")
         expect(@graph).to receive(:put_connections).with("me", "batalharia:create", battle: battle_url(@fake_battle.id))
         expect(Koala::Facebook::API).to receive(:new).with('ABCDEF').and_return(@graph)
@@ -301,7 +307,7 @@ describe Users::OmniauthCallbacksController do
         get :facebook
         expect(response).to redirect_to battle_path(@fake_battle.id)
       end
-      it "should share block non authorized shares" do
+      it "should block non authorized shares" do
         @fake_user = FactoryGirl.create(:user)
         @fake_battle = FactoryGirl.create(:battle, user: @fake_user)
         request.env["HTTP_REFERER"] = user_path(@fake_user.username)
@@ -325,7 +331,6 @@ describe Users::OmniauthCallbacksController do
           "source" => "share",
           "battle_id" => @fake_battle.id
         }
-        allow(controller).to receive(:authorize!).and_return(true)
         allow(controller).to receive(:authorize!).and_raise(CanCan::AccessDenied)
 
         get :facebook
