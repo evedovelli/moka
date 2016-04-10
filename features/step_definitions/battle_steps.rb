@@ -194,10 +194,6 @@ When /^I fill (\d+)(?:st|nd|rd|th) option with "([^"]*)"$/ do |option_number, op
 end
 
 When /^I follow the link to share the (\d+)(?:st|nd|rd|th) battle$/ do |battle_id|
-  @graph = double("graph")
-  allow(@graph).to receive(:put_connections)
-  allow(Koala::Facebook::API).to receive(:new).with('ABCDEF').and_return(@graph)
-
   stub_request(:get, "https://graph.facebook.com/oauth/access_token?client_id=&client_secret=&grant_type=client_credentials").
     to_return(:status => 200, :body => "", :headers => {})
 

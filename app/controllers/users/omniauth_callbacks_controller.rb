@@ -16,7 +16,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
        request.env["omniauth.params"]["source"] &&
        request.env["omniauth.params"]["source"] == "share" &&
        request.env["omniauth.params"]["battle_id"]
-      share_battle_on_facebook(request.env["omniauth.auth"].credentials, request.env["omniauth.params"]["battle_id"])
+      share_battle_on_facebook(request.env["omniauth.auth"].uid, request.env["omniauth.params"]["battle_id"])
       redirect_to battle_path(request.env["omniauth.params"]["battle_id"])
       return
     end
@@ -89,14 +89,9 @@ private
     return true
   end
 
-  def share_battle_on_facebook(credentials, battle_id)
+  def share_battle_on_facebook(uid, battle_id)
     authorize! :share, Battle.find_by_id(battle_id)
-    facebook_scrape(battle_url(battle_id))
-    @graph = Koala::Facebook::API.new(credentials.token)
-    @graph.put_connections("me", "batalharia:create", battle: battle_url(battle_id))
-  end
 
-  def facebook_scrape(url)
     params = {
       :client_id => ENV['FACEBOOK_KEY'],
       :client_secret => ENV['FACEBOOK_SECRET'],
@@ -108,10 +103,18 @@ private
     unless access_token.nil?
       uri = URI('https://graph.facebook.com')
       Net::HTTP.post_form(uri,
-                          'id' => "#{url}",
+                          'id' => canonical_battle_url(battle_id),
                           'scrape' => 'true',
                           'access_token' => "#{access_token}",
                           'max' => '500')
+
+      @graph = Koala::Facebook::API.new(access_token)
+      @graph.put_connections(uid, "batalharia:create", battle: canonical_battle_url(battle_id))
     end
   end
+
+  def canonical_battle_url(battle_id)
+    return "https://batalharia.com#{battle_path(battle_id).sub("\/#{@locale}", "")}"
+  end
+
 end

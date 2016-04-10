@@ -301,13 +301,13 @@ describe Users::OmniauthCallbacksController do
         expect(Rack::Utils).to receive(:parse_nested_query).and_return(@access_token)
         expect(Net::HTTP).to receive(:post_form).with(
             URI('https://graph.facebook.com'),
-            'id' => battle_url(@fake_battle.id),
+            'id' => "https://batalharia.com/battles/#{@fake_battle.id}",
             'scrape' => 'true',
             'access_token' => 'token',
             'max' => '500').and_return(true)
         @graph = double("graph")
-        expect(@graph).to receive(:put_connections).with("me", "batalharia:create", battle: battle_url(@fake_battle.id))
-        expect(Koala::Facebook::API).to receive(:new).with('ABCDEF').and_return(@graph)
+        expect(@graph).to receive(:put_connections).with("12345", "batalharia:create", battle: "https://batalharia.com/battles/#{@fake_battle.id}")
+        expect(Koala::Facebook::API).to receive(:new).with('token').and_return(@graph)
 
         get :facebook
         expect(response).to redirect_to battle_path(@fake_battle.id)
