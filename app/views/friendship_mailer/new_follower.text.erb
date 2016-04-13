@@ -1,16 +1,19 @@
 <%= t('mailers.friendship.hello',
-      name: user_name_for(@user))
+      name: user_name_for(@user),
+      locale: (@user.language || I18n.locale))
 %>
 <%= t('mailers.friendship.new',
-      follower: user_name_for(@follower))
+      follower: user_name_for(@follower),
+      locale: (@user.language || I18n.locale))
 %>
 ===============================================
 
 <%= t('mailers.friendship.visit_profile_text',
-      link: url_for(:host => t('mailers.url'),
+      link: url_for(:host => t('mailers.url', locale: (@user.language || I18n.locale)),
                     :controller => "users",
                     :action => "show",
                     :id => @follower.username),
-      follower: user_name_for(@follower))
+      follower: user_name_for(@follower),
+      locale: (@user.language || I18n.locale))
 %>
 

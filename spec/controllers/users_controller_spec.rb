@@ -504,4 +504,30 @@ describe UsersController do
 
   end
 
+  describe "set locale" do
+    before :each do
+      sign_in @fake_user
+      allow(controller).to receive(:current_user).and_return(@fake_user)
+    end
+
+    it "should accept pt-BR locale" do
+      expect(@fake_user).to receive(:language).and_return("pt-BR")
+      get :home
+      expect(response).to render_template('home')
+      expect(assigns(:locale)).to eq(:"pt-BR")
+    end
+    it "should accept en locale" do
+      expect(@fake_user).to receive(:language).and_return("en")
+      get :home
+      expect(response).to render_template('home')
+      expect(assigns(:locale)).to eq(:en)
+    end
+    it "should use default locale when user locale is not available" do
+      expect(@fake_user).to receive(:language).and_return(nil)
+      get :home
+      expect(response).to render_template('home')
+      expect(assigns(:locale)).to eq(:en)
+    end
+  end
+
 end

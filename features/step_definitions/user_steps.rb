@@ -154,6 +154,11 @@ Given /^I am not signed in$/ do
   step %Q{I sign out}
 end
 
+Given /^"([^"]+)" preferred language is "([^"]+)"$/ do |user, language|
+  u = User.find_by_username(user)
+  u.language = language
+  u.save
+end
 
 ### WHEN ###
 

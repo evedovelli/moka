@@ -1,8 +1,8 @@
 pt-BR:
   mailers:
-    url: "batalharia.com.br"
+    url: "batalharia.com"
     friendship:
-      from: "Batalharia <notification@batalharia.com.br>"
+      from: "Batalharia <notification@batalharia.com>"
       new: "%{follower} começou a seguir você no Batalharia"
       hello: "Olá %{name},"
       message_follow_back_html: '%{follower} começou a seguir você no <span style="color:#ff5555; font-size:17px; letter-spacing:0.3px; font-weight:bold">Batalharia</span>.'

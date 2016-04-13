@@ -13,6 +13,11 @@ class ApplicationController < ActionController::Base
       params[:locale] = nil
     end
     I18n.locale = params[:locale] || I18n.default_locale
+
+    if current_user
+      I18n.locale = current_user.language || I18n.locale
+    end
+
     @locale = I18n.locale
   end
 

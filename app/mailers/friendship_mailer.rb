@@ -8,8 +8,8 @@ class FriendshipMailer < ApplicationMailer
       content_type: 'image/png',
       content: File.open(Rails.root.join('app', 'assets', 'images', 'logo_short.png'), 'rb'){|f| f.read}
     }
-    mail(from: I18n.t('mailers.friendship.from'),
+    mail(from: I18n.t('mailers.friendship.from', locale: (@user.language || I18n.locale)),
          to: @user.email,
-         subject: I18n.t('mailers.friendship.new', follower: @follower.username))
+         subject: I18n.t('mailers.friendship.new', follower: @follower.username, locale: (@user.language || I18n.locale)))
   end
 end

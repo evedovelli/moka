@@ -4,7 +4,7 @@
     <tr>
       <td width="580" align="left" style="padding:0 30px 0 100px;">
         <p style="margin-bottom:0;">
-          <%= link_to(url_for(:host => t('mailers.url'),
+          <%= link_to(url_for(:host => t('mailers.url', locale: (@user.language || I18n.locale)),
                               :controller => "users",
                               :action => "home")
                              ) do
@@ -17,7 +17,7 @@
     <tr>
       <td width="580" style="padding:0 30px 10px 30px;">
         <h2 style="margin-top:0;">
-          <%= t('mailers.friendship.hello', name: user_name_for(@user)) %>
+          <%= t('mailers.friendship.hello', name: user_name_for(@user), locale: (@user.language || I18n.locale)) %>
         </h2>
       </td>
     </tr>
@@ -26,15 +26,17 @@
       <td width="580" align="center" style="padding:0 30px 20px 30px;">
         <h3>
           <%= t('mailers.friendship.message_follow_back_html',
-                follower: (link_to(url_for(:host => t('mailers.url'),
+                follower: (link_to(url_for(:host => t('mailers.url', locale: (@user.language || I18n.locale)),
                                            :controller => "users",
                                            :action => "show",
                                            :id => @follower.username),
                                    style: "color:#ff5555"
                           ) do
                             user_name_for(@follower)
-                          end))
+                          end), locale: (@user.language || I18n.locale))
           %>
+<%#                          end),%>
+<%#                locale: (@user.language || @locale))%>
         </h3><br>
       </td>
     </tr>
@@ -46,13 +48,15 @@
           <tbody>
             <tr>
               <td align="center" style="padding:14px 20px 14px 20px; background-color:#ff5555; border-radius:4px">
-                <%= link_to(url_for(:host => t('mailers.url'),
+                <%= link_to(url_for(:host => t('mailers.url', locale: (@user.language || I18n.locale)),
                                     :controller => "users",
                                     :action => "show",
                                     :id => @follower.username),
                             style: "text-decoration:none; text-align:center; font-size:18px; font-weight:bold; letter-spacing:0.5px; color:#FFF"
                            ) do
-                  t('mailers.friendship.visit_profile', follower: user_name_for(@follower))
+                  t('mailers.friendship.visit_profile',
+                    follower: user_name_for(@follower),
+                    locale: (@user.language || I18n.locale))
                 end %>
               </td>
             </tr>
