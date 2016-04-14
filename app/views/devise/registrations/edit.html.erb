@@ -7,6 +7,8 @@
 
       <h3><%= t('.title') %></h3>
 
+      <h5 class="divider"><span class="divider-text"><%= t('.section_identification') %></span></h5>
+
       <div class="control-group">
         <%= f.label :name, :class => "control-label" %>
         <div class="controls">
@@ -29,6 +31,8 @@
       </div>
 
       <% if not from_omniauth?(current_user) %>
+        <h5 class="divider"><span class="divider-text"><%= t('.section_password') %></span></h5>
+
         <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
           <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
         <% end %>
@@ -47,7 +51,23 @@
             <%= f.password_field :password_confirmation, :class => "input-large" %>
           </div>
         </div>
+      <% end %>
 
+      <h5 class="divider"><span class="divider-text"><%= t('.section_language') %></span></h5>
+
+      <div class="control-group">
+        <%= f.label :language, :class => "control-label" %>
+        <div class="controls">
+          <%= f.select(:language, [
+                                   [t('languages.portuguese', locale: "pt-BR"), 'pt-BR'],
+                                   [t('languages.english', locale: "en"), 'en']
+                                  ]) %>
+        </div>
+      </div>
+
+      <h5 class="divider"></h5>
+
+      <% if not from_omniauth?(current_user) %>
         <div class="control-group">
           <%= f.label :current_password, :class => "control-label" %>
           <div class="controls">
@@ -63,6 +83,8 @@
         </div>
       </div>
     <% end %>
+
+    <h5 class="divider"><span class="divider-text"><%= t('.section_cancel') %></span></h5>
 
     <h3><%= t('.cancel_my_account') %></h3>
 

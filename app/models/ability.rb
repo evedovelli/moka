@@ -86,6 +86,7 @@ class Ability
     can :social, User do |u|
       u == user
     end
+    can :locale, User
 
 
     # EmailSettings

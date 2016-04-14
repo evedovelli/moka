@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe FriendshipMailer, :type => :mailer do
-  describe 'new follower' do
+  describe 'new follower default locale' do
     before(:each) do
       ActionMailer::Base.perform_deliveries = true
       ActionMailer::Base.deliveries = []
@@ -68,4 +68,44 @@ RSpec.describe FriendshipMailer, :type => :mailer do
     end
   end
 
+  describe 'new follower locale from user' do
+    before(:each) do
+      ActionMailer::Base.perform_deliveries = true
+      ActionMailer::Base.deliveries = []
+
+      @user = FactoryGirl.create(:user, name: "Finn")
+      @follower = FactoryGirl.create(:user, username: "friend", email: "friend@friend.com")
+      allow(@user).to receive(:language).and_return("pt-BR")
+    end
+    after(:each) do
+      ActionMailer::Base.deliveries.clear
+    end
+
+    let(:mail) { FriendshipMailer.new_follower(@follower, @user) }
+
+    it 'should renders the subject' do
+      expect(mail.subject).to eql('friend começou a seguir você no Batalharia')
+    end
+    it 'should renders the sender email' do
+      expect(mail.from).to eql(['notification@batalharia.com'])
+    end
+    it 'should contains URL for Batalharia' do
+      expect(mail.body.encoded).to match(url_for(:host => "batalharia.com",
+                                                 :controller => "users",
+                                                 :action => "home"
+                                                ))
+    end
+    it 'should contains follower URL' do
+      expect(mail.body.encoded).to match(url_for(:host => 'batalharia.com',
+                                                 :controller => "users",
+                                                 :action => "show",
+                                                 :id => @follower.username))
+    end
+    it 'should contains follow back message' do
+      expect(mail.body.encoded).to match("a seguir")
+    end
+    it 'should contains visit profile message' do
+      expect(mail.body.encoded).to match("Visite o perfil de friend")
+    end
+  end
 end

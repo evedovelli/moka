@@ -76,3 +76,12 @@ Background: I am a registered user logged in and other users exist
       And "bomailey@mail.com" follows "Visit myself profile" in the email
       Then I should be on my profile page
 
+    @javascript
+    Scenario: Followed user is notified by email in his preferred language
+      Given "omailey" preferred language is "pt-BR"
+      Given no emails have been sent
+      And I am on the "omailey" profile page
+      When I click the "follow" button
+      And I wait 1 seconds
+      Then "bomailey@mail.com" should receive an email with subject "myself começou a seguir você no Batalharia"
+

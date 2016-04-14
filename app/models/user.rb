@@ -24,7 +24,7 @@ class User < ActiveRecord::Base
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :login, :username, :email, :password, :password_confirmation,
-                  :remember_me, :avatar, :name, :unread_notifications
+                  :remember_me, :avatar, :name, :unread_notifications, :language
   has_attached_file :avatar, :styles => {
                                :medium => {
                                  :geometry => "300x300#",

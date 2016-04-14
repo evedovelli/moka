@@ -3,7 +3,7 @@ pt-BR:
     formats:
       date: ! "%d/%m/%Y"
   languages:
-    portuguese: 'Português'
+    portuguese: 'Português (Brasil)'
     english: 'Inglês'
   devise:
     registrations:
@@ -15,6 +15,10 @@ pt-BR:
         change_password_help: 'Sua senha atual é necessária para confirmar as mudanças'
         cancel_my_account: 'Cancelar minha conta'
         unhappy: 'Infeliz?'
+        section_identification: "Identificação"
+        section_password: "Senha"
+        section_language: "Idioma"
+        section_cancel: "Cancelar conta"
     sessions:
       new:
         title: 'Entrar'

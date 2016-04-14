@@ -13,3 +13,4 @@ pt-BR:
         password_confirmation: "Confirmação da senha"
         current_password: "Senha atual"
         remember_me: "Lembrar login"
+        language: "Idioma preferido"

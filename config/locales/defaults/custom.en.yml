@@ -3,7 +3,7 @@ en:
     formats:
       date: ! '%Y-%m-%d'
   languages:
-    portuguese: 'Portuguese'
+    portuguese: 'Portuguese (Brazil)'
     english: 'English'
   devise:
     registrations:
@@ -15,6 +15,10 @@ en:
         change_password_help: 'We need your current password to confirm your changes'
         cancel_my_account: 'Cancel my account'
         unhappy: 'Unhappy?'
+        section_identification: "Identification"
+        section_password: "Password"
+        section_language: "Language"
+        section_cancel: "Cancel account"
     sessions:
       new:
         title: 'Sign in'
