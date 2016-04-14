@@ -24,7 +24,7 @@ describe ApplicationController do
       expect(response).to redirect_to @referer
     end
     it "should redirects to the home page" do
-      flash[:alert].should == "Invalid image"
+      expect(flash[:alert]).to eq("Invalid image")
     end
   end
 
@@ -38,7 +38,7 @@ describe ApplicationController do
       expect(response).to redirect_to @referer
     end
     it "should redirects to the home page" do
-      flash[:alert].should == "Failed to share image on Facebook. Please try again!"
+      expect(flash[:alert]).to eq("Failed to share image on Facebook. Please try again!")
     end
   end
 
@@ -52,7 +52,7 @@ describe ApplicationController do
       expect(response).to redirect_to @referer
     end
     it "should redirects to the home page" do
-      flash[:alert].should == "Failed to share image on Facebook. Please try again!"
+      expect(flash[:alert]).to eq("Failed to share image on Facebook. Please try again!")
     end
   end
 end

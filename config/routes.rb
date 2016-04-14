@@ -31,5 +31,7 @@ Moka::Application.routes.draw do
 
   get '/.well-known/acme-challenge/:id' => 'letsencrypt#challenge'
 
+  get "locale" => 'users#locale', :as => :set_locale
+
   root :to => "users#home"
 end

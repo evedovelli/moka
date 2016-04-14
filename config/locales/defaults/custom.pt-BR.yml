@@ -3,7 +3,7 @@ pt-BR:
     formats:
       date: ! "%d/%m/%Y"
   languages:
-    portuguese: 'Português'
+    portuguese: 'Português (Brasil)'
     english: 'Inglês'
   devise:
     registrations:

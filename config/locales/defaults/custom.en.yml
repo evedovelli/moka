@@ -3,7 +3,7 @@ en:
     formats:
       date: ! '%Y-%m-%d'
   languages:
-    portuguese: 'Portuguese'
+    portuguese: 'Portuguese (Brazil)'
     english: 'English'
   devise:
     registrations:

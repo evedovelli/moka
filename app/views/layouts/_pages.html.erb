@@ -1,8 +1,29 @@
 <ul class="nav nav-pills">
+
   <li class="<%= is_active?(page_path('privacy_policy')) %>">
     <%= link_to t('layouts._pages.privacy_policy'), page_path('privacy_policy') %>
   </li>
+
   <li class="<%= is_active?(page_path('terms_of_service')) %>">
     <%= link_to t('layouts._pages.terms_of_service'), page_path('terms_of_service') %>
   </li>
+
+  <li class="dropup">
+    <a id="language-dropdown" class="dropdown-toggle" data-toggle="dropdown" href="#" role="button">
+      <%= t('layouts._pages.language') %>
+    </a>
+    <ul id="language-dropdown-menu" class="dropdown-menu" role="menu" aria-labelledby="language-dropdown">
+      <li name="locale-pt-BR">
+        <%= link_to(set_locale_path(:locale => "pt-BR"), :method => :get) do %>
+          <%= t('languages.portuguese', locale: "pt-BR") %>
+        <% end %>
+      </li>
+      <li name="locale-en">
+        <%= link_to(set_locale_path(:locale => "en"), :method => :get) do %>
+          <%= t('languages.english', locale: "en") %>
+        <% end %>
+      </li>
+    </ul>
+  </li>
+
 </ul>

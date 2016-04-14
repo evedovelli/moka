@@ -530,4 +530,66 @@ describe UsersController do
     end
   end
 
+
+  describe "locale" do
+    before :each do
+      RoutingFilter.active = false
+    end
+    after :each do
+      RoutingFilter.active = true
+    end
+
+    it "should accept en locale" do
+      expect(request).to receive(:referer).and_return(root_path)
+      get :locale, {:locale => "en"}
+      expect(response).to redirect_to("/en/")
+    end
+    it "should accept pt-BR locale" do
+      expect(request).to receive(:referer).and_return(root_path)
+      get :locale, {:locale => "pt-BR"}
+      expect(response).to redirect_to("/pt-BR/")
+    end
+    it "should not accept other locales and redirect to default" do
+      expect(request).to receive(:referer).and_return(root_path)
+      get :locale, {:locale => "other"}
+      expect(response).to redirect_to("/en/")
+    end
+
+    it "should insert locale when it is not present in referer" do
+      expect(request).to receive(:referer).and_return("/")
+      get :locale
+      expect(response).to redirect_to("/en/")
+    end
+    it "should replace en locale from referer" do
+      expect(request).to receive(:referer).and_return("/en")
+      get :locale, {:locale => "en"}
+      expect(response).to redirect_to("/en/")
+    end
+    it "should replace en/ locale from referer" do
+      expect(request).to receive(:referer).and_return("/en/")
+      get :locale, {:locale => "en"}
+      expect(response).to redirect_to("/en/")
+    end
+    it "should replace en? locale from referer" do
+      expect(request).to receive(:referer).and_return("/en?test=1")
+      get :locale, {:locale => "en"}
+      expect(response).to redirect_to("/en/")
+    end
+    it "should replace pt-BR locale from referer" do
+      expect(request).to receive(:referer).and_return("/pt-BR")
+      get :locale, {:locale => "pt-BR"}
+      expect(response).to redirect_to("/pt-BR/")
+    end
+    it "should replace pt-BR/ locale from referer" do
+      expect(request).to receive(:referer).and_return("/pt-BR/")
+      get :locale, {:locale => "pt-BR"}
+      expect(response).to redirect_to("/pt-BR/")
+    end
+    it "should replace pt-BR? locale from referer" do
+      expect(request).to receive(:referer).and_return("/pt-BR?test=1")
+      get :locale, {:locale => "pt-BR"}
+      expect(response).to redirect_to("/pt-BR/")
+    end
+  end
+
 end

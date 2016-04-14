@@ -228,6 +228,7 @@ end
 
 When /^I edit my account details$/ do
   click_link "Edit account"
+  step %Q{I select "English" from "user_language"}
   fill_in "user_current_password", :with => "secretpassword"
   click_button "Update"
 end
@@ -235,6 +236,7 @@ end
 When /^I edit my username with "([^"]+)"$/ do |username|
   click_link "Edit account"
   fill_in "user_username", :with => username
+  step %Q{I select "English" from "user_language"}
   fill_in "user_current_password", :with => "secretpassword"
   click_button "Update"
 end
@@ -242,6 +244,7 @@ end
 When /^I edit my email with "([^"]+)"$/ do |email|
   click_link "Edit account"
   fill_in "user_email", :with => email
+  step %Q{I select "English" from "user_language"}
   fill_in "user_current_password", :with => "secretpassword"
   click_button "Update"
 end
@@ -250,6 +253,7 @@ When /^I edit my password with "([^"]+)"$/ do |password|
   click_link "Edit account"
   fill_in "user_password", :with => password
   fill_in "user_password_confirmation", :with => password
+  step %Q{I select "English" from "user_language"}
   fill_in "user_current_password", :with => "secretpassword"
   click_button "Update"
 end
@@ -295,6 +299,12 @@ When /^user "([^"]*)" cancels his account$/ do |user|
   step %Q{I confirm popup}
 end
 
+When /^I select language "([^"]*)"$/ do |language|
+  find("#language-dropdown").click
+  within("#language-dropdown-menu") do
+    click_link(language)
+  end
+end
 
 ### THEN ###
 

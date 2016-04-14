@@ -1,6 +1,15 @@
 class UsersController < ApplicationController
   before_filter :authenticate_user!, :only => [:edit, :update, :social]
-  load_and_authorize_resource :user, :find_by => :username, :expect => [:home, :social]
+  load_and_authorize_resource :user, :find_by => :username, :expect => [:home, :social, :locale]
+
+  def locale
+    referer_path = URI(request.referer).path
+    if /^\/(en|pt-BR)(\/|$|\?)/ =~ referer_path
+      redirect_to referer_path.sub(/\/[^\/]+[\/]?/, "/#{I18n.locale}/")
+    else
+      redirect_to "/#{I18n.locale}#{referer_path}"
+    end
+  end
 
   def home
     @user = current_user
