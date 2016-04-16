@@ -306,6 +306,7 @@ When /^I select language "([^"]*)"$/ do |language|
   end
 end
 
+
 ### THEN ###
 
 Then /^I should be signed in$/ do

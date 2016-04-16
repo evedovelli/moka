@@ -37,3 +37,10 @@ Background: Website is operating
       When I select language "English"
       And I go to the terms of service page
       Then I should see "Terms of Service"
+
+    Scenario: User is directed to the edit account page to set language
+      Given I am logged in
+      And I am on the home page
+      When I follow "Language"
+      Then I should be on the edit account page
+
