@@ -1,3 +1,5 @@
+require 'uri'
+
 module BattlesHelper
   def visible_battles(battles)
     return battles.reject{|b| b.hidden}
@@ -51,5 +53,21 @@ module BattlesHelper
       end
     end
     return battle_icons.html_safe
+  end
+
+  def share_on_facebook(url)
+    return "onClick=\"window.open('http://www.facebook.com/sharer.php?u=#{url}&appId=#{ENV['FACEBOOK_KEY']}','Facebook','width=600,height=300,left='+(screen.availWidth/2-300)+',top='+(screen.availHeight/2-150)+''); return false;\"".html_safe
+  end
+
+  def share_on_twitter(url, text)
+    return "onClick=\"window.open('http://twitter.com/share?url=#{url}&amp;text=#{text}','Twitter share','width=600,height=300,left='+(screen.availWidth/2-300)+',top='+(screen.availHeight/2-150)+''); return false;\"".html_safe
+  end
+
+  def share_on_google_plus(url)
+    return "onClick=\"window.open('https://plus.google.com/share?url=#{url}','Google plus','width=585,height=666,left='+(screen.availWidth/2-292)+',top='+(screen.availHeight/2-333)+''); return false;\"".html_safe
+  end
+
+  def twitter_text(battle)
+    return URI.encode(battle.title)
   end
 end

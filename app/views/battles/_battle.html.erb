@@ -9,12 +9,19 @@
       <div class="span12">
 
         <div class="row">
-          <div class="span12">
+          <div class="span6">
             <h4 class="pull-left battle-user">
               <%= link_to(image_tag(battle.user.avatar.url(:icon), :class => "img-polaroid"), user_path(battle.user)) %>
               <%= link_to(battle.user.username, user_path(battle.user), :class => "battle_user") %>
             </h4>
+          </div>
 
+          <div class="span5 hidden-phone">
+            <%= render :partial => "battles/social",
+                       :locals => { :battle => battle } %>
+          </div>
+
+          <div class="span1">
             <% if can? :destroy, battle %>
               <div class="battle-remove pull-right">
                 <%= link_to(battle_path(battle),
@@ -37,8 +44,8 @@
                 <% end %>
               </div>
             <% end %>
-
           </div>
+
         </div>
 
         <div class="scroller-over"></div>
@@ -134,6 +141,13 @@
         </div>
       </div>
     <% end %>
+
+    <div class="row">
+      <div class="span5 visible-phone">
+        <%= render :partial => "battles/social",
+                   :locals => { :battle => battle } %>
+      </div>
+    </div>
 
   </div>
 
