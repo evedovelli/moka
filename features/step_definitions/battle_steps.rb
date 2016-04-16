@@ -193,15 +193,6 @@ When /^I fill (\d+)(?:st|nd|rd|th) option with "([^"]*)"$/ do |option_number, op
   end
 end
 
-When /^I follow the link to share the (\d+)(?:st|nd|rd|th) battle$/ do |battle_id|
-  stub_request(:get, "https://graph.facebook.com/oauth/access_token?client_id=&client_secret=&grant_type=client_credentials").
-    to_return(:status => 200, :body => "", :headers => {})
-
-  within(all('.battle')[battle_id.to_i - 1]) do
-    find(".btn-facebook-share").click
-  end
-end
-
 
 ### THEN ###
 
@@ -374,8 +365,10 @@ Then /^I should see the button to add option$/ do
   expect(page).to have_css("#add_new_option")
 end
 
-Then /^I should not see a button to share the (\d+)(?:st|nd|rd|th) battle$/ do |battle_id|
+Then /^I should see buttons to share the (\d+)(?:st|nd|rd|th) battle on Facebook, Twitter and Google\+$/ do |battle_id|
   within(all('.battle')[battle_id.to_i - 1]) do
-    expect(page).not_to have_css('.btn-facebook-share')
+    expect(page).to have_css('.facebook-share')
+    expect(page).to have_css('.twitter-share')
+    expect(page).to have_css('.google-plus-share')
   end
 end

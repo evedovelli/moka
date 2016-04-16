@@ -28,3 +28,5 @@ pt-BR:
       count_html:
         one: '<b>%{count}</b> batalha'
         other: '<b>%{count}</b> batalhas'
+    _social:
+      share: 'Compartilhe:'

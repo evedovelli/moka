@@ -28,3 +28,5 @@ en:
       count_html:
         one: '<b>%{count}</b> battle'
         other: '<b>%{count}</b> battles'
+    _social:
+      share: 'Share:'

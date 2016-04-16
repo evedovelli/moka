@@ -1,4 +1,6 @@
 $facebook-color: #3B5998;
+$twitter-color: #2AA9E0;
+$google-plus-color: #DB4437;
 
 .btn-facebook.btn-primary {
   background-color: $facebook-color;
@@ -31,4 +33,33 @@ $facebook-color: #3B5998;
 
 .checked {
   color: #37C871;
+}
+
+.facebook-color {
+  color: $facebook-color;
+}
+
+.twitter-color {
+  color: $twitter-color;
+}
+
+.google-plus-color {
+  color: $google-plus-color;
+}
+
+.share-title {
+  color: #AAA;
+  padding-right: 8px;
+}
+
+a.facebook-share:hover {
+  text-decoration: none;
+}
+
+a.twitter-share:hover {
+  text-decoration: none;
+}
+
+a.google-plus-share:hover {
+  text-decoration: none;
 }

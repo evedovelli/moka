@@ -74,4 +74,22 @@ describe BattlesHelper, :type => :helper do
       expect(helper.show_battle_icons(@battle, vote)).to eq("<a href=\"/en/battles/#{@battle.id}\" id=\"option#{@battle.options[0].id}-icon\">#{image_tag(@battle.options[0].picture.url(:icon), :class => "img-polaroid")}</a><a href=\"/en/battles/#{@battle.id}\" id=\"option#{@battle.options[1].id}-icon\">#{image_tag(@battle.options[1].picture.url(:icon), :class => "img-polaroid")}</a><a href=\"/en/battles/#{@battle.id}\" id=\"option#{@battle.options[2].id}-icon\">#{image_tag(@battle.options[2].picture.url(:icon), :class => "voted_battle img-polaroid")}</a>")
     end
   end
+
+  describe "share on social networks" do
+    it "should return script to share on facebook" do
+      expect(helper.share_on_facebook("url")).to eq("onClick=\"window.open('http://www.facebook.com/sharer.php?u=url&appId=','Facebook','width=600,height=300,left='+(screen.availWidth/2-300)+',top='+(screen.availHeight/2-150)+''); return false;\"")
+    end
+    it "should return script to share on twitter" do
+      expect(helper.share_on_twitter("url", "title")).to eq("onClick=\"window.open('http://twitter.com/share?url=url&amp;text=title','Twitter share','width=600,height=300,left='+(screen.availWidth/2-300)+',top='+(screen.availHeight/2-150)+''); return false;\"")
+    end
+    it "should return script to share on google+" do
+      expect(helper.share_on_google_plus("url")).to eq("onClick=\"window.open('https://plus.google.com/share?url=url','Google plus','width=585,height=666,left='+(screen.availWidth/2-292)+',top='+(screen.availHeight/2-333)+''); return false;\"")
+    end
+    it "should return text to share on twitter" do
+      @battle = FactoryGirl.create(:battle, {
+        title: "#share this on: #Twitter!"
+      })
+      expect(helper.twitter_text(@battle)).to eq("%23share%20this%20on:%20%23Twitter!")
+    end
+  end
 end

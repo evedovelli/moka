@@ -305,7 +305,7 @@ describe Ability do
         end
 
         it "should be able to share battles" do
-          expect(@ability).to be_able_to(:share, @battle)
+          expect(@ability).not_to be_able_to(:share, @battle)
         end
         it "should not be able to share battles for other users" do
           expect(@ability).not_to be_able_to(:share, @other_battle)

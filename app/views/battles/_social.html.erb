@@ -1,0 +1,21 @@
+<div class="pull-right social-share">
+  <span class="share-title"><%= t('battles._social.share') %></span>
+  <a class="facebook-share" <%= share_on_facebook(canonical_url(battle_path(battle))) %> href="http://www.facebook.com/sharer.php?u=<%= canonical_url(battle_path(battle)) %>&appId=<%= ENV['FACEBOOK_KEY'] %>">
+    <span class="fa-stack fa-lg facebook-color share-icon">
+      <i class="fa fa-square fa-stack-2x"></i>
+      <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+    </span>
+  </a>
+  <a class="twitter-share" <%= share_on_twitter(canonical_url(battle_path(battle)), twitter_text(battle)) %> href="http://twitter.com/share?url=<%= canonical_url(battle_path(battle)) %>&amp;text=<%= twitter_text(battle) %>">
+    <span class="fa-stack fa-lg twitter-color share-icon">
+      <i class="fa fa-square fa-stack-2x"></i>
+      <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+    </span>
+  </a>
+  <a class="google-plus-share" <%= share_on_google_plus(canonical_url(battle_path(battle))) %> href="https://plus.google.com/share?url=<%= canonical_url(battle_path(battle)) %>">
+    <span class="fa-stack fa-lg google-plus-color share-icon">
+      <i class="fa fa-square fa-stack-2x"></i>
+      <i class="fa fa-google-plus fa-stack-1x fa-inverse"></i>
+    </span>
+  </a>
+</div>
