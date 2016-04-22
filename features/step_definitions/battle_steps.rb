@@ -193,6 +193,15 @@ When /^I fill (\d+)(?:st|nd|rd|th) option with "([^"]*)"$/ do |option_number, op
   end
 end
 
+When /^I select filter "([^"]*)"$/ do |filter|
+  within("#battle-filter-form") do
+    find("button.selectpicker").click
+    within("div.dropdown-menu") do
+      find('span', :text => filter).click
+    end
+  end
+end
+
 
 ### THEN ###
 

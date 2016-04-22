@@ -30,3 +30,9 @@ en:
         other: '<b>%{count}</b> battles'
     _social:
       share: 'Share:'
+    _filter:
+      all: 'All'
+      current: 'Current'
+      finished: 'Finished'
+      refresh: 'Refresh'
+      span: 'Filter battles:'

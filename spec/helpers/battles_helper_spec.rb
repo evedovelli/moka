@@ -3,11 +3,50 @@ require "rails_helper"
 describe BattlesHelper, :type => :helper do
   describe "visible battles" do
     it "should return all non hidden battles" do
-      battles = FactoryGirl.create_list(:battle, 10)
-      expected_battles = Array.new(battles)
+      battles_current = FactoryGirl.create_list(:battle, 5, {
+        starts_at: DateTime.now - 2.day,
+        duration: 96*60,
+      })
       battle = FactoryGirl.create(:battle)
       battle.hide
-      expect(helper.visible_battles(battles.push(battle))).to eq(expected_battles)
+      battles_finished = FactoryGirl.create_list(:battle, 5, {
+        starts_at: DateTime.now - 2.day,
+        duration: 6*60,
+      })
+      expected_battles = Array.new(battles_current)
+      expected_battles.concat battles_finished
+
+      expect(helper.visible_battles(Battle.all, "all")).to eq(expected_battles)
+    end
+    it "should return all non hidden current battles" do
+      battles_current = FactoryGirl.create_list(:battle, 5, {
+        starts_at: DateTime.now - 2.day,
+        duration: 96*60,
+      })
+      battle = FactoryGirl.create(:battle)
+      battle.hide
+      battles_finished = FactoryGirl.create_list(:battle, 5, {
+        starts_at: DateTime.now - 2.day,
+        duration: 6*60,
+      })
+      expected_battles = Array.new(battles_current)
+
+      expect(helper.visible_battles(Battle.all, "current")).to eq(expected_battles)
+    end
+    it "should return all non hidden finished battles" do
+      battles_current = FactoryGirl.create_list(:battle, 5, {
+        starts_at: DateTime.now - 2.day,
+        duration: 96*60,
+      })
+      battle = FactoryGirl.create(:battle)
+      battle.hide
+      battles_finished = FactoryGirl.create_list(:battle, 5, {
+        starts_at: DateTime.now - 2.day,
+        duration: 6*60,
+      })
+      expected_battles = Array.new(battles_finished)
+
+      expect(helper.visible_battles(Battle.all, "finished")).to eq(expected_battles)
     end
   end
 

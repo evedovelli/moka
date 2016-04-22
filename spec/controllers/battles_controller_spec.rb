@@ -98,6 +98,14 @@ describe BattlesController do
           get :hashtag, {:hashtag => "notmyfault"}
           expect(assigns(:voted_for)).to eq(nil)
         end
+        it "should make filter available to that template with all by default" do
+          get :hashtag, {:hashtag => "notmyfault"}
+          expect(assigns(:filter)).to eq("all")
+        end
+        it "should make filter available to that template with value from param" do
+          get :hashtag, {:hashtag => "notmyfault", :filter => "finished"}
+          expect(assigns(:filter)).to eq("finished")
+        end
       end
       describe "invalid" do
         it "should be redirected to root page with empty hashtag" do

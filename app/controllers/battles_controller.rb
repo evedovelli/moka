@@ -124,6 +124,8 @@ class BattlesController < ApplicationController
 
       @battles = Battle.with_hashtag(@hashtag, params[:page])
 
+      @filter = params[:filter] || 'all'
+
       if current_user
         @voted_for = current_user.voted_for_options(@battles)
       else

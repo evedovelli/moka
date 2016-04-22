@@ -1,8 +1,14 @@
 require 'uri'
 
 module BattlesHelper
-  def visible_battles(battles)
-    return battles.reject{|b| b.hidden}
+  def visible_battles(battles, filter)
+    battles.reject!{|b| b.hidden}
+    if filter == "finished"
+      battles.reject!{|b| not b.finished?}
+    elsif filter == "current"
+      battles.reject!{|b| not b.current?}
+    end
+    return battles
   end
 
   def option_size(total)
