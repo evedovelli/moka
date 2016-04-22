@@ -15,6 +15,7 @@ Background:
     Scenario: Update a battle
       When I fill battle duration with 0 days, 5 hours and 0 mins
       And I press "Update"
+      And I wait 2 seconds
       Then I should be on the home page
       And I should see the battle ends in "2015/05/18 15:30:14"
 

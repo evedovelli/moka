@@ -21,6 +21,7 @@
 //= require nprogress-ajax
 //= require jquery.validate
 //= require jquery.countdown
+//= require bootstrap-select
 //= require_tree .
 //= require turbolinks
 
@@ -31,4 +32,13 @@ function goBack()
 
 jQuery(function() {
   $('#flash_messages').fadeOut(10000)
+});
+
+
+/**********************************************************/
+/* Activates selectpicker                                 */
+/**********************************************************/
+
+$(document).on("page:change", function() {
+  return $('.selectpicker').selectpicker();
 });

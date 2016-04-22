@@ -22,6 +22,8 @@ class UsersController < ApplicationController
 
     authorize! :home, @user
 
+    @filter = params[:filter] || 'all'
+
     @battles = Battle.user_home(@user, params[:page])
     @voted_for = current_user.voted_for_options(@battles)
     @victorious = Battle.victorious(@battles)
@@ -34,6 +36,8 @@ class UsersController < ApplicationController
 
   def show
     @battles = @user.sorted_battles(params[:page])
+
+    @filter = params[:filter] || 'all'
 
     @voted_for = {}
     if current_user

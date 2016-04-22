@@ -1,5 +1,5 @@
-$("<%= escape_javascript(render visible_battles(@battles)) %>").appendTo("#battle_index");
-<% visible_battles(@battles).each do |battle| %>
+$("<%= escape_javascript(render visible_battles(@battles, @filter)) %>").appendTo("#battle_index");
+<% visible_battles(@battles, @filter).each do |battle| %>
   jQuery(selectablePictureBattle("#battle<%= battle.id %>"));
 <% end %>
 jQuery(startBattleCounters);
@@ -8,5 +8,5 @@ jQuery(startBattleCounters);
 <% if @battles.last_page? %>
   $('.pagination').html('<p class="center last_page"><%= image_tag("watermark_small.png") %></p>');
 <% else %>
-  $('.pagination').html("<%=j link_to_next_page(@battles, t('battles._index.next'), :remote => true, :class => "next_page") %>");
+  $('.pagination').html("<%=j link_to_next_page(@battles, t('battles._index.next'), params: { filter: @filter }, :remote => true, :class => "next_page") %>");
 <% end %>

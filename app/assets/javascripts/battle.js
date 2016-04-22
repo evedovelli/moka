@@ -428,3 +428,16 @@ function setupDurationInput(battle_form) {
   hours_field.on("change, keyup ", updateDuration);
   mins_field.on("change, keyup", updateDuration);
 };
+
+
+/**********************************************************/
+/* Submit battle filter when filter is selected           */
+/**********************************************************/
+
+function autoFilterSubmit () {
+  $('#battle-filter-select').on('change', function(){
+    $('#battle-filter-btn').trigger('click');
+  });
+  $('#battle-filter-btn').hide();
+}
+jQuery(autoFilterSubmit);

@@ -1,0 +1,14 @@
+<%= form_tag('#', method: "get", id: 'battle-filter-form') do %>
+  <span class="battle-filter-text"><%= t('battles._filter.span') %></span>
+  <%= select_tag(:filter, options_for_select([
+                              [t('battles._filter.all'), "all"],
+                              [t('battles._filter.current'), "current"],
+                              [t('battles._filter.finished'), "finished"]
+                            ],
+                            :selected => @filter), {
+                   :class => 'btn-mini selectpicker',
+                   'data-width' => 'auto',
+                   :id => 'battle-filter-select',
+                 }) %>
+  <%= button_tag(t('battles._filter.refresh'), :class => "btn", :id => "battle-filter-btn") %>
+<% end %>

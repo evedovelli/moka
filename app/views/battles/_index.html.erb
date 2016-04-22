@@ -1,13 +1,13 @@
 <div id="login-box" style='display:none;'></div>
 
 <div id="battle_index">
-  <%= render visible_battles(@battles) %>
+  <%= render visible_battles(@battles, @filter) %>
 </div>
 
 <div class="pagination">
   <% if @battles.last_page? %>
     <p class='center last_page'><%= image_tag("watermark_small.png") %></p>
   <% else %>
-    <%= link_to_next_page(@battles, t('battles._index.next'), :remote => true, :class => "next_page") %>
+    <%= link_to_next_page(@battles, t('battles._index.next'), params: { filter: @filter }, :remote => true, :class => "next_page") %>
   <% end %>
 </div>

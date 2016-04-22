@@ -30,3 +30,9 @@ pt-BR:
         other: '<b>%{count}</b> batalhas'
     _social:
       share: 'Compartilhe:'
+    _filter:
+      all: 'Todas'
+      current: 'Em andamento'
+      finished: 'Encerradas'
+      refresh: 'Atualizar'
+      span: 'Filtrar batalhas:'

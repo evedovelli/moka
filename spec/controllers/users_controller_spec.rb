@@ -170,6 +170,14 @@ describe UsersController do
           get :home
           expect(assigns(:vote)).to be_new_record
         end
+        it "should make filter available to that template with all by default" do
+          get :home
+          expect(assigns(:filter)).to eq("all")
+        end
+        it "should make filter available to that template with value from param" do
+          get :home, {:filter => "finished"}
+          expect(assigns(:filter)).to eq("finished")
+        end
       end
 
       describe "show" do
@@ -237,6 +245,14 @@ describe UsersController do
           allow(@other_user).to receive(:inverse_friends).and_return([double("1"), double("2"), double("3")])
           get :show, {:id => @other_user.username}
           expect(assigns(:number_of_followers)).to eq(3)
+        end
+        it "should make filter available to that template with all by default" do
+          get :show, {:id => @other_user.username}
+          expect(assigns(:filter)).to eq("all")
+        end
+        it "should make filter available to that template with value from param" do
+          get :show, {:id => @other_user.username, :filter => "finished"}
+          expect(assigns(:filter)).to eq("finished")
         end
       end
 
