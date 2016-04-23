@@ -328,23 +328,45 @@ Then /^I see a successful sign in message$/ do
 end
 
 Then /^I should see an invalid email message$/ do
-  expect(page).to have_content "Email is invalid"
+  within(".user_email") do
+    expect(page).to have_content "is invalid"
+  end
 end
 
 Then /^I should see a missing username message$/ do
-  expect(page).to have_content "Username can't be blank"
+  within(".user_username") do
+    expect(page).to have_content "can't be blank"
+  end
+end
+
+Then /^I should see an invalid username message$/ do
+  within(".user_username") do
+    expect(page).to have_content "is invalid"
+  end
+end
+
+Then /^I should see an invalid characters for username message$/ do
+  within(".user_username") do
+    expect(page).to have_content "is invalid. Only use letters, numbers and '_'"
+  end
 end
 
 Then /^I should see a missing password message$/ do
-  expect(page).to have_content "Password can't be blank"
+  within(".user_password") do
+    expect(page).to have_content "can't be blank"
+  end
 end
 
 Then /^I should see a missing password confirmation message$/ do
-  expect(page).to have_content "Password doesn't match confirmation"
+  within(".user_password_confirmation") do
+    expect(page).to have_content "doesn't match confirmation"
+  end
 end
 
 Then /^I should see a mismatched password message$/ do
-  expect(page).to have_content "Password doesn't match confirmation"
+  within(".user_password") do
+    expect(page).to have_content "doesn't match confirmation"
+  end
 end
 
 Then /^I should see a signed out message$/ do

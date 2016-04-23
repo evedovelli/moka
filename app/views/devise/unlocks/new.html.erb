@@ -1,12 +1,17 @@
 <h2><%= t('.title') %></h2>
 
-<%= form_for(resource, :as => resource_name, :url => unlock_path(resource_name), :html => { :method => :post }) do |f| %>
-  <%= devise_error_messages! %>
+<%= simple_form_for(resource,
+                    :as => resource_name,
+                    :url => unlock_path(resource_name),
+                    :html => { :method => :post, :class => "form-horizontal" }
+                   ) do |f| %>
+  <%= f.input :email, input_html: { :autofocus => true, :class => "input-large" } %>
 
-  <div><%= f.label :email %><br />
-  <%= f.email_field :email, :autofocus => true %></div>
-
-  <div><%= f.submit t('.unlock') %></div>
+  <div class="control-group">
+    <div class="controls">
+      <%= f.submit t('.unlock'), :class => "btn btn-primary btn-large btn-block" %>
+    </div>
+  </div>
 <% end %>
 
 <%= render "devise/shared/links" %>
