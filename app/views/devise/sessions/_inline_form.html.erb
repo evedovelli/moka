@@ -1,26 +1,11 @@
-<%= form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => { :class => "form-horizontal" }) do |f| %>
-  <div class="control-group">
-    <%= f.label :login, :class => "control-label" %>
-    <div class="controls">
-      <%= f.text_field :login, :autofocus => true, :class => "input-large" %>
-    </div>
-  </div>
-
-  <div class="control-group">
-    <%= f.label :password, :class => "control-label" %>
-    <div class="controls">
-      <%= f.password_field :password, :class => "input-large" %>
-    </div>
-  </div>
-
-  <div class="control-group">
-    <div class="controls">
-      <label class="checkbox">
-        <%= f.check_box :remember_me %>
-        <%= f.label :remember_me %>
-      </label>
-    </div>
-  </div>
+<%= simple_form_for(resource,
+                    :as => resource_name,
+                    :url => session_path(resource_name),
+                    :html => { :class => "form-horizontal" }
+                   ) do |f| %>
+  <%= f.input :login, input_html: { :autofocus => true, :class => "input-large" } %>
+  <%= f.input :password, input_html: { :class => "input-large" } %>
+  <%= f.input :remember_me, as: :boolean  %>
 
   <%= f.submit t('buttons.sign_in'), :class => "btn btn-primary btn-large btn-block" %>
 

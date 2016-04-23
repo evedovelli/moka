@@ -46,6 +46,7 @@ class User < ActiveRecord::Base
                        :presence => true
   validate :username, :has_valid_characters
   validate :username, :reserved_usernames
+  validates :email, :presence => true
 
   def has_valid_characters
     if username !~ /^[a-zA-Z0-9_]+$/

@@ -2,15 +2,9 @@
   <div class="main-frame">
     <h2><%= t('.title') %></h2>
 
-    <%= form_for(resource, :as => resource_name, :url => confirmation_path(resource_name), :html => { :method => :post, :class => "form-horizontal" }) do |f| %>
-      <%= devise_error_messages! %>
+    <%= simple_form_for(resource, :as => resource_name, :url => confirmation_path(resource_name), :html => { :method => :post, :class => "form-horizontal" }) do |f| %>
 
-      <div class="control-group">
-        <%= f.label :email, :class => "control-label" %>
-        <div class="controls">
-          <%= f.email_field :email, :autofocus => true, :class => "input-large" %>
-        </div>
-      </div>
+      <%= f.input :email, input_html: { :autofocus => true, :class => "input-large" } %>
 
       <div class="control-group">
         <div class="controls">

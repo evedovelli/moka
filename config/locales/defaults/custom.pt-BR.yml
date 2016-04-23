@@ -19,6 +19,7 @@ pt-BR:
         section_password: "Senha"
         section_language: "Idioma"
         section_cancel: "Cancelar conta"
+        waiting_confirmation: "Aguardando confirmação para: %{email}"
     sessions:
       new:
         title: 'Entrar'

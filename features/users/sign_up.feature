@@ -21,19 +21,15 @@ Background:
 
     Scenario: User signs up with reserved username
       When I sign up with username "sign_in"
-      Then I should see "Username is invalid"
+      Then I should see an invalid username message
 
     Scenario: User signs up with invalid username
       When I sign up with username "User.Name"
-      Then I should see "Username is invalid. Only use letters, numbers and '_'"
+      Then I should see an invalid characters for username message
 
     Scenario: User signs up without password
       When I sign up without a password
       Then I should see a missing password message
-
-    Scenario: User signs up without password confirmation
-      When I sign up without a password confirmation
-      Then I should see a missing password confirmation message
 
     Scenario: User signs up with mismatched password and confirmation
       When I sign up with a mismatched password confirmation

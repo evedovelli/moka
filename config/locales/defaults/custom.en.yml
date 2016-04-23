@@ -19,6 +19,7 @@ en:
         section_password: "Password"
         section_language: "Language"
         section_cancel: "Cancel account"
+        waiting_confirmation: "Currently waiting confirmation for: %{email}"
     sessions:
       new:
         title: 'Sign in'
