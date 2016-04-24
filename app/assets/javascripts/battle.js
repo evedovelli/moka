@@ -237,7 +237,7 @@ startBattleCounters = function(element) {
       var caption = '<span class="timer-range">' + hour + '%!H' + '</span>';
       caption = caption + '<span class="timer-range">' + min + '%!M' + '</span>';
       caption = caption + '<span class="timer-range">' + sec + '%!S' + '</span>';
-      if (event.offset.days > 0) {
+      if (event.offset.totalDays > 0) {
         format = '<span class="digit">%D</span>:' + format;
         caption = '<span class="timer-range">' + day + '%!D' + '</span>' + caption;
       }
