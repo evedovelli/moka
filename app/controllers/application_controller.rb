@@ -22,11 +22,15 @@ class ApplicationController < ActionController::Base
   end
 
   def after_sign_in_path_for(resource)
-    sign_in_url = new_user_session_url
-    if request.referer == sign_in_url
+    if (request.referer =~ /\/users\/sign_in/)
       super
     else
-      stored_location_for(resource) || request.referer || root_path
+      destination = stored_location_for(resource) || request.referer || root_url
+      if (destination =~ /\/users\/sign_in/)
+        return root_path
+      else
+        return destination
+      end
     end
   end
 
