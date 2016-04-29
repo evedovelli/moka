@@ -306,6 +306,14 @@ When /^I select language "([^"]*)"$/ do |language|
   end
 end
 
+When /^I sign in from modal form$/ do
+  within("#login-modal") do
+    step %Q{I fill in "user_login" with "myself"}
+    step %Q{I fill in "user_password" with "secretpassword"}
+    step %Q{I click "Sign in"}
+  end
+end
+
 
 ### THEN ###
 
@@ -325,6 +333,10 @@ end
 
 Then /^I see a successful sign in message$/ do
   expect(page).to have_content "Signed in successfully."
+end
+
+Then /^I see a successful sign in from Facebook message$/ do
+  expect(page).to have_content "Successfully authenticated from Facebook account"
 end
 
 Then /^I should see an invalid email message$/ do
@@ -478,4 +490,8 @@ end
 
 Then /^I should be redirected to Facebook again$/ do
   expect(URI.parse(current_url).path).to eq("users/auth/facebook")
+end
+
+Then /^I should be prompted to log in$/ do
+  expect(page).to have_css("#login-modal")
 end

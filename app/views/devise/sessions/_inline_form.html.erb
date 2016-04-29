@@ -3,9 +3,9 @@
                     :url => session_path(resource_name),
                     :html => { :class => "form-horizontal" }
                    ) do |f| %>
-  <%= f.input :login, input_html: { :autofocus => true, :class => "input-large" } %>
-  <%= f.input :password, input_html: { :class => "input-large" } %>
-  <%= f.input :remember_me, as: :boolean  %>
+  <%= f.input :login, label: t('devise.sessions._inline_form.login'), input_html: { :autofocus => true, :class => "input-large" } %>
+  <%= f.input :password, label: t('devise.sessions._inline_form.password'), input_html: { :class => "input-large" } %>
+  <%= f.input :remember_me, label: t('devise.sessions._inline_form.remember_me'), as: :boolean  %>
 
   <%= f.submit t('buttons.sign_in'), :class => "btn btn-primary btn-large btn-block" %>
 
