@@ -23,6 +23,10 @@ pt-BR:
     sessions:
       new:
         title: 'Entrar'
+      _inline_form:
+        login: "Usuário ou e-mail"
+        password: "Senha"
+        remember_me: "Lembrar login"
     confirmations:
       new:
         title: 'Reenviar instruções de confirmação'

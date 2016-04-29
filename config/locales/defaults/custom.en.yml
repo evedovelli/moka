@@ -23,6 +23,10 @@ en:
     sessions:
       new:
         title: 'Sign in'
+      _inline_form:
+        login: 'Username or email'
+        password: "Password"
+        remember_me: "Remember me"
     confirmations:
       new:
         title: 'Resend confirmation instructions'

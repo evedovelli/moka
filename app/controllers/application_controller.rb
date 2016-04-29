@@ -21,6 +21,19 @@ class ApplicationController < ActionController::Base
     @locale = I18n.locale
   end
 
+  def after_sign_in_path_for(resource)
+    if (request.referer =~ /\/users\/sign_in/)
+      super
+    else
+      destination = stored_location_for(resource) || request.referer || root_url
+      if (destination =~ /\/users\/sign_in/)
+        return root_path
+      else
+        return destination
+      end
+    end
+  end
+
   rescue_from CanCan::AccessDenied do |exception|
     flash[:alert] = I18n.t('messages.access_denied')
     redirect_to root_url
