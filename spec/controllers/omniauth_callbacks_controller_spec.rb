@@ -10,7 +10,7 @@ describe Users::OmniauthCallbacksController do
     describe "success" do
       it "should sign in and redirect to referer when authentication is ok" do
         @fake_user = FactoryGirl.create(:user)
-        request.env["HTTP_REFERER"] = user_path(@fake_user.username)
+        request.env['omniauth.origin'] = user_path(@fake_user.username)
         expect(@fake_user).to receive(:persisted?).and_return(true)
         expect(User).to receive(:find_for_oauth).and_return(@fake_user)
 
@@ -241,7 +241,7 @@ describe Users::OmniauthCallbacksController do
         expect(response).to redirect_to root_path
       end
       it "should send email for confirmation if facebook user is not confirmed" do
-        request.env["HTTP_REFERER"] = "where_i_came_from"
+        request.env['omniauth.origin'] = "where_i_came_from"
         @fake_user = FactoryGirl.create(:user)
         expect(@fake_user).to receive(:persisted?).and_return(true)
         expect(@fake_user).to receive(:confirmed?).and_return(false)
@@ -272,7 +272,6 @@ describe Users::OmniauthCallbacksController do
       it "should share battle on facebook and redirect to battle page" do
         @fake_user = FactoryGirl.create(:user)
         @fake_battle = FactoryGirl.create(:battle, user: @fake_user)
-        request.env["HTTP_REFERER"] = user_path(@fake_user.username)
 
         OmniAuth.config.mock_auth[:facebook] = OmniAuth::AuthHash.new({
           :provider => 'facebook',
@@ -315,7 +314,6 @@ describe Users::OmniauthCallbacksController do
       it "should block non authorized shares" do
         @fake_user = FactoryGirl.create(:user)
         @fake_battle = FactoryGirl.create(:battle, user: @fake_user)
-        request.env["HTTP_REFERER"] = user_path(@fake_user.username)
 
         OmniAuth.config.mock_auth[:facebook] = OmniAuth::AuthHash.new({
           :provider => 'facebook',
@@ -342,35 +340,206 @@ describe Users::OmniauthCallbacksController do
         expect(flash[:alert]).to match("Access denied.")
         expect(response).to redirect_to(root_url)
       end
+      it "should redirect to root page if battle id is not available" do
+        @fake_user = FactoryGirl.create(:user)
+        @fake_battle = FactoryGirl.create(:battle, user: @fake_user)
+
+        OmniAuth.config.mock_auth[:facebook] = OmniAuth::AuthHash.new({
+          :provider => 'facebook',
+          :uid => '12345',
+          :info => {
+            :email => 'joe@bloggs.com',
+            :name => 'Joe Bloggs',
+            :verified => true
+          },
+          :credentials => {
+            :token => 'ABCDEF',
+            :expires_at => 1321747205,
+            :expires => true
+          }
+        })
+        request.env["omniauth.auth"] = OmniAuth.config.mock_auth[:facebook]
+        request.env["omniauth.params"] = {
+          "source" => "share"
+        }
+        allow(controller).to receive(:authorize!).and_return(true)
+
+        get :facebook
+
+        expect(flash[:alert]).to match('Error while sharing battle on Facebook')
+        expect(response).to redirect_to root_path
+      end
+    end
+
+    describe "find friends" do
+      it "should search facebook friends and redirect to Facebook friends index" do
+        @fake_user = FactoryGirl.create(:user)
+        allow(controller).to receive(:current_user).and_return(@fake_user)
+
+        OmniAuth.config.mock_auth[:facebook] = OmniAuth::AuthHash.new({
+          :provider => 'facebook',
+          :uid => '12345',
+          :info => {
+            :email => 'joe@bloggs.com',
+            :name => 'Joe Bloggs',
+            :verified => true
+          },
+          :credentials => {
+            :token => 'ABCDEF',
+            :expires_at => 1321747205,
+            :expires => true
+          }
+        })
+        request.env["omniauth.auth"] = OmniAuth.config.mock_auth[:facebook]
+        request.env["omniauth.params"] = {
+          "source" => "find_friends"
+        }
+        allow(controller).to receive(:authorize!).and_return(true)
+        @graph = double("graph")
+        @friend1 = double("friend1")
+        @friend2 = double("friend2")
+        @friends = [ @friend1, @friend2 ]
+        expect(@graph).to receive(:get_connections).with("me", "friends").and_return(@friends)
+        expect(Koala::Facebook::API).to receive(:new).with('ABCDEF').and_return(@graph)
+        expect(@fake_user).to receive(:add_facebook_friend).with(@friend1)
+        expect(@fake_user).to receive(:add_facebook_friend).with(@friend2)
+
+        get :facebook
+        expect(response).to redirect_to user_facebook_friends_path
+      end
+      it "should block non authorized searches for friends" do
+        @fake_user = FactoryGirl.create(:user)
+        allow(controller).to receive(:current_user).and_return(@fake_user)
+
+        OmniAuth.config.mock_auth[:facebook] = OmniAuth::AuthHash.new({
+          :provider => 'facebook',
+          :uid => '12345',
+          :info => {
+            :email => 'joe@bloggs.com',
+            :name => 'Joe Bloggs',
+            :verified => true
+          },
+          :credentials => {
+            :token => 'ABCDEF',
+            :expires_at => 1321747205,
+            :expires => true
+          }
+        })
+        request.env["omniauth.auth"] = OmniAuth.config.mock_auth[:facebook]
+        request.env["omniauth.params"] = {
+          "source" => "find_friends"
+        }
+        allow(controller).to receive(:authorize!).and_raise(CanCan::AccessDenied)
+
+        get :facebook
+        expect(flash[:alert]).to match("Access denied.")
+        expect(response).to redirect_to(root_url)
+      end
+      it "should redirect to root page if user is not logged in" do
+        OmniAuth.config.mock_auth[:facebook] = OmniAuth::AuthHash.new({
+          :provider => 'facebook',
+          :uid => '12345',
+          :info => {
+            :email => 'joe@bloggs.com',
+            :name => 'Joe Bloggs',
+            :verified => true
+          },
+          :credentials => {
+            :token => 'ABCDEF',
+            :expires_at => 1321747205,
+            :expires => true
+          }
+        })
+        request.env["omniauth.auth"] = OmniAuth.config.mock_auth[:facebook]
+        request.env["omniauth.params"] = {
+          "source" => "find_friends"
+        }
+        allow(controller).to receive(:authorize!).and_return(true)
+
+        get :facebook
+        expect(flash[:alert]).to match('You must sign in before searching friends on Facebook')
+        expect(response).to redirect_to root_path
+      end
     end
   end
 
   describe "share battle" do
-    describe "success" do
-      it 'should update scope and redirect to facebook auth path' do
+    describe "denied" do
+      before (:each) do
+        allow(controller).to receive(:authorize!).and_raise(CanCan::AccessDenied)
+      end
+      it 'should be redirected to root page if access denied' do
         @fake_battle = FactoryGirl.create(:battle)
         get :share_battle, provider: "facebook", battle_id: @fake_battle.id
-        expect(flash[:scope]).to match('public_profile,user_friends,email,publish_actions')
-        expect(flash[:display]).to match('popup')
-        expect(response).to redirect_to("/users/auth/facebook?source=share&battle_id=#{@fake_battle.id}")
+        expect(flash[:scope]).to be_nil
+        expect(flash[:display]).to be_nil
+        expect(flash[:alert]).to match('Access denied.')
+        expect(response).to redirect_to(root_path)
       end
     end
-    describe "error" do
-      it 'should fail when provider is wrong' do
-        @fake_battle = FactoryGirl.create(:battle)
-        get :share_battle, provider: "twitter", battle_id: @fake_battle.id
+
+    describe "allowed" do
+      before (:each) do
+        allow(controller).to receive(:authorize!).and_return(true)
+      end
+
+      describe "success" do
+        it 'should update scope and redirect to facebook auth path' do
+          @fake_battle = FactoryGirl.create(:battle)
+          get :share_battle, provider: "facebook", battle_id: @fake_battle.id
+          expect(flash[:scope]).to match('public_profile,user_friends,email,publish_actions')
+          expect(flash[:display]).to match('popup')
+          expect(response).to redirect_to("/users/auth/facebook?source=share&battle_id=#{@fake_battle.id}")
+        end
+      end
+      describe "error" do
+        it 'should fail when provider is wrong' do
+          @fake_battle = FactoryGirl.create(:battle)
+          get :share_battle, provider: "twitter", battle_id: @fake_battle.id
+          expect(flash[:scope]).to be_nil
+          expect(flash[:display]).to be_nil
+          expect(flash[:alert]).to match('Error while sharing battle on twitter')
+          expect(response).to redirect_to(root_path)
+        end
+      end
+    end
+  end
+
+  describe "find friends" do
+    describe "denied" do
+      before (:each) do
+        allow(controller).to receive(:authorize!).and_raise(CanCan::AccessDenied)
+      end
+      it 'should be redirected to root page if access denied' do
+        get :find_friends, provider: "facebook"
         expect(flash[:scope]).to be_nil
         expect(flash[:display]).to be_nil
-        expect(flash[:alert]).to match('Error while sharing battle on twitter')
+        expect(flash[:alert]).to match('Access denied.')
         expect(response).to redirect_to(root_path)
       end
-      it 'should fail when provider is missing' do
-        @fake_battle = FactoryGirl.create(:battle)
-        get :share_battle, provider: "twitter", battle_id: @fake_battle.id
-        expect(flash[:scope]).to be_nil
-        expect(flash[:display]).to be_nil
-        expect(flash[:alert]).to match('Error while sharing battle on ')
-        expect(response).to redirect_to(root_path)
+    end
+
+    describe "allowed" do
+      before (:each) do
+        allow(controller).to receive(:authorize!).and_return(true)
+      end
+
+      describe "success" do
+        it 'should update scope and redirect to facebook auth path' do
+          get :find_friends, provider: "facebook"
+          expect(flash[:scope]).to match('public_profile,user_friends,email')
+          expect(flash[:display]).to match('popup')
+          expect(response).to redirect_to("/users/auth/facebook?source=find_friends")
+        end
+      end
+      describe "error" do
+        it 'should fail when provider is wrong' do
+          get :find_friends, provider: "twitter"
+          expect(flash[:scope]).to be_nil
+          expect(flash[:display]).to be_nil
+          expect(flash[:alert]).to match('Error while search for friends from twitter')
+          expect(response).to redirect_to(root_path)
+        end
       end
     end
   end

@@ -27,6 +27,22 @@ $google-plus-color: #DB4437;
   color: $facebook-color;
 }
 
+.btn-facebook.btn-primary.btn-facebook-connected {
+  background-image: linear-gradient(to bottom, #FFF, #FFF);
+  background-color: #FFF;
+  border-width: 2px;
+  border-color: $facebook-color;
+}
+
+p.facebook-connected {
+  color: #000;
+  margin-bottom: 0;
+}
+
+p.facebook-connected:hover {
+  color: #000;
+}
+
 .facebook-letters {
   font-size: 16px;
 }

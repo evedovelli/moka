@@ -277,6 +277,10 @@ describe User do
       user = User.new(@attr.merge(:username => "sign_up"))
       expect(user).not_to be_valid
     end
+    it 'should reject facebook_friends' do
+      user = User.new(@attr.merge(:username => "facebook_friends"))
+      expect(user).not_to be_valid
+    end
   end
 
   describe 'to_param' do
@@ -677,6 +681,43 @@ describe User do
     end
   end
 
+  describe 'get_facebook_friends' do
+    before(:each) do
+      @user = User.new(@attr)
+    end
+    it 'should return the ordered votes from correct page' do
+      @l1 = []
+      @l2 = []
+      @l3 = []
+      @l1 << FactoryGirl.create(:user, {username: "u1", email: "u1@email.com"})
+      @l1 << FactoryGirl.create(:user, {username: "u10", email: "u10@email.com"})
+      for i in 2..9 do
+        @l1 << FactoryGirl.create(:user, {username: "u#{i}", email: "u#{i}@email.com"})
+        Timecop.travel(Time.now + 1.minute)
+      end
+      for i in 11..19 do
+        @l2 << FactoryGirl.create(:user, {username: "x#{i}", email: "x#{i}@email.com"})
+        Timecop.travel(Time.now + 1.minute)
+      end
+      for i in 11..20 do
+        @l3 << FactoryGirl.create(:user, {username: "a#{i}", email: "a#{i}@email.com"})
+        Timecop.travel(Time.now + 1.minute)
+      end
+
+      @l1.each do |friend|
+        FactoryGirl.create(:facebook_friendship, user: @user, facebook_friend: friend)
+      end
+      @l2.each do |friend|
+        FactoryGirl.create(:facebook_friendship, user: @user, facebook_friend: friend)
+      end
+      @l3.each do |friend|
+        FactoryGirl.create(:facebook_friendship, user: @user, facebook_friend: friend)
+      end
+
+      expect(@user.get_facebook_friends("3")).to eq(@l2)
+    end
+  end
+
   describe 'connected_to_facebook?' do
     before(:each) do
       @user = User.new(@attr)
@@ -688,6 +729,73 @@ describe User do
     it 'should return false when an identity from facebook is not found' do
       @identity = FactoryGirl.create(:identity, {user: @user, provider: 'twitter'})
       expect(@user.connected_to_facebook?).to eq(false)
+    end
+  end
+
+  describe 'has_friendship_with' do
+    before(:each) do
+      @user = User.new(@attr)
+    end
+    it 'should be true if user is following friend' do
+      @friend = FactoryGirl.create(:user, {username: "friend", email: "friend@email.com"})
+      FactoryGirl.create(:friendship, user: @user, friend: @friend)
+      expect(@user.has_friendship_with(@friend)).to be(true)
+    end
+    it 'should be false if user is following friend' do
+      @friend = FactoryGirl.create(:user, {username: "friend", email: "friend@email.com"})
+      expect(@user.has_friendship_with(@friend)).to be(false)
+    end
+  end
+
+  describe 'has_facebook_friendship_with' do
+    before(:each) do
+      @user = User.new(@attr)
+    end
+    it 'should be true if user is following friend' do
+      @friend = FactoryGirl.create(:user, {username: "friend", email: "friend@email.com"})
+      FactoryGirl.create(:facebook_friendship, user: @user, facebook_friend: @friend)
+      expect(@user.has_facebook_friendship_with(@friend)).to be(true)
+    end
+    it 'should be false if user is following friend' do
+      @friend = FactoryGirl.create(:user, {username: "friend", email: "friend@email.com"})
+      expect(@user.has_facebook_friendship_with(@friend)).to be(false)
+    end
+  end
+
+  describe 'add_facebook_friend' do
+    before(:each) do
+      @user = User.new(@attr)
+      @friend = FactoryGirl.create(:user, {username: "friend", email: "friend@email.com"})
+    end
+    it 'should add Facebook friend with no errors' do
+      expect(Identity).to receive(:search_friend).with("09434", "facebook").and_return(@friend)
+      @facebook_friendships = double('facebook_friendships')
+      expect(@facebook_friendships).to receive(:create).and_return(true)
+      expect(@user).to receive(:facebook_friendships).and_return(@facebook_friendships)
+      expect(@user).to receive(:has_friendship_with).and_return(false)
+      expect(@user).to receive(:has_facebook_friendship_with).and_return(false)
+      expect(@user.add_facebook_friend({"id" => "09434"})).to eq(true)
+    end
+    it 'should not add Facebook friend not found' do
+      expect(Identity).to receive(:search_friend).with("09434", "facebook").and_return(nil)
+      @facebook_friendships = double('facebook_friendships')
+      expect(@user).not_to receive(:facebook_friendships)
+      expect(@user.add_facebook_friend({"id" => "09434"})).to eq(false)
+    end
+    it 'should not add Facebook friend already added' do
+      expect(Identity).to receive(:search_friend).with("09434", "facebook").and_return(@friend)
+      @facebook_friendships = double('facebook_friendships')
+      expect(@user).to receive(:has_friendship_with).with(@friend).and_return(true)
+      expect(@user).not_to receive(:facebook_friendships)
+      expect(@user.add_facebook_friend({"id" => "09434"})).to eq(false)
+    end
+    it 'should not add Facebook friend already followed' do
+      expect(Identity).to receive(:search_friend).with("09434", "facebook").and_return(@friend)
+      @facebook_friendships = double('facebook_friendships')
+      expect(@user).to receive(:has_friendship_with).with(@friend).and_return(false)
+      expect(@user).to receive(:has_facebook_friendship_with).with(@friend).and_return(true)
+      expect(@user).not_to receive(:facebook_friendships)
+      expect(@user.add_facebook_friend({"id" => "09434"})).to eq(false)
     end
   end
 end

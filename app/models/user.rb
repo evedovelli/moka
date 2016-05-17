@@ -21,6 +21,8 @@ class User < ActiveRecord::Base
   has_many :sent_notifications, :class_name => "Notification", :foreign_key => "sender_id", dependent: :destroy
   has_many :identities, dependent: :destroy
   has_one  :email_settings, dependent: :destroy
+  has_many :facebook_friendships, dependent: :destroy
+  has_many :facebook_friends, :through => :facebook_friendships
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :login, :username, :email, :password, :password_confirmation,
@@ -61,6 +63,8 @@ class User < ActiveRecord::Base
     when 'sign_up'
       errors.add(:username, I18n.t('messages.invalid_username'))
     when 'sign_out'
+      errors.add(:username, I18n.t('messages.invalid_username'))
+    when 'facebook_friends'
       errors.add(:username, I18n.t('messages.invalid_username'))
     else
       return
@@ -214,8 +218,33 @@ class User < ActiveRecord::Base
     return self.inverse_friends.order(:username).page(page)
   end
 
+  def get_facebook_friends(page)
+    return self.facebook_friends.order(:username).page(page)
+  end
+
   def connected_to_facebook?
     return self.identities.where(:provider => "facebook").size > 0
+  end
+
+  def has_friendship_with(friend)
+    return (self.friends.where(id: friend.id).size > 0)
+  end
+
+  def has_facebook_friendship_with(friend)
+    return (self.facebook_friends.where(id: friend.id).size > 0)
+  end
+
+  def add_facebook_friend(facebook_friend)
+    friend = Identity.search_friend(facebook_friend["id"], "facebook")
+    if (friend) &&
+       (not self.has_friendship_with(friend)) &&
+       (not self.has_facebook_friendship_with(friend))
+      return facebook_friendships.create(
+        user: self,
+        facebook_friend: friend
+      )
+    end
+    return false
   end
 
 end

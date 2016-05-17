@@ -1,0 +1,19 @@
+<div class="span12">
+  <div class="row">
+    <div class="span8 offset2">
+      <h2 class="center"><%= I18n.t('users.facebook_friends.title') %></h2>
+    </div>
+  </div>
+
+  <% if @users.empty? && @users.first_page? && @users.last_page? %>
+    <div class="row">
+      <div class="span12">
+        <h4 class="center"><%= I18n.t('users.facebook_friends.empty') %></h4>
+      </div>
+    </div>
+  <% else %>
+    <div class="row">
+      <%= render :partial => "friendships/index", :locals => { :friends => @users }  %>
+    </div>
+  <% end %>
+</div>

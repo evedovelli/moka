@@ -11,5 +11,7 @@ en:
     sign_up: 'Sign up'
     vote: 'Vote now'
     cancel_my_account: 'Cancel my account'
+    find_facebook_friends: 'Find friends from Facebook'
+    update_facebook_friends: 'Update list'
   links:
     here: 'here'

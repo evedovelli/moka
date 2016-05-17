@@ -86,7 +86,11 @@ class Ability
     can :social, User do |u|
       u == user
     end
+    can :facebook_friends, User do |u|
+      u == user
+    end
     can :locale, User
+    can :find_friends, User
 
 
     # EmailSettings

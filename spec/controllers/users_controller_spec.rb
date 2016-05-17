@@ -56,6 +56,11 @@ describe UsersController do
       expect(flash[:alert]).to match("You need to sign in or sign up before continuing.")
       expect(response).to redirect_to("/en/users/sign_in")
     end
+    it "should be redirected to 'sign in' page if accessing facebook friends page for user" do
+      get :facebook_friends
+      expect(flash[:alert]).to match("You need to sign in or sign up before continuing.")
+      expect(response).to redirect_to("/en/users/sign_in")
+    end
   end
 
   describe "When user is logged in" do
@@ -105,6 +110,11 @@ describe UsersController do
       end
       it "should be redirected to root page if accessing social page for user" do
         get :social
+        expect(flash[:alert]).to match("Access denied.")
+        expect(response).to redirect_to(root_url)
+      end
+      it "should be redirected to root page if accessing facebook friends page for user" do
+        get :facebook_friends
         expect(flash[:alert]).to match("Access denied.")
         expect(response).to redirect_to(root_url)
       end
@@ -169,6 +179,10 @@ describe UsersController do
         it "should build a vote to the template" do
           get :home
           expect(assigns(:vote)).to be_new_record
+        end
+        it "should make the find friends boolean available to that template" do
+          get :home
+          expect(assigns(:find_friends)).to eq(true)
         end
         it "should make filter available to that template with all by default" do
           get :home
@@ -512,6 +526,46 @@ describe UsersController do
         end
         it "should make the user available to that template" do
           get :social
+          expect(assigns(:user)).to eq(@fake_user)
+        end
+      end
+
+      describe "facebook friends" do
+        before (:each) do
+          allow(controller).to receive(:current_user).and_return(@fake_user)
+          @friends = [double("f1"), double("f2"), double("f3"), double("f4")]
+          allow(@fake_user).to receive(:get_facebook_friends).and_return(@friends)
+        end
+        it "should get facebook friends with the correct page" do
+          expect(@fake_user).to receive(:get_facebook_friends).with("4")
+          get :facebook_friends, {:page => 4}
+        end
+        it "should respond to html" do
+          get :facebook_friends
+          expect(response.content_type).to eq(Mime::HTML)
+        end
+        it "should render the facebook_friends template" do
+          get :facebook_friends
+          expect(response).to render_template('facebook_friends')
+        end
+        it "should respond to js" do
+          get :facebook_friends, {format: 'js'}
+          expect(response.content_type).to eq(Mime::JS)
+        end
+        it "should render the index template" do
+          get :facebook_friends, {format: 'js'}
+          expect(response).to render_template('users/index')
+        end
+        it "should make the list of facebook friends available to that template" do
+          get :facebook_friends
+          expect(assigns(:users)).to eq(@friends)
+        end
+        it "should make the find friends boolean available to that template" do
+          get :facebook_friends
+          expect(assigns(:find_friends)).to eq(true)
+        end
+        it "should make the user available to that template" do
+          get :facebook_friends
           expect(assigns(:user)).to eq(@fake_user)
         end
       end

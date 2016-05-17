@@ -6,7 +6,17 @@
 
 <div class="pagination">
   <% if @battles.last_page? %>
-    <p class='center last_page'><%= image_tag("watermark_small.png") %></p>
+    <% if @find_friends %>
+      <div class="row">
+        <div class="span4 offset4 find-facebook-friends-container">
+          <%= find_facebook_friends_button(t('buttons.find_facebook_friends')) %>
+        </div>
+      </div>
+    <% end %>
+
+    <div class="row">
+      <p class='center last_page'><%= image_tag("watermark_small.png") %></p>
+    </div>
   <% else %>
     <%= link_to_next_page(@battles, t('battles._index.next'), params: { filter: @filter }, :remote => true, :class => "next_page") %>
   <% end %>

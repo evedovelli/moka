@@ -8,9 +8,11 @@ Moka::Application.routes.draw do
 
   devise_scope :user do
     get '/users/auth/:provider/battles/:battle_id' => 'users/omniauth_callbacks#share_battle'
+    get '/users/auth/:provider/friends' => 'users/omniauth_callbacks#find_friends'
     get '/users/auth/:provider/setup', :to => 'users/omniauth_callbacks#setup'
   end
 
+  get "users/facebook_friends" => "users#facebook_friends", :as => :user_facebook_friends
   resources :users, :only => [:show, :index, :edit, :update] do
     resources :friendships, :only => [:create, :destroy, :index]
     resource :email_settings, :only => [:edit, :update]

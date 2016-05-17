@@ -64,4 +64,36 @@ describe Identity do
       expect(identity).to be_valid
     end
   end
+
+  describe 'search_friend' do
+    before :each do
+      @id1 = Identity.new({
+        :provider => "twitter",
+        :uid => "98234"
+      })
+      @id1.save
+      @user.identities << @id1
+      @user.save
+
+      @id2 = Identity.new({
+        :provider => "facebook",
+        :uid => "08234"
+      })
+      @id2.save
+      @user.identities << @id2
+      @user.save
+    end
+    it 'should return identity of friend when found' do
+      friend = Identity.search_friend("08234", "facebook")
+      expect(friend).to eq(@user)
+    end
+    it 'should return nil when uid is not found' do
+      friend = Identity.search_friend("01234", "facebook")
+      expect(friend).to be_nil
+    end
+    it 'should return nil when provider is not found' do
+      friend = Identity.search_friend("98234", "instagram")
+      expect(friend).to be_nil
+    end
+  end
 end

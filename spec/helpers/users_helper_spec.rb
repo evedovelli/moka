@@ -101,4 +101,18 @@ describe UsersHelper, :type => :helper do
       expect(helper.from_omniauth?(@user)).to eq(true)
     end
   end
+
+  describe "find facebook frinds button" do
+    it "should return link to find friends from facebook when signed in" do
+      @current_user = FactoryGirl.create(:user)
+      allow(helper).to receive(:user_signed_in?).and_return(true)
+      allow(helper).to receive(:current_user).and_return(@current_user)
+      expect(helper.find_facebook_friends_button("Run for your life")).to eq("<a href=\"/users/auth/facebook/friends\" class=\"btn btn-primary btn-large btn-facebook btn-block\" id=\"facebook-friends-find\"><table class=\"facebook-login-table\"><tr><td><i class=\"fa fa-facebook-square fa-2x\"></i></td><td></td><td>Run for your life</td></tr></table></a>")
+    end
+    it "should return empty string when not signed in" do
+      allow(helper).to receive(:user_signed_in?).and_return(false)
+      allow(helper).to receive(:current_user).and_return(nil)
+      expect(helper.find_facebook_friends_button("Run for your life")).to eq("")
+    end
+  end
 end
