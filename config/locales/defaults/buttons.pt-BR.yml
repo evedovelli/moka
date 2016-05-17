@@ -11,5 +11,7 @@ pt-BR:
     sign_up: 'Registrar'
     vote: 'Envie seu voto agora'
     cancel_my_account: 'Cancelar minha conta'
+    find_facebook_friends: 'Encontrar amigos do Facebook'
+    update_facebook_friends: 'Atualizar a lista'
   links:
     here: 'aqui'

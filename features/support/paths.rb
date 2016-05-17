@@ -80,6 +80,12 @@ module NavigationHelpers
     when /the terms of service page/
       page_path('terms_of_service')
 
+    when /the find Facebook friends page/
+      '/users/auth/facebook/friends'
+
+    when /the Facebook friends page/
+      user_facebook_friends_path
+
     else
       begin
         page_name =~ /the (.*) page/

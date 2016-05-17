@@ -8,9 +8,8 @@ class FriendshipsController < ApplicationController
   def create
     @friendship = current_user.friendships.build(:friend_id => params[:friend_id])
     authorize! :create, @friendship
-    did_save = @friendship.save
 
-    if did_save && (current_user != @friend)
+    if @friendship.save && (current_user != @friend)
       @friend = @friendship.friend
       @friend.receive_friendship_notification_from(current_user)
       @friend.receive_friendship_email_from(current_user)

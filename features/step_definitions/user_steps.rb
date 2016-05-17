@@ -12,6 +12,7 @@ def create_user(username, email, password, name=nil)
                          :password_confirmation => password,
                          :name => name)
   FactoryGirl.create(:email_settings, user: u)
+  return u
 end
 
 def delete_user(email)
@@ -159,6 +160,20 @@ Given /^"([^"]+)" preferred language is "([^"]+)"$/ do |user, language|
   u.language = language
   u.save
 end
+
+Given /^user "([^"]+)" with Facebook's account exists$/ do |user|
+  u = create_user(user, "#{user}@email.com", "#{user}password", user)
+  id = FactoryGirl.create(:identity,
+                     user: u,
+                     uid: user,
+                     provider: "facebook")
+end
+
+Given /^I am friends with "([^"]+)" on Facebook$/ do |friend|
+  @facebook_accounts = @facebook_accounts || []
+  @facebook_accounts << { "id" => friend }
+end
+
 
 ### WHEN ###
 
@@ -312,6 +327,22 @@ When /^I sign in from modal form$/ do
     step %Q{I fill in "user_password" with "secretpassword"}
     step %Q{I click "Sign in"}
   end
+end
+
+When /^I click to find friends from Facebook$/ do
+  @graph = double("graph")
+  allow(@graph).to receive(:get_connections).with("me", "friends").and_return(@facebook_accounts)
+  allow(Koala::Facebook::API).to receive(:new).and_return(@graph)
+  find("#facebook-friends-find").click
+end
+
+When /^I become friends with "([^"]+)" on Facebook$/ do |friend|
+  @facebook_accounts = @facebook_accounts || []
+  @facebook_accounts << { "id" => friend }
+end
+
+When /^I click to update friends from Facebook$/ do
+  find("#facebook-friends-find").click
 end
 
 
@@ -494,4 +525,13 @@ end
 
 Then /^I should be prompted to log in$/ do
   expect(page).to have_css("#login-modal")
+end
+
+Then /^I should not see the button to find friends from Facebook$/ do
+  expect(page).not_to have_css("#facebook-friends-find")
+end
+
+Then /^I should see the button to find friends from Facebook$/ do
+  expect(page).to have_css("#facebook-friends-find")
+  expect(URI.parse(page.find("#facebook-friends-find")['href']).path).to eq(path_to("the find Facebook friends page"))
 end

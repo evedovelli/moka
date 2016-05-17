@@ -11,7 +11,14 @@
     <div class="span8 offset2">
       <p class="user-pagination">
         <% if friends.last_page? %>
-          <p class='center user-last_page'><%= image_tag("watermark_small.png") %></p>
+          <% if @find_friends %>
+            <div class="row">
+              <div class="span4 offset2 find-facebook-friends-container"><%= find_facebook_friends_button(t('buttons.update_facebook_friends')) %></div>
+            </div>
+          <% end %>
+          <div class="row">
+            <p class='center user-last_page'><%= image_tag("watermark_small.png") %></p>
+          </div>
         <% else %>
           <%= link_to_next_page(friends, t('friendships._index.next'), :remote => true, :class => "next_page") %>
         <% end %>

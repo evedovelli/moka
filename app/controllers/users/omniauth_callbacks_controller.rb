@@ -9,7 +9,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     end
 
     #####################################################
-    # PREPARE TO SHARE BATTLE
+    # SHARE BATTLE
     #####################################################
 
     if request.env["omniauth.params"] &&
@@ -18,6 +18,35 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
        request.env["omniauth.params"]["battle_id"]
       share_battle_on_facebook(request.env["omniauth.auth"].uid, request.env["omniauth.params"]["battle_id"])
       redirect_to battle_path(request.env["omniauth.params"]["battle_id"])
+      return
+    elsif request.env["omniauth.params"] &&
+       request.env["omniauth.params"]["source"] &&
+       request.env["omniauth.params"]["source"] == "share"
+      flash[:alert] = I18n.t('messages.error_share', provider: "Facebook")
+      redirect_to root_path
+      return
+    end
+
+
+    #####################################################
+    # FIND FACEBOOK FRIENDS
+    #####################################################
+
+    if request.env["omniauth.params"] &&
+       request.env["omniauth.params"]["source"] &&
+       request.env["omniauth.params"]["source"] == "find_friends" &&
+       request.env["omniauth.auth"].credentials &&
+       current_user
+      friends = find_friends_from_facebook(request.env["omniauth.auth"].credentials)
+      update_friends_list(friends)
+      redirect_to user_facebook_friends_path
+      return
+    elsif request.env["omniauth.params"] &&
+       request.env["omniauth.params"]["source"] &&
+       request.env["omniauth.params"]["source"] == "find_friends" &&
+       request.env["omniauth.auth"].credentials
+      flash[:alert] = I18n.t('messages.error_find_friends_not_logged', provider: "Facebook")
+      redirect_to root_path
       return
     end
 
@@ -46,11 +75,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
         flash[:notice] = I18n.t('devise.registrations.signed_up_but_unconfirmed')
       end
 
-      if request.env["HTTP_REFERER"]
-        redirect_to :back
-      else
-        redirect_to root_path
-      end
+      redirect_to request.env['omniauth.origin'] || stored_location_for(resource) || root_path
     else
       session["devise.facebook_data"] = request.env["omniauth.auth"]
       set_flash_message(:alert, :failure, kind: :Facebook, reason: I18n.t('messages.omniauth_error')) if is_navigational_format?
@@ -59,12 +84,27 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   end
 
   def share_battle
+    authorize! :share, Battle.find_by_id(params[:battle_id])
+
     if params[:provider] == "facebook"
       flash[:scope] = 'public_profile,user_friends,email,publish_actions'
       flash[:display] = 'popup'
       redirect_to "/users/auth/facebook?source=share&battle_id=#{params[:battle_id]}"
     else
       flash[:alert] = I18n.t('messages.error_share', provider: params[:provider])
+      redirect_to root_path
+    end
+  end
+
+  def find_friends
+    authorize! :find_friends, User
+
+    if params[:provider] == "facebook"
+      flash[:scope] = 'public_profile,user_friends,email'
+      flash[:display] = 'popup'
+      redirect_to "/users/auth/facebook?source=find_friends"
+    else
+      flash[:alert] = I18n.t('messages.error_find_friends', provider: params[:provider])
       redirect_to root_path
     end
   end
@@ -110,6 +150,19 @@ private
 
       @graph = Koala::Facebook::API.new(access_token)
       @graph.put_connections(uid, "batalharia:create", battle: canonical_battle_url(battle_id))
+    end
+  end
+
+  def find_friends_from_facebook(credentials)
+    authorize! :find_friends, User
+
+    @graph = Koala::Facebook::API.new(credentials.token)
+    return @graph.get_connections("me", "friends")
+  end
+
+  def update_friends_list(friends)
+    friends.each do |friend|
+      current_user.add_facebook_friend(friend)
     end
   end
 

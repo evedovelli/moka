@@ -52,4 +52,22 @@ module UsersHelper
   def from_omniauth?(user)
     return user && user.identities && user.identities.count > 0
   end
+
+  def find_facebook_friends_button(message)
+    if user_signed_in?
+      return link_to('/users/auth/facebook/friends',
+                 :id => 'facebook-friends-find',
+                 :class => 'btn btn-primary btn-large btn-facebook btn-block') do
+        "<table class=\"facebook-login-table\">"\
+          "<tr>"\
+            "<td>#{ fa_icon "facebook-square", class: "fa-2x" }</td>"\
+            "<td></td>"\
+            "<td>#{ message }</td>"\
+          "</tr>"\
+        "</table>".html_safe
+      end
+    else
+      return ""
+    end
+  end
 end

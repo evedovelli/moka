@@ -11,6 +11,9 @@ en:
       title: 'Followers'
     following:
       title: 'Following'
+    facebook_friends:
+      title: 'Follow your Facebook friends'
+      empty: 'You are already following all of your Facebook friends from Batalharia!'
     _overlay_form:
       title: 'Update profile picture'
     cover:

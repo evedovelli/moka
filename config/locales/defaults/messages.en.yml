@@ -18,6 +18,7 @@ en:
     invalid_characters: "is invalid. Only use letters, numbers and '_'"
     invalid_image: 'Invalid image'
     uniqueness_friend: 'Already following this user'
+    uniqueness_facebook_friend: 'Facebook friend already registered'
     single_vote_per_battle: 'can have one vote per battle'
     invalid_search: 'Invalid search'
     profile_updated: 'Your profile was successfully updated'
@@ -28,4 +29,6 @@ en:
     or: "or"
     share: "Share"
     error_share: "Error while sharing battle on %{provider}"
+    error_find_friends_not_logged: "You must sign in before searching friends on %{provider}"
+    error_find_friends: "Error while search for friends from %{provider}"
     facebook_share_timeout: 'Failed to share image on Facebook. Please try again!'

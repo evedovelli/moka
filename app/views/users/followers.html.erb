@@ -21,7 +21,7 @@
 
     <div class="span10">
       <div class="row">
-        <div class="span4">
+        <div class="span6">
           <div class="row">
             <div class="span4">
               <p class="username">
@@ -34,6 +34,10 @@
               <p class="name"><%= @user.name %></p>
             </div>
           </div>
+        </div>
+
+        <div class="span4 hidden-phone">
+          <%= find_facebook_friends_button(t('buttons.find_facebook_friends')) %>
         </div>
 
       </div>

@@ -1,8 +1,10 @@
 <%= render 'users/edit_nav' %>
 
-<div class="span4 edit-social-container">
+<div class="span4 offset1 edit-social-container">
   <% if @user.connected_to_facebook? %>
-    <p class="facebook-connected"><%= fa_icon "check", class: "fa-2x checked" %> <%= t(".facebook_connected_html", icon: fa_icon("facebook-square", class: "fa-2x facebook-logo")) %></p>
+    <div class='btn btn-primary btn-large btn-facebook btn-block disabled btn-facebook-connected'>
+      <p class="facebook-connected"><%= fa_icon "check", class: "fa-2x checked" %> <%= t(".facebook_connected_html", icon: fa_icon("facebook-square", class: "fa-2x facebook-logo")) %></p>
+    </div>
   <% else %>
     <%= link_to('/users/auth/facebook',
                 :id => 'facebook-sign-in',
@@ -16,4 +18,8 @@
       </table>
     <% end %>
   <% end %>
+</div>
+
+<div class="span4 offset2 find-facebook-friends-container">
+  <%= find_facebook_friends_button(t('buttons.find_facebook_friends')) %>
 </div>

@@ -7,6 +7,9 @@ pt-BR:
       unfollow: 'Deixar de seguir'
       following_list: 'Seguindo (%{count})'
       followers_list: 'Seguidores (%{count})'
+    facebook_friends:
+      title: 'Siga seus amigos do Facebook'
+      empty: 'Você já está seguindo todos seus amigos do Facebook cadastrados no Batalharia!'
     followers:
       title: 'Seguidores'
     following:

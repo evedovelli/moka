@@ -18,6 +18,7 @@ pt-BR:
     invalid_characters: "é inválido. Apenas use letras, números e '_'"
     invalid_image: 'Imagem inválida'
     uniqueness_friend: 'Você já está seguindo este usuário'
+    uniqueness_facebook_friend: 'Amigo do Facebook já registrado'
     single_vote_per_battle: 'pode ter apenas um voto por batalha'
     invalid_search: 'Pesquisa inválida'
     profile_updated: 'Seu perfil for atualizado com sucesso'
@@ -28,4 +29,6 @@ pt-BR:
     or: "ou"
     share: "Compartilhar"
     error_share: "Erro ao compartilhar batalha no %{provider}"
+    error_find_friends_not_logged: "Você deve logar no site antes de de procurar amigos do %{provider}"
+    error_find_friends: "Erro ao procurar amigos no %{provider}"
     facebook_share_timeout: 'Falha ao compartilhar imagem no Facebook. Por favor, tente novamente!'

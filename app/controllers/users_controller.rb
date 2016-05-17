@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
-  before_filter :authenticate_user!, :only => [:edit, :update, :social]
-  load_and_authorize_resource :user, :find_by => :username, :expect => [:home, :social, :locale]
+  before_filter :authenticate_user!, :only => [:edit, :update, :social, :facebook_friends]
+  load_and_authorize_resource :user, :find_by => :username, :expect => [:home, :social, :locale, :facebook_friends]
 
   def locale
     referer_path = URI(request.referer).path
@@ -28,6 +28,7 @@ class UsersController < ApplicationController
     @voted_for = current_user.voted_for_options(@battles)
     @victorious = Battle.victorious(@battles)
     @vote = Vote.new()
+    @find_friends = true
     respond_to do |format|
       format.js { render "users/load_more_battles" }
       format.html {}
@@ -102,5 +103,17 @@ class UsersController < ApplicationController
   def social
     @user = current_user
     authorize! :social, @user
+  end
+
+  def facebook_friends
+    @user = current_user
+    authorize! :facebook_friends, @user
+
+    @users = @user.get_facebook_friends(params[:page])
+    @find_friends = true
+    respond_to do |format|
+      format.js { render('users/index') }
+      format.html {}
+    end
   end
 end
