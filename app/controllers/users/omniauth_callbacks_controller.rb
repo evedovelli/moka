@@ -162,7 +162,7 @@ private
 
   def update_friends_list(friends)
     friends.each do |friend|
-      current_user.add_facebook_friend(friend)
+      current_user.update_facebook_friend(friend)
     end
   end
 

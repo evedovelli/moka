@@ -234,7 +234,7 @@ class User < ActiveRecord::Base
     return (self.facebook_friends.where(id: friend.id).size > 0)
   end
 
-  def add_facebook_friend(facebook_friend)
+  def update_facebook_friend(facebook_friend)
     friend = Identity.search_friend(facebook_friend["id"], "facebook")
     if (friend) &&
        (not self.has_friendship_with(friend)) &&
@@ -243,6 +243,13 @@ class User < ActiveRecord::Base
         user: self,
         facebook_friend: friend
       )
+    elsif (friend) &&
+       (self.has_friendship_with(friend)) &&
+       (self.has_facebook_friendship_with(friend))
+      facebook_friendship = facebook_friendships.where(
+        facebook_friend_id: friend.id
+      ).first
+      return facebook_friendship.destroy
     end
     return false
   end
