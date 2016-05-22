@@ -106,7 +106,9 @@ Background: App is running
       And user "octopus" with Facebook's account exists
       And I am logged in
       And I am friends with "octopus" on Facebook
-      When I go to the "octopus" profile page
+      When I go to the "octopus" followers page
+      And I click to find friends from Facebook
+      And I go to the "octopus" profile page
       And I click the "follow" button
       And I go to the "octopus" followers page
       And I click to find friends from Facebook

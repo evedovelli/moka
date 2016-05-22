@@ -401,8 +401,8 @@ describe Users::OmniauthCallbacksController do
         @friends = [ @friend1, @friend2 ]
         expect(@graph).to receive(:get_connections).with("me", "friends").and_return(@friends)
         expect(Koala::Facebook::API).to receive(:new).with('ABCDEF').and_return(@graph)
-        expect(@fake_user).to receive(:add_facebook_friend).with(@friend1)
-        expect(@fake_user).to receive(:add_facebook_friend).with(@friend2)
+        expect(@fake_user).to receive(:update_facebook_friend).with(@friend1)
+        expect(@fake_user).to receive(:update_facebook_friend).with(@friend2)
 
         get :facebook
         expect(response).to redirect_to user_facebook_friends_path

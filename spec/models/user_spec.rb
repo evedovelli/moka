@@ -762,7 +762,7 @@ describe User do
     end
   end
 
-  describe 'add_facebook_friend' do
+  describe 'update_facebook_friend' do
     before(:each) do
       @user = User.new(@attr)
       @friend = FactoryGirl.create(:user, {username: "friend", email: "friend@email.com"})
@@ -774,28 +774,37 @@ describe User do
       expect(@user).to receive(:facebook_friendships).and_return(@facebook_friendships)
       expect(@user).to receive(:has_friendship_with).and_return(false)
       expect(@user).to receive(:has_facebook_friendship_with).and_return(false)
-      expect(@user.add_facebook_friend({"id" => "09434"})).to eq(true)
+      expect(@user.update_facebook_friend({"id" => "09434"})).to eq(true)
     end
     it 'should not add Facebook friend not found' do
       expect(Identity).to receive(:search_friend).with("09434", "facebook").and_return(nil)
-      @facebook_friendships = double('facebook_friendships')
       expect(@user).not_to receive(:facebook_friendships)
-      expect(@user.add_facebook_friend({"id" => "09434"})).to eq(false)
+      expect(@user.update_facebook_friend({"id" => "09434"})).to eq(false)
     end
     it 'should not add Facebook friend already added' do
       expect(Identity).to receive(:search_friend).with("09434", "facebook").and_return(@friend)
-      @facebook_friendships = double('facebook_friendships')
-      expect(@user).to receive(:has_friendship_with).with(@friend).and_return(true)
+      expect(@user).to receive(:has_friendship_with).twice.with(@friend).and_return(true)
+      expect(@user).to receive(:has_facebook_friendship_with).and_return(false)
       expect(@user).not_to receive(:facebook_friendships)
-      expect(@user.add_facebook_friend({"id" => "09434"})).to eq(false)
+      expect(@user.update_facebook_friend({"id" => "09434"})).to eq(false)
     end
-    it 'should not add Facebook friend already followed' do
+    it 'should not add Facebook friend already Facebook followed' do
       expect(Identity).to receive(:search_friend).with("09434", "facebook").and_return(@friend)
-      @facebook_friendships = double('facebook_friendships')
-      expect(@user).to receive(:has_friendship_with).with(@friend).and_return(false)
+      expect(@user).to receive(:has_friendship_with).twice.with(@friend).and_return(false)
       expect(@user).to receive(:has_facebook_friendship_with).with(@friend).and_return(true)
       expect(@user).not_to receive(:facebook_friendships)
-      expect(@user.add_facebook_friend({"id" => "09434"})).to eq(false)
+      expect(@user.update_facebook_friend({"id" => "09434"})).to eq(false)
+    end
+    it 'should remove Facebook friend already followed' do
+      expect(Identity).to receive(:search_friend).with("09434", "facebook").and_return(@friend)
+      @facebook_friendships = double('facebook_friendships')
+      @facebook_friendship = double('facebook_friendship')
+      expect(@facebook_friendship).to receive(:destroy).and_return(true)
+      expect(@facebook_friendships).to receive(:where).with(facebook_friend_id: @friend.id).and_return([@facebook_friendship])
+      expect(@user).to receive(:facebook_friendships).and_return(@facebook_friendships)
+      expect(@user).to receive(:has_friendship_with).twice.with(@friend).and_return(true)
+      expect(@user).to receive(:has_facebook_friendship_with).and_return(true)
+      expect(@user.update_facebook_friend({"id" => "09434"})).to eq(true)
     end
   end
 end
