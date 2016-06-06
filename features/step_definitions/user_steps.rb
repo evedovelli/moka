@@ -148,8 +148,6 @@ Given /^I have signed up with my Facebook account$/ do
       :expires => true
     },
   })
-  stub_request(:get, "https://graph.facebook.com/v2.0/me/friends?access_token=ABCDEF").
-      to_return(:status => 200, :body => "", :headers => {})
   step %Q{I click in the Sign in with Facebook button}
 end
 
@@ -306,6 +304,8 @@ When /^I close the login window$/ do
 end
 
 When /^I click in the Sign in with Facebook button$/ do
+  stub_request(:get, "https://graph.facebook.com/v2.0/me/friends?access_token=ABCDEF").
+        to_return(:status => 200, :body => "", :headers => {})
   find('#facebook-sign-in').click
 end
 
