@@ -46,7 +46,7 @@ module UsersHelper
   end
 
   def user_name_for(user)
-    return user.name || user.username;
+    return user.name || user.username
   end
 
   def from_omniauth?(user)

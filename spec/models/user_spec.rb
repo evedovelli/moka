@@ -360,7 +360,11 @@ describe User do
         expect(User).to receive(:new).and_return(@fake_user)
         expect(@fake_user).to receive(:skip_confirmation!)
         expect(@fake_user).to receive(:save!)
+        @email_settings = FactoryGirl.create(:email_settings, user: @fake_user)
+        expect(EmailSettings).to receive(:create).with(user_id: @fake_user.id).and_return(@email_settings)
+        expect(@fake_user).to receive(:notify_user_friends).with(@auth.credentials)
         User.find_for_oauth(@auth, nil)
+        expect(@fake_user.email_settings).to eq(@email_settings)
       end
       it 'should create new user with first option username taken' do
         @other_user = FactoryGirl.create(:user, username: "pamela", email: "pam@malibu.com")
@@ -372,7 +376,11 @@ describe User do
         expect(User).to receive(:new).and_return(@fake_user)
         expect(@fake_user).to receive(:skip_confirmation!)
         expect(@fake_user).to receive(:save!)
+        @email_settings = FactoryGirl.create(:email_settings, user: @fake_user)
+        expect(EmailSettings).to receive(:create).with(user_id: @fake_user.id).and_return(@email_settings)
+        expect(@fake_user).to receive(:notify_user_friends).with(@auth.credentials)
         User.find_for_oauth(@auth, nil)
+        expect(@fake_user.email_settings).to eq(@email_settings)
       end
       it 'should create new user non-verified' do
         @auth_unverified = OmniAuth::AuthHash.new({
@@ -390,7 +398,11 @@ describe User do
         expect(User).to receive(:new).and_return(@fake_user)
         expect(@fake_user).not_to receive(:skip_confirmation!)
         expect(@fake_user).to receive(:save!)
+        @email_settings = FactoryGirl.create(:email_settings, user: @fake_user)
+        expect(EmailSettings).to receive(:create).with(user_id: @fake_user.id).and_return(@email_settings)
+        expect(@fake_user).to receive(:notify_user_friends).with(@auth.credentials)
         User.find_for_oauth(@auth_unverified, nil)
+        expect(@fake_user.email_settings).to eq(@email_settings)
       end
     end
 
@@ -505,7 +517,7 @@ describe User do
     end
   end
 
-  describe 'send_vote_notification_to' do
+  describe 'receive_vote_notification_from' do
     before :each do
       @user = User.create!(@attr)
       @other_user = FactoryGirl.create(:user)
@@ -525,18 +537,89 @@ describe User do
     end
   end
 
-  describe 'send_friendship_notification_to' do
+  describe 'receive_friendship_notification_from' do
     before :each do
       @user = User.create!(@attr)
       @other_user = FactoryGirl.create(:user)
     end
-    it 'should create a new Vote Notification' do
+    it 'should create a new Friendship Notification' do
       expect(FriendshipNotification).to receive(:create).with(user: @user, sender: @other_user)
       @user.receive_friendship_notification_from(@other_user)
     end
     it 'should increment the unread notifications counter' do
       expect(@user).to receive(:increment_unread_notification)
       @user.receive_friendship_notification_from(@other_user)
+    end
+  end
+
+  describe 'receive_facebook_sign_up_notification_from' do
+    before :each do
+      @user = User.create!(@attr)
+      @other_user = FactoryGirl.create(:user)
+    end
+    it 'should create a new Vote Notification' do
+      expect(FacebookSignUpNotification).to receive(:create).with(user: @user, sender: @other_user)
+      @user.receive_facebook_sign_up_notification_from(@other_user)
+    end
+    it 'should increment the unread notifications counter' do
+      expect(@user).to receive(:increment_unread_notification)
+      @user.receive_facebook_sign_up_notification_from(@other_user)
+    end
+  end
+
+  describe 'receive_friendship_email_from' do
+    before :each do
+      @user = User.create!(@attr)
+      @other_user = FactoryGirl.create(:user)
+    end
+    it 'should create a new friendship email without email_settings' do
+      expect(@user).to receive(:email_settings).and_return(nil)
+      @friendship_mailer = double("friendship_mailer")
+      expect(@friendship_mailer).to receive(:deliver)
+      expect(FriendshipMailer).to receive(:new_follower).with(@other_user, @user).and_return(@friendship_mailer)
+      @user.receive_friendship_email_from(@other_user)
+    end
+    it 'should create a new friendship email with email_settings new_follower true' do
+      @email_settings = FactoryGirl.create(:email_settings, user: @user, new_follower: true)
+      expect(@user).to receive(:email_settings).twice.and_return(@email_settings)
+      @friendship_mailer = double("friendship_mailer")
+      expect(@friendship_mailer).to receive(:deliver)
+      expect(FriendshipMailer).to receive(:new_follower).with(@other_user, @user).and_return(@friendship_mailer)
+      @user.receive_friendship_email_from(@other_user)
+    end
+    it 'should not create a new friendship email with email_settings new_follower false' do
+      @email_settings = FactoryGirl.create(:email_settings, user: @user, new_follower: false)
+      expect(@user).to receive(:email_settings).twice.and_return(@email_settings)
+      expect(FriendshipMailer).not_to receive(:new_follower)
+      @user.receive_friendship_email_from(@other_user)
+    end
+  end
+
+  describe 'receive_facebook_sign_up_email_from' do
+    before :each do
+      @user = User.create!(@attr)
+      @other_user = FactoryGirl.create(:user)
+    end
+    it 'should create a new friendship email without email_settings' do
+      expect(@user).to receive(:email_settings).and_return(nil)
+      @friendship_mailer = double("friendship_mailer")
+      expect(@friendship_mailer).to receive(:deliver)
+      expect(FriendshipMailer).to receive(:facebook_friend_sign_up).with(@other_user, @user).and_return(@friendship_mailer)
+      @user.receive_facebook_sign_up_email_from(@other_user)
+    end
+    it 'should create a new friendship email with email_settings facebook_friend_sign_up true' do
+      @email_settings = FactoryGirl.create(:email_settings, user: @user, facebook_friend_sign_up: true)
+      expect(@user).to receive(:email_settings).twice.and_return(@email_settings)
+      @friendship_mailer = double("friendship_mailer")
+      expect(@friendship_mailer).to receive(:deliver)
+      expect(FriendshipMailer).to receive(:facebook_friend_sign_up).with(@other_user, @user).and_return(@friendship_mailer)
+      @user.receive_facebook_sign_up_email_from(@other_user)
+    end
+    it 'should not create a new friendship email with email_settings facebook_friend_sign_up false' do
+      @email_settings = FactoryGirl.create(:email_settings, user: @user, facebook_friend_sign_up: false)
+      expect(@user).to receive(:email_settings).twice.and_return(@email_settings)
+      expect(FriendshipMailer).not_to receive(:facebook_friend_sign_up)
+      @user.receive_facebook_sign_up_email_from(@other_user)
     end
   end
 
@@ -805,6 +888,53 @@ describe User do
       expect(@user).to receive(:has_friendship_with).twice.with(@friend).and_return(true)
       expect(@user).to receive(:has_facebook_friendship_with).and_return(true)
       expect(@user.update_facebook_friend({"id" => "09434"})).to eq(true)
+    end
+  end
+
+  describe 'notify_user_friends' do
+    before(:each) do
+      @user = User.new(@attr)
+    end
+    it 'should notify list of friends' do
+      @graph = double("graph")
+      @friend1 = double("friend1")
+      @friend2 = double("friend2")
+      @friends = [ @friend1, @friend2 ]
+      expect(@user).to receive(:find_friends_from_facebook).with("credentials").and_return(@friends)
+      expect(@user).to receive(:update_facebook_friend).with(@friend1)
+      expect(@user).to receive(:update_facebook_friend).with(@friend2)
+
+      @friend = FactoryGirl.create(:user, {username: "friend", email: "friend@email.com"})
+      @friendship1 = FactoryGirl.create(:facebook_friendship, user: @user, facebook_friend: @friend)
+      expect(@friend).to receive(:receive_facebook_sign_up_notification_from).with(@user)
+      expect(@friend).to receive(:receive_facebook_sign_up_email_from).with(@user)
+      expect(@user).to receive(:facebook_friendships).and_return([@friendship1])
+
+      @user.notify_user_friends("credentials")
+    end
+    it 'should do nothing without credentials' do
+      expect(@user).not_to receive(:find_friends_from_facebook)
+      expect(@user).not_to receive(:update_facebook_friend)
+      expect(@user).not_to receive(:facebook_friendships)
+
+      @user.notify_user_friends(nil)
+    end
+  end
+
+  describe 'find_friends_from_facebook' do
+    before(:each) do
+      @user = User.new(@attr)
+    end
+    it 'should get friend list from Facebook' do
+      @graph = double("graph")
+      @friend1 = double("friend1")
+      @friend2 = double("friend2")
+      @friends = [ @friend1, @friend2 ]
+      expect(@graph).to receive(:get_connections).with("me", "friends").and_return(@friends)
+      expect(Koala::Facebook::API).to receive(:new).with('ABCDEFG').and_return(@graph)
+      @credentials = double("credentials")
+      expect(@credentials).to receive(:token).and_return("ABCDEFG")
+      expect(@user.find_friends_from_facebook(@credentials)).to eq(@friends)
     end
   end
 end

@@ -18,7 +18,7 @@
 
           <div class="span5 hidden-phone">
             <%= render :partial => "battles/social",
-                       :locals => { :battle => battle } %>
+                       :locals => { :battle => battle, :div_class => "social-share" } %>
           </div>
 
           <div class="span1">
@@ -145,7 +145,7 @@
     <div class="row">
       <div class="span5 visible-phone">
         <%= render :partial => "battles/social",
-                   :locals => { :battle => battle } %>
+                   :locals => { :battle => battle, :div_class => "social-share-mobile" } %>
       </div>
     </div>
 

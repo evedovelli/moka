@@ -4,7 +4,16 @@ pt-BR:
     friendship:
       from: "Batalharia <notification@batalharia.com>"
       new: "%{follower} começou a seguir você no Batalharia"
-      hello: "Olá %{name},"
-      message_follow_back_html: '%{follower} começou a seguir você no <span style="color:#ff5555; font-size:17px; letter-spacing:0.3px; font-weight:bold">Batalharia</span>.'
-      visit_profile: "Visite o perfil de %{follower}"
-      visit_profile_text: "Clique em %{link} para visitar o perfil de %{follower}."
+      facebook_friend: 'Seu amigo do Facebook %{friend} acaba de entrar para o Batalharia'
+      new_follower:
+        hello: "Olá %{name},"
+        message_follow_back_html: '%{follower} começou a seguir você no <span style="color:#ff5555; font-size:17px; letter-spacing:0.3px; font-weight:bold">Batalharia</span>.'
+        message_follow_back: "%{follower} começou a seguir você no Batalharia"
+        visit_profile: "Visite o perfil de %{follower}"
+        visit_profile_text: "Clique em %{link} para visitar o perfil de %{follower}."
+      facebook_friend_sign_up:
+        hello: "Olá %{name},"
+        follow_html: "Siga %{friend} e não perca nenhuma de suas batalhas no <span style=\"color:#ff5555; font-size:17px; letter-spacing:0.3px; font-weight:bold\">Batalharia</span>."
+        follow: "Siga %{friend} e não perca nenhuma de suas batalhas no Batalharia."
+        visit_profile: "Visite o perfil de %{friend}"
+        visit_profile_text: "Clique em %{link} para visitar o perfil de %{friend}."

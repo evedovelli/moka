@@ -95,12 +95,12 @@ Given /^I have uploaded the "([^"]*)" image as my profile picture$/ do |image|
   user.update_attributes({:avatar => Rack::Test::UploadedFile.new(create_path(image), 'image/png')})
 end
 
-Given /^I accept to share my Facebook info:$/ do |table|
+Given /^(?:I|the following users) accept to share (?:my|their) Facebook info:$/ do |table|
   table.hashes.each do |user|
     if user[:name]
       OmniAuth.config.mock_auth[:facebook] = OmniAuth::AuthHash.new({
         :provider => 'facebook',
-        :uid => '8734210',
+        :uid => user[:uid] || '8734210',
         :info => {
           :email => user[:email],
           :name => user[:name],
@@ -116,7 +116,7 @@ Given /^I accept to share my Facebook info:$/ do |table|
     else
       OmniAuth.config.mock_auth[:facebook] = OmniAuth::AuthHash.new({
         :provider => 'facebook',
-        :uid => '8734210',
+        :uid => user[:uid] || '8734210',
         :info => {
           :email => user[:email],
           :verified => to_boolean(user[:verified])
@@ -148,6 +148,8 @@ Given /^I have signed up with my Facebook account$/ do
       :expires => true
     },
   })
+  stub_request(:get, "https://graph.facebook.com/v2.0/me/friends?access_token=ABCDEF").
+      to_return(:status => 200, :body => "", :headers => {})
   step %Q{I click in the Sign in with Facebook button}
 end
 
@@ -174,6 +176,11 @@ Given /^I am friends with "([^"]+)" on Facebook$/ do |friend|
   @facebook_accounts << { "id" => friend }
 end
 
+Given /^"([^"]+)" is friends with me on Facebook$/ do |friend|
+  @facebook_accounts = @facebook_accounts || []
+  @facebook_accounts << { "id" => '8734210' }
+end
+
 
 ### WHEN ###
 
@@ -195,6 +202,10 @@ end
 
 When /^I sign in with password "([^"]+)"$/ do |password|
   sign_in("myself@email.com", password)
+end
+
+When /^I sign in with my Facebook account$/ do
+  step %Q{I have signed up with my Facebook account}
 end
 
 When /^(?:|I )sign out$/ do
@@ -343,6 +354,18 @@ end
 
 When /^I click to update friends from Facebook$/ do
   find("#facebook-friends-find").click
+end
+
+When /^my Facebook friend "([^"]+)" signs up$/ do |user|
+  step %Q{I go to the home page}
+
+  @graph = double("graph")
+  allow(@graph).to receive(:get_connections).with("me", "friends").and_return(@facebook_accounts)
+  allow(Koala::Facebook::API).to receive(:new).and_return(@graph)
+
+  find('#facebook-sign-in').click
+  expect(page).to have_content "Logout"
+  logout(:user)
 end
 
 
