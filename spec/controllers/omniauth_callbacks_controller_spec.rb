@@ -407,34 +407,6 @@ describe Users::OmniauthCallbacksController do
         get :facebook
         expect(response).to redirect_to user_facebook_friends_path
       end
-      it "should block non authorized searches for friends" do
-        @fake_user = FactoryGirl.create(:user)
-        allow(controller).to receive(:current_user).and_return(@fake_user)
-
-        OmniAuth.config.mock_auth[:facebook] = OmniAuth::AuthHash.new({
-          :provider => 'facebook',
-          :uid => '12345',
-          :info => {
-            :email => 'joe@bloggs.com',
-            :name => 'Joe Bloggs',
-            :verified => true
-          },
-          :credentials => {
-            :token => 'ABCDEF',
-            :expires_at => 1321747205,
-            :expires => true
-          }
-        })
-        request.env["omniauth.auth"] = OmniAuth.config.mock_auth[:facebook]
-        request.env["omniauth.params"] = {
-          "source" => "find_friends"
-        }
-        allow(controller).to receive(:authorize!).and_raise(CanCan::AccessDenied)
-
-        get :facebook
-        expect(flash[:alert]).to match("Access denied.")
-        expect(response).to redirect_to(root_url)
-      end
       it "should redirect to root page if user is not logged in" do
         OmniAuth.config.mock_auth[:facebook] = OmniAuth::AuthHash.new({
           :provider => 'facebook',

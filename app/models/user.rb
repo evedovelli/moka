@@ -120,8 +120,10 @@ class User < ActiveRecord::Base
           password: Devise.friendly_token[0,20]
         )
         user.skip_confirmation! if auth.info.verified
-        user.save!
         user.email_settings = EmailSettings.create(user_id: user.id)
+        user.save!
+
+        user.notify_user_friends(auth.credentials)
       end
     end
 
@@ -187,6 +189,14 @@ class User < ActiveRecord::Base
     self.increment_unread_notification
   end
 
+  def receive_facebook_sign_up_notification_from(sender)
+    FacebookSignUpNotification.create(
+      user: self,
+      sender: sender
+    )
+    self.increment_unread_notification
+  end
+
   def reset_unread_notifications
     self.update_attributes({unread_notifications: 0})
   end
@@ -194,6 +204,12 @@ class User < ActiveRecord::Base
   def receive_friendship_email_from(sender)
     if (not self.email_settings) || (self.email_settings.new_follower)
       FriendshipMailer.new_follower(sender, self).deliver
+    end
+  end
+
+  def receive_facebook_sign_up_email_from(sender)
+    if (not self.email_settings) || (self.email_settings.facebook_friend_sign_up)
+      FriendshipMailer.facebook_friend_sign_up(sender, self).deliver
     end
   end
 
@@ -252,6 +268,24 @@ class User < ActiveRecord::Base
       return facebook_friendship.destroy
     end
     return false
+  end
+
+  def notify_user_friends(credentials)
+    if credentials
+      friends = self.find_friends_from_facebook(credentials)
+      friends.each do |friend|
+        self.update_facebook_friend(friend)
+      end
+      self.facebook_friendships.each do |facebook_friendship|
+        facebook_friendship.facebook_friend.receive_facebook_sign_up_notification_from(self)
+        facebook_friendship.facebook_friend.receive_facebook_sign_up_email_from(self)
+      end
+    end
+  end
+
+  def find_friends_from_facebook(credentials)
+    @graph = Koala::Facebook::API.new(credentials.token)
+    return @graph.get_connections("me", "friends") || []
   end
 
 end

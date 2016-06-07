@@ -46,6 +46,8 @@ describe Users::RegistrationsController do
         })
         request.env["omniauth.auth"] = OmniAuth.config.mock_auth[:facebook]
         Capybara.current_session.driver.header 'Referer', root_url
+        stub_request(:get, "https://graph.facebook.com/v2.0/me/friends?access_token=ABCDEF").
+            to_return(:status => 200, :body => "", :headers => {})
         visit '/users/auth/facebook'
         @fake_user = User.find_by_username("joe")
         sign_in @fake_user

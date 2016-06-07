@@ -37,7 +37,13 @@ $victoriousColor: #37C871;
 
 .vote-count {
   margin-top: 0px;
-  margin-bottom: 0px;
+  margin-bottom: 30px;
+  @media (max-width: 767px) {
+    margin-bottom: 30px;
+  }
+  @media (min-width: 768px) {
+    margin-bottom: 0px;
+  }
   font-size: 15px;
 }
 

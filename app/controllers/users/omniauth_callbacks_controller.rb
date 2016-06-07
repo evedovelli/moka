@@ -37,8 +37,8 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
        request.env["omniauth.params"]["source"] == "find_friends" &&
        request.env["omniauth.auth"].credentials &&
        current_user
-      friends = find_friends_from_facebook(request.env["omniauth.auth"].credentials)
-      update_friends_list(friends)
+      friends = current_user.find_friends_from_facebook(request.env["omniauth.auth"].credentials)
+      update_friends_list(current_user, friends)
       redirect_to user_facebook_friends_path
       return
     elsif request.env["omniauth.params"] &&
@@ -64,10 +64,13 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     @user = User.find_for_oauth(request.env["omniauth.auth"], current_user)
 
     if @user.nil?
+      # Error: User already exists
       session["devise.facebook_data"] = request.env["omniauth.auth"]
       set_flash_message(:alert, :failure, kind: :Facebook, reason: I18n.t('messages.omniauth_already_exists_error')) if is_navigational_format?
       redirect_to root_path
+
     elsif @user.persisted?
+      # Success: User created successfully
       if @user.confirmed?
         sign_in(@user, event: :authentication)
         set_flash_message(:notice, :success, kind: :Facebook) if is_navigational_format?
@@ -76,10 +79,13 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       end
 
       redirect_to request.env['omniauth.origin'] || stored_location_for(resource) || root_path
+
     else
+      # Error: Could not persist user
       session["devise.facebook_data"] = request.env["omniauth.auth"]
       set_flash_message(:alert, :failure, kind: :Facebook, reason: I18n.t('messages.omniauth_error')) if is_navigational_format?
       redirect_to new_user_registration_url
+
     end
   end
 
@@ -153,16 +159,9 @@ private
     end
   end
 
-  def find_friends_from_facebook(credentials)
-    authorize! :find_friends, User
-
-    @graph = Koala::Facebook::API.new(credentials.token)
-    return @graph.get_connections("me", "friends")
-  end
-
-  def update_friends_list(friends)
+  def update_friends_list(user, friends)
     friends.each do |friend|
-      current_user.update_facebook_friend(friend)
+      user.update_facebook_friend(friend)
     end
   end
 

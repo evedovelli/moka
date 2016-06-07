@@ -24,3 +24,11 @@ When /^I update email settings$/ do
   find("#update_email_settings").click
 end
 
+When /^I disable email reception for new Facebook friends$/ do
+  find("#email_settings_facebook_friend_sign_up").set(false)
+end
+
+When /^I enable email reception for new Facebook friends$/ do
+  find("#email_settings_facebook_friend_sign_up").set(true)
+end
+

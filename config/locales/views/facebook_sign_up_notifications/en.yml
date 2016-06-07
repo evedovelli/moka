@@ -1,0 +1,4 @@
+en:
+  facebook_sign_up_notifications:
+    _facebook_sign_up_notification:
+      message_html: "Your Facebook friend %{user} just signed up."

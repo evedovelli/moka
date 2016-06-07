@@ -1,0 +1,4 @@
+pt-BR:
+  facebook_sign_up_notifications:
+    _facebook_sign_up_notification:
+      message_html: "Seu amigo do Facebook %{user} acaba de entrar para o Batalharia."

@@ -17,7 +17,7 @@
     <tr>
       <td width="580" style="padding:0 30px 10px 30px;">
         <h2 style="margin-top:0;">
-          <%= t('mailers.friendship.new_follower.hello', name: user_name_for(@user), locale: (@user.language || I18n.locale)) %>
+          <%= t('mailers.friendship.facebook_friend_sign_up.hello', name: user_name_for(@user), locale: (@user.language || I18n.locale)) %>
         </h2>
       </td>
     </tr>
@@ -25,14 +25,14 @@
     <tr>
       <td width="580" align="center" style="padding:0 30px 20px 30px;">
         <h3>
-          <%= t('mailers.friendship.new_follower.message_follow_back_html',
-                follower: (link_to(url_for(:host => t('mailers.url', locale: (@user.language || I18n.locale)),
+          <%= t('mailers.friendship.facebook_friend_sign_up.follow_html',
+                friend: (link_to(url_for(:host => t('mailers.url', locale: (@user.language || I18n.locale)),
                                            :controller => "users",
                                            :action => "show",
-                                           :id => @follower.username),
+                                           :id => @friend.username),
                                    style: "color:#ff5555"
                           ) do
-                            user_name_for(@follower)
+                            user_name_for(@friend)
                           end), locale: (@user.language || I18n.locale))
           %>
         </h3><br>
@@ -49,11 +49,11 @@
                 <%= link_to(url_for(:host => t('mailers.url', locale: (@user.language || I18n.locale)),
                                     :controller => "users",
                                     :action => "show",
-                                    :id => @follower.username),
+                                    :id => @friend.username),
                             style: "text-decoration:none; text-align:center; font-size:18px; font-weight:bold; letter-spacing:0.5px; color:#FFF"
                            ) do
-                  t('mailers.friendship.new_follower.visit_profile',
-                    follower: user_name_for(@follower),
+                  t('mailers.friendship.facebook_friend_sign_up.visit_profile',
+                    friend: user_name_for(@friend),
                     locale: (@user.language || I18n.locale))
                 end %>
               </td>
