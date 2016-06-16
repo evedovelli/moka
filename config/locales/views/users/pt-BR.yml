@@ -27,7 +27,7 @@ pt-BR:
     _overlay_sign_in:
       not_a_member_html: "Ainda não está cadastrado? %{link}. É gratuito!"
       sign_up: "Cadastre-se aqui"
-      title: "Entre na sua conta para votar!"
+      title: "Entre na sua conta para continuar!"
     index:
       title: "Usuários"
       next: "Próxima página"

@@ -1,7 +1,9 @@
 module UsersHelper
   def user_button_for(user, btn_classes = "btn-large")
     if !current_user
-      return ""
+      return (link_to(user_sign_in_popup_path, remote: true, :class => "btn #{btn_classes} btn-block btn-follow") do
+               "<i class=\"icon-plus\"></i> #{I18n.t('users.show.follow')}".html_safe
+             end).html_safe
     end
 
     if current_user == user
@@ -23,7 +25,9 @@ module UsersHelper
 
   def mini_user_button_for(user)
     if !current_user
-      return ""
+      return (link_to(user_sign_in_popup_path, remote: true, :class => "btn btn-block btn-follow") do
+               "<i class=\"icon-plus\"></i><i class=\"icon-user\"></i>".html_safe
+             end).html_safe
     end
 
     if current_user == user

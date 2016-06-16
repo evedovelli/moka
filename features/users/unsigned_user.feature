@@ -8,7 +8,7 @@ Background: I am not a registered user and battles exist
     And current time is 1985-10-21 07:28:00 -0300
     And a battle was created by "willywallace" with options:
     | name            | image              |
-    | Devil Robot     | devil_robot.jpg    |
+    | Devil_Robot     | devil_robot.jpg    |
     | Darth Vader     | vader.jpg          |
     And current time is 1985-10-21 08:28:00 -0300
 
@@ -63,4 +63,34 @@ Background: I am not a registered user and battles exist
       When I vote for "Darth Vader"
       Then I should see the login form
       And I should not see any option selected
+
+    @javascript
+    Scenario: I try to follow user and I am redirected to the login page
+      Given I am on the "willywallace" profile page
+      When I click the "follow" button
+      Then I should see the login form
+
+    @javascript
+    Scenario: I try to vote and I close the login form
+      Given I am on the "willywallace" profile page
+      When I click the "follow" button
+      And I close the login window
+      Then I should not see the login form
+
+    @javascript
+    Scenario: I try to see votes and I am redirected to the login page
+      Given "Devil_Robot" has 5 votes
+      And current time is 1995-10-21 08:28:00 -0300
+      And I am on the "willywallace" profile page
+      When I click to see voters for "Devil_Robot"
+      Then I should see the login form
+
+    @javascript
+    Scenario: I try to vote and I close the login form
+      Given "Devil_Robot" has 5 votes
+      And current time is 1995-10-21 08:28:00 -0300
+      And I am on the "willywallace" profile page
+      When I click to see voters for "Devil_Robot"
+      And I close the login window
+      Then I should not see the login form
 

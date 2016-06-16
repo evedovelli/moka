@@ -91,6 +91,7 @@ class Ability
     end
     can :locale, User
     can :find_friends, User
+    can :sign_in_popup, User
 
 
     # EmailSettings

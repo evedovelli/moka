@@ -61,6 +61,11 @@ describe UsersController do
       expect(flash[:alert]).to match("You need to sign in or sign up before continuing.")
       expect(response).to redirect_to("/en/users/sign_in")
     end
+    it "should be redirected to 'sign in' page if accessing sign_in_popup page for user" do
+      get :sign_in_popup
+      expect(flash[:alert]).to be_nil
+      expect(response).to redirect_to("/en/users/sign_in")
+    end
   end
 
   describe "When user is logged in" do
@@ -115,6 +120,11 @@ describe UsersController do
       end
       it "should be redirected to root page if accessing facebook friends page for user" do
         get :facebook_friends
+        expect(flash[:alert]).to match("Access denied.")
+        expect(response).to redirect_to(root_url)
+      end
+      it "should be redirected to root page if accessing sign_in_popup page for user" do
+        get :sign_in_popup
         expect(flash[:alert]).to match("Access denied.")
         expect(response).to redirect_to(root_url)
       end
@@ -570,6 +580,24 @@ describe UsersController do
         end
       end
 
+      describe "sign_in_popup" do
+        it "should respond to HTML" do
+          get :sign_in_popup
+          expect(response.content_type).to eq(Mime::HTML)
+        end
+        it "should redirect to the sign in page for HTML" do
+          get :sign_in_popup
+          expect(response).to redirect_to(new_user_session_path)
+        end
+        it "should respond to js" do
+          get :sign_in_popup, {format: 'js'}
+          expect(response.content_type).to eq(Mime::JS)
+        end
+        it "should render the sign_in_popup template" do
+          get :sign_in_popup, {format: 'js'}
+          expect(response).to render_template('users/sign_in_popup')
+        end
+      end
     end
 
   end

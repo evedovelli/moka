@@ -113,8 +113,11 @@ describe Ability do
         it "should be able to access locale" do
           expect(@ability).to be_able_to(:locale, User)
         end
-        it "should be able to access Source IPv4" do
+        it "should be able to access find_friends" do
           expect(@ability).to be_able_to(:find_friends, User)
+        end
+        it "should be able to access sign_in_popup" do
+          expect(@ability).to be_able_to(:sign_in_popup, User)
         end
 
         it "should not be able to to access home from other User" do

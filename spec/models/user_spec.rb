@@ -281,6 +281,10 @@ describe User do
       user = User.new(@attr.merge(:username => "facebook_friends"))
       expect(user).not_to be_valid
     end
+    it 'should reject sign_in_popup' do
+      user = User.new(@attr.merge(:username => "sign_in_popup"))
+      expect(user).not_to be_valid
+    end
   end
 
   describe 'to_param' do

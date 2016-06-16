@@ -13,6 +13,7 @@ Moka::Application.routes.draw do
   end
 
   get "users/facebook_friends" => "users#facebook_friends", :as => :user_facebook_friends
+  get "users/sign_in_popup"    => "users#sign_in_popup",    :as => :user_sign_in_popup
   resources :users, :only => [:show, :index, :edit, :update] do
     resources :friendships, :only => [:create, :destroy, :index]
     resource :email_settings, :only => [:edit, :update]
