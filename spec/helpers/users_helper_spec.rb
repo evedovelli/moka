@@ -4,7 +4,7 @@ describe UsersHelper, :type => :helper do
   describe "user button for" do
     it "should return nothing if user not logged in" do
       allow(helper).to receive(:current_user).and_return(nil)
-      expect(helper.user_button_for(@current_user)).to eq("")
+      expect(helper.user_button_for(@current_user)).to eq("<a href=\"/en/users/sign_in_popup\" class=\"btn btn-large btn-block btn-follow\" data-remote=\"true\"><i class=\"icon-plus\"></i> Follow</a>")
     end
     it "should return link to edit for current user" do
       @current_user = FactoryGirl.create(:user)
@@ -47,7 +47,7 @@ describe UsersHelper, :type => :helper do
   describe "mini user button for" do
     it "should return nothing if user not logged in" do
       allow(helper).to receive(:current_user).and_return(nil)
-      expect(helper.mini_user_button_for(@current_user)).to eq("")
+      expect(helper.mini_user_button_for(@current_user)).to eq("<a href=\"/en/users/sign_in_popup\" class=\"btn btn-block btn-follow\" data-remote=\"true\"><i class=\"icon-plus\"></i><i class=\"icon-user\"></i></a>")
     end
     it "should return link to edit for current user" do
       @current_user = FactoryGirl.create(:user)

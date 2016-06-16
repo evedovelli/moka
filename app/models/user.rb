@@ -66,6 +66,8 @@ class User < ActiveRecord::Base
       errors.add(:username, I18n.t('messages.invalid_username'))
     when 'facebook_friends'
       errors.add(:username, I18n.t('messages.invalid_username'))
+    when 'sign_in_popup'
+      errors.add(:username, I18n.t('messages.invalid_username'))
     else
       return
     end

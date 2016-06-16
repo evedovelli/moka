@@ -1,12 +1,19 @@
 require 'rails_helper'
 
 describe OptionsController do
+  before (:each) do
+    @fake_option = FactoryGirl.create(:option)
+  end
 
   describe "When user is not logged in" do
-    it "should be redirected to 'sign in' page if accessing votes for option" do
-      get :votes, {id: 1}
-      expect(flash[:alert]).to match("You need to sign in or sign up before continuing.")
-      expect(response).to redirect_to("/en/users/sign_in")
+    before (:each) do
+      allow(controller).to receive(:authorize!).and_return(true)
+    end
+
+    it "should render 'sign in' popup modal if accessing votes for option" do
+      get :votes, {id: @fake_option.id, :format => 'js'}
+      expect(response.content_type).to eq(Mime::JS)
+      expect(response).to render_template('votes/unsigned_user')
     end
   end
 
@@ -14,7 +21,6 @@ describe OptionsController do
     before (:each) do
       @fake_user = FactoryGirl.create(:user)
       sign_in @fake_user
-      @fake_option = FactoryGirl.create(:option)
     end
 
     describe "When user is not authorized" do

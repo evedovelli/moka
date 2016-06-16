@@ -1,0 +1,12 @@
+$('#login-box').replaceWith("<%= j (render :partial => 'users/overlay_sign_in') %>");
+$('#login-modal').modal('show');
+
+jQuery(closeOverlayLoginForm);
+
+$(document).click(function(event) {
+  if (!$(event.target).closest('.login-black-box-container').length) {
+    if ($('#login-box').is(":visible")) {
+      $('#login-box').hide()
+    }
+  }
+})

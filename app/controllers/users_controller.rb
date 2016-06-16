@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_filter :authenticate_user!, :only => [:edit, :update, :social, :facebook_friends]
-  load_and_authorize_resource :user, :find_by => :username, :expect => [:home, :social, :locale, :facebook_friends]
+  load_and_authorize_resource :user, :find_by => :username, :except => [:home, :social, :locale, :facebook_friends, :sign_in_popup]
 
   def locale
     referer_path = URI(request.referer).path
@@ -114,6 +114,14 @@ class UsersController < ApplicationController
     respond_to do |format|
       format.js { render('users/index') }
       format.html {}
+    end
+  end
+
+  def sign_in_popup
+    authorize! :sign_in_popup, User
+    respond_to do |format|
+      format.js {}
+      format.html { redirect_to new_user_session_path }
     end
   end
 end
