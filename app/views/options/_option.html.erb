@@ -1,44 +1,73 @@
 <div id="option<%= option.id %>">
   <div class="option-sizeable option-offsetable span<%= size %> offset<%= offset %>">
 
-    <div class="vote_picture_frame <%= if battle.current?
-                                         "current_battle"
-                                       end %> <%= fill_if_voted(option.id, "outer_selected_picture") %> <%= fill_if_victorious(option.id, "outer_victorious_picture", battle.current?) %>">
+    <div class="option-outer-box">
+      <div class="vote_picture_frame <%= if battle.current?
+                                           "current_battle"
+                                         end %> <%= fill_if_voted(option.id, "outer_selected_picture") %> <%= fill_if_victorious(option.id, "outer_victorious_picture", battle.current?) %>">
 
-      <div id="<%="vote_option#{option.id}"%>" class="vote_picture <%= fill_if_voted(option.id, "selected_picture") %> <%= fill_if_victorious(option.id, "victorious_picture", battle.current?) %>">
+        <div id="<%="vote_option#{option.id}"%>" class="vote_picture <%= fill_if_voted(option.id, "selected_picture") %> <%= fill_if_victorious(option.id, "victorious_picture", battle.current?) %>">
 
-        <%= f.radio_button(
-          :option,
-          option.id,
-          :checked => false,
-          :name => "vote[option_id]",
-          :class => "vote_radio"
-        ) %>
+          <%= f.radio_button(
+            :option,
+            option.id,
+            :checked => false,
+            :name => "vote[option_id]",
+            :class => "vote_radio"
+          ) %>
 
-        <div class="option-box <%= fill_if_voted(option.id, "selected_box") %> <%= fill_if_victorious(option.id, "victorious_box", battle.current?) %>">
-          <div class="row">
-            <div class="option-sizeable span<%= size %>">
-              <div class="picture-box">
-                <%= image_tag option.picture.url(:medium) %>
+          <div class="option-box <%= fill_if_voted(option.id, "selected_box") %> <%= fill_if_victorious(option.id, "victorious_box", battle.current?) %>">
+            <div class="row">
+              <div class="option-sizeable span<%= size %>">
+                <div class="picture-box">
+                  <%= image_tag option.picture.url(:medium) %>
+                </div>
               </div>
             </div>
           </div>
+
         </div>
-
       </div>
+
+      <div class="row">
+        <div class="option-sizeable span<%= size %>">
+          <table>
+            <tr>
+              <td>
+                <span class="fa-stack vote-icon <%= if battle.current?
+                              "current_battle"
+                            end %>">
+                  <i class="fa fa-square fa-stack-2x"></i>
+                  <i class="fa fa-check vote-icon-check fa-stack-1x <%= fill_if_voted(option.id, "selected_icon") %> fa-inverse"></i>
+                </span>
+              </td>
+<%#              <td>%>
+<%#                <span class="fa-stack comment-icon">%>
+<%#                  <i class="fa fa-square fa-stack-2x"></i>%>
+<%#                  <i class="fa fa-comment fa-inverse fa-stack-1x"></i>%>
+<%#                </span>%>
+<%#              </td>%>
+              <td>
+                <h3 class="center option-name"><%= auto_link_hashtags(option.name, :hashtag_url_base => hashtag_path("")).html_safe %></h3>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+      <% if can? :show_results, battle %>
+        <%= render :partial => 'votes/results', :locals => { :option => option, :votes => option.number_of_votes, :total_votes => battle.number_of_votes, :size => size } %>
+      <% else %>
+        <div id='<%="results#{option.id}"%>' style='display:none;'></div>
+      <% end %>
     </div>
 
-    <div class="row">
+    <div class="row visible-phone">
       <div class="option-sizeable span<%= size %>">
-        <h3 class="center option-name"><%= auto_link_hashtags(option.name, :hashtag_url_base => hashtag_path("")).html_safe %></h3>
+        <div class="option-bottom-margin"></div>
       </div>
     </div>
-
-    <% if can? :show_results, battle %>
-      <%= render :partial => 'votes/results', :locals => { :option => option, :votes => option.number_of_votes, :total_votes => battle.number_of_votes, :size => size } %>
-    <% else %>
-      <div id='<%="results#{option.id}"%>' style='display:none;'></div>
-    <% end %>
 
   </div>
+
 </div>

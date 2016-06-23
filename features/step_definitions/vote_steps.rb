@@ -41,6 +41,15 @@ When /^I vote for "([^"]*)" for the (\d+)(?:st|nd|rd|th) battle$/ do |option, ba
   end
 end
 
+When /^I press the button to vote for "([^"]*)" for the (\d+)(?:st|nd|rd|th) battle$/ do |option, battle_id|
+  expect(page).to have_css("#vote_option#{Option.find_by_name(option).id}")
+  within(all('.battle')[battle_id.to_i - 1]) do
+    within("#option#{Option.find_by_name(option).id}") do
+      find(".vote-icon").click
+    end
+  end
+end
+
 When /^I close the results overlay$/ do
   find('#close_results').click
 end
@@ -91,8 +100,9 @@ end
 
 Then /^I should see "([^"]*)" option selected for the (\d+)(?:st|nd|rd|th) battle$/ do |option, battle_id|
   within(all('.battle')[battle_id.to_i - 1]) do
-    within(find("#vote_option#{Option.find_by_name(option).id}")) do
+    within(find("#option#{Option.find_by_name(option).id}")) do
       expect(page).to have_css(".selected_box")
+      expect(page).to have_css(".selected_icon")
     end
   end
 end

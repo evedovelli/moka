@@ -98,6 +98,7 @@ class BattlesController < ApplicationController
     @battle_options_error = ""
     if @battle.update_attributes(params[:battle])
       @vote = Vote.new()
+      @voted_for = current_user.voted_for_options([@battle])
       respond_to do |format|
         format.js {}
       end

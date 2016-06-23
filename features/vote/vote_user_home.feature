@@ -29,6 +29,15 @@ Background: I exist as an user, and I there are battles
       And I should see 0 votes for "Palpatine" for the 1st battle
 
     @javascript
+    Scenario: I can vote in a battle from my home page with vote button
+      When I go to my home page
+      And I press the button to vote for "Dick Dastardly" for the 1st battle
+      Then I should see "Dick Dastardly" option selected for the 1st battle
+      And I should be on the home page
+      And I should see 1 vote for "Dick Dastardly" for the 1st battle
+      And I should see 0 votes for "Palpatine" for the 1st battle
+
+    @javascript
     Scenario: I can vote in many battles from my home page
       When I go to my home page
       And I vote for "Dick Dastardly" for the 1st battle

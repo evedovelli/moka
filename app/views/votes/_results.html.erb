@@ -2,11 +2,11 @@
   <div class="row">
     <div class="span<%= size %>">
       <% if (can? :votes, option) && (votes > 0) %>
-        <h4 class="center vote-count <%= votes_size(votes, total_votes) %>">
+        <h4 class="vote-count center <%= votes_size(votes, total_votes) %>">
           <%= link_to(t('votes._results.votes', count: votes), option_votes_path(option.id), :remote => true, :id => "votes#{option.id}") %>
         </h4>
       <% else %>
-        <h4 class="center vote-count <%= votes_size(votes, total_votes) %>">
+        <h4 class="vote-count center <%= votes_size(votes, total_votes) %>">
           <%= t('votes._results.votes', count: votes) %>
         </h4>
       <% end %>

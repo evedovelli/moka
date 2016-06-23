@@ -102,5 +102,24 @@ div.no_picture_container h4 {
 
 .option-name {
   margin-top: 0px;
-  font-size: 18px;
+  margin-bottom: 2px;
+  padding-left: 10px;
+  font-size: 16px;
+  line-height: 20px;
+}
+
+.option-outer-box {
+  background-color: darken(#eee, 5%);
+}
+
+.option-bottom-margin {
+  padding-bottom: 20px;
+}
+
+.vote-icon:hover {
+  cursor: pointer;
+}
+
+i.selected_icon {
+  color: #FF9522;
 }

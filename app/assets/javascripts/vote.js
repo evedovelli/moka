@@ -3,7 +3,10 @@ selectablePictureBattle = function(selector) {
   $(selector + ' .vote_radio').css("display","none");
   $(selector + ' .vote_button').css("display","none");
   $(selector + ' .vote_picture_frame').on("click", function(){
-    selectablePicture($(this))
+    selectableOption($(this))
+  });
+  $(selector + ' .vote-icon').on("click", function(){
+    selectableOption($(this))
   });
 }
 
@@ -11,33 +14,41 @@ selectablePictureBattles = function() {
   $('.vote_radio').css("display","none");
   $('.vote_button').css("display","none");
   $('.vote_picture_frame').on("click", function(){
-    selectablePicture($(this))
+    selectableOption($(this))
+  });
+  $('.vote-icon').on("click", function(){
+    selectableOption($(this))
   });
 }
 
-selectablePicture = function(element) {
+selectableOption = function(element) {
   // Option is not selectable if battle is not current
   if (!element.hasClass('current_battle')) {
     return;
   }
 
+  battle_box = element.closest('.battle-box');
+  option_outer_box = element.closest('.option-outer-box');
+
   // Remove previous selection
-  element.closest('.battle-box').find('.outer_selected_picture').removeClass('outer_selected_picture');
-  element.closest('.battle-box').find('.selected_picture').removeClass('selected_picture');
-  element.closest('.battle-box').find('.option-box').removeClass('selected_box');
+  battle_box.find('.outer_selected_picture').removeClass('outer_selected_picture');
+  battle_box.find('.selected_picture').removeClass('selected_picture');
+  battle_box.find('.option-box').removeClass('selected_box');
+  battle_box.find('.vote-icon-check').removeClass('selected_icon');
 
   // Check box
-  radio_button = element.find('.vote_radio');
+  radio_button = option_outer_box.find('.vote_radio');
   radio_button.prop('checked', true);
   radio_value = radio_button.val();
 
   // Send vote
-  element.closest('.new_vote').find('.vote_button').trigger('click');
+  option_outer_box.closest('.new_vote').find('.vote_button').trigger('click');
 
   // Add new selection
-  element.addClass('outer_selected_picture');
-  element.find('.vote_picture').addClass('selected_picture');
-  element.find('.option-box').addClass('selected_box');
+  option_outer_box.find('.vote_picture_frame').addClass('outer_selected_picture');
+  option_outer_box.find('.vote_picture').addClass('selected_picture');
+  option_outer_box.find('.option-box').addClass('selected_box');
+  option_outer_box.find('.vote-icon-check').addClass('selected_icon');
 };
 
 jQuery(selectablePictureBattles);
