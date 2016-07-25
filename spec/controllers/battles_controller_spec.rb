@@ -453,6 +453,8 @@ describe BattlesController do
             allow(Vote).to receive(:new).and_return(@fake_vote)
             allow(@fake_battle).to receive(:save).and_return(true)
             allow(@fake_battle).to receive(:update_attributes).and_return(true)
+            @top_comments = double("top_comments")
+            allow(Battle).to receive(:top_comments).and_return(@top_comments)
             put(:update, { :id => @fake_battle.id, battle: {"starts_at" => "now"}, :format => 'js' })
           end
           it "should respond to js" do
@@ -466,6 +468,9 @@ describe BattlesController do
           end
           it "should make a new vote available to that template" do
             expect(assigns(:vote)).to eq(@fake_vote)
+          end
+          it "should make top_comments available to that template" do
+            expect(assigns(:top_comments)).to eq(@top_comments)
           end
         end
         describe "in error" do
