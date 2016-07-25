@@ -123,3 +123,43 @@ div.no_picture_container h4 {
 i.selected_icon {
   color: #FF9522;
 }
+
+.comment-icon {
+  color: $grayDark;
+}
+
+.comment-icon:hover {
+  color: $grayDark;
+}
+
+.next_page-option {
+  margin-bottom: 10px;
+}
+
+.top-comments-table {
+  background-color: $grayLighter;
+  margin-bottom: 0px;
+}
+
+.comments-title {
+  margin-left: 5px;
+  margin-right: 5px;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  color: $gray;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 20px;
+}
+
+.no-comments {
+  margin-top: 20px;
+}
+
+.new-comment-body-cell {
+  width: 100%;
+}
+
+.new-comment {
+  width: 90%;
+}

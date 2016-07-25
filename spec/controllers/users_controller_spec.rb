@@ -141,6 +141,8 @@ describe UsersController do
           @voted_for = double("vf")
           allow(Battle).to receive(:user_home).and_return(@battles)
           allow(Battle).to receive(:victorious).and_return(@battles)
+          @top_comments = double("top_comments")
+          allow(Battle).to receive(:top_comments).and_return(@top_comments)
           allow(@fake_user).to receive(:voted_for_options).with(@battles).and_return(@voted_for)
           allow(controller).to receive(:current_user).and_return(@fake_user)
         end
@@ -178,6 +180,11 @@ describe UsersController do
           get :home, {page: "2"}
           expect(assigns(:victorious)).to eq(@battles)
         end
+        it "should make top_comments available to that template" do
+          expect(Battle).to receive(:top_comments).with(@battles).and_return(@top_comments)
+          get :home, {page: "2"}
+          expect(assigns(:top_comments)).to eq(@top_comments)
+        end
         it "should make the voted for battles available to that template" do
           get :home
           expect(assigns(:voted_for)).to eq(@voted_for)
@@ -213,6 +220,8 @@ describe UsersController do
           @voted_for = double("vf")
           allow(@fake_user).to receive(:voted_for_options).and_return(@voted_for)
           allow(Battle).to receive(:victorious).and_return(@battles)
+          @top_comments = double("top_comments")
+          allow(Battle).to receive(:top_comments).and_return(@top_comments)
           allow(controller).to receive(:current_user).and_return(@fake_user)
         end
         it "should search user with correct user id" do
@@ -247,6 +256,11 @@ describe UsersController do
           expect(Battle).to receive(:victorious).with(@battles).and_return(@battles)
           get :show, {:id => @other_user.username}
           expect(assigns(:victorious)).to eq(@battles)
+        end
+        it "should make top_comments available to that template" do
+          expect(Battle).to receive(:top_comments).with(@battles).and_return(@top_comments)
+          get :show, {:id => @other_user.username}
+          expect(assigns(:top_comments)).to eq(@top_comments)
         end
         it "should make the voted for battles available to that template" do
           get :show, {:id => @other_user.username}

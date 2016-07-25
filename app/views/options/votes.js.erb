@@ -4,16 +4,16 @@ $("<%= escape_javascript(render @votes) %>").appendTo('<%="#votes-option#{@optio
 <% if @votes.last_page? %>
   $('<%="#vote-pagination-option#{@option.id}"%>').html('<p class="center vote-last_page"></p>');
 <% else %>
-  $('<%="#vote-pagination-option#{@option.id}"%>').html("<%=j link_to_next_page(@votes, t('votes._index.next'), :remote => true, :id => "next_page-option#{@option.id}", :class => "btn") %>");
+  $('<%="#vote-pagination-option#{@option.id}"%>').html("<%=j link_to_next_page(@votes, t('votes._index.next'), :remote => true, :id => "next_page-option#{@option.id}", :class => "btn next_page-option") %>");
 <% end %>
 
 $('<%="#votes-modal-option#{@option.id}"%>').modal('show');
 
-$('<%="#votes-modal-option#{@option.id}"%>').on('hide', function () {
+$('<%="#votes-modal-option#{@option.id}"%>').one('hide', function () {
   $('<%="#modal-body-option#{@option.id}"%>').scrollTop(0);
 });
 
-$('<%="#votes-modal-option#{@option.id}"%>').on('hidden', function () {
+$('<%="#votes-modal-option#{@option.id}"%>').one('hidden', function () {
   $('<%="#votes-option#{@option.id}"%>').empty();
 });
 

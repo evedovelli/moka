@@ -2,4 +2,6 @@ en:
   options:
     _option:
       destroy: 'Are you sure you want to remove this option?'
-
+    _comments:
+      previous_comments: 'View previous comments'
+      write_comment: 'Write a comment...'

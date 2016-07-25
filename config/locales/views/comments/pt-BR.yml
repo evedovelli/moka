@@ -1,0 +1,7 @@
+pt-BR:
+  comments:
+    _index:
+      title_html: "Comentários em <b>%{option}</b>"
+      next: "Carregar comentários mais antigos"
+    _form:
+      write_comment: "Escreva um comentário..."

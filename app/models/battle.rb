@@ -100,6 +100,16 @@ class Battle < ActiveRecord::Base
     return victory_for
   end
 
+  def self.top_comments(battles)
+    comments = {}
+    battles.each do |battle|
+      battle.options.each do |option|
+        comments[option.id] = option.comments.reverse_order.take(3)
+      end
+    end
+    return comments
+  end
+
   def number_of_votes
     total = 0
     options.each do |option|

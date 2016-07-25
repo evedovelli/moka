@@ -2,4 +2,7 @@ pt-BR:
   options:
     _option:
       destroy: 'Você tem certeza que quer remover essa opção?'
+    _comments:
+      previous_comments: 'Ver comentários anteriores'
+      write_comment: "Escreva um comentário..."
 

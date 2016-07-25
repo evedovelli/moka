@@ -10,6 +10,7 @@ class BattlesController < ApplicationController
       @voted_for = nil
     end
     @victorious = Battle.victorious([@battle])
+    @top_comments = Battle.top_comments([@battle])
   end
 
   def new
@@ -51,6 +52,7 @@ class BattlesController < ApplicationController
 
     if @battle.save
       @vote = Vote.new()
+      @top_comments = Battle.top_comments([@battle])
       respond_to do |format|
         format.js {}
       end
@@ -133,6 +135,7 @@ class BattlesController < ApplicationController
         @voted_for = nil
       end
       @victorious = Battle.victorious(@battles)
+      @top_comments = Battle.top_comments(@battles)
       @vote = Vote.new()
 
       respond_to do |format|

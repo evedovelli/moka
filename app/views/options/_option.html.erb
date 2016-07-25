@@ -2,19 +2,16 @@
   <div class="option-sizeable option-offsetable span<%= size %> offset<%= offset %>">
 
     <div class="option-outer-box">
+      <%= simple_form_for(@vote, remote: true, html: {id: "new_vote_#{battle.id}_#{option.id}"}) do |f| %>
+        <%= f.input(:option_id, :as => :hidden, input_html: {value: option.id}) %>
+        <%= f.button(:submit, t('buttons.vote'), :class => "vote_button btn btn-primary btn-large") %>
+      <% end %>
+
       <div class="vote_picture_frame <%= if battle.current?
                                            "current_battle"
                                          end %> <%= fill_if_voted(option.id, "outer_selected_picture") %> <%= fill_if_victorious(option.id, "outer_victorious_picture", battle.current?) %>">
 
         <div id="<%="vote_option#{option.id}"%>" class="vote_picture <%= fill_if_voted(option.id, "selected_picture") %> <%= fill_if_victorious(option.id, "victorious_picture", battle.current?) %>">
-
-          <%= f.radio_button(
-            :option,
-            option.id,
-            :checked => false,
-            :name => "vote[option_id]",
-            :class => "vote_radio"
-          ) %>
 
           <div class="option-box <%= fill_if_voted(option.id, "selected_box") %> <%= fill_if_victorious(option.id, "victorious_box", battle.current?) %>">
             <div class="row">
@@ -41,12 +38,14 @@
                   <i class="fa fa-check vote-icon-check fa-stack-1x <%= fill_if_voted(option.id, "selected_icon") %> fa-inverse"></i>
                 </span>
               </td>
-<%#              <td>%>
-<%#                <span class="fa-stack comment-icon">%>
-<%#                  <i class="fa fa-square fa-stack-2x"></i>%>
-<%#                  <i class="fa fa-comment fa-inverse fa-stack-1x"></i>%>
-<%#                </span>%>
-<%#              </td>%>
+              <td>
+                <%= link_to(option_comments_path(option), remote: true, id: "btn-comments-option#{option.id}", class: "btn-comments") do %>
+                  <span class="fa-stack comment-icon">
+                    <i class="fa fa-square fa-stack-2x"></i>
+                    <i class="fa fa-comment fa-inverse fa-stack-1x"></i>
+                  </span>
+                <% end %>
+              </td>
               <td>
                 <h3 class="center option-name"><%= auto_link_hashtags(option.name, :hashtag_url_base => hashtag_path("")).html_safe %></h3>
               </td>
@@ -60,6 +59,14 @@
       <% else %>
         <div id='<%="results#{option.id}"%>' style='display:none;'></div>
       <% end %>
+
+      <div class="row">
+        <%= render :partial => 'options/comments', :locals => { :option => option, :comments => @top_comments, :comment => @new_comment, :size => size } %>
+      </div>
+
+      <div class="row">
+        <%= render('comments/box', option: option, size: size) %>
+      </div>
     </div>
 
     <div class="row visible-phone">

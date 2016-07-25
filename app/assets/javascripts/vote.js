@@ -36,13 +36,8 @@ selectableOption = function(element) {
   battle_box.find('.option-box').removeClass('selected_box');
   battle_box.find('.vote-icon-check').removeClass('selected_icon');
 
-  // Check box
-  radio_button = option_outer_box.find('.vote_radio');
-  radio_button.prop('checked', true);
-  radio_value = radio_button.val();
-
   // Send vote
-  option_outer_box.closest('.new_vote').find('.vote_button').trigger('click');
+  option_outer_box.find('.vote_button').trigger('click');
 
   // Add new selection
   option_outer_box.find('.vote_picture_frame').addClass('outer_selected_picture');

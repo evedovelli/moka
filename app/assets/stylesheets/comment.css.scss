@@ -1,0 +1,54 @@
+$black:    #000;
+$grayDark: #333;
+
+.text-comment {
+  width: 90%;
+}
+
+.table td.comment-body-cell {
+  margin-left: 0px;
+  margin-right: 0px;
+  padding-left: 0px;
+  padding-right: 0px;
+}
+
+.table td.comment-btn-cell {
+  margin-left: 0px;
+  padding-left: 0px;
+}
+
+input.comment-btn {
+  margin-top: 0px;
+}
+
+.next_page-comments {
+  margin-bottom: 10px;
+}
+
+table.comment-form-table {
+  margin-bottom: 0px;
+}
+
+form.comment-form {
+  margin-bottom: 0px;
+}
+
+div.modal-footer-comments {
+  padding-bottom: 0px;
+}
+
+table.comment-form-table td {
+  border-top: 0;
+}
+
+.comment-body {
+  width: 100%;
+}
+
+.delete_comment {
+  color: $grayDark;
+}
+
+.delete_comment:hover {
+  color: $black;
+}

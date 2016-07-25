@@ -27,6 +27,7 @@ class UsersController < ApplicationController
     @battles = Battle.user_home(@user, params[:page])
     @voted_for = current_user.voted_for_options(@battles)
     @victorious = Battle.victorious(@battles)
+    @top_comments = Battle.top_comments(@battles)
     @vote = Vote.new()
     @find_friends = true
     respond_to do |format|
@@ -45,6 +46,7 @@ class UsersController < ApplicationController
       @voted_for = current_user.voted_for_options(@battles)
     end
     @victorious = Battle.victorious(@battles)
+    @top_comments = Battle.top_comments(@battles)
 
     @vote = Vote.new()
     @number_of_following = @user.friends.count

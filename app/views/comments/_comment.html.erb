@@ -1,0 +1,15 @@
+<tr class="comment<%= comment[:id] %>">
+  <td><%= link_to(image_tag(comment.user.avatar.url(:icon), :class => "img-polaroid"), user_path(comment.user)) %></td>
+  <td class="comment-body"><%= link_to(comment.user.username, user_path(comment.user)) %> <%= comment.body %></td>
+  <td>
+    <% if can? :destroy, comment %>
+      <%= link_to(option_comment_path(comment.option, comment),
+                  method: :delete,
+                  remote: true,
+                  class: "delete_comment",
+                  id: "delete_comment#{comment[:id]}") do %>
+        <i class="fa fa-close"></i>
+      <% end %>
+    <% end %>
+  </td>
+</tr>

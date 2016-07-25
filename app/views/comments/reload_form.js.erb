@@ -1,0 +1,7 @@
+$('<%="#comments-form-option#{@option.id}"%>')
+  .html("<%= escape_javascript(render partial: "comments/form",
+                                      locals: { option: @option,
+                                                comment: @comment
+                                              }
+                              ) %>");
+autoExpand('.text-comment');

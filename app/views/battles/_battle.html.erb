@@ -101,25 +101,20 @@
           </div>
         </div>
 
-        <%= simple_form_for(@vote, remote: true, html: {id: "new_vote_#{battle.id}"}) do |f| %>
-          <div class="battle-box">
-            <div class="row">
-              <% option_number = 0 %>
-              <% battle.options.each do |option| %>
-                <%= render :partial => "options/option",
-                           :locals => { :battle => battle,
-                                        :option => option,
-                                        :f => f,
-                                        :size => option_size(battle.options.count),
-                                        :offset => option_offset(battle.options.count, option_number)
-                                      } %>
-                <% option_number += 1 %>
-              <% end %>
-            </div>
+        <div class="battle-box">
+          <div class="row">
+            <% option_number = 0 %>
+            <% battle.options.each do |option| %>
+              <%= render :partial => "options/option",
+                         :locals => { :battle => battle,
+                                      :option => option,
+                                      :size => option_size(battle.options.count),
+                                      :offset => option_offset(battle.options.count, option_number)
+                                    } %>
+              <% option_number += 1 %>
+            <% end %>
           </div>
-          <%= f.button(:submit, t('buttons.vote'), :class => "vote_button btn btn-primary btn-large") %>
-        <% end %>
-
+        </div>
       </div>
     </div>
 

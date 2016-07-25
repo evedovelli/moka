@@ -101,4 +101,21 @@ describe Option do
     end
   end
 
+  describe 'ordered comments' do
+    it 'should return the ordered comments from correct page' do
+      @l1 = []
+      @l2 = []
+      option = Option.new(@attr)
+      for i in 1..5 do
+        @l1 << FactoryGirl.create(:comment, {option: option, user: FactoryGirl.create(:user, {username: "u#{i}", email: "u#{i}@email.com"})})
+        Timecop.travel(Time.now + 1.minute)
+      end
+      for i in 6..13 do
+        @l2 << FactoryGirl.create(:comment, {option: option, user: FactoryGirl.create(:user, {username: "u#{i}", email: "u#{i}@email.com"})})
+        Timecop.travel(Time.now + 1.minute)
+      end
+      expect(option.ordered_comments("2")).to eq(@l1.reverse)
+    end
+  end
+
 end

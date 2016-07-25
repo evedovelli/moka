@@ -1,0 +1,29 @@
+<div class="option-sizeable span<%= size %>">
+  <% if comments[option.id].count > 2 %>
+    <h5 class="comments-title">
+      <%= link_to(t('options._comments.previous_comments'), option_comments_path(option), :remote => true, :id => "previous-comments-option#{option.id}") %>
+    </h5>
+  <% else %>
+    <div class="no-comments"></div>
+  <% end %>
+  <table class="table top-comments-table">
+    <tbody id="top-comments-option<%= option.id %>" >
+      <%= render comments[option.id].take(2) %>
+    </tbody>
+  </table>
+
+
+  <table class="table comment-form-table">
+    <tr>
+      <td class="new-comment-user-cell">
+        <% if current_user %>
+          <%= link_to(image_tag(current_user.avatar.url(:icon), :class => "img-polaroid"), user_path(current_user)) %>
+        <% end %>
+      </td>
+      <td class="new-comment-body-cell">
+        <input type="text" class="new-comment" placeholder="<%= t('options._comments.write_comment') %>">
+      </td>
+    </tr>
+  </table>
+
+</div>

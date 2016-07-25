@@ -1,0 +1,35 @@
+var heightBefore = $('<%="#comments-option#{@option.id}"%>').height();
+$("<%= escape_javascript(render @comments.reverse) %>").prependTo('<%="#comments-option#{@option.id}"%>');
+var heightAfter = $('<%="#comments-option#{@option.id}"%>').height();
+
+$('<%="#comments-modal-option#{@option.id}"%>').one('shown', function () {
+  $('<%="#comments-form-option#{@option.id}"%>').empty();
+  $("<%= escape_javascript(render(partial: "comments/form",
+                                  locals: { option: @option,
+                                            comment: @comment
+                                          })
+                          ) %>").appendTo('<%="#comments-form-option#{@option.id}"%>');
+  $('<%="#modal-body-comments-option#{@option.id}"%>').scrollTop(10000);
+  autoExpand('.text-comment');
+  $(this).find('.text-comment').focus();
+});
+
+$('<%="#modal-body-comments-option#{@option.id}"%>').scrollTop(heightAfter - heightBefore);
+
+// Update pagination link
+<% if @comments.last_page? %>
+  $('<%="#comments-pagination-option#{@option.id}"%>').html('<p class="center comments-last_page"></p>');
+<% else %>
+  $('<%="#comments-pagination-option#{@option.id}"%>').html("<%=j link_to_next_page(@comments, t('comments._index.next'), :remote => true, :id => "next_page-comment-option#{@option.id}", :class => "btn next_page-comments") %>");
+<% end %>
+
+$('<%="#comments-modal-option#{@option.id}"%>').modal('show');
+
+$('<%="#comments-modal-option#{@option.id}"%>').one('hide', function () {
+  $('<%="#modal-body-comments-option#{@option.id}"%>').scrollTop(10000);
+});
+
+$('<%="#comments-modal-option#{@option.id}"%>').one('hidden', function () {
+  $('<%="#comments-option#{@option.id}"%>').empty();
+  $('<%="#comments-form-option#{@option.id}"%>').empty();
+});
