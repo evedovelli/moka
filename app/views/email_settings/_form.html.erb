@@ -1,4 +1,4 @@
-<%= simple_form_for([@user, @email_settings], :remote => true, :html => {:class => "form-horizontal"}) do |f| %>
+<%= simple_form_for([@user, @email_settings], :html => {:class => "form-horizontal"}) do |f| %>
   <%= f.input :new_follower, as: :boolean %>
   <%= f.input :facebook_friend_sign_up, as: :boolean %>
 

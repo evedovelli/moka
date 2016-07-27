@@ -45,6 +45,7 @@ Background:
       When I fill battle description with "Chose the evilest Sith"
       And I press "Update"
       Then I should be on the home page
+      And I scroll to the top of the page
       And I should see the battle description "Chose the evilest Sith"
 
     @javascript
