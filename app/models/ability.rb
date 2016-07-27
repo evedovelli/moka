@@ -63,6 +63,10 @@ class Ability
 
       # EmailSettings
       can :manage, EmailSettings
+
+
+      # Comments
+      can :manage, Comment
     end
 
 
@@ -141,5 +145,15 @@ class Ability
       notification.try(:user) == user
     end
     can :dropdown, Notification
+
+
+    # Comments
+    can :create, Comment do |comment|
+      comment.try(:user) == user
+    end
+    can :read, Comment
+    can :destroy, Comment do |comment|
+      (comment.try(:user) == user) || (comment.try(:battle).try(:user) == user)
+    end
   end
 end

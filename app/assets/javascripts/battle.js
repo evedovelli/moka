@@ -435,7 +435,7 @@ function setupDurationInput(battle_form) {
 /**********************************************************/
 
 function autoFilterSubmit () {
-  $('#battle-filter-select').on('change', function(){
+  $('#battle-filter-select').on('change', function() {
     $('#battle-filter-btn').trigger('click');
   });
   $('#battle-filter-btn').hide();

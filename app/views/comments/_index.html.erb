@@ -1,0 +1,22 @@
+<div id="comments-modal-option<%= option.id %>" class="comments-modal modal hide fade" tabindex="-1" role="dialog" aria-labelledby="comments-modal-label-option<%= option.id %>" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+      <i class="icon-remove close-login-form"></i>
+    </button>
+    <h3 id="comments-modal-label-option<%= option.id %>"><%= t('comments._index.title_html', option: option.name) %></h3>
+  </div>
+
+  <div id="modal-body-comments-option<%= option.id %>" class="modal-body">
+    <div id="comments-pagination-option<%= option.id %>" class="center"></div>
+
+    <table class="table comments-table">
+      <tbody id="comments-option<%= option.id %>" >
+        <%# render comments here %>
+      </tbody>
+    </table>
+  </div>
+
+  <div id="comments-form-option<%= option.id %>" class="modal-footer modal-footer-comments">
+    <%# form goes here %>
+  </div>
+</div>

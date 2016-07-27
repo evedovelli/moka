@@ -72,6 +72,12 @@ describe Ability do
           expect(@ability).to be_able_to(:manage, Notification)
         end
       end
+
+      describe "Resource Comment" do
+        it "should be able to manage comments" do
+          expect(@ability).to be_able_to(:manage, Comment)
+        end
+      end
     end
 
     describe "other user" do
@@ -398,6 +404,43 @@ describe Ability do
         end
       end
 
+      describe "Resource Comment" do
+        before :each do
+          @option = FactoryGirl.create(:option)
+          @comment = FactoryGirl.create(:comment, user: @user, option: @option)
+          @other_user = FactoryGirl.create(:user, email: "another@ex.com", username: "second")
+          @other_comment = FactoryGirl.create(:comment, user: @other_user, option: @option)
+          @battle = FactoryGirl.create(:battle, user: @user)
+          @another_comment = FactoryGirl.create(:comment, user: @other_user, option: @battle.options[0])
+        end
+        it "should be able to create his Comments" do
+          expect(@ability).to be_able_to(:create, @comment)
+        end
+        it "should not be able to create others Comments" do
+          expect(@ability).not_to be_able_to(:create, @other_comment)
+        end
+        it "should be able to show his Comments" do
+          expect(@ability).to be_able_to(:show, @comment)
+        end
+        it "should be able to show others Comments" do
+          expect(@ability).to be_able_to(:show, @other_comment)
+        end
+        it "should be able to index Comments" do
+          expect(@ability).to be_able_to(:index, Comment)
+        end
+        it "should not be able to update Comments" do
+          expect(@ability).not_to be_able_to(:update, @comment)
+        end
+        it "should be able to destroy his Comments" do
+          expect(@ability).to be_able_to(:destroy, @comment)
+        end
+        it "should not be able to destroy others Comments" do
+          expect(@ability).not_to be_able_to(:destroy, @other_comment)
+        end
+        it "should be able to destroy others Comments in his battle" do
+          expect(@ability).to be_able_to(:destroy, @another_comment)
+        end
+      end
     end
 
   end

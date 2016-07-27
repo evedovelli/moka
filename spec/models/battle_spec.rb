@@ -414,6 +414,40 @@ describe Battle do
     end
   end
 
+  describe 'top_comments' do
+    before(:each) do
+      @user = FactoryGirl.create(:user, username: "charlie", email: "charlie@brown.com")
+      @other_user = FactoryGirl.create(:user, username: "patty", email: "patty@peppermint.com")
+
+      @battle = FactoryGirl.create(:battle, :title => "Battle 1")
+      @other_battle = FactoryGirl.create(:battle, :title => "Battle 2")
+    end
+    it 'should return a hash with latest comments for each option' do
+      @comment1 = FactoryGirl.create(:comment, user: @user, option: @battle.options[0])
+      @comment2 = FactoryGirl.create(:comment, user: @user, option: @battle.options[1])
+      @comment3 = FactoryGirl.create(:comment, user: @user, option: @battle.options[1])
+      @comment4 = FactoryGirl.create(:comment, user: @user, option: @other_battle.options[0])
+
+      expect(Battle.top_comments([@battle, @other_battle])).to eq({
+        @battle.options[0].id => [@comment1],
+        @battle.options[1].id => [@comment3, @comment2],
+        @other_battle.options[0].id => [@comment4],
+        @other_battle.options[1].id => []
+      })
+    end
+    it 'should take only last three comments for an option' do
+      @comment1 = FactoryGirl.create(:comment, user: @user, option: @battle.options[1])
+      @comment2 = FactoryGirl.create(:comment, user: @user, option: @battle.options[1])
+      @comment3 = FactoryGirl.create(:comment, user: @user, option: @battle.options[1])
+      @comment4 = FactoryGirl.create(:comment, user: @user, option: @battle.options[1])
+
+      expect(Battle.top_comments([@battle])).to eq({
+        @battle.options[0].id => [],
+        @battle.options[1].id => [@comment4, @comment3, @comment2]
+      })
+    end
+  end
+
   describe 'number_of_votes' do
     it 'should return the sum of votes for battle' do
       @user = FactoryGirl.create(:user, username: "charlie", email: "charlie@brown.com")

@@ -179,6 +179,10 @@ describe BattlesController do
         before (:each) do
           @fake_battle = FactoryGirl.create(:battle)
           allow(Battle).to receive(:find).and_return(@fake_battle)
+          @victorious = double("victorious")
+          allow(Battle).to receive(:victorious).and_return(@victorious)
+          @top_comments = double("top_comments")
+          allow(Battle).to receive(:top_comments).and_return(@top_comments)
         end
         it "should respond to html" do
           get :show, { :id => @fake_battle.id }
@@ -202,6 +206,16 @@ describe BattlesController do
           allow(controller).to receive(:current_user).and_return(@fake_user)
           get :show, { :id => @fake_battle.id }
           expect(assigns(:voted_for)).to eq(voted_for)
+        end
+        it "should make victorious available to that template" do
+          expect(Battle).to receive(:victorious).with([@fake_battle]).and_return(@victorious)
+          get :show, { :id => @fake_battle.id }
+          expect(assigns(:victorious)).to eq(@victorious)
+        end
+        it "should make top_comments available to that template" do
+          expect(Battle).to receive(:top_comments).with([@fake_battle]).and_return(@top_comments)
+          get :show, { :id => @fake_battle.id }
+          expect(assigns(:top_comments)).to eq(@top_comments)
         end
       end
 
@@ -308,6 +322,8 @@ describe BattlesController do
             before :each do
               @fake_vote = double("vote")
               allow(Vote).to receive(:new).and_return(@fake_vote)
+              @top_comments = double("top comments")
+              allow(Battle).to receive(:top_comments).and_return(@top_comments)
               allow(@fake_battle).to receive(:save).and_return(true)
               post(:create, {battle: {}, :format => 'js'})
             end
@@ -322,6 +338,9 @@ describe BattlesController do
             end
             it "should make a new vote available to that template" do
               expect(assigns(:vote)).to eq(@fake_vote)
+            end
+            it "should make a new top_comments available to that template" do
+              expect(assigns(:top_comments)).to eq(@top_comments)
             end
             it "should make empty battle options error available to that template" do
               expect(assigns(:battle_options_error)).to match("")
@@ -434,6 +453,8 @@ describe BattlesController do
             allow(Vote).to receive(:new).and_return(@fake_vote)
             allow(@fake_battle).to receive(:save).and_return(true)
             allow(@fake_battle).to receive(:update_attributes).and_return(true)
+            @top_comments = double("top_comments")
+            allow(Battle).to receive(:top_comments).and_return(@top_comments)
             put(:update, { :id => @fake_battle.id, battle: {"starts_at" => "now"}, :format => 'js' })
           end
           it "should respond to js" do
@@ -447,6 +468,9 @@ describe BattlesController do
           end
           it "should make a new vote available to that template" do
             expect(assigns(:vote)).to eq(@fake_vote)
+          end
+          it "should make top_comments available to that template" do
+            expect(assigns(:top_comments)).to eq(@top_comments)
           end
         end
         describe "in error" do
@@ -518,6 +542,10 @@ describe BattlesController do
         before (:each) do
           @fake_battle = FactoryGirl.create(:battle)
           allow(Battle).to receive(:with_hashtag).and_return([@fake_battle])
+          @victorious = double("victorious")
+          allow(Battle).to receive(:victorious).and_return(@victorious)
+          @top_comments = double("top_comments")
+          allow(Battle).to receive(:top_comments).and_return(@top_comments)
         end
         it "should respond to html" do
           get :hashtag, {:hashtag => "notmyfault"}
@@ -559,6 +587,16 @@ describe BattlesController do
           allow(controller).to receive(:current_user).and_return(@fake_user)
           get :hashtag, {:hashtag => "notmyfault"}
           expect(assigns(:voted_for)).to eq(voted_for)
+        end
+        it "should make victorious available to that template" do
+          expect(Battle).to receive(:victorious).with([@fake_battle]).and_return(@victorious)
+          get :hashtag, {:hashtag => "notmyfault"}
+          expect(assigns(:victorious)).to eq(@victorious)
+        end
+        it "should make top_comments available to that template" do
+          expect(Battle).to receive(:top_comments).with([@fake_battle]).and_return(@top_comments)
+          get :hashtag, {:hashtag => "notmyfault"}
+          expect(assigns(:top_comments)).to eq(@top_comments)
         end
       end
 

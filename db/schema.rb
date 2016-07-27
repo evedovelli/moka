@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20160525014423) do
+ActiveRecord::Schema.define(:version => 20160620220510) do
 
   create_table "battles", :force => true do |t|
     t.datetime "starts_at"
@@ -25,6 +25,17 @@ ActiveRecord::Schema.define(:version => 20160525014423) do
   end
 
   add_index "battles", ["user_id"], :name => "index_battles_on_user_id"
+
+  create_table "comments", :force => true do |t|
+    t.integer  "user_id"
+    t.text     "body"
+    t.integer  "option_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "comments", ["option_id"], :name => "index_comments_on_option_id"
+  add_index "comments", ["user_id"], :name => "index_comments_on_user_id"
 
   create_table "email_settings", :force => true do |t|
     t.integer  "user_id"

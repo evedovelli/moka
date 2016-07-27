@@ -1,0 +1,12 @@
+if ($(".comments-last_page").length == 0) {
+  $("#comments-option<%=@option.id%>").children(":first").remove();
+}
+$("<%= escape_javascript(render @comment) %>").appendTo("#comments-option<%=@option.id%>");
+$('<%="#comments-form-option#{@option.id}"%>')
+  .html("<%= escape_javascript(render partial: "comments/form",
+                                      locals: { option: @option,
+                                                comment: @new_comment
+                                              }
+                              ) %>");
+$('<%="#modal-body-comments-option#{@option.id}"%>').scrollTop(10000);
+autoExpand('.text-comment');

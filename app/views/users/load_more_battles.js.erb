@@ -1,6 +1,7 @@
 $("<%= escape_javascript(render visible_battles(@battles, @filter)) %>").appendTo("#battle_index");
 <% visible_battles(@battles, @filter).each do |battle| %>
   jQuery(selectablePictureBattle("#battle<%= battle.id %>"));
+  jQuery(newComment("#battle<%= battle.id %>"));
 <% end %>
 jQuery(startBattleCounters);
 

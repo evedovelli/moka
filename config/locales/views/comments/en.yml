@@ -1,0 +1,7 @@
+en:
+  comments:
+    _index:
+      title_html: "Comments for <b>%{option}</b>"
+      next: "Load older comments"
+    _form:
+      write_comment: "Write a comment..."

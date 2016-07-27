@@ -30,6 +30,9 @@ Moka::Application.routes.draw do
   resources :notifications, :only => [:index]
   get "notifications_dropdown" => "notifications#dropdown", :as => :notifications_dropdown
 
+  resources :options, :except => [:show, :index, :new, :create, :edit, :update, :destroy] do
+    resources :comments, :only => [:index, :create, :destroy]
+  end
   get "options/:id/votes" => "options#votes", :as => :option_votes
 
   get '/.well-known/acme-challenge/:id' => 'letsencrypt#challenge'

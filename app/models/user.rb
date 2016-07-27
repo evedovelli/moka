@@ -23,6 +23,7 @@ class User < ActiveRecord::Base
   has_one  :email_settings, dependent: :destroy
   has_many :facebook_friendships, dependent: :destroy
   has_many :facebook_friends, :through => :facebook_friendships
+  has_many :comments, dependent: :destroy
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :login, :username, :email, :password, :password_confirmation,

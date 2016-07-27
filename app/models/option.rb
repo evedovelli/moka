@@ -4,6 +4,7 @@ class Option < ActiveRecord::Base
   belongs_to :battle
   has_many :votes, dependent: :destroy
   has_many :users, through: :votes
+  has_many :comments, dependent: :destroy
 
   attr_accessible :name, :picture, :id
   has_attached_file :picture, :styles => {
@@ -37,5 +38,9 @@ class Option < ActiveRecord::Base
 
   def ordered_votes(page)
     return self.votes.order(:created_at).page(page)
+  end
+
+  def ordered_comments(page)
+    return self.comments.order(:created_at).reverse_order.page(page)
   end
 end

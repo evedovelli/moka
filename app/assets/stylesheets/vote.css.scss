@@ -36,14 +36,8 @@ $victoriousColor: #37C871;
 }
 
 .vote-count {
-  margin-top: 0px;
-  margin-bottom: 30px;
-  @media (max-width: 767px) {
-    margin-bottom: 30px;
-  }
-  @media (min-width: 768px) {
-    margin-bottom: 0px;
-  }
+  margin-top: 4px;
+  margin-bottom: 10px;
   font-size: 15px;
 }
 
@@ -74,4 +68,9 @@ $victoriousColor: #37C871;
 
 .vote-size-smallest {
   font-size: 10px;
+}
+
+.new_vote {
+  margin-top: 0px;
+  margin-bottom: 0px;
 }
