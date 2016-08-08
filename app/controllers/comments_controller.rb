@@ -6,6 +6,8 @@ class CommentsController < ApplicationController
 
   def create
     if @comment.save
+      @user = current_user
+      @option.battle.user.receive_comment_notification_from(@user, @option) unless @user == @option.battle.user
       @new_comment = Comment.new()
       respond_to do |format|
         format.js {}

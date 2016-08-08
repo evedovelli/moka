@@ -200,6 +200,15 @@ class User < ActiveRecord::Base
     self.increment_unread_notification
   end
 
+  def receive_comment_notification_from(sender, option)
+    CommentNotification.create(
+      user: self,
+      sender: sender,
+      option: option
+    )
+    self.increment_unread_notification
+  end
+
   def reset_unread_notifications
     self.update_attributes({unread_notifications: 0})
   end

@@ -1,0 +1,4 @@
+pt-BR:
+  comment_notifications:
+    _comment_notification:
+      message_html: "%{user} comentou em sua batalha."

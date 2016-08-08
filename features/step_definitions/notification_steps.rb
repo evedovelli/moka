@@ -18,6 +18,22 @@ Given /^"([^"]+)" logs in and votes for "([^"]+)"$/ do |user, option|
   sign_in("myself@email.com", "secretpassword")
 end
 
+Given /^"([^"]+)" logs in and comments "([^"]+)" for "([^"]+)"$/ do |user, comment, option|
+  click_link("Logout")
+  within("#flash_notice") do
+    expect(page).to have_content("Signed out successfully")
+  end
+  step %Q{I go to the sign in page}
+  sign_in("#{user}@email.com", "#{user}password")
+  step %Q{I go to the 1st battle page}
+  step %Q{I comment "#{comment}" for "#{option}"}
+  click_link("Logout")
+  within("#flash_notice") do
+    expect(page).to have_content("Signed out successfully")
+  end
+  sign_in("myself@email.com", "secretpassword")
+end
+
 Given /^"([^"]+)" logs in and follows me$/ do |user|
   click_link("Logout")
   within("#flash_notice") do
@@ -122,6 +138,12 @@ Then /^I should see option "([^"]*)" selected for newest notification$/ do |sele
     within("#option#{Option.find_by_name(selected_option).id}-icon") do
       expect(page).to have_css(".voted_battle")
     end
+  end
+end
+
+Then /^I should see option "([^"]*)" in newest notification$/ do |option|
+  within(all(".notification")[0]) do
+    expect(page).to have_css("#option#{Option.find_by_name(option).id}-icon")
   end
 end
 
