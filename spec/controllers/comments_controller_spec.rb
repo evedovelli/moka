@@ -79,24 +79,48 @@ describe CommentsController do
         end
         describe "on success" do
           before :each do
+            @fake_battle = double("battle")
+            allow(controller).to receive(:current_user).and_return(@fake_user)
+            allow(@fake_user).to receive(:receive_comment_notification_from)
+            allow(@fake_battle).to receive(:user).and_return(@fake_user)
+            allow(@fake_option).to receive(:battle).and_return(@fake_battle)
             allow(@fake_comment).to receive(:save).and_return(true)
             allow(Comment).to receive(:new).and_return(@fake_comment)
-            post :create, {option_id: @fake_option.id, comment: {body: "guard"}, :format => 'js'}
           end
           it "should respond to js" do
+            post :create, {option_id: @fake_option.id, comment: {body: "guard"}, :format => 'js'}
             expect(response.content_type).to eq(Mime::JS)
           end
           it "should render the create template" do
+            post :create, {option_id: @fake_option.id, comment: {body: "guard"}, :format => 'js'}
             expect(response).to render_template('create')
           end
           it "should make a new_comment available" do
+            post :create, {option_id: @fake_option.id, comment: {body: "guard"}, :format => 'js'}
             expect(assigns(:new_comment)).to eq(@fake_comment)
           end
+          it "should make user available" do
+            post :create, {option_id: @fake_option.id, comment: {body: "guard"}, :format => 'js'}
+            expect(assigns(:user)).to eq(@fake_user)
+          end
           it "should make the comment available" do
+            post :create, {option_id: @fake_option.id, comment: {body: "guard"}, :format => 'js'}
             expect(assigns(:comment)).to eq(@fake_comment)
           end
           it "should make the option available" do
+            post :create, {option_id: @fake_option.id, comment: {body: "guard"}, :format => 'js'}
             expect(assigns(:option)).to eq(@fake_option)
+          end
+          it "should create a comment notification" do
+            @other_user = FactoryGirl.create(:user, username: "other_user", email: "other_user@email.com")
+            allow(controller).to receive(:current_user).and_return(@other_user)
+            expect(@fake_user).to receive(:receive_comment_notification_from).with(@other_user, @fake_option)
+            post :create, {option_id: @fake_option.id, comment: {body: "guard"}, :format => 'js'}
+          end
+          it "should not create a comment notification for own battle" do
+            allow(controller).to receive(:current_user).and_return(@fake_user)
+            expect(@fake_user).not_to receive(:receive_comment_notification_from)
+            post :create, {option_id: @fake_option.id, comment: {body: "guard"}, :format => 'js'}
           end
         end
         describe "on error" do

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20160620220510) do
+ActiveRecord::Schema.define(:version => 20160729011757) do
 
   create_table "battles", :force => true do |t|
     t.datetime "starts_at"
@@ -76,6 +76,7 @@ ActiveRecord::Schema.define(:version => 20160620220510) do
     t.integer  "vote_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.integer  "option_id"
   end
 
   add_index "notifications", ["user_id"], :name => "index_notifications_on_user_id"

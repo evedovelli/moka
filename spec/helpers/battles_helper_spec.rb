@@ -114,6 +114,18 @@ describe BattlesHelper, :type => :helper do
     end
   end
 
+  describe "show option icon" do
+    it "should return option icons" do
+      @battle = FactoryGirl.create(:battle, {
+        starts_at: DateTime.now - 2.day,
+        duration: 96*60,
+        number_of_options: 3
+      })
+      user = FactoryGirl.create(:user, username: "u1", email: "user@u1.com")
+      expect(helper.show_option_icon(@battle.options[0])).to eq("<a href=\"/en/battles/#{@battle.id}\" id=\"option#{@battle.options[0].id}-icon\">#{image_tag(@battle.options[0].picture.url(:icon), :class => "img-polaroid")}</a>")
+    end
+  end
+
   describe "share on social networks" do
     it "should return script to share on facebook" do
       expect(helper.share_on_facebook("url")).to eq("onClick=\"window.open('http://www.facebook.com/sharer.php?u=url&appId=','Facebook','width=600,height=300,left='+(screen.availWidth/2-300)+',top='+(screen.availHeight/2-150)+''); return false;\"")

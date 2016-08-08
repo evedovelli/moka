@@ -61,6 +61,10 @@ module BattlesHelper
     return battle_icons.html_safe
   end
 
+  def show_option_icon(option)
+    link_to(image_tag(option.picture.url(:icon), :class => "img-polaroid"), battle_path(option.battle), :id => "option#{option.id}-icon").html_safe
+  end
+
   def share_on_facebook(url)
     return "onClick=\"window.open('http://www.facebook.com/sharer.php?u=#{url}&appId=#{ENV['FACEBOOK_KEY']}','Facebook','width=600,height=300,left='+(screen.availWidth/2-300)+',top='+(screen.availHeight/2-150)+''); return false;\"".html_safe
   end
