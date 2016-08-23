@@ -85,9 +85,8 @@ Background: I am a registered user logged in and battles exist
     Scenario: Scroll page and then create battle
       When I go to my profile page
       And I scroll to the bottom of the page
-      And I wait 2 second
-      And I scroll to the top of the page
       And I wait 1 second
+      And I scroll to the top of the page
       And I press the button to add new battle
       And I add 1st option "Vader" with picture "vader.jpg"
       And I add 2nd option "Palpatine" with picture "palpatine.jpg"
