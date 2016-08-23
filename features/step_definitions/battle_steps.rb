@@ -112,7 +112,6 @@ end
 
 When /^I press the button to edit (\d+)(?:st|nd|rd|th) battle$/ do |id|
   expect(page).to have_css("#icon-edit-battle#{id}")
-  sleep 1
   find("#icon-edit-battle#{id}").click
   expect(page).to have_css(".battle_form")
 end
