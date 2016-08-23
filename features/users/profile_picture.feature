@@ -26,7 +26,6 @@ Background: User exists and is logged in
     Scenario: User can see preview when uploading profile picture
       When I go to my profile page
       And I click to edit my profile picture
-      And I wait 1 second
       And I select "wario.png" image for my profile picture
       Then I should see the preview of the image for my profile picture
 
@@ -35,7 +34,6 @@ Background: User exists and is logged in
       Given I have uploaded the "wario.png" image as my profile picture
       When I go to my profile page
       And I click to edit my profile picture
-      And I wait 1 second
       And I select "vader.jpg" image for my profile picture
       And I remove the profile picture uploaded image
       Then I should see the preview with the current "wario.png" image
@@ -44,7 +42,6 @@ Background: User exists and is logged in
     Scenario: User can update his profile picture
       When I go to my profile page
       And I click to edit my profile picture
-      And I wait 1 second
       And I select "wario.png" image for my profile picture
       And I click "Update"
       Then I should be on my profile page

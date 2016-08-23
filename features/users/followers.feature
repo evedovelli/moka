@@ -29,7 +29,6 @@ Background: I am a registered user logged in and other users exist
       And "cirilo" is following "omailey"
       And I am following "omailey"
       When I click the followers button
-      And I wait 1 second
       Then I should be on the "omailey" followers page
       And I should see "gotardo" with button to "follow"
       And I should see "cirilo" with button to "follow"
@@ -40,6 +39,5 @@ Background: I am a registered user logged in and other users exist
     Scenario: I can access my followers page from my home page
       Given I am on my profile page
       When I click the followers button
-      And I wait 1 second
       Then I should be on my followers page
 

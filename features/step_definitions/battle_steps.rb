@@ -97,29 +97,21 @@ end
 
 When /^I press the button to add new battle$/ do
   find("#add_battle").click
-  # This sleep should not be necessary in a unix environment. The "expect" below blocks
-  # until css appears (with a timeout). But I am using Windows and facing some timing
-  # problems for tests with selenium and my version of Firefox, so I will let this sleep
-  # and remove it when I move to a unix environment.
-  sleep 0.5
   expect(page).to have_css(%Q{form[id="new_battle"]})
 end
 
 When /^I follow the link to remove (\d+)(?:st|nd|rd|th) battle$/ do |id|
-  find("#delete_battle#{id}").click
+  expect(page).to have_css("#icon-remove-battle#{id}")
+  find("#icon-remove-battle#{id}").click
 end
 
 When /^I remove (?:the|my) (\d+)(?:st|nd|rd|th) battle$/ do |id|
-  all(".delete_battle")[id.to_i - 1].click
+  all(".icon-remove-battle")[id.to_i - 1].click
 end
 
 When /^I press the button to edit (\d+)(?:st|nd|rd|th) battle$/ do |id|
-  find("#edit_battle#{id}").click
-  # This sleep should not be necessary in a unix environment. The "expect" below blocks
-  # until css appears (with a timeout). But I am using Windows and facing some timing
-  # problems for tests with selenium and my version of Firefox, so I will let this sleep
-  # and remove it when I move to a unix environment.
-  sleep 0.5
+  expect(page).to have_css("#icon-edit-battle#{id}")
+  find("#icon-edit-battle#{id}").click
   expect(page).to have_css(".battle_form")
 end
 
@@ -133,7 +125,7 @@ When /^I add (\d+)(?:st|nd|rd|th) option "([^"]*)" with picture "([^"]*)"$/ do |
 end
 
 When /^I remove (\d+)(?:st|nd|rd|th) option$/ do |option_number|
-  all(".remove_option_form")[option_number.to_i - 1].click
+  all(".icon-remove-option")[option_number.to_i - 1].click
 end
 
 When /^I wait (\d+) second(?:|s) for uploading images$/ do |time|
@@ -150,6 +142,16 @@ end
 
 When /^I press the button to add option$/ do
   find("#add_new_option").click
+end
+
+When /^I press the button to create the battle$/ do
+  click_button("Create")
+  expect(page).not_to have_css(%Q{form[id="new_battle"]})
+end
+
+When /^I press the button to update the battle$/ do
+  click_button("Update")
+  expect(page).not_to have_css(".battle_form")
 end
 
 When /^I select "([^"]*)" image for (\d+)(?:st|nd|rd|th) option$/ do |image, option_number|

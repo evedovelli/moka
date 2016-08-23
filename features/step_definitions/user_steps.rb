@@ -288,6 +288,7 @@ end
 
 When /^I click to edit my profile picture$/ do
   find('.btn-edit-user-avatar').click
+  expect(page).to have_css(".avatar_form")
 end
 
 When /^I select "([^"]*)" image for my profile picture$/ do |picture|

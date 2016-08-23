@@ -15,6 +15,7 @@ Background: There is a battle running
       And I have commented "Evil of evil" for "Devil Robot"
       When I go to the 1st battle page
       And I click to see comments for "Devil Robot"
+      And I wait 1 second
       And I destroy comment "Evil of evil"
       Then I should be on the 1st battle page
       And I should not see "Evil of evil"
@@ -33,6 +34,7 @@ Background: There is a battle running
       Then I should be on the 1st battle page
       And I should not see "Evil of evil"
 
+    @javascript
     Scenario: User cannot destroy others' comments in others' battles
       Given user "Mickey" exists
       And a battle was created by "Mickey" with options:
@@ -53,7 +55,7 @@ Background: There is a battle running
       | Darth Vader     | vader.jpg          |
       And I have commented "Evil of evil" for "Devil Robot"
       When I go to the 1st battle page
-      And I destroy comment "Evil of evil"
+      And I destroy comment "Evil of evil" from "Devil Robot"
       Then I should be on the 1st battle page
       And I should not see "Evil of evil"
 
@@ -66,7 +68,7 @@ Background: There is a battle running
       | Darth Vader     | vader.jpg          |
       And "Mickey" has commented "Evil of evil" for "Devil Robot"
       When I go to the 1st battle page
-      And I destroy comment "Evil of evil"
+      And I destroy comment "Evil of evil" from "Devil Robot"
       Then I should be on the 1st battle page
       And I should not see "Evil of evil"
 

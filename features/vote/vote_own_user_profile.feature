@@ -55,8 +55,7 @@ Background: I exist as an user, and I have created some battles
       When I press the button to add new battle
       And I add 1st option "Dastardly" with picture "dick_dastardly.jpg"
       And I add 2nd option "Robot" with picture "devil_robot.jpg"
-      And I press "Create"
-      And I wait 4 seconds for uploading images
+      And I press the button to create the battle
       And I vote for "Robot" for the 1st battle
       Then I should be on my profile page
       And I should see "Robot" option selected for the 1st battle
@@ -69,8 +68,7 @@ Background: I exist as an user, and I have created some battles
       When I press the button to add new battle
       And I add 1st option "Dastardly" with picture "dick_dastardly.jpg"
       And I add 2nd option "Robot" with picture "devil_robot.jpg"
-      And I press "Create"
-      And I wait 4 seconds for uploading images
+      And I press the button to create the battle
       And I vote for "Palpatine" for the 2nd battle
       Then I should be on my profile page
       And I should see "Palpatine" option selected for the 2nd battle

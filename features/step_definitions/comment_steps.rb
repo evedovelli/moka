@@ -33,13 +33,17 @@ end
 
 When /^I click to comment for "([^"]*)"$/ do |option|
   find("#btn-comments-option#{Option.find_by_name(option).id}").click
+  expect(page).to have_css(".comments-modal")
 end
 
+When /^I click to comment for option "([^"]*)"$/ do |option|
+  find("#btn-comments-option#{Option.find_by_name(option).id}").click
+  expect(page).to have_css("#login-modal")
+end
 
 When /^I click to see comments for "([^"]*)"$/ do |option|
   step %Q{I click to comment for "#{option}"}
 end
-
 
 When /^I comment "([^"]*)" for "([^"]*)"$/ do |comment, option|
   find("#btn-comments-option#{Option.find_by_name(option).id}").click
@@ -48,13 +52,22 @@ When /^I comment "([^"]*)" for "([^"]*)"$/ do |comment, option|
 end
 
 When /^I destroy comment "([^"]*)"$/ do |comment|
-  find("#delete_comment#{Comment.find_by_body(comment).id}").click
+  within(all(".comments-modal").first) do
+    find("#icon-delete-comment#{Comment.find_by_body(comment).id}").click
+  end
+end
+
+When /^I destroy comment "([^"]*)" from "([^"]*)"$/ do |comment, option|
+  within(find("#top-comments-option#{Option.find_by_name(option).id}")) do
+    find("#icon-delete-comment#{Comment.find_by_body(comment).id}").click
+  end
 end
 
 When /^I click to load more comments$/ do
   expect(page).to have_css(".comments-modal")
   page.execute_script("window.scrollBy(0,0)")
   all(".next_page-comments").first.click
+  sleep 1
 end
 
 

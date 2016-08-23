@@ -31,7 +31,6 @@ Background: I am a registered user logged in and other users exist
       And "omailey" is following "myself"
       And I am following "gotardo"
       When I click the following button
-      And I wait 1 second
       Then I should be on the "omailey" following page
       And I should see "gotardo" with button to "unfollow"
       And I should see "cirilo" with button to "follow"
@@ -42,6 +41,5 @@ Background: I am a registered user logged in and other users exist
     Scenario: I can access my following page from my home page
       Given I am on my profile page
       When I click the following button
-      And I wait 1 second
       Then I should be on my following page
 
