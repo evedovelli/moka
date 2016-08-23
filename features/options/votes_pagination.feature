@@ -21,6 +21,7 @@ Background: There is a battle running with many voters
     Scenario: User can load second page of voters for an option
       When I go to my home page
       And I click to see voters for "Vader"
+      And I wait 1 second
       And I click to load more voters for "Vader"
       Then I should see the 2 first voters for "Vader"
       And I should see from the 14th to the 18th voter for "Vader"
@@ -31,6 +32,7 @@ Background: There is a battle running with many voters
     Scenario: User can load all pages of voters for an option
       When I go to my home page
       And I click to see voters for "Vader"
+      And I wait 1 second
       And I click to load more voters for "Vader"
       And I should see from the 14th to the 18th voter for "Vader"
       And I click to load more voters for "Vader"

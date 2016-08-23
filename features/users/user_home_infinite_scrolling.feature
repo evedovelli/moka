@@ -118,9 +118,9 @@ Background: I am a registered user logged in and battles exist
     Scenario: Scroll page and then create battle
       When I go to my home page
       And I scroll to the bottom of the page
-      And I wait 1 second
+      And I wait 2 second
       And I scroll to the bottom of the page
-      And I wait 1 second
+      And I wait 2 second
       And I scroll to the top of the page
       And I wait 1 second
       And I press the button to add new battle

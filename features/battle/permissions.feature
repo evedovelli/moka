@@ -65,6 +65,7 @@ Background: I exist as an user and there are battles in database
       And I press the button to edit 2nd battle
       And I fill battle title with "2nd battle"
       And I press "Update"
+      And I wait 2 seconds
       And I press the button to edit 1st battle
       And I fill battle title with "1st battle"
       And I press "Update"
