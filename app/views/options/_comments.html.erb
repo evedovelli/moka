@@ -17,7 +17,9 @@
     <tr>
       <td class="new-comment-user-cell">
         <% if current_user %>
-          <%= link_to(image_tag(current_user.avatar.url(:icon), :class => "img-polaroid"), user_path(current_user)) %>
+          <div class="comment-avatar">
+            <%= link_to(image_tag(current_user.avatar.url(:icon), :class => "img-polaroid"), user_path(current_user)) %>
+          </div>
         <% end %>
       </td>
       <td class="new-comment-body-cell">

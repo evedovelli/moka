@@ -1,5 +1,9 @@
 <tr class="comment<%= comment[:id] %>">
-  <td><%= link_to(image_tag(comment.user.avatar.url(:icon), :class => "img-polaroid img-comment"), user_path(comment.user)) %></td>
+  <td>
+    <div class="comment-avatar">
+      <%= link_to(image_tag(comment.user.avatar.url(:icon), :class => "img-polaroid img-comment"), user_path(comment.user)) %>
+    </div>
+  </td>
   <td class="comment-body"><%= link_to(comment.user.username, user_path(comment.user)) %> <%= comment.body %></td>
   <td>
     <% if can? :destroy, comment %>
