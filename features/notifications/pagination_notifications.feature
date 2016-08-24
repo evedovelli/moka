@@ -19,6 +19,7 @@ Background: There is a battle running and users signed up
     Scenario: Notifications are paginated in notifications' page
       When I go to my home page
       And I click the notifications button
+      And I wait 1 second
       And I click the all notifications button
       And I wait 1 second
       Then I should be on my notifications' page

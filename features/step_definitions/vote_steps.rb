@@ -59,6 +59,8 @@ When /^I click to see voters for "([^"]*)"$/ do |option|
 end
 
 When /^I click to load more voters for "([^"]*)"$/ do |option|
+  expect(page).to have_css(".votes-modal")
+  page.execute_script("window.scrollBy(0,0)")
   find("#next_page-option#{Option.find_by_name(option).id}").click
 end
 

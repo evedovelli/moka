@@ -48,10 +48,12 @@ end
 
 When /^I click the following button$/ do
   find(".btn-following").click
+  expect(page).to have_css("#users-index")
 end
 
 When /^I click the followers button$/ do
   find(".btn-followers").click
+  expect(page).to have_css("#users-index")
 end
 
 

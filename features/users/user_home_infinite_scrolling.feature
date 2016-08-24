@@ -83,7 +83,6 @@ Background: I am a registered user logged in and battles exist
       And I add 1st option "Vader" with picture "vader.jpg"
       And I add 2nd option "Palpatine" with picture "palpatine.jpg"
       And I press "Create"
-      And I wait 4 seconds
       Then I should see "Vader"
       And I should see the battle title "battle 13"
       And I should see the battle title "battle 12"
@@ -100,7 +99,6 @@ Background: I am a registered user logged in and battles exist
       And I add 1st option "Vader" with picture "vader.jpg"
       And I add 2nd option "Palpatine" with picture "palpatine.jpg"
       And I press "Create"
-      And I wait 4 seconds
       And I scroll to the bottom of the page
       Then I should see "Vader"
       And I should see the battle title "battle 13"
@@ -122,11 +120,12 @@ Background: I am a registered user logged in and battles exist
       And I scroll to the bottom of the page
       And I wait 1 second
       And I scroll to the bottom of the page
+      And I wait 1 second
+      And I scroll to the top of the page
       And I press the button to add new battle
       And I add 1st option "Vader" with picture "vader.jpg"
       And I add 2nd option "Palpatine" with picture "palpatine.jpg"
       And I press "Create"
-      And I wait 4 seconds
       Then I should see "Vader"
       And I should see the battle title "battle 13"
       And I should see the battle title "battle 12"

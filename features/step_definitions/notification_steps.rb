@@ -3,6 +3,7 @@ include ActionDispatch::TestProcess
 ### GIVEN ###
 
 Given /^"([^"]+)" logs in and votes for "([^"]+)"$/ do |user, option|
+  page.driver.browser.manage.window.resize_to(1920, 1080)
   click_link("Logout")
   within("#flash_notice") do
     expect(page).to have_content("Signed out successfully")
@@ -19,6 +20,7 @@ Given /^"([^"]+)" logs in and votes for "([^"]+)"$/ do |user, option|
 end
 
 Given /^"([^"]+)" logs in and comments "([^"]+)" for "([^"]+)"$/ do |user, comment, option|
+  page.driver.browser.manage.window.resize_to(1920, 1080)
   click_link("Logout")
   within("#flash_notice") do
     expect(page).to have_content("Signed out successfully")
@@ -27,6 +29,8 @@ Given /^"([^"]+)" logs in and comments "([^"]+)" for "([^"]+)"$/ do |user, comme
   sign_in("#{user}@email.com", "#{user}password")
   step %Q{I go to the 1st battle page}
   step %Q{I comment "#{comment}" for "#{option}"}
+  all('.close-login-form').first.click
+  expect(page).not_to have_css('.comments-modal')
   click_link("Logout")
   within("#flash_notice") do
     expect(page).to have_content("Signed out successfully")
@@ -35,6 +39,7 @@ Given /^"([^"]+)" logs in and comments "([^"]+)" for "([^"]+)"$/ do |user, comme
 end
 
 Given /^"([^"]+)" logs in and follows me$/ do |user|
+  page.driver.browser.manage.window.resize_to(1920, 1080)
   click_link("Logout")
   within("#flash_notice") do
     expect(page).to have_content("Signed out successfully")
@@ -51,6 +56,7 @@ Given /^"([^"]+)" logs in and follows me$/ do |user|
 end
 
 Given /^"([^"]+)" logs in and unfollows me$/ do |user|
+  page.driver.browser.manage.window.resize_to(1920, 1080)
   click_link("Logout")
   within("#flash_notice") do
     expect(page).to have_content("Signed out successfully")
@@ -86,6 +92,7 @@ Given /^I have 36 notifications$/ do
 end
 
 Given /^"([^"]+)" has logged in and voted for "([^"]+)"$/ do |user, option|
+  page.driver.browser.manage.window.resize_to(1920, 1080)
   step %Q{I go to the sign in page}
   sign_in("#{user}@email.com", "#{user}password")
   step %Q{I go to the 1st battle page}
@@ -100,6 +107,7 @@ end
 ### WHEN ###
 
 When /^I click the notifications button$/ do
+  page.driver.browser.manage.window.resize_to(1920, 900)
   find("#notifications-btn").click
 end
 

@@ -13,7 +13,6 @@ Background:
       When I add 1st option "Vader" with picture "vader.jpg"
       And I add 2nd option "Palpatine" with picture "palpatine.jpg"
       And I press "Create"
-      And I wait 2 seconds for uploading images
       Then I should see "Vader"
       And I should see the image "vader.jpg"
       And I should see "Palpatine"
@@ -57,7 +56,6 @@ Background:
       And I add 1st option "Vader" with picture "vader.jpg"
       And I add 2nd option "Palpatine" with picture "palpatine.jpg"
       And I press "Create"
-      And I wait 2 seconds for uploading images
       Then I should be on the home page
       And I should see the battle title "Who is the most devil?"
       And I should see "Vader"
@@ -68,7 +66,6 @@ Background:
       When I add 1st option "Vader" with picture "vader.jpg"
       And I add 2nd option "Palpatine" with picture "palpatine.jpg"
       And I press "Create"
-      And I wait 2 seconds for uploading images
       Then I should be on the home page
       And I should see the battle title "Who should win this battle?"
       And I should see "Vader"
@@ -80,7 +77,6 @@ Background:
       And I add 1st option "Vader" with picture "vader.jpg"
       And I add 2nd option "Palpatine" with picture "palpatine.jpg"
       And I press "Create"
-      And I wait 2 seconds for uploading images
       Then I should be on the home page
       And I should see the battle title "Who should win this battle?"
       And I should see the battle description "Chose the evilest Sith"
@@ -92,7 +88,6 @@ Background:
       And I add 1st option "bigbigbigbigbigbigbigbigbigbigbigbigbigbXX" with picture "vader.jpg"
       And I add 2nd option "Palpatine" with picture "palpatine.jpg"
       And I press "Create"
-      And I wait 2 seconds for uploading images
       Then I should be on the home page
       And I should see the battle title "longlonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglong"
       And I should see the battle description "greatgreatgreatgreatgreatgreatgreatgreatgreatgreatgreatgreatgreatgreatgreatgreatgreatgreatgreatgreatgreatgreat"

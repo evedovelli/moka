@@ -30,7 +30,7 @@
                             :remote => true,
                             :id => "delete_battle#{battle[:id]}",
                             :class => "delete_battle") do %>
-                  <i class="icon-remove pull-right"></i>
+                  <i class="icon-remove pull-right icon-remove-battle" id="icon-remove-battle<%= battle[:id] %>"></i>
                 <% end %>
               </div>
             <% end %>
@@ -40,7 +40,7 @@
                 <%= link_to(edit_battle_path(battle),
                             :remote => true,
                             :id => "edit_battle#{battle[:id]}") do %>
-                  <i class="icon-edit pull-right"></i>
+                  <i class="icon-edit pull-right" id="icon-edit-battle<%= battle[:id] %>"></i>
                 <% end %>
               </div>
             <% end %>

@@ -14,36 +14,35 @@ Background:
     @javascript
     Scenario: Update a battle
       When I fill battle duration with 0 days, 5 hours and 0 mins
-      And I press "Update"
-      And I wait 2 seconds
+      And I press the button to update the battle
       Then I should be on the home page
       And I should see the battle ends in "2015/05/18 15:30:14"
 
     @javascript
     Scenario: Update a battle
       When I add 1st option "Vader" with picture "vader.jpg"
-      And I press "Update"
+      And I press the button to update the battle
       Then I should be on the home page
       And I should see the image "vader.jpg"
 
     @javascript
     Scenario: Specify new battle title
       When I fill battle title with "Something something something Darkside?"
-      And I press "Update"
+      And I press the button to update the battle
       Then I should be on the home page
       And I should see the battle title "Something something something Darkside?"
 
     @javascript
     Scenario: Specify new battle title
       When I fill battle title with ""
-      And I press "Update"
+      And I press the button to update the battle
       Then I should be on the home page
       And I should see the battle title "Choose anything"
 
     @javascript
     Scenario: Specify new battle with description
       When I fill battle description with "Chose the evilest Sith"
-      And I press "Update"
+      And I press the button to update the battle
       Then I should be on the home page
       And I scroll to the top of the page
       And I should see the battle description "Chose the evilest Sith"
@@ -53,7 +52,7 @@ Background:
       When I fill battle title with "longlonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglongWWWWW"
       And I fill battle description with "greatgreatgreatgreatgreatgreatgreatgreatgreatgreatgreatgreatgreatgreatgreatgreatgreatgreatgreatgreatgreatgreatKKKKK"
       And I fill 1st option with "bigbigbigbigbigbigbigbigbigbigbigbigbigbXX"
-      And I press "Update"
+      And I press the button to update the battle
       Then I should be on the home page
       And I should see the battle title "longlonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglong"
       And I should see the battle description "greatgreatgreatgreatgreatgreatgreatgreatgreatgreatgreatgreatgreatgreatgreatgreatgreatgreatgreatgreatgreatgreat"

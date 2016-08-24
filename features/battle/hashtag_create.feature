@@ -18,7 +18,7 @@ Background:
       When I fill battle title with "Who is the most awesome #starwars character?"
       And I add 1st option "Vader" with picture "vader.jpg"
       And I add 2nd option "Palpatine" with picture "palpatine.jpg"
-      And I press "Create"
+      And I press the button to create the battle
       And I go to the "starwars" hashtag page
       Then I should see 1 battle
       And I should see the battle title "Who is the most awesome #starwars character?"
@@ -30,7 +30,7 @@ Background:
       When I fill battle title with "Who is the most awesome #starwars #character?"
       And I add 1st option "Vader" with picture "vader.jpg"
       And I add 2nd option "Palpatine" with picture "palpatine.jpg"
-      And I press "Create"
+      And I press the button to create the battle
       And I go to the "character" hashtag page
       Then I should see 1 battle
       And I should see the battle title "Who is the most awesome #starwars #character?"
@@ -43,7 +43,7 @@ Background:
       When I fill battle title with "Who is the most awesome starwars character?"
       And I add 1st option "Darth #Vader" with picture "vader.jpg"
       And I add 2nd option "Emperor #Palpatine" with picture "palpatine.jpg"
-      And I press "Create"
+      And I press the button to create the battle
       And I go to the "palpatine" hashtag page
       Then I should see 1 battle
       And I should see the battle title "Who is the most awesome starwars character?"
@@ -56,7 +56,7 @@ Background:
       When I fill battle description with "Choose the most awesome #starwars #character!"
       And I add 1st option "Vader" with picture "vader.jpg"
       And I add 2nd option "Palpatine" with picture "palpatine.jpg"
-      And I press "Create"
+      And I press the button to create the battle
       And I go to the "starwars" hashtag page
       Then I should see 1 battle
       And I should see the battle title "Choose the most awesome #starwars #character!"
