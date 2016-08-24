@@ -23,8 +23,8 @@ Background: There is a battle running
       Given I am on the 1st battle page
       When I click to comment for option "Jake"
       And I sign in from modal form
-      Then I should be on the 1st battle page
-      And I see a successful sign in message
+      Then I see a successful sign in message
+      And I should be on the 1st battle page
       And I should see "Oh boy!"
 
     @javascript
@@ -35,6 +35,6 @@ Background: There is a battle running
       And I am on the 1st battle page
       When I click to comment for option "Jake"
       And I click in the Sign in with Facebook button
-      Then I should be on the 1st battle page
-      And I see a successful sign in from Facebook message
+      Then I see a successful sign in from Facebook message
+      And I should be on the 1st battle page
       And I should see "Oh boy!"
