@@ -54,6 +54,7 @@ end
 When /^I destroy comment "([^"]*)"$/ do |comment|
   within(all(".comments-modal").first) do
     find("#icon-delete-comment#{Comment.find_by_body(comment).id}").click
+    expect(page).not_to have_css("#icon-delete-comment#{Comment.find_by_body(comment).id}")
   end
 end
 

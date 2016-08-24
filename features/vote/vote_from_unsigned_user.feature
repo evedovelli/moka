@@ -17,8 +17,8 @@ Background: There is a battle running
       Given I am on the 1st battle page
       When I vote for "Jake"
       And I sign in from modal form
-      Then I should be on the 1st battle page
-      And I see a successful sign in message
+      Then I see a successful sign in message
+      And I should be on the 1st battle page
       And I should see "Jake" with 0 votes
 
     @javascript
