@@ -30,6 +30,7 @@ Background: There is a battle running
       And "Mickey" has commented "Evil of evil" for "Devil Robot"
       When I go to the 1st battle page
       And I click to see comments for "Devil Robot"
+      And I wait 1 second
       And I destroy comment "Evil of evil"
       Then I should be on the 1st battle page
       And I should not see "Evil of evil"
@@ -44,6 +45,7 @@ Background: There is a battle running
       And "Mickey" has commented "Evil of evil" for "Devil Robot"
       When I go to the 1st battle page
       And I click to see comments for "Devil Robot"
+      And I wait 1 second
       Then I should not see button to destroy comment
 
     @javascript
