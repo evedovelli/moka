@@ -590,6 +590,25 @@ describe User do
     end
   end
 
+  describe 'receive_comment_answer_notification_from' do
+    before :each do
+      @user = User.create!(@attr)
+      @other_user = FactoryGirl.create(:user)
+      @battle = FactoryGirl.create(:battle,
+                                  :starts_at => DateTime.now - 1.day,
+                                  :duration => 48*60,
+                                  :user => @user)
+    end
+    it 'should create a new Comment Answer Notification' do
+      expect(CommentAnswerNotification).to receive(:create).with(user: @user, sender: @other_user, option: @battle.options[0])
+      @user.receive_comment_answer_notification_from(@other_user, @battle.options[0])
+    end
+    it 'should increment the unread notifications counter' do
+      expect(@user).to receive(:increment_unread_notification)
+      @user.receive_comment_answer_notification_from(@other_user, @battle.options[0])
+    end
+  end
+
   describe 'receive_friendship_email_from' do
     before :each do
       @user = User.create!(@attr)

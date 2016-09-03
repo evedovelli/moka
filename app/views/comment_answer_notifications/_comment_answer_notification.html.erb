@@ -1,0 +1,9 @@
+<tr id="notification<%= comment_answer_notification.id %>" class="notification">
+  <td><%= link_to(image_tag(comment_answer_notification.sender.avatar.url(:icon), :class => "img-polaroid"), user_path(comment_answer_notification.sender)) %></td>
+  <td><%= t('comment_answer_notifications._comment_answer_notification.message_html', user: link_to(comment_answer_notification.sender.username, user_path(comment_answer_notification.sender))) %></td>
+  <td class="battle-icon">
+    <% if comment_answer_notification.option %>
+        <%= show_option_icon(comment_answer_notification.option) %>
+    <% end %>
+  </td>
+</tr>

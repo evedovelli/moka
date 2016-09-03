@@ -106,7 +106,7 @@ end
 
 ### WHEN ###
 
-When /^I click the notifications button$/ do
+When /^(?:I|he) click(?:|s) the notifications button$/ do
   page.driver.browser.manage.window.resize_to(1920, 900)
   find("#notifications-btn").click
 end
@@ -117,9 +117,20 @@ When /^I click the all notifications button$/ do
   end
 end
 
+When /^"([^"]+)" logs in and goes to his home page$/ do |user|
+  page.driver.browser.manage.window.resize_to(1920, 1080)
+  click_link("Logout")
+  within("#flash_notice") do
+    expect(page).to have_content("Signed out successfully")
+  end
+  step %Q{I go to the sign in page}
+  sign_in("#{user}@email.com", "#{user}password")
+  step %Q{I go to my home page}
+end
+
 ### THEN ###
 
-Then /^I should see (\d+) notification(?:|s) alert$/ do |notifications|
+Then /^(?:I|he) should see (\d+) notification(?:|s) alert$/ do |notifications|
   within("#notifications-unread") do
     expect(page).to have_content(notifications)
   end
@@ -129,7 +140,7 @@ Then /^I should not see notification alert$/ do
   expect(page).to have_css("#notifications-none")
 end
 
-Then /^I should see the notification "([^"]*)" in dropdown menu$/ do |notification|
+Then /^(?:I|he) should see the notification "([^"]*)" in dropdown menu$/ do |notification|
   within("#notification-dropdown") do
     expect(page).to have_content(notification)
   end

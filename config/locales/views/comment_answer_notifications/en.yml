@@ -1,0 +1,4 @@
+en:
+  comment_answer_notifications:
+    _comment_answer_notification:
+      message_html: "%{user} has answered to your comment."

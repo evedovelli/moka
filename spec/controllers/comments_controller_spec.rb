@@ -85,41 +85,94 @@ describe CommentsController do
             allow(@fake_battle).to receive(:user).and_return(@fake_user)
             allow(@fake_option).to receive(:battle).and_return(@fake_battle)
             allow(@fake_comment).to receive(:save).and_return(true)
-            allow(Comment).to receive(:new).and_return(@fake_comment)
           end
           it "should respond to js" do
+            allow(Comment).to receive(:new).and_return(@fake_comment)
             post :create, {option_id: @fake_option.id, comment: {body: "guard"}, :format => 'js'}
             expect(response.content_type).to eq(Mime::JS)
           end
           it "should render the create template" do
+            allow(Comment).to receive(:new).and_return(@fake_comment)
             post :create, {option_id: @fake_option.id, comment: {body: "guard"}, :format => 'js'}
             expect(response).to render_template('create')
           end
           it "should make a new_comment available" do
+            allow(Comment).to receive(:new).and_return(@fake_comment)
             post :create, {option_id: @fake_option.id, comment: {body: "guard"}, :format => 'js'}
             expect(assigns(:new_comment)).to eq(@fake_comment)
           end
           it "should make user available" do
+            allow(Comment).to receive(:new).and_return(@fake_comment)
             post :create, {option_id: @fake_option.id, comment: {body: "guard"}, :format => 'js'}
             expect(assigns(:user)).to eq(@fake_user)
           end
           it "should make the comment available" do
+            allow(Comment).to receive(:new).and_return(@fake_comment)
             post :create, {option_id: @fake_option.id, comment: {body: "guard"}, :format => 'js'}
             expect(assigns(:comment)).to eq(@fake_comment)
           end
           it "should make the option available" do
+            allow(Comment).to receive(:new).and_return(@fake_comment)
             post :create, {option_id: @fake_option.id, comment: {body: "guard"}, :format => 'js'}
             expect(assigns(:option)).to eq(@fake_option)
           end
           it "should create a comment notification" do
+            allow(Comment).to receive(:new).and_return(@fake_comment)
             @other_user = FactoryGirl.create(:user, username: "other_user", email: "other_user@email.com")
             allow(controller).to receive(:current_user).and_return(@other_user)
             expect(@fake_user).to receive(:receive_comment_notification_from).with(@other_user, @fake_option)
             post :create, {option_id: @fake_option.id, comment: {body: "guard"}, :format => 'js'}
           end
           it "should not create a comment notification for own battle" do
+            allow(Comment).to receive(:new).and_return(@fake_comment)
             allow(controller).to receive(:current_user).and_return(@fake_user)
             expect(@fake_user).not_to receive(:receive_comment_notification_from)
+            post :create, {option_id: @fake_option.id, comment: {body: "guard"}, :format => 'js'}
+          end
+          it "should create comment answer notification for commenters" do
+            @user1 = FactoryGirl.create(:user, username: "user1", email: "user1@email.com")
+            @user2 = FactoryGirl.create(:user, username: "user2", email: "user2@email.com")
+            @fake_comment2 = @fake_option.comments.new({
+              user_id: @user2.id,
+              body: "comment"
+            })
+            @fake_comment2.save!
+            @fake_comment1 = @fake_option.comments.new({
+              user_id: @user1.id,
+              body: "comment"
+            })
+            @fake_comment1.save!
+            expect(@user1).to receive(:receive_comment_answer_notification_from).once.with(@fake_user, @fake_option)
+            expect(@fake_comment1).to receive(:user).and_return(@user1)
+            expect(@user2).to receive(:receive_comment_answer_notification_from).once.with(@fake_user, @fake_option)
+            expect(@fake_comment2).to receive(:user).and_return(@user2)
+            allow(Comment).to receive(:new).and_return(@fake_comment)
+            post :create, {option_id: @fake_option.id, comment: {body: "guard"}, :format => 'js'}
+          end
+          it "should create single comment answer notification for each commenters" do
+            @user1 = FactoryGirl.create(:user, username: "user1", email: "user1@email.com")
+            @user2 = FactoryGirl.create(:user, username: "user2", email: "user2@email.com")
+            @fake_comment3 = @fake_option.comments.new({
+              user_id: @user2.id,
+              body: "comment"
+            })
+            @fake_comment3.save!
+            @fake_comment2 = @fake_option.comments.new({
+              user_id: @user2.id,
+              body: "comment"
+            })
+            @fake_comment2.save!
+            @fake_comment1 = @fake_option.comments.new({
+              user_id: @user1.id,
+              body: "comment"
+            })
+            @fake_comment1.save!
+            expect(@user1).to receive(:receive_comment_answer_notification_from).once.with(@fake_user, @fake_option)
+            expect(@fake_comment1).to receive(:user).and_return(@user1)
+            expect(@user2).to receive(:receive_comment_answer_notification_from).once.with(@fake_user, @fake_option)
+            expect(@fake_comment2).to receive(:user).and_return(@user2)
+            expect(@fake_comment3).to receive(:user).and_return(@user2)
+            allow(Comment).to receive(:new).and_return(@fake_comment)
             post :create, {option_id: @fake_option.id, comment: {body: "guard"}, :format => 'js'}
           end
         end

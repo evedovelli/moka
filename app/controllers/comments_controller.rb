@@ -8,6 +8,16 @@ class CommentsController < ApplicationController
     if @comment.save
       @user = current_user
       @option.battle.user.receive_comment_notification_from(@user, @option) unless @user == @option.battle.user
+
+      users = []
+      @option.comments.each do |comment|
+        users.push(comment.user)
+      end
+      users.delete(@option.battle.user)
+      users.uniq.each do |user|
+        user.receive_comment_answer_notification_from(@user, @option) unless @user == user
+      end
+
       @new_comment = Comment.new()
       respond_to do |format|
         format.js {}

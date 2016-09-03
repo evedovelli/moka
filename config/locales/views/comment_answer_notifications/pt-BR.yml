@@ -1,0 +1,4 @@
+pt-BR:
+  comment_answer_notifications:
+    _comment_answer_notification:
+      message_html: "%{user} respondeu ao seu comentário."
