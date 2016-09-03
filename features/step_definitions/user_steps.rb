@@ -335,6 +335,7 @@ end
 
 When /^I sign in from modal form$/ do
   within("#login-modal") do
+    sleep 0.5
     step %Q{I fill in "user_login" with "myself"}
     step %Q{I fill in "user_password" with "secretpassword"}
     step %Q{I click "Sign in"}
