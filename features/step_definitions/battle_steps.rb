@@ -93,6 +93,10 @@ Given /^battle (\d+) is removed$/ do |battle_id|
   Battle.find(battle_id.to_i).hide
 end
 
+Given /^I have created a battle$/ do
+  step %Q{a battle was created with options "red" and "blue"}
+end
+
 ### WHEN ###
 
 When /^I press the button to add new battle$/ do
@@ -205,6 +209,11 @@ When /^I select filter "([^"]*)"$/ do |filter|
   end
 end
 
+When /^I click to close the first battle message$/ do
+  within(all('.alert-first-battle').first) do
+    all('.close').first.click
+  end
+end
 
 ### THEN ###
 
@@ -383,4 +392,14 @@ Then /^I should see buttons to share the (\d+)(?:st|nd|rd|th) battle on Facebook
     expect(page).to have_css('.twitter-share')
     expect(page).to have_css('.google-plus-share')
   end
+end
+
+Then /^I should see a message to add my first battle$/ do
+  within(all('.alert-first-battle').first) do
+    expect(page).to have_content("To create your first battle click the button + Add battle above")
+  end
+end
+
+Then /^I should not see a message to add my first battle$/ do
+  expect(page).not_to have_css(".alert-first-battle")
 end

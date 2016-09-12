@@ -5,3 +5,4 @@ en:
     attributes:
       email_settings:
         new_follower: "New followers"
+        facebook_friend_sign_up: "Facebook friend signs up"

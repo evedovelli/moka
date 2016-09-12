@@ -5,3 +5,4 @@ pt-BR:
     attributes:
       email_settings:
         new_follower: "Novos seguidores"
+        facebook_friend_sign_up: "Registro de amigo do Facebook"

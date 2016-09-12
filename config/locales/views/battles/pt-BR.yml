@@ -36,3 +36,5 @@ pt-BR:
       finished: 'Encerradas'
       refresh: 'Atualizar'
       span: 'Filtrar batalhas:'
+    _first_battle:
+      start_html: "Para criar sua primeira batalha, clique no botão <small>+ Adicionar batalha</small> acima."

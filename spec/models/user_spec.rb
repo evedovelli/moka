@@ -979,4 +979,40 @@ describe User do
       expect(@user.find_friends_from_facebook(@credentials)).to eq(@friends)
     end
   end
+
+  describe 'welcome?' do
+    before(:each) do
+      @user = User.new(@attr)
+      @fake_friends = double('friends')
+      expect(@user).to receive(:friends).and_return(@fake_friends)
+    end
+    it 'should return true when user has less than 4 friends' do
+      expect(@fake_friends).to receive(:count).and_return(1)
+      expect(@user.welcome?).to eq(true)
+    end
+    it 'should return true when user has 4 friends' do
+      expect(@fake_friends).to receive(:count).and_return(4)
+      expect(@user.welcome?).to eq(true)
+    end
+    it 'should return false when user has more than 4 friends' do
+      expect(@fake_friends).to receive(:count).and_return(5)
+      expect(@user.welcome?).to eq(false)
+    end
+  end
+
+  describe 'first_battle?' do
+    before(:each) do
+      @user = User.new(@attr)
+      @fake_battles = double('battles')
+      expect(@user).to receive(:battles).and_return(@fake_battles)
+    end
+    it 'should return true when user has 0 battles' do
+      expect(@fake_battles).to receive(:count).and_return(0)
+      expect(@user.first_battle?).to eq(true)
+    end
+    it 'should return false when user has more than 0 battles' do
+      expect(@fake_battles).to receive(:count).and_return(1)
+      expect(@user.first_battle?).to eq(false)
+    end
+  end
 end

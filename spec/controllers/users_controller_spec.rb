@@ -201,6 +201,16 @@ describe UsersController do
           get :home
           expect(assigns(:find_friends)).to eq(true)
         end
+        it "should make the render_welcome boolean available to that template" do
+          expect(@fake_user).to receive(:welcome?).and_return(true)
+          get :home
+          expect(assigns(:render_welcome)).to eq(true)
+        end
+        it "should make the render_battle_help boolean available to that template" do
+          expect(@fake_user).to receive(:first_battle?).and_return(false)
+          get :home
+          expect(assigns(:render_battle_help)).to eq(false)
+        end
         it "should make filter available to that template with all by default" do
           get :home
           expect(assigns(:filter)).to eq("all")
@@ -283,6 +293,16 @@ describe UsersController do
           allow(@other_user).to receive(:inverse_friends).and_return([double("1"), double("2"), double("3")])
           get :show, {:id => @other_user.username}
           expect(assigns(:number_of_followers)).to eq(3)
+        end
+        it "should make the render_welcome boolean available to that template" do
+          expect(@other_user).to receive(:welcome?).and_return(true)
+          get :show, {:id => @other_user.username}
+          expect(assigns(:render_welcome)).to eq(true)
+        end
+        it "should make the render_battle_help boolean available to that template" do
+          expect(@other_user).to receive(:first_battle?).and_return(false)
+          get :show, {:id => @other_user.username}
+          expect(assigns(:render_battle_help)).to eq(false)
         end
         it "should make filter available to that template with all by default" do
           get :show, {:id => @other_user.username}

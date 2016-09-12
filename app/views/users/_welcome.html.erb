@@ -1,0 +1,11 @@
+<div class="alert alert-info fade in alert-block alert-welcome">
+  <a href="#" class="close" data-dismiss="alert" href="#">&times;</a>
+  <h3><%= t('users._welcome.title') %></h3>
+  <p><%= t('users._welcome.start') %></p>
+  <p><%= t('users._welcome.find_friends_html') %></p>
+  <p><%= t('users._welcome.find_battles_html') %></p>
+  <p>
+    <%= t('users._welcome.find_facebook_html') %>
+    <%= find_facebook_friends_button_mini(t('buttons.find_facebook_friends')) %>
+  </p>
+</div>

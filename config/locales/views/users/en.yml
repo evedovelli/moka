@@ -41,3 +41,9 @@ en:
       email_settings: "Email settings"
     edit:
       title: "Edit profile picture"
+    _welcome:
+      title: "Welcome to Batalharia!"
+      start: "Start by searching for battles and other users to follow."
+      find_friends_html: "You can search for your friends by typing their names in the search field from the menu above, and then click the <i class=\"icon-user\"></i> button."
+      find_battles_html: "You can also search for battles by <em>hashtags</em>. Type the <em>hashtag</em> in the same search field from the menu above, and then click the <i class=\"icon-hashtag\"><b>#</b></i> button."
+      find_facebook_html: "You can search for your Facebook friends by clicking here: "

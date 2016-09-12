@@ -1,4 +1,7 @@
 <div class="span12">
+  <% if @render_welcome %>
+    <%= render 'users/welcome' %>
+  <% end %>
   <%= render 'battles/new' %>
   <%= render 'battles/index' %>
 </div>
