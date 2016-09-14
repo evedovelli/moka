@@ -42,7 +42,7 @@ Background: There is a battle running
       When I go to my home page
       And I click to see voters for "Vader"
       And I should see the 10 voters for "Vader"
-      And I close the modal window
+      And I close the list of votes
       And I click to see voters for "Devil"
       Then I should see the 5 voters for "Devil"
       And I should not see voters for "Vader"

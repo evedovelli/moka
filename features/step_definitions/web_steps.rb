@@ -123,11 +123,6 @@ When /^I scroll to the top of the page$/ do
   page.execute_script("window.scrollBy(0,-10000)")
 end
 
-When /^I close the modal window$/ do
-  expect(page).to have_css(".close")
-  all(".close")[0].click
-end
-
 
 ### THEN ###
 

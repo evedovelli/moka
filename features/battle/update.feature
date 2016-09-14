@@ -49,6 +49,7 @@ Background:
 
     @javascript
     Scenario: Specify battle with too long content in text fields
+      Given I click to close the welcome message
       When I fill battle title with "longlonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglongWWWWW"
       And I fill battle description with "greatgreatgreatgreatgreatgreatgreatgreatgreatgreatgreatgreatgreatgreatgreatgreatgreatgreatgreatgreatgreatgreatKKKKK"
       And I fill 1st option with "bigbigbigbigbigbigbigbigbigbigbigbigbigbXX"

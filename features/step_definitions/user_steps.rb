@@ -300,8 +300,11 @@ When /^I remove the profile picture uploaded image$/ do
 end
 
 When /^I close the login window$/ do
-  expect(page).to have_css(".close")
-  step %Q{I close the modal window}
+  expect(page).to have_css("#login-modal")
+  expect(page).to have_css(".close-login-form")
+  within('#login-modal') do
+    all('.close-login-form').first.click
+  end
 end
 
 When /^I click in the Sign in with Facebook button$/ do
