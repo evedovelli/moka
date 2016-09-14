@@ -30,6 +30,8 @@ class UsersController < ApplicationController
     @top_comments = Battle.top_comments(@battles)
     @vote = Vote.new()
     @find_friends = true
+    @render_welcome = @user.welcome?
+    @render_battle_help = @user.first_battle?
     respond_to do |format|
       format.js { render "users/load_more_battles" }
       format.html {}
@@ -51,6 +53,8 @@ class UsersController < ApplicationController
     @vote = Vote.new()
     @number_of_following = @user.friends.count
     @number_of_followers = @user.inverse_friends.count
+    @render_welcome = @user.welcome?
+    @render_battle_help = @user.first_battle?
     respond_to do |format|
       format.js { render "users/load_more_battles" }
       format.html {}

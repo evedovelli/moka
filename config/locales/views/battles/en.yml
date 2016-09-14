@@ -36,3 +36,5 @@ en:
       finished: 'Finished'
       refresh: 'Refresh'
       span: 'Filter battles:'
+    _first_battle:
+      start_html: "To create your first battle click the button <small>+ Add battle</small> above."

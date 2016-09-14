@@ -64,6 +64,14 @@ When /^I click to load more voters for "([^"]*)"$/ do |option|
   find("#next_page-option#{Option.find_by_name(option).id}").click
 end
 
+When /^I close the list of votes$/ do
+  expect(page).to have_css(".votes-modal")
+  expect(page).to have_css(".close-login-form")
+  within(all(".votes-modal").first) do
+    all(".close-login-form").first.click
+  end
+end
+
 
 ### THEN ###
 

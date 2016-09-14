@@ -20,4 +20,8 @@
       <div class="span12" id="battle_form" style="display:none;"></div>
     </div>
   </div>
+
+  <% if @render_battle_help %>
+    <%= render 'battles/first_battle' %>
+  <% end %>
 <% end %>

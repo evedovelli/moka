@@ -41,3 +41,9 @@ pt-BR:
       email_settings: "Configurações de Email"
     edit:
       title: "Editar foto de perfil"
+    _welcome:
+      title: "Bem-vindo ao Batalharia!"
+      start: "Comece procurando batalhas e outros usuários para seguir."
+      find_friends_html: "Você pode procurar pelos seus amigos escrevendo o nome deles no campo de busca do menu acima, e então clique no botão <i class=\"icon-user\"></i>."
+      find_battles_html: "Você também pode procurar por batalhas com <em>hashtags</em>. Escreva a <em>hashtag</em> no mesmo campo de busca do menu acima, e então clique no botão <i class=\"icon-hashtag\"><b>#</b></i>."
+      find_facebook_html: "Você pode procurar seus amigos do Facebook clicando aqui: "

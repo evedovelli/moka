@@ -102,7 +102,7 @@ describe UsersHelper, :type => :helper do
     end
   end
 
-  describe "find facebook frinds button" do
+  describe "find facebook friends button" do
     it "should return link to find friends from facebook when signed in" do
       @current_user = FactoryGirl.create(:user)
       allow(helper).to receive(:user_signed_in?).and_return(true)
@@ -113,6 +113,20 @@ describe UsersHelper, :type => :helper do
       allow(helper).to receive(:user_signed_in?).and_return(false)
       allow(helper).to receive(:current_user).and_return(nil)
       expect(helper.find_facebook_friends_button("Run for your life")).to eq("")
+    end
+  end
+
+  describe "find facebook friends mini button" do
+    it "should return link to find friends from facebook when signed in" do
+      @current_user = FactoryGirl.create(:user)
+      allow(helper).to receive(:user_signed_in?).and_return(true)
+      allow(helper).to receive(:current_user).and_return(@current_user)
+      expect(helper.find_facebook_friends_button_mini("Run for your life")).to eq("<a href=\"/users/auth/facebook/friends\" class=\"btn btn-primary btn-facebook\"><i class=\"fa fa-facebook-square fa-1x\"></i> Run for your life</a>")
+    end
+    it "should return empty string when not signed in" do
+      allow(helper).to receive(:user_signed_in?).and_return(false)
+      allow(helper).to receive(:current_user).and_return(nil)
+      expect(helper.find_facebook_friends_button_mini("Run for your life")).to eq("")
     end
   end
 end

@@ -74,4 +74,16 @@ module UsersHelper
       return ""
     end
   end
+
+  def find_facebook_friends_button_mini(message)
+    if user_signed_in?
+      return link_to('/users/auth/facebook/friends',
+                 :class => 'btn btn-primary btn-facebook') do
+          "#{ fa_icon "facebook-square", class: "fa-1x" } "\
+          "#{ message }".html_safe
+      end
+    else
+      return ""
+    end
+  end
 end

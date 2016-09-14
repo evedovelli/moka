@@ -300,8 +300,11 @@ When /^I remove the profile picture uploaded image$/ do
 end
 
 When /^I close the login window$/ do
-  expect(page).to have_css(".close")
-  step %Q{I close the modal window}
+  expect(page).to have_css("#login-modal")
+  expect(page).to have_css(".close-login-form")
+  within('#login-modal') do
+    all('.close-login-form').first.click
+  end
 end
 
 When /^I click in the Sign in with Facebook button$/ do
@@ -368,6 +371,12 @@ When /^my Facebook friend "([^"]+)" signs up$/ do |user|
   find('#facebook-sign-in').click
   expect(page).to have_content "Logout"
   logout(:user)
+end
+
+When /^I click to close the welcome message$/ do
+  within(all('.alert-welcome').first) do
+    all('.close').first.click
+  end
 end
 
 
@@ -559,4 +568,14 @@ end
 Then /^I should see the button to find friends from Facebook$/ do
   expect(page).to have_css("#facebook-friends-find")
   expect(URI.parse(page.find("#facebook-friends-find")['href']).path).to eq(path_to("the find Facebook friends page"))
+end
+
+Then /^I should see the welcome message$/ do
+  within(all('.alert-welcome').first) do
+    expect(page).to have_content("Start by searching for battles and other users to follow")
+  end
+end
+
+Then /^I should not see the welcome message$/ do
+  expect(page).not_to have_css('.alert-welcome')
 end

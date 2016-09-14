@@ -16,7 +16,7 @@ Given /^"([^"]*)" is following "([^"]*)"$/ do |user, friend|
                                   })
 end
 
-Given /^I am following the (\d+) users$/ do |num|
+Given /^I am following (?:|the )(\d+) users$/ do |num|
   for i in 1..num.to_i
     FactoryGirl.create(:friendship, {
                                       :user => User.find_by_username("myself"),

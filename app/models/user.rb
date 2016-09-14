@@ -309,4 +309,20 @@ class User < ActiveRecord::Base
     return @graph.get_connections("me", "friends") || []
   end
 
+  def welcome?
+    if friends.count > 4
+      return false
+    else
+      return true
+    end
+  end
+
+  def first_battle?
+    if battles.count > 0
+      return false
+    else
+      return true
+    end
+  end
+
 end
