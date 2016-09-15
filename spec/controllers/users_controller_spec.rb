@@ -295,12 +295,12 @@ describe UsersController do
           expect(assigns(:number_of_followers)).to eq(3)
         end
         it "should make the render_welcome boolean available to that template" do
-          expect(@other_user).to receive(:welcome?).and_return(true)
+          expect(@fake_user).to receive(:welcome?).and_return(true)
           get :show, {:id => @other_user.username}
           expect(assigns(:render_welcome)).to eq(true)
         end
         it "should make the render_battle_help boolean available to that template" do
-          expect(@other_user).to receive(:first_battle?).and_return(false)
+          expect(@fake_user).to receive(:first_battle?).and_return(false)
           get :show, {:id => @other_user.username}
           expect(assigns(:render_battle_help)).to eq(false)
         end

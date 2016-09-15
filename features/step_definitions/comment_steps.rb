@@ -68,7 +68,7 @@ When /^I click to load more comments$/ do
   expect(page).to have_css(".comments-modal")
   page.execute_script("window.scrollBy(0,0)")
   all(".next_page-comments").first.click
-  sleep 1
+  sleep 2
 end
 
 
