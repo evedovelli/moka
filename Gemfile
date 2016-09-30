@@ -108,7 +108,7 @@ gem 'aws-sdk', '~> 1.6'
 
 
 # For allowing file uploads using Ajax
-gem 'remotipart', '~> 1.2'
+gem 'remotipart', :git => "https://github.com/StephaneRob/remotipart.git", :ref => 'bca2acd'
 
 # For user authentication
 gem "devise", ">= 3.2.4"

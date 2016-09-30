@@ -36,7 +36,7 @@ Moka::Application.configure do
   config.assets.debug = true
 
   # Path to imageMagick, used by PaperClip
-  Paperclip.options[:command_path] = "C:\Program Files\ImageMagick-6.8.5-Q16"
+  Paperclip.options[:command_path] = "/usr/bin/convert"
 
   # Mailer for Devise Authentication
   config.action_mailer.default_url_options = { :host => 'localhost:3000' }
