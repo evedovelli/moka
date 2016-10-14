@@ -1,5 +1,5 @@
 branch-defaults:
-  'master':
+  master:
     environment: moka-production
 global:
   application_name: moka

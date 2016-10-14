@@ -1,6 +1,7 @@
 $border-color-current: #afe9c6;
 $border-color-finished: #E5E5E5;
 $background-color-finished: #f9f9f9;
+$battle-title-color: #333333;
 $battle-title-backcolor-current: #afe9c6;
 $battle-title-backcolor-finished: darken(#eee, 5%);
 $remaining-time-color: darken(#999, 20%);
@@ -292,4 +293,15 @@ div.add_new_option_container a {
 
 .battle-filter-text {
   color: #aaa;
+}
+
+.battle-title-link {
+  color: $battle-title-color;
+  text-decoration: none;
+}
+
+.battle-title-link:hover {
+  color: $battle-title-color;
+  text-decoration: none;
+  cursor: pointer;
 }

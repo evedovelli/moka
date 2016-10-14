@@ -1,0 +1,22 @@
+<!-- Modal for copying URL -->
+<div id="copy-modal-<%= battle.id %>" class="modal hide fade copy-modal" tabindex="-1" role="dialog" aria-labelledby="copy-modal-label" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="copy-modal-label"><%= t('battles._social_copy.title') %></h3>
+  </div>
+  <div class="modal-body">
+    <form class="form-inline">
+      <input class="copy-link input-xlarge" type="text" value="<%= canonical_url(battle_path(battle)) %>">
+      <a class="copy-button">
+        <span class="fa-stack fa-lg copy-color share-icon">
+          <i class="fa fa-square fa-stack-2x"></i>
+          <i class="fa fa-copy fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+      <span class="help-block"><%= t('battles._social_copy.help') %></span>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+  </div>
+</div>
