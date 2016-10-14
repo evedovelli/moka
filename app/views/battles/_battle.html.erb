@@ -1,5 +1,7 @@
 <div class="battle_container">
 
+  <%= render :partial => "battles/social_copy", :locals => { :battle => battle } %>
+
   <% if battle.current? %>
     <div id="battle<%= battle[:id] %>" class="battle main-box battle-current">
   <% else %>
@@ -88,7 +90,11 @@
             <div class="battle-title-container span8">
               <div class="row">
                 <div class="span8">
-                  <h2 class="pull-left battle-title"><%= auto_link_hashtags(battle.title || " ", :hashtag_url_base => hashtag_path("")).html_safe %></h2>
+                  <h2 class="pull-left battle-title">
+                    <%= link_to(auto_link_hashtags(battle.title || " ", :hashtag_url_base => hashtag_path("")).html_safe,
+                                battle_path(battle),
+                                :class => "battle-title-link") %>
+                  </h2>
                 </div>
               </div>
               <div class="row">

@@ -38,3 +38,6 @@ en:
       span: 'Filter battles:'
     _first_battle:
       start_html: "To create your first battle click the button <small>+ Add battle</small> above."
+    _social_copy:
+      title: 'Share a link to this battle'
+      help: 'Click the button to copy the link to the clipboard'

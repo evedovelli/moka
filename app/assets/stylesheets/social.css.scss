@@ -1,6 +1,7 @@
 $facebook-color: #3B5998;
 $twitter-color: #2AA9E0;
 $google-plus-color: #DB4437;
+$copy-color: #D4AA00;
 
 .btn-facebook.btn-primary {
   background-color: $facebook-color;
@@ -63,6 +64,10 @@ p.facebook-connected:hover {
   color: $google-plus-color;
 }
 
+.copy-color {
+  color: $copy-color;
+}
+
 .share-title {
   color: #AAA;
   padding-right: 8px;
@@ -78,4 +83,8 @@ a.twitter-share:hover {
 
 a.google-plus-share:hover {
   text-decoration: none;
+}
+
+a.copy-button:hover {
+  cursor: pointer;
 }

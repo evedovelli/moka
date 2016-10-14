@@ -20,3 +20,10 @@ Background:
     Scenario: User can share others' battles on Facebook, Twitter and Google+
       When I go to the home page
       Then I should see buttons to share the 2nd battle on Facebook, Twitter and Google+
+
+    @javascript
+    Scenario: User can copy battle's URL to share with friends
+      When I go to the home page
+      And I click the button to open the copy 1st battle's URL modal
+      Then I should see the 1st battle's URL
+      And I should see a button to copy the 1st battle's URL

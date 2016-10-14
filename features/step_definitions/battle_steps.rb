@@ -215,6 +215,12 @@ When /^I click to close the first battle message$/ do
   end
 end
 
+When /^I click the button to open the copy (\d+)(?:st|nd|rd|th) battle's URL modal$/ do |battle_id|
+  within(all('.battle')[battle_id.to_i - 1]) do
+    all('.copy-share').first.click
+  end
+end
+
 ### THEN ###
 
 Then /^I should not see the new battle form$/ do
@@ -402,4 +408,16 @@ end
 
 Then /^I should not see a message to add my first battle$/ do
   expect(page).not_to have_css(".alert-first-battle")
+end
+
+Then /^I should see the (\d+)(?:st|nd|rd|th) battle's URL$/ do |battle_id|
+  within(find("#copy-modal-#{battle_id.to_i}")) do
+    expect(page).to have_css(".copy-link")
+  end
+end
+
+Then /^I should see a button to copy the (\d+)(?:st|nd|rd|th) battle's URL$/ do |battle_id|
+  within(find("#copy-modal-#{battle_id.to_i}")) do
+    expect(page).to have_css(".copy-button")
+  end
 end

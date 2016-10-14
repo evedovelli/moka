@@ -38,3 +38,6 @@ pt-BR:
       span: 'Filtrar batalhas:'
     _first_battle:
       start_html: "Para criar sua primeira batalha, clique no botão <small>+ Adicionar batalha</small> acima."
+    _social_copy:
+      title: 'Compartilhe um link para esta batalha'
+      help: 'Clique no botão para copiar o link para a área de transferência'

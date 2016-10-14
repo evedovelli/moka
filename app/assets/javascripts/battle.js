@@ -441,3 +441,18 @@ function autoFilterSubmit () {
   $('#battle-filter-btn').hide();
 }
 jQuery(autoFilterSubmit);
+
+
+/**********************************************************/
+/* Copy link to the battle to the clipboard               */
+/**********************************************************/
+
+function copyBattleToClipboard () {
+  $('.copy-button').on('click', function() {
+    var copy_link = $(this).closest('.copy-modal').find('.copy-link');
+    copy_link.focus();
+    copy_link.select();
+    document.execCommand('copy');
+  });
+}
+jQuery(copyBattleToClipboard);
