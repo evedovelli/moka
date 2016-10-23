@@ -28,7 +28,7 @@ Moka::Application.configure do
   # config.action_dispatch.x_sendfile_header = 'X-Accel-Redirect' # for nginx
 
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
-  config.force_ssl = true
+  config.force_ssl = false
 
   # See everything in the log (default is :info)
   # config.log_level = :debug
@@ -79,13 +79,9 @@ Moka::Application.configure do
   # Mailer for Devise Authentication
   config.action_mailer.default_url_options = { :host => 'batalharia.com' }
 
-  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.delivery_method = :mailgun
   config.action_mailer.smtp_settings = {
-    :address => 'email-smtp.us-west-2.amazonaws.com',
-    :authentication => :login,
-    :user_name => 'AKIAJPCEY5SZWMZFQI4A',
-    :password => 'AifubvVEnfOnpcYeapk5brZ6eh16/W49c3vNXaoPHOeI',
-    :enable_starttls_auto => true,
-    :port => 465
+    :api_key => ENV['MAILGUN_API_KEY'],
+    :domain => 'batalharia.com'
   }
 end

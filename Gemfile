@@ -154,3 +154,6 @@ gem 'high_voltage', '~> 2.4.0'
 
 # Select form with bootstrap style
 gem 'bootstrap-select-rails', :git => "https://github.com/evedovelli/bootstrap-select-rails.git", :tag => "v1.5.4"
+
+# Action Mailer adapter for using Mailgun HTTP API
+gem 'mailgun_rails'
