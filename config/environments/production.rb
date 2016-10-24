@@ -80,7 +80,7 @@ Moka::Application.configure do
   config.action_mailer.default_url_options = { :host => 'batalharia.com' }
 
   config.action_mailer.delivery_method = :mailgun
-  config.action_mailer.smtp_settings = {
+  config.action_mailer.mailgun_settings = {
     :api_key => ENV['MAILGUN_API_KEY'],
     :domain => 'batalharia.com'
   }
