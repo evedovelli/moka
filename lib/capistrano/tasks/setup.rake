@@ -26,7 +26,7 @@ namespace :setup do
 
       execute "ln -nfs #{current_path}/config/nginx.conf /etc/nginx/sites-enabled/#{fetch(:application)}"
       execute "ln -nfs #{current_path}/config/unicorn_init.sh /etc/init.d/unicorn_#{fetch(:application)}"
-   end
+    end
   end
 
 end

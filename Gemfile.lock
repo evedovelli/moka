@@ -1,11 +1,4 @@
 GIT
-  remote: https://github.com/StephaneRob/remotipart.git
-  revision: bca2acd4eb474c48e178c0eaefcba3d5a3293ab9
-  ref: bca2acd
-  specs:
-    remotipart (1.3.0)
-
-GIT
   remote: https://github.com/evedovelli/bootstrap-select-rails.git
   revision: 88cb015dc92c3f932310afaaaa44b0ea2dcba58d
   tag: v1.5.4
@@ -71,6 +64,9 @@ GEM
     capistrano-rbenv (2.0.3)
       capistrano (~> 3.1)
       sshkit (~> 1.3)
+    capistrano3-puma (1.2.1)
+      capistrano (~> 3.0)
+      puma (>= 2.6)
     capybara (2.5.0)
       mime-types (>= 1.16)
       nokogiri (>= 1.3.3)
@@ -256,6 +252,7 @@ GEM
     rake (10.4.2)
     rdoc (3.12.2)
       json (~> 1.4)
+    remotipart (1.3.1)
     responders (1.1.2)
       railties (>= 3.2, < 4.2)
     rest-client (2.0.0)
@@ -358,6 +355,7 @@ DEPENDENCIES
   capistrano-bundler (~> 1.1.2)
   capistrano-rails (~> 1.1.1)
   capistrano-rbenv (~> 2.0.2)
+  capistrano3-puma
   capybara (>= 2.2.1)
   chromedriver-helper
   coffee-rails (~> 3.2.1)
@@ -386,7 +384,7 @@ DEPENDENCIES
   puma (>= 2.14.0)
   rails (= 3.2.17)
   rails_12factor
-  remotipart!
+  remotipart (~> 1.3.1)
   rolify
   routing-filter
   rspec-rails (>= 2.12.2)
@@ -403,7 +401,7 @@ DEPENDENCIES
   webmock (~> 1.22)
 
 RUBY VERSION
-   ruby 2.1.5p273
+   ruby 2.3.1p112
 
 BUNDLED WITH
-   1.12.5
+   1.13.6

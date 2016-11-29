@@ -63,7 +63,7 @@
 set :stage, :production
 set :rails_env, :production
 
-server '104.236.197.52',
+server '107.170.36.111',
   user: 'evedovelli',
   roles: %w{web app db},
   primary: true

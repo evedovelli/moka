@@ -29,6 +29,10 @@ class BattlesController < ApplicationController
     @battle_options_error = ""
 
     if not params[:battle]
+      @battle = Battle.new()
+      2.times do
+        @battle.options.build
+      end
       @options_id = "options_new"
       respond_to do |format|
         format.js { render 'battles/reload_form' }

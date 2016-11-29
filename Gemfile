@@ -9,6 +9,7 @@ group :development do
   gem 'capistrano-rails', '~> 1.1.1'
   gem 'capistrano-bundler', '~> 1.1.2'
   gem 'capistrano-rbenv', '~> 2.0.2'
+  gem 'capistrano3-puma'
 
   # To intercept and open sent emails on browser
   gem 'letter_opener'
@@ -106,9 +107,8 @@ gem "paperclip", "~> 3.5.3"
 # To use Paperclip with AWS S3
 gem 'aws-sdk', '~> 1.6'
 
-
 # For allowing file uploads using Ajax
-gem 'remotipart', :git => "https://github.com/StephaneRob/remotipart.git", :ref => 'bca2acd'
+gem 'remotipart', '~> 1.3.1'
 
 # For user authentication
 gem "devise", ">= 3.2.4"

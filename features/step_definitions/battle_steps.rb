@@ -8,12 +8,12 @@ Given /^the following battles were added:$/ do |table|
     o1 = FactoryGirl.create(:option, { name: "Potato", picture: Rack::Test::UploadedFile.new(create_path('chips.png'), 'image/png') })
     o2 = FactoryGirl.create(:option, { name: "Tomato", picture: Rack::Test::UploadedFile.new(create_path('tomato.png'), 'image/png') })
     b = FactoryGirl.create(:battle, { options: [o1, o2],
-                                  number_of_options: 0,
-                                  starts_at: battle[:starts_at],
-                                  duration: battle[:duration],
-                                  user: User.find_by_username(battle[:user] || "myself"),
-                                  title: battle[:title] || "Choose your vegetable"
-                                })
+                                      number_of_options: 0,
+                                      starts_at: battle[:starts_at],
+                                      duration: battle[:duration],
+                                      user: User.find_by_username(battle[:user] || "myself"),
+                                      title: battle[:title] || "Choose your vegetable"
+                                    })
     b.fetch_hashtags
     b.save
   end
