@@ -114,7 +114,7 @@ gem 'remotipart', '~> 1.3.1'
 gem "devise", ">= 3.2.4"
 
 # Sign up with Facebook account
-gem 'omniauth-facebook'
+gem 'omniauth-facebook', ">= 4.0.0"
 
 # For posting on Facebook
 gem 'koala', '~> 2.2'
