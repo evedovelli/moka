@@ -102,7 +102,7 @@ gem 'jquery-turbolinks'
 # gem 'debugger'
 
 # For attaching images
-gem "paperclip", "~> 3.5.3"
+gem "paperclip", "~> 4.3.7"
 
 # To use Paperclip with AWS S3
 gem 'aws-sdk', '~> 1.6'
